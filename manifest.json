@@ -1,0 +1,22 @@
+{
+    "name": "Console Recorder Generator",
+    "version": "0.1.0",
+    "manifest_version": 2,
+    "description": "Not going to even try describing this.",
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "background":  {
+      "scripts": ["bg.js"]
+    },
+    "browser_action": {
+      "browser_style": true
+    },
+    "permissions": [
+      "webRequest",
+      "webRequestBlocking",
+      "tabs",
+      "debugger",
+      "notifications",
+      "*://*.console.aws.amazon.com/*"
+    ]
+}
+  
