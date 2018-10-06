@@ -42,7 +42,8 @@ for service in services:
         })
     
     services_output[service] = {
-        'operations': operations
+        'operations': operations,
+        'endpoint_prefix': service_content['metadata']['endpointPrefix'],
     }
 
 with open("combined.json", "w") as f:  
