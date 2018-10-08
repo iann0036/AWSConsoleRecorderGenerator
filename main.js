@@ -1,6 +1,7 @@
 var only_one_select = false;
 var selectables;
 var response;
+var combined;
 var final_output = '';
 
 function addSelectable() {
@@ -70,9 +71,6 @@ function doAccept() {
     var i = this.getAttribute('data-response-index');
     var j = this.getAttribute('data-potential-index');
 
-    var service = response[i]['service'];
-    var method = response[i]['method'];
-    var regexval = document.getElementById(`regexinput${i}`).value;
     var apiservice ='';
     var apimethod = '';
 
@@ -88,6 +86,44 @@ function doAccept() {
         apiservice = response[i]['potentials'][j]['service'];
     }
 
+    console.log("Setting " + i + " to " + apiservice + "." + apimethod);
+
+    response[i]['selectedpotentialapiservice'] = apiservice;
+    response[i]['selectedpotentialapimethod'] = apimethod;
+
+    [...document.getElementsByClassName(`inputMethodSelector${i}`)].forEach(
+        (el, index, array) => {
+            el.innerHTML = "<option></option>";
+            combined[apiservice]['operations'].forEach(operation => {
+                if (operation['name'] == apimethod) {
+                    operation['inputs'].forEach(input => {
+                        var methodname = el.getAttribute('data-prop').split(".").pop();
+                        if (methodname.toLowerCase() == input.toLowerCase()) {
+                            el.innerHTML += `<option selected>${input}</option>`;
+                        } else {
+                            el.innerHTML += `<option>${input}</option>`;
+                        }
+                    });
+                }
+            });
+        }
+    );
+
+    this.outerHTML = "<i>accepted</i>";
+}
+
+function doFinalize() {
+    var i = this.getAttribute('data-response-index');
+    var apiservice = response[i]['selectedpotentialapiservice'];
+    var apimethod = response[i]['selectedpotentialapimethod'];
+    var service = response[i]['service'];
+    var method = response[i]['method'];
+
+    var boto3method = convertApiToBoto3(apimethod);
+    var climethod = convertApiToCli(apimethod);
+
+    var regexval = document.getElementById(`regexinput${i}`).value;
+
     var selectables_string = '';
     if (selectables.length > 0) {
         selectables.forEach(selectable => {
@@ -95,12 +131,33 @@ function doAccept() {
         });
     }
 
-    var boto3method = convertApiToBoto3(apimethod);
-    var climethod = convertApiToCli(apimethod);
+    var inputs_string = '';
+    [...document.getElementsByClassName(`inputMethodSelector${i}`)].forEach(
+        (el, index, array) => {
+            if (el.selectedIndex != -1) {
+                var optiontext = el.options[el.selectedIndex].text;
+                if (optiontext != "") {
+                    var boto3prop = optiontext.substring(0,1).toUpperCase() + optiontext.substring(1);
+                    var cliprop = convertApiToCli(optiontext);
+
+                    if (optiontext == "MaxResults") {
+                        cliprop = "max-items";
+                    }
+
+                    var prop = el.getAttribute('data-prop');
+
+                    inputs_string += `        reqParams.boto3['${boto3prop}'] = ${prop};
+        reqParams.cli['--${cliprop}'] = ${prop};
+`;
+                }
+            }
+        }
+    );
 
     document.getElementById('final_output').innerHTML += `
-    // ${service}
+    // autogen:${apiservice}.${apimethod}
     if (details.method == "${method}" && details.url.match(/${regexval}/g)${selectables_string}) {
+${inputs_string}
         outputs.push({
             'region': region,
             'service': '${apiservice}',
@@ -112,20 +169,20 @@ function doAccept() {
             'options': reqParams
         });
         
-        return true;
+        return {};
     }
 `;
     document.getElementById('final_output').setAttribute('style', 'width: 100%; height: 0;');
     var scrollHeight = document.getElementById('final_output').scrollHeight;
     document.getElementById('final_output').setAttribute('style', 'width: 100%; height: ' + scrollHeight + 'px;');
 
-    this.outerHTML = "<i>accepted</i>";
     selectables = [];
 }
 
 chrome.runtime.sendMessage(null, {
     "action": "getCombined"
-}, null, function(combined){
+}, null, function(xcombined){
+    combined = xcombined;
     var combined_select = '<select id="combinedSelect">';
     var combined_select_options = [];
     for (var service in combined) {
@@ -168,7 +225,7 @@ chrome.runtime.sendMessage(null, {
 
                 for (var prop in jsonRequestBody) {
                     var val = JSON.stringify(jsonRequestBody[prop]);
-                    selectable_json += `<a id="${i}-${prop}" data-prop="jsonRequestBody.${prop}" data-val=${val} href="#">${prop}</a>: ${val}<br />`;
+                    selectable_json += `<a id="${i}-${prop}" data-prop="jsonRequestBody.${prop}" data-val=${val} style="color: #2222cc;">${prop}</a>: ${val} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${prop}" data-prop="jsonRequestBody.${prop}"></select><br />`;
                     setTimeout(function(i, prop){
                         document.getElementById(`${i}-${prop}`).onclick = addSelectable;
                     }, 1, i, prop);
@@ -177,7 +234,7 @@ chrome.runtime.sendMessage(null, {
                         for (var subprop in jsonRequestBody[prop]) {
                             var proppath = prop + "." + subprop;
                             var val = JSON.stringify(jsonRequestBody[prop][subprop]);
-                            selectable_json += `<a id="${i}-${subprop}" data-prop="jsonRequestBody.${proppath}" data-val=${val} href="#">${proppath}</a>: ${val}<br />`;
+                            selectable_json += `<a id="${i}-${subprop}" data-prop="jsonRequestBody.${proppath}" data-val=${val} style="color: #2222cc;">${proppath}</a>: ${val} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${proppath}" data-prop="jsonRequestBody.${proppath}"></select><br />`;
                             setTimeout(function(i, subprop){
                                 document.getElementById(`${i}-${subprop}`).onclick = addSelectable;
                             }, 1, i, subprop);
@@ -199,7 +256,7 @@ chrome.runtime.sendMessage(null, {
 
                     document.getElementById('main').innerHTML += `
                     <tr>
-                    ${first_row ? `<td rowspan="${(potentials_length+1)}" style="background-color: ${url_color};"><b>${url}</b> <i>${method}</i><br />${selectable_json}/<input id="regexinput${i}" style="width: 90%;" value="${regex}" />/g</td>` : ''}
+                    ${first_row ? `<td rowspan="${(potentials_length+1)}" style="background-color: ${url_color};"><button id="finalize${i}" data-response-index="${i}" style="float: right;">Finalize</button><br /><b>${url}</b> <i>${method}</i><br />${selectable_json}/<input id="regexinput${i}" style="width: 90%;" value="${regex}" />/g</td>` : ''}
                     <td style="background-color: ${potential_color};">${potential}${foundinuri ? "" : " <sup><i>respBody</i></sup>"}</td> 
                     <td><button data-response-index="${i}" data-potential-index="${j}" id="acceptPotential-${i}-${j}">Accept</button></td>
                     </tr>`;
@@ -212,21 +269,26 @@ chrome.runtime.sendMessage(null, {
             } else {
                 document.getElementById('main').innerHTML += `
                 <tr>
-                <td rowspan="2" style="background-color: ${url_color};"><b>${url}</b> <i>${method}</i><br />${selectable_json}/<input id="regexinput${i}" style="width: 90%;" value="${regex}" />/g</td>
+                <td rowspan="2" style="background-color: ${url_color};"><button id="finalize${i}" data-response-index="${i}" style="float: right;">Finalize</button><br /><b>${url}</b> <i>${method}</i><br />${selectable_json}/<input id="regexinput${i}" style="width: 90%;" value="${regex}" />/g</td>
                 <td>(no potentials)</td> 
                 <td>&nbsp;</td>
                 </tr>`;
             }
+
             document.getElementById('main').innerHTML += `
             <tr>
             <td id="pickArea${i}"><button id="pickButton${i}">Pick</button></td> 
             <td><button data-response-index="${i}" id="pickAcceptButton${i}">Accept</button></td>
             </tr>`;
+
             setTimeout(function(i, combined_select){
                 document.getElementById(`pickButton${i}`).onclick = function() {
                     document.getElementById(`pickArea${i}`).innerHTML = combined_select;
                 };
+
                 document.getElementById(`pickAcceptButton${i}`).onclick = doAccept;
+
+                document.getElementById(`finalize${i}`).onclick = doFinalize;
             }, 1, i, combined_select);
         }
     });
