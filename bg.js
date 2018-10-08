@@ -741,4 +741,149 @@ function analyseRequest(details) {
 
         return true;
     }
+    
+    // guardduty
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "ListDetectors") {
+        outputs.push({
+            'region': region,
+            'service': 'guardduty',
+            'method': {
+                'api': 'ListDetectors',
+                'boto3': 'list_detectors',
+                'cli': 'list-detectors'
+            },
+            'options': reqParams
+        });
+        
+        return true;
+    }
+
+    // config
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/config\/service\/aggregationAuthorization\/describePendingAggregationRequests\?/g)) {
+        outputs.push({
+            'region': region,
+            'service': 'config',
+            'method': {
+                'api': 'DescribePendingAggregationRequests',
+                'boto3': 'describe_pending_aggregation_requests',
+                'cli': 'describe-pending-aggregation-requests'
+            },
+            'options': reqParams
+        });
+        
+        return true;
+    }
+
+    // config
+    if (details.method == "GET" && details.url.match(/.+console\.aws\.amazon\.com\/config\/service\/iam\/listRoles\?/g)) {
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'ListRoles',
+                'boto3': 'list_roles',
+                'cli': 'list-roles'
+            },
+            'options': reqParams
+        });
+        
+        return true;
+    }
+
+    // config
+    if (details.method == "GET" && details.url.match(/.+console\.aws\.amazon\.com\/config\/service\/listS3Buckets\?/g)) {
+        outputs.push({
+            'region': region,
+            'service': 's3',
+            'method': {
+                'api': 'ListBuckets',
+                'boto3': 'list_buckets',
+                'cli': 'list-buckets'
+            },
+            'options': reqParams
+        });
+        
+        return true;
+    }
+
+    // config
+    if (details.method == "GET" && details.url.match(/.+console\.aws\.amazon\.com\/config\/service\/listSnsTopics\?/g)) {
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'ListTopics',
+                'boto3': 'list_topics',
+                'cli': 'list-topics'
+            },
+            'options': reqParams
+        });
+        
+        return true;
+    }
+
+    // xray
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/xray\/data\/proxy\?call=GetEncryptionConfig&/g)) {
+        outputs.push({
+            'region': region,
+            'service': 'xray',
+            'method': {
+                'api': 'GetEncryptionConfig',
+                'boto3': 'get_encryption_config',
+                'cli': 'get-encryption-config'
+            },
+            'options': reqParams
+        });
+        
+        return true;
+    }
+
+    // xray
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/xray\/data\/proxy\?call=GetSamplingRules&/g)) {
+        outputs.push({
+            'region': region,
+            'service': 'xray',
+            'method': {
+                'api': 'GetSamplingRules',
+                'boto3': 'get_sampling_rules',
+                'cli': 'get-sampling-rules'
+            },
+            'options': reqParams
+        });
+        
+        return true;
+    }
+
+    // xray
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/xray\/data\/proxy\?call=GetSamplingStatisticSummaries&/g)) {
+        outputs.push({
+            'region': region,
+            'service': 'xray',
+            'method': {
+                'api': 'GetSamplingStatisticSummaries',
+                'boto3': 'get_sampling_statistic_summaries',
+                'cli': 'get-sampling-statistic-summaries'
+            },
+            'options': reqParams
+        });
+        
+        return true;
+    }
+
+    // opsworks
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/k\/DescribeServers\?/g)) {
+        outputs.push({
+            'region': region,
+            'service': 'opsworkscm',
+            'method': {
+                'api': 'DescribeServers',
+                'boto3': 'describe_servers',
+                'cli': 'describe-servers'
+            },
+            'options': reqParams
+        });
+        
+        return true;
+    }
+
 }

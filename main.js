@@ -91,7 +91,7 @@ function doAccept() {
     var selectables_string = '';
     if (selectables.length > 0) {
         selectables.forEach(selectable => {
-            selectables_string += ` && jsonRequestBody.${selectable.prop} == "${selectable.val}"`;
+            selectables_string += ` && ${selectable.prop} == "${selectable.val}"`;
         });
     }
 
@@ -155,14 +155,41 @@ chrome.runtime.sendMessage(null, {
 
             try {
                 jsonRequestBody = JSON.parse(request_body);
+
+                // check for string objects
+                for (var prop in jsonRequestBody) {
+                    if (typeof jsonRequestBody[prop] == "string") {
+                        try {
+                            var parsed = JSON.parse(jsonRequestBody[prop]);
+                            jsonRequestBody[prop] = parsed;
+                        } catch(e) {;}
+                    }
+                }
+
                 for (var prop in jsonRequestBody) {
                     var val = JSON.stringify(jsonRequestBody[prop]);
-                    selectable_json += `<a id="${i}-${prop}" data-prop="${prop}" data-val=${val} href="#">${prop}</a>: ${val}<br />`;
+                    selectable_json += `<a id="${i}-${prop}" data-prop="jsonRequestBody.${prop}" data-val=${val} href="#">${prop}</a>: ${val}<br />`;
                     setTimeout(function(i, prop){
                         document.getElementById(`${i}-${prop}`).onclick = addSelectable;
                     }, 1, i, prop);
+                    
+                    if (typeof jsonRequestBody[prop] === 'object' && Array.isArray(jsonRequestBody[prop]) == false) {
+                        for (var subprop in jsonRequestBody[prop]) {
+                            var proppath = prop + "." + subprop;
+                            var val = JSON.stringify(jsonRequestBody[prop][subprop]);
+                            selectable_json += `<a id="${i}-${subprop}" data-prop="jsonRequestBody.${proppath}" data-val=${val} href="#">${proppath}</a>: ${val}<br />`;
+                            setTimeout(function(i, subprop){
+                                document.getElementById(`${i}-${subprop}`).onclick = addSelectable;
+                            }, 1, i, subprop);
+                        }
+                    }
                 }
-            } catch(e) {;}
+            } catch(e) {
+                jsonRequestBody = {
+                    '__RAW__': request_body
+                };
+                selectable_json = "<b><i>not-json</i></b> " + request_body;
+            }
             
             if (potentials_length > 0) {
                 for (var j=0; j<response[i]['potentials'].length; j++) {
