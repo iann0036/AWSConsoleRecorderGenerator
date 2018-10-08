@@ -155,7 +155,7 @@ function doFinalize() {
     );
 
     document.getElementById('final_output').innerHTML += `
-    // autogen:${apiservice}.${apimethod}
+    // autogen:${service}:${apiservice}.${apimethod}
     if (details.method == "${method}" && details.url.match(/${regexval}/g)${selectables_string}) {
 ${inputs_string}
         outputs.push({
