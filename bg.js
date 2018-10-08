@@ -23,7 +23,7 @@ chrome.browserAction.onClicked.addListener(
 chrome.webRequest.onBeforeRequest.addListener(
     logRequest,
     {urls: ["<all_urls>"]},
-    ["requestBody","blocking"]
+    ["requestBody"]
 );
 
 fetch("combined.json")
@@ -52,7 +52,7 @@ function logRequest(details) {
 
     if (details.type != "xmlhttprequest") return;
 
-    if (analyseRequest(details) === true) return;
+    if (analyseRequest(details) !== false) return;
 
     try {
         requestBody = decodeURIComponent(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes)));
@@ -75,7 +75,7 @@ function logRequest(details) {
 
         var valid_service = false;
         for (var i in combined) {
-            if (service == combined[i]['endpoint_prefix']) {
+            if (service == combined[i]['endpoint_prefix'] || service == i) {
                 valid_service = true;
             }
         }
@@ -119,6 +119,8 @@ function logRequest(details) {
                 'regex': regex
             });
             console.warn("---");
+        } else {
+            console.log("Non-valid service: " + service);
         }
     }
 }
@@ -1508,4 +1510,5 @@ function analyseRequest(details) {
         return {};
     }
 
+    return false;
 }

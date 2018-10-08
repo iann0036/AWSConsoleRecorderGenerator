@@ -114,6 +114,12 @@ function doAccept() {
 
 function doFinalize() {
     var i = this.getAttribute('data-response-index');
+
+    if (response[i]['selectedpotentialapiservice'] === undefined) {
+        alert('No match accepted, try again');
+        return;
+    }
+
     var apiservice = response[i]['selectedpotentialapiservice'];
     var apimethod = response[i]['selectedpotentialapimethod'];
     var service = response[i]['service'];
@@ -177,6 +183,7 @@ ${inputs_string}
     document.getElementById('final_output').setAttribute('style', 'width: 100%; height: ' + scrollHeight + 'px;');
 
     selectables = [];
+    this.outerHTML = "<i style='float: right;'>finalized</i>";
 }
 
 chrome.runtime.sendMessage(null, {
