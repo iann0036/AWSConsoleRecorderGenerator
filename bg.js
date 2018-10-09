@@ -2528,5 +2528,47 @@ function analyseRequest(details) {
         return {};
     }
 
+    // autogen:guardduty:guardduty.CreateSampleFindings
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "CreateSampleFindings" && jsonRequestBody.method == "POST") {
+        reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
+
+        outputs.push({
+            'region': region,
+            'service': 'guardduty',
+            'method': {
+                'api': 'CreateSampleFindings',
+                'boto3': 'create_sample_findings',
+                'cli': 'create-sample-findings'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:guardduty:guardduty.UpdateDetector
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "UpdateDetector" && jsonRequestBody.method == "POST") {
+        reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['Enable'] = jsonRequestBody.contentString.enable;
+        reqParams.cli['--enable'] = jsonRequestBody.contentString.enable;
+        reqParams.boto3['FindingPublishingFrequency'] = jsonRequestBody.contentString.findingPublishingFrequency;
+        reqParams.cli['--finding-publishing-frequency'] = jsonRequestBody.contentString.findingPublishingFrequency;
+
+        outputs.push({
+            'region': region,
+            'service': 'guardduty',
+            'method': {
+                'api': 'UpdateDetector',
+                'boto3': 'update_detector',
+                'cli': 'update-detector'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
     return false;
 }

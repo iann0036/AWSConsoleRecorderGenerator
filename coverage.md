@@ -3,14 +3,18 @@
 | Service | Coverage |
 | --- | --- |
 | *cloud9* | 6/10 (60.0%) |
-| *cloudtrail* | 1/14 (7.0%) |
+| *cloudtrail* | 6/14 (42.0%) |
+| *config* | 3/43 (6.0%) |
 | *ds* | 1/49 (2.0%) |
 | *ec2* | 18/274 (6.0%) |
 | *efs* | 8/12 (66.0%) |
-| *iam* | 3/127 (2.0%) |
+| *guardduty* | 21/42 (50.0%) |
+| *iam* | 6/127 (4.0%) |
 | *kms* | 2/35 (5.0%) |
+| *lambda* | 1/30 (3.0%) |
 | *medialive* | 4/25 (16.0%) |
 | *s3* | 23/78 (29.0%) |
+| *sns* | 1/30 (3.0%) |
 | *ssm* | 1/108 (0.0%) |
 
 ## Operation Coverage
@@ -617,18 +621,18 @@
 | *cloudsearchdomain* | `UploadDocuments` | 0 |
 | *cloudtrail* | `DeleteTrail` | 0 |
 | *cloudtrail* | `RemoveTags` | 0 |
-| *cloudtrail* | `GetEventSelectors` | 0 |
+| *cloudtrail* | `GetEventSelectors` | 1 |
 | *cloudtrail* | `AddTags` | 0 |
 | *cloudtrail* | `StartLogging` | 0 |
-| *cloudtrail* | `GetTrailStatus` | 0 |
+| *cloudtrail* | `GetTrailStatus` | 1 |
 | *cloudtrail* | `ListPublicKeys` | 0 |
 | *cloudtrail* | `StopLogging` | 0 |
 | *cloudtrail* | `PutEventSelectors` | 0 |
-| *cloudtrail* | `DescribeTrails` | 1 |
-| *cloudtrail* | `CreateTrail` | 0 |
+| *cloudtrail* | `DescribeTrails` | 2 |
+| *cloudtrail* | `CreateTrail` | 1 |
 | *cloudtrail* | `UpdateTrail` | 0 |
-| *cloudtrail* | `ListTags` | 0 |
-| *cloudtrail* | `LookupEvents` | 0 |
+| *cloudtrail* | `ListTags` | 1 |
+| *cloudtrail* | `LookupEvents` | 1 |
 | *cloudwatch* | `ListDashboards` | 0 |
 | *cloudwatch* | `ListMetrics` | 0 |
 | *cloudwatch* | `DeleteDashboards` | 0 |
@@ -960,7 +964,7 @@
 | *config* | `DeleteRetentionConfiguration` | 0 |
 | *config* | `PutEvaluations` | 0 |
 | *config* | `DeleteConfigRule` | 0 |
-| *config* | `DescribeConfigurationRecorders` | 0 |
+| *config* | `DescribeConfigurationRecorders` | 1 |
 | *config* | `DescribeAggregationAuthorizations` | 0 |
 | *config* | `PutConfigurationRecorder` | 0 |
 | *config* | `DescribeConfigurationRecorderStatus` | 0 |
@@ -979,10 +983,10 @@
 | *config* | `PutAggregationAuthorization` | 0 |
 | *config* | `DescribeConfigRuleEvaluationStatus` | 0 |
 | *config* | `PutRetentionConfiguration` | 0 |
-| *config* | `DescribeDeliveryChannels` | 0 |
+| *config* | `DescribeDeliveryChannels` | 1 |
 | *config* | `GetComplianceSummaryByResourceType` | 0 |
 | *config* | `GetAggregateComplianceDetailsByConfigRule` | 0 |
-| *config* | `DescribePendingAggregationRequests` | 0 |
+| *config* | `DescribePendingAggregationRequests` | 1 |
 | *config* | `DescribeConfigRules` | 0 |
 | *config* | `DescribeAggregateComplianceByConfigRules` | 0 |
 | *config* | `PutConfigRule` | 0 |
@@ -2175,44 +2179,44 @@
 | *greengrass* | `DeleteLoggerDefinition` | 0 |
 | *greengrass* | `DeleteFunctionDefinition` | 0 |
 | *greengrass* | `CreateSubscriptionDefinitionVersion` | 0 |
-| *guardduty* | `GetFindings` | 0 |
-| *guardduty* | `ListIPSets` | 0 |
-| *guardduty* | `UpdateDetector` | 0 |
+| *guardduty* | `GetFindings` | 1 |
+| *guardduty* | `ListIPSets` | 2 |
+| *guardduty* | `UpdateDetector` | 1 |
 | *guardduty* | `GetThreatIntelSet` | 0 |
 | *guardduty* | `UpdateThreatIntelSet` | 0 |
-| *guardduty* | `ListDetectors` | 0 |
+| *guardduty* | `ListDetectors` | 1 |
 | *guardduty* | `ListInvitations` | 0 |
-| *guardduty* | `GetInvitationsCount` | 0 |
+| *guardduty* | `GetInvitationsCount` | 1 |
 | *guardduty* | `DisassociateMembers` | 0 |
 | *guardduty* | `UpdateFindingsFeedback` | 0 |
-| *guardduty* | `ListFilters` | 0 |
-| *guardduty* | `GetMasterAccount` | 0 |
-| *guardduty* | `ArchiveFindings` | 0 |
-| *guardduty* | `GetIPSet` | 0 |
+| *guardduty* | `ListFilters` | 1 |
+| *guardduty* | `GetMasterAccount` | 1 |
+| *guardduty* | `ArchiveFindings` | 1 |
+| *guardduty* | `GetIPSet` | 1 |
 | *guardduty* | `DisassociateFromMasterAccount` | 0 |
 | *guardduty* | `GetMembers` | 0 |
-| *guardduty* | `ListFindings` | 0 |
+| *guardduty* | `ListFindings` | 1 |
 | *guardduty* | `StartMonitoringMembers` | 0 |
 | *guardduty* | `CreateFilter` | 0 |
-| *guardduty* | `CreateDetector` | 0 |
-| *guardduty* | `ListMembers` | 0 |
-| *guardduty* | `DeleteMembers` | 0 |
-| *guardduty* | `ListThreatIntelSets` | 0 |
-| *guardduty* | `CreateIPSet` | 0 |
-| *guardduty* | `UnarchiveFindings` | 0 |
+| *guardduty* | `CreateDetector` | 1 |
+| *guardduty* | `ListMembers` | 1 |
+| *guardduty* | `DeleteMembers` | 1 |
+| *guardduty* | `ListThreatIntelSets` | 1 |
+| *guardduty* | `CreateIPSet` | 1 |
+| *guardduty* | `UnarchiveFindings` | 1 |
 | *guardduty* | `UpdateFilter` | 0 |
 | *guardduty* | `DeclineInvitations` | 0 |
 | *guardduty* | `AcceptInvitation` | 0 |
-| *guardduty* | `CreateMembers` | 0 |
-| *guardduty* | `GetDetector` | 0 |
-| *guardduty* | `CreateSampleFindings` | 0 |
+| *guardduty* | `CreateMembers` | 1 |
+| *guardduty* | `GetDetector` | 1 |
+| *guardduty* | `CreateSampleFindings` | 1 |
 | *guardduty* | `GetFilter` | 0 |
 | *guardduty* | `DeleteDetector` | 0 |
-| *guardduty* | `GetFindingsStatistics` | 0 |
+| *guardduty* | `GetFindingsStatistics` | 1 |
 | *guardduty* | `InviteMembers` | 0 |
 | *guardduty* | `DeleteInvitations` | 0 |
 | *guardduty* | `CreateThreatIntelSet` | 0 |
-| *guardduty* | `UpdateIPSet` | 0 |
+| *guardduty* | `UpdateIPSet` | 1 |
 | *guardduty* | `StopMonitoringMembers` | 0 |
 | *guardduty* | `DeleteFilter` | 0 |
 | *guardduty* | `DeleteIPSet` | 0 |
@@ -2224,7 +2228,7 @@
 | *health* | `DescribeEntityAggregates` | 0 |
 | *health* | `DescribeEventAggregates` | 0 |
 | *iam* | `GetUserPolicy` | 0 |
-| *iam* | `CreateServiceLinkedRole` | 0 |
+| *iam* | `CreateServiceLinkedRole` | 1 |
 | *iam* | `DeleteInstanceProfile` | 0 |
 | *iam* | `GetAccountSummary` | 0 |
 | *iam* | `DeleteRolePermissionsBoundary` | 0 |
@@ -2250,7 +2254,7 @@
 | *iam* | `UploadServerCertificate` | 0 |
 | *iam* | `GetContextKeysForPrincipalPolicy` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
-| *iam* | `ListRoles` | 1 |
+| *iam* | `ListRoles` | 2 |
 | *iam* | `DeleteAccessKey` | 0 |
 | *iam* | `AddRoleToInstanceProfile` | 0 |
 | *iam* | `GetContextKeysForCustomPolicy` | 0 |
@@ -2310,7 +2314,7 @@
 | *iam* | `GetOpenIDConnectProvider` | 0 |
 | *iam* | `ListUsers` | 0 |
 | *iam* | `DeleteLoginProfile` | 0 |
-| *iam* | `ListPolicyVersions` | 0 |
+| *iam* | `ListPolicyVersions` | 1 |
 | *iam* | `AttachGroupPolicy` | 0 |
 | *iam* | `DeleteServiceSpecificCredential` | 0 |
 | *iam* | `CreatePolicy` | 0 |
@@ -2322,7 +2326,7 @@
 | *iam* | `GetAccountAuthorizationDetails` | 0 |
 | *iam* | `GetSAMLProvider` | 0 |
 | *iam* | `CreateRole` | 0 |
-| *iam* | `ListAttachedRolePolicies` | 0 |
+| *iam* | `ListAttachedRolePolicies` | 1 |
 | *iam* | `EnableMFADevice` | 0 |
 | *iam* | `DeleteSAMLProvider` | 0 |
 | *iam* | `ListUserPolicies` | 0 |
@@ -2707,7 +2711,7 @@
 | *lambda* | `DeleteFunction` | 0 |
 | *lambda* | `UpdateEventSourceMapping` | 0 |
 | *lambda* | `UpdateAlias` | 0 |
-| *lambda* | `ListFunctions` | 0 |
+| *lambda* | `ListFunctions` | 1 |
 | *lambda* | `CreateEventSourceMapping` | 0 |
 | *lambda* | `GetFunctionConfiguration` | 0 |
 | *lambda* | `DeleteFunctionConcurrency` | 0 |
@@ -3671,7 +3675,7 @@
 | *s3* | `GetBucketLogging` | 1 |
 | *s3* | `HeadBucket` | 0 |
 | *s3* | `ListBucketMetricsConfigurations` | 0 |
-| *s3* | `ListBuckets` | 1 |
+| *s3* | `ListBuckets` | 2 |
 | *s3* | `DeleteBucketWebsite` | 0 |
 | *s3* | `DeleteBucketInventoryConfiguration` | 0 |
 | *s3* | `GetBucketNotificationConfiguration` | 1 |
@@ -3689,7 +3693,7 @@
 | *s3* | `GetObjectTorrent` | 0 |
 | *s3* | `GetBucketCors` | 0 |
 | *s3* | `GetBucketLifecycle` | 0 |
-| *s3* | `CreateBucket` | 1 |
+| *s3* | `CreateBucket` | 2 |
 | *s3* | `CompleteMultipartUpload` | 0 |
 | *s3* | `GetBucketWebsite` | 1 |
 | *s3* | `CreateMultipartUpload` | 0 |
@@ -4039,7 +4043,7 @@
 | *sns* | `Subscribe` | 0 |
 | *sns* | `DeleteTopic` | 0 |
 | *sns* | `OptInPhoneNumber` | 0 |
-| *sns* | `ListTopics` | 0 |
+| *sns* | `ListTopics` | 2 |
 | *sqs* | `CreateQueue` | 0 |
 | *sqs* | `GetQueueAttributes` | 0 |
 | *sqs* | `SetQueueAttributes` | 0 |
@@ -4581,4 +4585,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 67**
+**Total Unique Occurances: 101**
