@@ -217,6 +217,14 @@ chrome.runtime.sendMessage(null, {
             var selectable_json = '';
             selectables = [];
 
+            var searchParams = new URL(url).searchParams.entries();
+            for (var searchParam of searchParams) {
+                selectable_json += `<a id="${i}-getparam-${searchParam[0]}" data-prop="getUrlValue(details.url, '${searchParam[0]}')" data-val="${searchParam[1]}" style="color: #2222cc;">GET ${searchParam[0]}</a>: ${searchParam[1]} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-getparam-${searchParam[0]}" data-prop="getUrlValue(details.url, '${searchParam[0]}')"></select><br />`;
+                setTimeout(function(i, searchParam){
+                    document.getElementById(`${i}-getparam-${searchParam[0]}`).onclick = addSelectable;
+                }, 1, i, searchParam);
+            }
+
             try {
                 jsonRequestBody = JSON.parse(request_body);
 
@@ -252,7 +260,7 @@ chrome.runtime.sendMessage(null, {
                 jsonRequestBody = {
                     '__RAW__': request_body
                 };
-                selectable_json = "<b><i>not-json</i></b> " + request_body;
+                selectable_json += "<b><i>not-json</i></b> " + request_body;
             }
             
             if (potentials_length > 0) {

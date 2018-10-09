@@ -5,6 +5,7 @@ import math
 
 services = None
 occurances = []
+skipped_ops = []
 
 with open("combined.json", "r") as f:
     services = json.loads(f.read())
@@ -16,6 +17,11 @@ with open("bg.js", "r") as f:
         if (line.startswith("// autogen:") or line.startswith("// manual:")):
             lineparts = line.split(":")
             occurances.append(lineparts[2])
+
+with open("skipped.txt", "r") as f:
+    lines = f.read().splitlines()
+    for line in lines:
+        skipped_ops.append(line)
 
 total_services = 0
 total_operations = 0
@@ -29,7 +35,7 @@ with open("coverage.md", "w") as f:
         service = services[servicename]
         occurance_count = 0
         for operation in service['operations']:
-            if servicename + "." + operation['name'] in occurances:
+            if servicename + "." + operation['name'] in occurances or servicename + "." + operation['name'] in skipped_ops:
                 occurance_count += 1
         if occurance_count > 0:
             coverage_val = "%s/%s (%s%%)" % (occurance_count, len(service['operations']), math.floor(occurance_count * 100 / len(service['operations'])))
