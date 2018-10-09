@@ -2570,5 +2570,66 @@ function analyseRequest(details) {
         return {};
     }
 
+    // autogen:efs:efs.CreateTags
+    // autogen:efs:efs.DeleteTags
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/efs\/ajax\/api\?/g) && getUrlValue(details.url, 'type') == "modifyTags") {
+        reqParams.boto3['FileSystemId'] = jsonRequestBody.fileSystemId;
+        reqParams.cli['--file-system-id'] = jsonRequestBody.fileSystemId;
+        if (jsonRequestBody.addTags.length) {
+            reqParams.boto3['Tags'] = jsonRequestBody.addTags;
+            reqParams.cli['--tags'] = jsonRequestBody.addTags;
+
+            outputs.push({
+                'region': region,
+                'service': 'efs',
+                'method': {
+                    'api': 'CreateTags',
+                    'boto3': 'create_tags',
+                    'cli': 'create-tags'
+                },
+                'options': reqParams
+            });
+        }
+        if (jsonRequestBody.removeKeys.length) {
+            reqParams.boto3['TagKeys'] = jsonRequestBody.removeKeys;
+            reqParams.cli['--tag-keys'] = jsonRequestBody.removeKeys;
+
+            outputs.push({
+                'region': region,
+                'service': 'efs',
+                'method': {
+                    'api': 'DeleteTags',
+                    'boto3': 'delete_tags',
+                    'cli': 'delete-tags'
+                },
+                'options': reqParams
+            });
+        }
+        
+        return {};
+    }
+
+    // autogen:efs:efs.ModifyMountTargetSecurityGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/efs\/ajax\/api\?/g) && getUrlValue(details.url, 'type') == "modifySecurityGroups") {
+        reqParams.boto3['MountTargetId'] = jsonRequestBody.mountTargetId;
+        reqParams.cli['--mount-target-id'] = jsonRequestBody.mountTargetId;
+        reqParams.boto3['SecurityGroups'] = jsonRequestBody.securityGroups;
+        reqParams.cli['--security-groups'] = jsonRequestBody.securityGroups;
+
+        outputs.push({
+            'region': region,
+            'service': 'efs',
+            'method': {
+                'api': 'ModifyMountTargetSecurityGroups',
+                'boto3': 'modify_mount_target_security_groups',
+                'cli': 'modify-mount-target-security-groups'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+
     return false;
 }

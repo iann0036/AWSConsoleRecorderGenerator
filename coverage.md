@@ -7,7 +7,7 @@
 | *config* | 3/43 (6.0%) |
 | *ds* | 1/49 (2.0%) |
 | *ec2* | 18/274 (6.0%) |
-| *efs* | 8/12 (66.0%) |
+| *efs* | 11/12 (91.0%) |
 | *guardduty* | 21/42 (50.0%) |
 | *iam* | 6/127 (4.0%) |
 | *kms* | 2/35 (5.0%) |
@@ -1653,15 +1653,15 @@
 | *ecs* | `DescribeContainerInstances` | 0 |
 | *ecs* | `RunTask` | 0 |
 | *ecs* | `DiscoverPollEndpoint` | 0 |
-| *efs* | `DeleteTags` | 0 |
+| *efs* | `DeleteTags` | 1 |
 | *efs* | `DescribeMountTargetSecurityGroups` | 0 |
 | *efs* | `DeleteFileSystem` | 1 |
-| *efs* | `CreateTags` | 0 |
+| *efs* | `CreateTags` | 1 |
 | *efs* | `CreateMountTarget` | 1 |
 | *efs* | `DescribeFileSystems` | 1 |
 | *efs* | `DescribeTags` | 1 |
 | *efs* | `UpdateFileSystem` | 1 |
-| *efs* | `ModifyMountTargetSecurityGroups` | 0 |
+| *efs* | `ModifyMountTargetSecurityGroups` | 1 |
 | *efs* | `DescribeMountTargets` | 1 |
 | *efs* | `CreateFileSystem` | 1 |
 | *efs* | `DeleteMountTarget` | 1 |
@@ -4585,4 +4585,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 101**
+**Total Unique Occurances: 104**
