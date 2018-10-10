@@ -2,19 +2,31 @@ import os
 import json
 import pprint
 import math
+import re
 
 services = None
+cfn_spec = None
 occurances = []
 skipped_ops = []
+cfn_types = []
+cfn_occurances = []
 
 with open("combined.json", "r") as f:
     services = json.loads(f.read())
 
+with open("cfnspec.json", "r") as f:
+    cfn_spec = json.loads(f.read())['ResourceTypes']
+
+for cfntype, _ in cfn_spec.iteritems():
+    cfn_types.append(cfntype)
+
 with open("bg.js", "r") as f:
-    lines = f.read().splitlines()
+    text = f.read()
+    lines = text.splitlines()
+    cfn_occurances = re.compile('(AWS\:\:[a-zA-Z0-9]+\:\:[a-zA-Z0-9]+)').findall(text)
     for line in lines:
         line = line.strip()
-        if (line.startswith("// autogen:") or line.startswith("// manual:")):
+        if line.startswith("// autogen:") or line.startswith("// manual:"):
             lineparts = line.split(":")
             occurances.append(lineparts[2])
 
@@ -27,7 +39,19 @@ total_services = 0
 total_operations = 0
 total_unique_occurances = 0
 with open("coverage.md", "w") as f:
-    f.write("## Service Coverage\n\n")
+    f.write("## CloudFormation Resource Coverage\n\n")
+    f.write("**%s/%s (%s%%)** Resources Covered\n" % (
+        len(cfn_occurances),
+        len(cfn_types),
+        math.floor(len(set(cfn_occurances)) * 100 / len(cfn_types))
+    ))
+    f.write("| Type | Coverage |\n")
+    f.write("| --- | --- |\n")
+
+    for cfntype in sorted(cfn_types):
+        f.write("| *%s* | %s |\n" % (cfntype, cfn_occurances.count(cfntype)))
+
+    f.write("\n## Service Coverage\n\n")
     f.write("| Service | Coverage |\n")
     f.write("| --- | --- |\n")
 

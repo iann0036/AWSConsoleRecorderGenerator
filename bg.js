@@ -443,36 +443,38 @@ function analyseRequest(details) {
         }
         reqParams.boto3['IpPermissions'] = [];
         reqParams.cli['--ip-permissions'] = [];
-        jsonRequestBody['ipPermissions'].forEach(ipPermission => {
-            var ipRangeObjects = [];
-            ipPermission['ipRangeObjects'].forEach(ipRangeObject => {
-                ipRangeObjects.push({
-                    'Description': ipRangeObject['description'],
-                    'CidrIp': ipRangeObject['cidrIp']
+        if (jsonRequestBody['ipPermissions']) {
+            jsonRequestBody['ipPermissions'].forEach(ipPermission => {
+                var ipRangeObjects = [];
+                ipPermission['ipRangeObjects'].forEach(ipRangeObject => {
+                    ipRangeObjects.push({
+                        'Description': ipRangeObject['description'],
+                        'CidrIp': ipRangeObject['cidrIp']
+                    });
+                });
+                var ipv6RangeObjects = [];
+                ipPermission['ipv6RangeObjects'].forEach(ipv6RangeObject => {
+                    ipv6RangeObjects.push({
+                        'Description': ipv6RangeObject['description'],
+                        'CidrIpv6': ipv6RangeObject['CidrIpv6']
+                    });
+                });
+                reqParams.boto3['IpPermissions'].push({
+                    'IpProtocol': ipPermission['ipProtocol'],
+                    'FromPort': ipPermission['fromPort'],
+                    'ToPort': ipPermission['toPort'],
+                    'IpRanges': ipRangeObjects,
+                    'Ipv6Ranges': ipv6RangeObjects
+                });
+                reqParams.cli['--ip-permissions'].push({
+                    'IpProtocol': ipPermission['ipProtocol'],
+                    'FromPort': ipPermission['fromPort'],
+                    'ToPort': ipPermission['toPort'],
+                    'IpRanges': ipRangeObjects,
+                    'Ipv6Ranges': ipv6RangeObjects
                 });
             });
-            var ipv6RangeObjects = [];
-            ipPermission['ipv6RangeObjects'].forEach(ipv6RangeObject => {
-                ipv6RangeObjects.push({
-                    'Description': ipv6RangeObject['description'],
-                    'CidrIpv6': ipv6RangeObject['CidrIpv6']
-                });
-            });
-            reqParams.boto3['IpPermissions'].push({
-                'IpProtocol': ipPermission['ipProtocol'],
-                'FromPort': ipPermission['fromPort'],
-                'ToPort': ipPermission['toPort'],
-                'IpRanges': ipRangeObjects,
-                'Ipv6Ranges': ipv6RangeObjects
-            });
-            reqParams.cli['--ip-permissions'].push({
-                'IpProtocol': ipPermission['ipProtocol'],
-                'FromPort': ipPermission['fromPort'],
-                'ToPort': ipPermission['toPort'],
-                'IpRanges': ipRangeObjects,
-                'Ipv6Ranges': ipv6RangeObjects
-            });
-        });
+        }
 
         outputs.push({
             'region': region,
@@ -512,19 +514,23 @@ function analyseRequest(details) {
         reqParams.boto3['BlockDeviceMapping'] = jsonRequestBody.BlockDeviceMappings;
 
         reqParams.cfn['ImageId'] = jsonRequestBody.ImageId;
-        reqParams.cfn['MaxCount'] = jsonRequestBody.MaxCount;
-        reqParams.cfn['MinCount'] = jsonRequestBody.MinCount;
         reqParams.cfn['KeyName'] = jsonRequestBody.KeyName;
-        reqParams.cfn['SecurityGroupId'] = jsonRequestBody.SecurityGroupIds;
+        reqParams.cfn['SecurityGroupIds'] = jsonRequestBody.SecurityGroupIds;
         reqParams.cfn['InstanceType'] = jsonRequestBody.InstanceType;
-        reqParams.cfn['Placement'] = jsonRequestBody.Placement;
-        reqParams.cfn['Monitoring'] = jsonRequestBody.Monitoring;
+        if (jsonRequestBody.Placement && jsonRequestBody.Placement.Tenancy) {
+            reqParams.cfn['Tenancy'] = jsonRequestBody.Placement.Tenancy;
+        }
+        reqParams.cfn['Monitoring'] = jsonRequestBody.Monitoring.Enabled;
         reqParams.cfn['DisableApiTermination'] = jsonRequestBody.DisableApiTermination;
         reqParams.cfn['InstanceInitiatedShutdownBehavior'] = jsonRequestBody.InstanceInitiatedShutdownBehavior;
-        reqParams.cfn['CreditSpecification'] = jsonRequestBody.CreditSpecification;
-        reqParams.cfn['TagSpecification'] = jsonRequestBody.TagSpecifications;
+        if (jsonRequestBody.CreditSpecification) {
+            reqParams.cfn['CreditSpecification'] = {
+                'CPUCredits': jsonRequestBody.CreditSpecification.CpuCredits
+            }
+        }
+        reqParams.cfn['Tags'] = jsonRequestBody.TagSpecifications;
         reqParams.cfn['EbsOptimized'] = jsonRequestBody.EbsOptimized;
-        reqParams.cfn['BlockDeviceMapping'] = jsonRequestBody.BlockDeviceMappings;
+        reqParams.cfn['BlockDeviceMappings'] = jsonRequestBody.BlockDeviceMappings;
 
         reqParams.cli['--image-id'] = jsonRequestBody.ImageId;
         if (jsonRequestBody.MaxCount == jsonRequestBody.MinCount) {
@@ -1627,6 +1633,12 @@ function analyseRequest(details) {
         reqParams.boto3['ProvisionedThroughputInMibps'] = jsonRequestBody.provisionedThroughputInMibps;
         reqParams.cli['--provisioned-throughput-in-mibps'] = jsonRequestBody.provisionedThroughputInMibps;
 
+        reqParams.cfn['PerformanceMode'] = jsonRequestBody.performanceMode;
+        reqParams.cfn['Encrypted'] = jsonRequestBody.encrypted;
+        reqParams.cfn['KmsKeyId'] = jsonRequestBody.kmsKeyId;
+        reqParams.cfn['ThroughputMode'] = jsonRequestBody.throughputMode;
+        reqParams.cfn['ProvisionedThroughputInMibps'] = jsonRequestBody.provisionedThroughputInMibps;
+
         outputs.push({
             'region': region,
             'service': 'efs',
@@ -1636,6 +1648,14 @@ function analyseRequest(details) {
                 'cli': 'create-file-system'
             },
             'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'efs',
+            'type': 'AWS::EFS::FileSystem',
+            'options': reqParams,
+            'was_blocked': blocking
         });
         
         return {};
@@ -1650,6 +1670,10 @@ function analyseRequest(details) {
         reqParams.boto3['SecurityGroups'] = jsonRequestBody.mountTargetConfig.securityGroups;
         reqParams.cli['--security-groups'] = jsonRequestBody.mountTargetConfig.securityGroups;
 
+        reqParams.cfn['FileSystemId'] = jsonRequestBody.fileSystemId;
+        reqParams.cfn['SubnetId'] = jsonRequestBody.mountTargetConfig.subnetId;
+        reqParams.cfn['SecurityGroups'] = jsonRequestBody.mountTargetConfig.securityGroups;
+
         outputs.push({
             'region': region,
             'service': 'efs',
@@ -1659,6 +1683,14 @@ function analyseRequest(details) {
                 'cli': 'create-mount-target'
             },
             'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'efs',
+            'type': 'AWS::EFS::MountTarget',
+            'options': reqParams,
+            'was_blocked': blocking
         });
         
         return {};
@@ -2629,7 +2661,6 @@ function analyseRequest(details) {
         
         return {};
     }
-
-
+    
     return false;
 }

@@ -1,0 +1,3 @@
+rekognition.ListCollections
+rekognition.CreateCollection
+rekognition.DescribeCollection
