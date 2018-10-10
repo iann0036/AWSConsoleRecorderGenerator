@@ -9,7 +9,11 @@ cfn_spec = None
 occurances = []
 skipped_ops = []
 cfn_types = []
-cfn_occurances = []
+cfn_occurances = [
+    "AWS::CloudFormation::CustomResource",
+    "AWS::CloudFormation::WaitCondition",
+    "AWS::CloudFormation::WaitConditionHandle"
+]
 
 with open("combined.json", "r") as f:
     services = json.loads(f.read())
@@ -23,7 +27,7 @@ for cfntype, _ in cfn_spec.iteritems():
 with open("bg.js", "r") as f:
     text = f.read()
     lines = text.splitlines()
-    cfn_occurances = re.compile('(AWS\:\:[a-zA-Z0-9]+\:\:[a-zA-Z0-9]+)').findall(text)
+    cfn_occurances += re.compile('(AWS\:\:[a-zA-Z0-9]+\:\:[a-zA-Z0-9]+)').findall(text)
     for line in lines:
         line = line.strip()
         if line.startswith("// autogen:") or line.startswith("// manual:"):
