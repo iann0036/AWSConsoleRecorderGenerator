@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**28/258 (10.0%)** Resources Covered
+**30/258 (11.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -178,8 +178,8 @@
 | *AWS::IAM::Policy* | 0 |
 | *AWS::IAM::Role* | 0 |
 | *AWS::IAM::ServiceLinkedRole* | 0 |
-| *AWS::IAM::User* | 0 |
-| *AWS::IAM::UserToGroupAddition* | 0 |
+| *AWS::IAM::User* | 1 |
+| *AWS::IAM::UserToGroupAddition* | 1 |
 | *AWS::Inspector::AssessmentTarget* | 0 |
 | *AWS::Inspector::AssessmentTemplate* | 0 |
 | *AWS::Inspector::ResourceGroup* | 0 |
@@ -274,7 +274,7 @@
 | *ec2* | 72/274 (26.0%) |
 | *efs* | 11/12 (91.0%) |
 | *guardduty* | 21/42 (50.0%) |
-| *iam* | 6/127 (4.0%) |
+| *iam* | 19/127 (14.0%) |
 | *kms* | 2/35 (5.0%) |
 | *lambda* | 1/30 (3.0%) |
 | *logs* | 1/33 (3.0%) |
@@ -283,6 +283,7 @@
 | *rekognition* | 3/34 (8.0%) |
 | *s3* | 23/78 (29.0%) |
 | *sns* | 1/30 (3.0%) |
+| *sqs* | 2/20 (10.0%) |
 | *ssm* | 1/108 (0.0%) |
 
 ## Operation Coverage
@@ -2502,15 +2503,15 @@
 | *iam* | `DeleteRolePermissionsBoundary` | 0 |
 | *iam* | `ListAttachedGroupPolicies` | 0 |
 | *iam* | `UpdateUser` | 0 |
-| *iam* | `ListAccountAliases` | 0 |
-| *iam* | `GetUser` | 0 |
+| *iam* | `ListAccountAliases` | 1 |
+| *iam* | `GetUser` | 1 |
 | *iam* | `ListInstanceProfilesForRole` | 0 |
 | *iam* | `UploadSSHPublicKey` | 0 |
 | *iam* | `GetServiceLinkedRoleDeletionStatus` | 0 |
 | *iam* | `ListGroupPolicies` | 0 |
 | *iam* | `CreateAccessKey` | 0 |
 | *iam* | `UpdateLoginProfile` | 0 |
-| *iam* | `ListGroups` | 0 |
+| *iam* | `ListGroups` | 1 |
 | *iam* | `UpdateRoleDescription` | 0 |
 | *iam* | `UpdateSAMLProvider` | 0 |
 | *iam* | `ResetServiceSpecificCredential` | 0 |
@@ -2529,7 +2530,7 @@
 | *iam* | `GetGroupPolicy` | 0 |
 | *iam* | `DeleteServiceLinkedRole` | 0 |
 | *iam* | `CreateServiceSpecificCredential` | 0 |
-| *iam* | `CreateLoginProfile` | 0 |
+| *iam* | `CreateLoginProfile` | 1 |
 | *iam* | `SimulateCustomPolicy` | 0 |
 | *iam* | `DeactivateMFADevice` | 0 |
 | *iam* | `DetachRolePolicy` | 0 |
@@ -2542,15 +2543,15 @@
 | *iam* | `UpdateGroup` | 0 |
 | *iam* | `GetGroup` | 0 |
 | *iam* | `GetRolePolicy` | 1 |
-| *iam* | `CreateUser` | 0 |
-| *iam* | `AddUserToGroup` | 0 |
+| *iam* | `CreateUser` | 1 |
+| *iam* | `AddUserToGroup` | 1 |
 | *iam* | `RemoveRoleFromInstanceProfile` | 0 |
 | *iam* | `ListInstanceProfiles` | 1 |
 | *iam* | `UpdateServiceSpecificCredential` | 0 |
 | *iam* | `ListAttachedUserPolicies` | 0 |
 | *iam* | `CreatePolicyVersion` | 0 |
 | *iam* | `ListServiceSpecificCredentials` | 0 |
-| *iam* | `AttachUserPolicy` | 0 |
+| *iam* | `AttachUserPolicy` | 1 |
 | *iam* | `ListVirtualMFADevices` | 0 |
 | *iam* | `UpdateAssumeRolePolicy` | 0 |
 | *iam* | `ListServerCertificates` | 0 |
@@ -2564,7 +2565,7 @@
 | *iam* | `DeleteVirtualMFADevice` | 0 |
 | *iam* | `PutRolePermissionsBoundary` | 0 |
 | *iam* | `SimulatePrincipalPolicy` | 0 |
-| *iam* | `ListAccessKeys` | 0 |
+| *iam* | `ListAccessKeys` | 1 |
 | *iam* | `GetSSHPublicKey` | 0 |
 | *iam* | `ListSSHPublicKeys` | 0 |
 | *iam* | `DeleteSigningCertificate` | 0 |
@@ -2578,9 +2579,9 @@
 | *iam* | `DetachGroupPolicy` | 0 |
 | *iam* | `UpdateSSHPublicKey` | 0 |
 | *iam* | `GetInstanceProfile` | 0 |
-| *iam* | `DeleteUser` | 0 |
+| *iam* | `DeleteUser` | 1 |
 | *iam* | `GetOpenIDConnectProvider` | 0 |
-| *iam* | `ListUsers` | 0 |
+| *iam* | `ListUsers` | 1 |
 | *iam* | `DeleteLoginProfile` | 0 |
 | *iam* | `ListPolicyVersions` | 1 |
 | *iam* | `AttachGroupPolicy` | 0 |
@@ -2588,7 +2589,7 @@
 | *iam* | `CreatePolicy` | 0 |
 | *iam* | `CreateOpenIDConnectProvider` | 0 |
 | *iam* | `DetachUserPolicy` | 0 |
-| *iam* | `ListGroupsForUser` | 0 |
+| *iam* | `ListGroupsForUser` | 1 |
 | *iam* | `GetCredentialReport` | 0 |
 | *iam* | `CreateAccountAlias` | 0 |
 | *iam* | `GetAccountAuthorizationDetails` | 0 |
@@ -2606,7 +2607,7 @@
 | *iam* | `ChangePassword` | 0 |
 | *iam* | `ListEntitiesForPolicy` | 0 |
 | *iam* | `PutUserPermissionsBoundary` | 0 |
-| *iam* | `GetLoginProfile` | 0 |
+| *iam* | `GetLoginProfile` | 1 |
 | *iam* | `CreateVirtualMFADevice` | 0 |
 | *iam* | `GetServerCertificate` | 0 |
 | *iam* | `AttachRolePolicy` | 0 |
@@ -2614,7 +2615,7 @@
 | *iam* | `UpdateAccountPasswordPolicy` | 0 |
 | *iam* | `GetRole` | 0 |
 | *iam* | `DeletePolicyVersion` | 0 |
-| *iam* | `ListPolicies` | 0 |
+| *iam* | `ListPolicies` | 1 |
 | *iam* | `PutUserPolicy` | 0 |
 | *iam* | `ResyncMFADevice` | 0 |
 | *iam* | `DeleteServerCertificate` | 0 |
@@ -2956,7 +2957,7 @@
 | *kms* | `RetireGrant` | 0 |
 | *kms* | `TagResource` | 0 |
 | *kms* | `DescribeKey` | 1 |
-| *kms* | `ListKeys` | 1 |
+| *kms* | `ListKeys` | 2 |
 | *kms* | `GenerateRandom` | 0 |
 | *kms* | `GetKeyPolicy` | 0 |
 | *kms* | `CreateGrant` | 0 |
@@ -4325,12 +4326,12 @@
 | *sqs* | `AddPermission` | 0 |
 | *sqs* | `ChangeMessageVisibilityBatch` | 0 |
 | *sqs* | `SendMessage` | 0 |
-| *sqs* | `DeleteQueue` | 0 |
+| *sqs* | `DeleteQueue` | 1 |
 | *sqs* | `PurgeQueue` | 0 |
 | *sqs* | `ListQueueTags` | 0 |
 | *sqs* | `DeleteMessage` | 0 |
 | *sqs* | `ReceiveMessage` | 0 |
-| *sqs* | `ListQueues` | 0 |
+| *sqs* | `ListQueues` | 1 |
 | *sqs* | `RemovePermission` | 0 |
 | *ssm* | `DescribeInventoryDeletions` | 0 |
 | *ssm* | `GetPatchBaselineForPatchGroup` | 0 |
@@ -4853,4 +4854,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 165**
+**Total Unique Occurances: 180**
