@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**15/258 (5.0%)** Resources Covered
+**19/258 (6.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -50,7 +50,7 @@
 | *AWS::CloudFront::CloudFrontOriginAccessIdentity* | 0 |
 | *AWS::CloudFront::Distribution* | 0 |
 | *AWS::CloudFront::StreamingDistribution* | 0 |
-| *AWS::CloudTrail::Trail* | 0 |
+| *AWS::CloudTrail::Trail* | 1 |
 | *AWS::CloudWatch::Alarm* | 0 |
 | *AWS::CloudWatch::Dashboard* | 0 |
 | *AWS::CodeDeploy::Application* | 0 |
@@ -165,11 +165,11 @@
 | *AWS::Glue::Partition* | 0 |
 | *AWS::Glue::Table* | 0 |
 | *AWS::Glue::Trigger* | 0 |
-| *AWS::GuardDuty::Detector* | 0 |
+| *AWS::GuardDuty::Detector* | 1 |
 | *AWS::GuardDuty::Filter* | 0 |
-| *AWS::GuardDuty::IPSet* | 0 |
+| *AWS::GuardDuty::IPSet* | 1 |
 | *AWS::GuardDuty::Master* | 0 |
-| *AWS::GuardDuty::Member* | 0 |
+| *AWS::GuardDuty::Member* | 1 |
 | *AWS::GuardDuty::ThreatIntelSet* | 0 |
 | *AWS::IAM::AccessKey* | 0 |
 | *AWS::IAM::Group* | 0 |
