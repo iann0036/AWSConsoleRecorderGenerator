@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**24/258 (9.0%)** Resources Covered
+**28/258 (10.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -81,7 +81,7 @@
 | *AWS::DirectoryService::MicrosoftAD* | 0 |
 | *AWS::DirectoryService::SimpleAD* | 0 |
 | *AWS::DynamoDB::Table* | 0 |
-| *AWS::EC2::CustomerGateway* | 0 |
+| *AWS::EC2::CustomerGateway* | 1 |
 | *AWS::EC2::DHCPOptions* | 0 |
 | *AWS::EC2::EIP* | 1 |
 | *AWS::EC2::EIPAssociation* | 1 |
@@ -91,8 +91,8 @@
 | *AWS::EC2::Instance* | 1 |
 | *AWS::EC2::InternetGateway* | 1 |
 | *AWS::EC2::LaunchTemplate* | 1 |
-| *AWS::EC2::NatGateway* | 0 |
-| *AWS::EC2::NetworkAcl* | 0 |
+| *AWS::EC2::NatGateway* | 1 |
+| *AWS::EC2::NetworkAcl* | 1 |
 | *AWS::EC2::NetworkAclEntry* | 0 |
 | *AWS::EC2::NetworkInterface* | 1 |
 | *AWS::EC2::NetworkInterfaceAttachment* | 0 |
@@ -120,7 +120,7 @@
 | *AWS::EC2::VPCPeeringConnection* | 0 |
 | *AWS::EC2::VPNConnection* | 0 |
 | *AWS::EC2::VPNConnectionRoute* | 0 |
-| *AWS::EC2::VPNGateway* | 0 |
+| *AWS::EC2::VPNGateway* | 1 |
 | *AWS::EC2::VPNGatewayRoutePropagation* | 0 |
 | *AWS::EC2::Volume* | 0 |
 | *AWS::EC2::VolumeAttachment* | 0 |
@@ -271,7 +271,7 @@
 | *cloudtrail* | 6/14 (42.0%) |
 | *config* | 3/43 (6.0%) |
 | *ds* | 1/49 (2.0%) |
-| *ec2* | 63/274 (22.0%) |
+| *ec2* | 72/274 (26.0%) |
 | *efs* | 11/12 (91.0%) |
 | *guardduty* | 21/42 (50.0%) |
 | *iam* | 6/127 (4.0%) |
@@ -1632,7 +1632,7 @@
 | *ec2* | `PurchaseHostReservation` | 0 |
 | *ec2* | `BundleInstance` | 0 |
 | *ec2* | `DescribeReservedInstances` | 0 |
-| *ec2* | `CreateNetworkAcl` | 0 |
+| *ec2* | `CreateNetworkAcl` | 1 |
 | *ec2* | `CreateImage` | 0 |
 | *ec2* | `ModifyHosts` | 0 |
 | *ec2* | `CreateFleet` | 0 |
@@ -1656,7 +1656,7 @@
 | *ec2* | `ModifyIdFormat` | 0 |
 | *ec2* | `DescribeSpotFleetRequests` | 0 |
 | *ec2* | `AllocateHosts` | 1 |
-| *ec2* | `DeleteNetworkAcl` | 0 |
+| *ec2* | `DeleteNetworkAcl` | 1 |
 | *ec2* | `GetHostReservationPurchasePreview` | 0 |
 | *ec2* | `DeleteSecurityGroup` | 0 |
 | *ec2* | `UpdateSecurityGroupRuleDescriptionsEgress` | 0 |
@@ -1689,7 +1689,7 @@
 | *ec2* | `DescribeVpnGateways` | 1 |
 | *ec2* | `AssociateVpcCidrBlock` | 0 |
 | *ec2* | `AssociateAddress` | 1 |
-| *ec2* | `DeleteCustomerGateway` | 0 |
+| *ec2* | `DeleteCustomerGateway` | 1 |
 | *ec2* | `CopyFpgaImage` | 0 |
 | *ec2* | `CreateInternetGateway` | 1 |
 | *ec2* | `CreateLaunchTemplate` | 1 |
@@ -1707,7 +1707,7 @@
 | *ec2* | `UnassignPrivateIpAddresses` | 0 |
 | *ec2* | `AttachInternetGateway` | 0 |
 | *ec2* | `CreateInstanceExportTask` | 0 |
-| *ec2* | `DeleteDhcpOptions` | 0 |
+| *ec2* | `DeleteDhcpOptions` | 1 |
 | *ec2* | `ResetNetworkInterfaceAttribute` | 0 |
 | *ec2* | `ModifyReservedInstances` | 0 |
 | *ec2* | `DetachNetworkInterface` | 0 |
@@ -1728,7 +1728,7 @@
 | *ec2* | `DeleteVpcEndpoints` | 0 |
 | *ec2* | `DescribeVolumeAttribute` | 0 |
 | *ec2* | `DeleteKeyPair` | 1 |
-| *ec2* | `DeleteNatGateway` | 0 |
+| *ec2* | `DeleteNatGateway` | 1 |
 | *ec2* | `UnassignIpv6Addresses` | 0 |
 | *ec2* | `ModifyInstancePlacement` | 0 |
 | *ec2* | `ReplaceNetworkAclEntry` | 0 |
@@ -1741,7 +1741,7 @@
 | *ec2* | `CreateDefaultVpc` | 0 |
 | *ec2* | `DisableVpcClassicLink` | 0 |
 | *ec2* | `AttachNetworkInterface` | 0 |
-| *ec2* | `CreateNatGateway` | 0 |
+| *ec2* | `CreateNatGateway` | 1 |
 | *ec2* | `DeleteVpnConnectionRoute` | 0 |
 | *ec2* | `CancelSpotInstanceRequests` | 0 |
 | *ec2* | `CreateKeyPair` | 1 |
@@ -1753,7 +1753,7 @@
 | *ec2* | `RevokeSecurityGroupEgress` | 0 |
 | *ec2* | `DescribeInstanceAttribute` | 1 |
 | *ec2* | `DeregisterImage` | 0 |
-| *ec2* | `DeleteVpnGateway` | 0 |
+| *ec2* | `DeleteVpnGateway` | 1 |
 | *ec2* | `ReportInstanceStatus` | 0 |
 | *ec2* | `CancelReservedInstancesListing` | 0 |
 | *ec2* | `DescribeInstanceStatus` | 0 |
@@ -1768,7 +1768,7 @@
 | *ec2* | `DetachInternetGateway` | 0 |
 | *ec2* | `DeleteNetworkAclEntry` | 0 |
 | *ec2* | `CreateFpgaImage` | 0 |
-| *ec2* | `CreateCustomerGateway` | 0 |
+| *ec2* | `CreateCustomerGateway` | 1 |
 | *ec2* | `StopInstances` | 0 |
 | *ec2* | `ResetInstanceAttribute` | 0 |
 | *ec2* | `CreateSecurityGroup` | 1 |
@@ -1824,7 +1824,7 @@
 | *ec2* | `DescribeSecurityGroups` | 3 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
-| *ec2* | `CreateVpnGateway` | 0 |
+| *ec2* | `CreateVpnGateway` | 1 |
 | *ec2* | `DescribeBundleTasks` | 0 |
 | *ec2* | `DescribeReservedInstancesListings` | 0 |
 | *ec2* | `GetReservedInstancesExchangeQuote` | 0 |
@@ -4853,4 +4853,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 156**
+**Total Unique Occurances: 165**
