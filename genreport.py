@@ -45,7 +45,7 @@ with open("coverage.md", "w") as f:
         len(cfn_types),
         math.floor(len(set(cfn_occurances)) * 100 / len(cfn_types))
     ))
-    f.write("| Type | Coverage |\n")
+    f.write("\n| Type | Coverage |\n")
     f.write("| --- | --- |\n")
 
     for cfntype in sorted(cfn_types):

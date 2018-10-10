@@ -1,6 +1,7 @@
 ## CloudFormation Resource Coverage
 
 **5/258 (1.0%)** Resources Covered
+
 | Type | Coverage |
 | --- | --- |
 | *AWS::AmazonMQ::Broker* | 0 |
