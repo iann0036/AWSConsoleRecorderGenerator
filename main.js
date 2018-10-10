@@ -261,6 +261,17 @@ chrome.runtime.sendMessage(null, {
                     '__RAW__': request_body
                 };
                 selectable_json += "<b><i>not-json</i></b> " + request_body;
+
+                if ((request_body.match(/\|/g) || []).length > 6) {
+                    var pipesplit_body = request_body.split("|");
+                    for (var j=0; j<pipesplit_body.length; j++) {
+                        var field = pipesplit_body[j];
+                        selectable_json += `<a id="pipesplit-${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})" data-val="${field}" style="color: #2222cc;">PIPESPLIT${j}</a>: ${field} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})"></select><br />`;
+                        setTimeout(function(i, j){
+                            document.getElementById(`pipesplit-${i}-${j}`).onclick = addSelectable;
+                        }, 1, i, j);
+                    }
+                }
             }
             
             if (potentials_length > 0) {

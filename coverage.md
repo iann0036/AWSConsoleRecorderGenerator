@@ -1,11 +1,11 @@
 ## CloudFormation Resource Coverage
 
-**19/258 (6.0%)** Resources Covered
+**24/258 (9.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
-| *AWS::AmazonMQ::Broker* | 2 |
-| *AWS::AmazonMQ::Configuration* | 0 |
+| *AWS::AmazonMQ::Broker* | 1 |
+| *AWS::AmazonMQ::Configuration* | 1 |
 | *AWS::ApiGateway::Account* | 0 |
 | *AWS::ApiGateway::ApiKey* | 0 |
 | *AWS::ApiGateway::Authorizer* | 0 |
@@ -85,11 +85,11 @@
 | *AWS::EC2::DHCPOptions* | 0 |
 | *AWS::EC2::EIP* | 1 |
 | *AWS::EC2::EIPAssociation* | 1 |
-| *AWS::EC2::EgressOnlyInternetGateway* | 0 |
-| *AWS::EC2::FlowLog* | 0 |
+| *AWS::EC2::EgressOnlyInternetGateway* | 1 |
+| *AWS::EC2::FlowLog* | 1 |
 | *AWS::EC2::Host* | 1 |
 | *AWS::EC2::Instance* | 1 |
-| *AWS::EC2::InternetGateway* | 0 |
+| *AWS::EC2::InternetGateway* | 1 |
 | *AWS::EC2::LaunchTemplate* | 1 |
 | *AWS::EC2::NatGateway* | 0 |
 | *AWS::EC2::NetworkAcl* | 0 |
@@ -99,7 +99,7 @@
 | *AWS::EC2::NetworkInterfacePermission* | 0 |
 | *AWS::EC2::PlacementGroup* | 0 |
 | *AWS::EC2::Route* | 0 |
-| *AWS::EC2::RouteTable* | 0 |
+| *AWS::EC2::RouteTable* | 1 |
 | *AWS::EC2::SecurityGroup* | 1 |
 | *AWS::EC2::SecurityGroupEgress* | 0 |
 | *AWS::EC2::SecurityGroupIngress* | 0 |
@@ -109,7 +109,7 @@
 | *AWS::EC2::SubnetNetworkAclAssociation* | 0 |
 | *AWS::EC2::SubnetRouteTableAssociation* | 0 |
 | *AWS::EC2::TrunkInterfaceAssociation* | 0 |
-| *AWS::EC2::VPC* | 0 |
+| *AWS::EC2::VPC* | 1 |
 | *AWS::EC2::VPCCidrBlock* | 0 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 0 |
 | *AWS::EC2::VPCEndpoint* | 0 |
@@ -271,12 +271,13 @@
 | *cloudtrail* | 6/14 (42.0%) |
 | *config* | 3/43 (6.0%) |
 | *ds* | 1/49 (2.0%) |
-| *ec2* | 36/274 (13.0%) |
+| *ec2* | 63/274 (22.0%) |
 | *efs* | 11/12 (91.0%) |
 | *guardduty* | 21/42 (50.0%) |
 | *iam* | 6/127 (4.0%) |
 | *kms* | 2/35 (5.0%) |
 | *lambda* | 1/30 (3.0%) |
+| *logs* | 1/33 (3.0%) |
 | *medialive* | 4/25 (16.0%) |
 | *mq* | 6/17 (35.0%) |
 | *rekognition* | 3/34 (8.0%) |
@@ -1595,18 +1596,18 @@
 | *dynamodbstreams* | `DescribeStream` | 0 |
 | *ec2* | `DeleteTags` | 1 |
 | *ec2* | `ResetSnapshotAttribute` | 0 |
-| *ec2* | `DescribeCustomerGateways` | 0 |
+| *ec2* | `DescribeCustomerGateways` | 1 |
 | *ec2* | `ReplaceIamInstanceProfileAssociation` | 0 |
 | *ec2* | `EnableVpcClassicLinkDnsSupport` | 0 |
-| *ec2* | `DescribeNetworkAcls` | 0 |
+| *ec2* | `DescribeNetworkAcls` | 1 |
 | *ec2* | `DescribeImageAttribute` | 0 |
 | *ec2* | `CancelConversionTask` | 0 |
 | *ec2* | `CancelImportTask` | 0 |
 | *ec2* | `CreateVpnConnectionRoute` | 0 |
 | *ec2* | `CreateVpcEndpointConnectionNotification` | 0 |
-| *ec2* | `DescribeRouteTables` | 0 |
+| *ec2* | `DescribeRouteTables` | 2 |
 | *ec2* | `ResetImageAttribute` | 0 |
-| *ec2* | `CreateRouteTable` | 0 |
+| *ec2* | `CreateRouteTable` | 1 |
 | *ec2* | `ReplaceRouteTableAssociation` | 0 |
 | *ec2* | `CreateVpcEndpoint` | 0 |
 | *ec2* | `RegisterImage` | 0 |
@@ -1625,7 +1626,7 @@
 | *ec2* | `AttachVpnGateway` | 0 |
 | *ec2* | `DeleteLaunchTemplate` | 0 |
 | *ec2* | `ImportImage` | 0 |
-| *ec2* | `DescribeAddresses` | 1 |
+| *ec2* | `DescribeAddresses` | 2 |
 | *ec2* | `DisassociateIamInstanceProfile` | 0 |
 | *ec2* | `AssociateIamInstanceProfile` | 0 |
 | *ec2* | `PurchaseHostReservation` | 0 |
@@ -1636,7 +1637,7 @@
 | *ec2* | `ModifyHosts` | 0 |
 | *ec2* | `CreateFleet` | 0 |
 | *ec2* | `RebootInstances` | 0 |
-| *ec2* | `DescribeVpcEndpoints` | 0 |
+| *ec2* | `DescribeVpcEndpoints` | 1 |
 | *ec2* | `ModifyIdentityIdFormat` | 0 |
 | *ec2* | `DescribeSpotFleetRequestHistory` | 0 |
 | *ec2* | `PurchaseScheduledInstances` | 0 |
@@ -1647,9 +1648,9 @@
 | *ec2* | `CancelExportTask` | 0 |
 | *ec2* | `AcceptVpcEndpointConnections` | 0 |
 | *ec2* | `DetachVpnGateway` | 0 |
-| *ec2* | `DescribeVpcAttribute` | 0 |
+| *ec2* | `DescribeVpcAttribute` | 1 |
 | *ec2* | `CancelBundleTask` | 0 |
-| *ec2* | `DescribeNatGateways` | 0 |
+| *ec2* | `DescribeNatGateways` | 1 |
 | *ec2* | `DisassociateSubnetCidrBlock` | 0 |
 | *ec2* | `CreateVpcPeeringConnection` | 0 |
 | *ec2* | `ModifyIdFormat` | 0 |
@@ -1675,7 +1676,7 @@
 | *ec2* | `MoveAddressToVpc` | 0 |
 | *ec2* | `ModifyVpcEndpointConnectionNotification` | 0 |
 | *ec2* | `ModifyInstanceAttribute` | 0 |
-| *ec2* | `CreateVpc` | 0 |
+| *ec2* | `CreateVpc` | 1 |
 | *ec2* | `DescribeVpcEndpointServices` | 0 |
 | *ec2* | `CancelSpotFleetRequests` | 0 |
 | *ec2* | `UnmonitorInstances` | 0 |
@@ -1685,18 +1686,18 @@
 | *ec2* | `DisableVpcClassicLinkDnsSupport` | 0 |
 | *ec2* | `DescribeHostReservationOfferings` | 0 |
 | *ec2* | `DescribeVolumesModifications` | 0 |
-| *ec2* | `DescribeVpnGateways` | 0 |
+| *ec2* | `DescribeVpnGateways` | 1 |
 | *ec2* | `AssociateVpcCidrBlock` | 0 |
 | *ec2* | `AssociateAddress` | 1 |
 | *ec2* | `DeleteCustomerGateway` | 0 |
 | *ec2* | `CopyFpgaImage` | 0 |
-| *ec2* | `CreateInternetGateway` | 0 |
+| *ec2* | `CreateInternetGateway` | 1 |
 | *ec2* | `CreateLaunchTemplate` | 1 |
 | *ec2* | `AttachClassicLinkVpc` | 0 |
 | *ec2* | `DescribeSpotPriceHistory` | 1 |
-| *ec2* | `DescribeDhcpOptions` | 0 |
+| *ec2* | `DescribeDhcpOptions` | 2 |
 | *ec2* | `DeleteVpcPeeringConnection` | 0 |
-| *ec2* | `DescribeFlowLogs` | 1 |
+| *ec2* | `DescribeFlowLogs` | 2 |
 | *ec2* | `CreateNetworkAclEntry` | 0 |
 | *ec2* | `ReleaseHosts` | 0 |
 | *ec2* | `RestoreAddressToClassic` | 0 |
@@ -1714,16 +1715,16 @@
 | *ec2* | `DescribeVpcEndpointServicePermissions` | 0 |
 | *ec2* | `DescribeSpotFleetInstances` | 0 |
 | *ec2* | `EnableVpcClassicLink` | 0 |
-| *ec2* | `CreateFlowLogs` | 0 |
-| *ec2* | `DisassociateVpcCidrBlock` | 0 |
+| *ec2* | `CreateFlowLogs` | 1 |
+| *ec2* | `DisassociateVpcCidrBlock` | 1 |
 | *ec2* | `CreateDefaultSubnet` | 0 |
 | *ec2* | `DeleteVpcEndpointConnectionNotifications` | 0 |
 | *ec2* | `DescribeVolumeStatus` | 0 |
 | *ec2* | `DescribeHosts` | 2 |
-| *ec2* | `DescribeVpcPeeringConnections` | 0 |
+| *ec2* | `DescribeVpcPeeringConnections` | 1 |
 | *ec2* | `DescribeVolumes` | 1 |
 | *ec2* | `DeleteNetworkInterface` | 1 |
-| *ec2* | `DescribeVpnConnections` | 0 |
+| *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DeleteVpcEndpoints` | 0 |
 | *ec2* | `DescribeVolumeAttribute` | 0 |
 | *ec2* | `DeleteKeyPair` | 1 |
@@ -1731,8 +1732,8 @@
 | *ec2* | `UnassignIpv6Addresses` | 0 |
 | *ec2* | `ModifyInstancePlacement` | 0 |
 | *ec2* | `ReplaceNetworkAclEntry` | 0 |
-| *ec2* | `CreateEgressOnlyInternetGateway` | 0 |
-| *ec2* | `DeleteInternetGateway` | 0 |
+| *ec2* | `CreateEgressOnlyInternetGateway` | 1 |
+| *ec2* | `DeleteInternetGateway` | 1 |
 | *ec2* | `CreateVolume` | 0 |
 | *ec2* | `RunInstances` | 1 |
 | *ec2* | `DescribeScheduledInstances` | 0 |
@@ -1771,7 +1772,7 @@
 | *ec2* | `StopInstances` | 0 |
 | *ec2* | `ResetInstanceAttribute` | 0 |
 | *ec2* | `CreateSecurityGroup` | 1 |
-| *ec2* | `DescribeInternetGateways` | 0 |
+| *ec2* | `DescribeInternetGateways` | 1 |
 | *ec2* | `ModifyNetworkInterfaceAttribute` | 0 |
 | *ec2* | `AttachVolume` | 0 |
 | *ec2* | `DescribeFleetHistory` | 0 |
@@ -1779,16 +1780,16 @@
 | *ec2* | `AcceptReservedInstancesExchangeQuote` | 0 |
 | *ec2* | `DeleteSpotDatafeedSubscription` | 0 |
 | *ec2* | `DeletePlacementGroup` | 0 |
-| *ec2* | `DeleteRouteTable` | 0 |
+| *ec2* | `DeleteRouteTable` | 1 |
 | *ec2* | `DescribeFleetInstances` | 0 |
 | *ec2* | `DescribeInstanceCreditSpecifications` | 0 |
 | *ec2* | `DescribeKeyPairs` | 2 |
 | *ec2* | `GetLaunchTemplateData` | 0 |
-| *ec2* | `DescribeStaleSecurityGroups` | 0 |
+| *ec2* | `DescribeStaleSecurityGroups` | 1 |
 | *ec2* | `DescribeReservedInstancesOfferings` | 0 |
 | *ec2* | `MonitorInstances` | 0 |
 | *ec2* | `GetConsoleScreenshot` | 0 |
-| *ec2* | `DescribeAccountAttributes` | 0 |
+| *ec2* | `DescribeAccountAttributes` | 2 |
 | *ec2* | `AssignIpv6Addresses` | 0 |
 | *ec2* | `AuthorizeSecurityGroupEgress` | 0 |
 | *ec2* | `AllocateAddress` | 1 |
@@ -1812,14 +1813,14 @@
 | *ec2* | `DescribePrincipalIdFormat` | 0 |
 | *ec2* | `ReplaceRoute` | 0 |
 | *ec2* | `AssociateRouteTable` | 0 |
-| *ec2* | `DeleteVpc` | 0 |
+| *ec2* | `DeleteVpc` | 1 |
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
 | *ec2* | `DescribePlacementGroups` | 1 |
-| *ec2* | `DescribeRegions` | 0 |
-| *ec2* | `DescribeInstances` | 2 |
+| *ec2* | `DescribeRegions` | 1 |
+| *ec2* | `DescribeInstances` | 3 |
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
-| *ec2* | `DeleteEgressOnlyInternetGateway` | 0 |
+| *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
 | *ec2* | `DescribeSecurityGroups` | 3 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
@@ -1833,7 +1834,7 @@
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 0 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 3 |
+| *ec2* | `DescribeSubnets` | 4 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -1841,7 +1842,7 @@
 | *ec2* | `ImportVolume` | 0 |
 | *ec2* | `ImportSnapshot` | 0 |
 | *ec2* | `GetConsoleOutput` | 0 |
-| *ec2* | `DescribeVpcEndpointServiceConfigurations` | 0 |
+| *ec2* | `DescribeVpcEndpointServiceConfigurations` | 1 |
 | *ec2* | `CreateLaunchTemplateVersion` | 0 |
 | *ec2* | `DescribeTags` | 2 |
 | *ec2* | `UpdateSecurityGroupRuleDescriptionsIngress` | 0 |
@@ -1852,17 +1853,17 @@
 | *ec2* | `CreateVpcEndpointServiceConfiguration` | 0 |
 | *ec2* | `ModifyVpcAttribute` | 0 |
 | *ec2* | `EnableVolumeIO` | 0 |
-| *ec2* | `CreateTags` | 1 |
+| *ec2* | `CreateTags` | 2 |
 | *ec2* | `DescribeSecurityGroupReferences` | 0 |
 | *ec2* | `DescribeVpcEndpointConnections` | 0 |
-| *ec2* | `DeleteFlowLogs` | 0 |
+| *ec2* | `DeleteFlowLogs` | 1 |
 | *ec2* | `ModifyFleet` | 0 |
 | *ec2* | `CreateVpnConnection` | 0 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
 | *ec2* | `CreateReservedInstancesListing` | 0 |
 | *ec2* | `DeleteNetworkInterfacePermission` | 0 |
 | *ec2* | `DescribeHostReservations` | 0 |
-| *ec2* | `DescribeEgressOnlyInternetGateways` | 0 |
+| *ec2* | `DescribeEgressOnlyInternetGateways` | 1 |
 | *ec2* | `DescribeAggregateIdFormat` | 0 |
 | *ec2* | `ModifyVolume` | 0 |
 | *ec2* | `RunScheduledInstances` | 0 |
@@ -2521,7 +2522,7 @@
 | *iam* | `UploadServerCertificate` | 0 |
 | *iam* | `GetContextKeysForPrincipalPolicy` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
-| *iam* | `ListRoles` | 2 |
+| *iam* | `ListRoles` | 3 |
 | *iam* | `DeleteAccessKey` | 0 |
 | *iam* | `AddRoleToInstanceProfile` | 0 |
 | *iam* | `GetContextKeysForCustomPolicy` | 0 |
@@ -3128,7 +3129,7 @@
 | *logs* | `PutMetricFilter` | 0 |
 | *logs* | `DeleteResourcePolicy` | 0 |
 | *logs* | `PutLogEvents` | 0 |
-| *logs* | `DescribeLogGroups` | 0 |
+| *logs* | `DescribeLogGroups` | 1 |
 | *logs* | `DescribeDestinations` | 0 |
 | *logs* | `AssociateKmsKey` | 0 |
 | *logs* | `PutRetentionPolicy` | 0 |
@@ -4852,4 +4853,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 128**
+**Total Unique Occurances: 156**
