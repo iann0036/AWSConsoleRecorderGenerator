@@ -12,7 +12,8 @@ cfn_types = []
 cfn_occurances = [
     "AWS::CloudFormation::CustomResource",
     "AWS::CloudFormation::WaitCondition",
-    "AWS::CloudFormation::WaitConditionHandle"
+    "AWS::CloudFormation::WaitConditionHandle",
+    "AWS::SDB::Domain"
 ]
 
 with open("combined.json", "r") as f:

@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**39/258 (15.0%)** Resources Covered
+**42/258 (16.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -152,7 +152,7 @@
 | *AWS::ElasticLoadBalancingV2::LoadBalancer* | 0 |
 | *AWS::ElasticLoadBalancingV2::TargetGroup* | 0 |
 | *AWS::Elasticsearch::Domain* | 0 |
-| *AWS::Events::Rule* | 0 |
+| *AWS::Events::Rule* | 1 |
 | *AWS::GameLift::Alias* | 0 |
 | *AWS::GameLift::Build* | 0 |
 | *AWS::GameLift::Fleet* | 0 |
@@ -230,7 +230,7 @@
 | *AWS::Route53::RecordSetGroup* | 0 |
 | *AWS::S3::Bucket* | 1 |
 | *AWS::S3::BucketPolicy* | 0 |
-| *AWS::SDB::Domain* | 0 |
+| *AWS::SDB::Domain* | 1 |
 | *AWS::SNS::Subscription* | 0 |
 | *AWS::SNS::Topic* | 0 |
 | *AWS::SNS::TopicPolicy* | 0 |
@@ -261,7 +261,7 @@
 | *AWS::WAF::SqlInjectionMatchSet* | 0 |
 | *AWS::WAF::WebACL* | 0 |
 | *AWS::WAF::XssMatchSet* | 0 |
-| *AWS::WorkSpaces::Workspace* | 0 |
+| *AWS::WorkSpaces::Workspace* | 1 |
 
 ## Service Coverage
 
@@ -269,6 +269,7 @@
 | --- | --- |
 | *acm* | 1/12 (8.0%) |
 | *apigateway* | 31/120 (25.0%) |
+| *autoscaling* | 1/54 (1.0%) |
 | *cloud9* | 6/10 (60.0%) |
 | *cloudtrail* | 6/14 (42.0%) |
 | *cloudwatch* | 1/17 (5.0%) |
@@ -276,12 +277,16 @@
 | *config* | 3/43 (6.0%) |
 | *ds* | 1/49 (2.0%) |
 | *ec2* | 72/274 (26.0%) |
+| *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
 | *elbv2* | 1/34 (2.0%) |
+| *events* | 5/15 (33.0%) |
+| *firehose* | 1/10 (10.0%) |
 | *guardduty* | 21/42 (50.0%) |
 | *iam* | 19/127 (14.0%) |
+| *kinesis* | 1/28 (3.0%) |
 | *kms* | 2/35 (5.0%) |
-| *lambda* | 1/30 (3.0%) |
+| *lambda* | 3/30 (10.0%) |
 | *logs* | 1/33 (3.0%) |
 | *medialive* | 4/25 (16.0%) |
 | *mq* | 6/17 (35.0%) |
@@ -289,7 +294,9 @@
 | *s3* | 23/78 (29.0%) |
 | *sns* | 1/30 (3.0%) |
 | *sqs* | 2/20 (10.0%) |
-| *ssm* | 1/108 (0.0%) |
+| *ssm* | 2/108 (1.0%) |
+| *stepfunctions* | 1/19 (5.0%) |
+| *workspaces* | 4/23 (17.0%) |
 
 ## Operation Coverage
 
@@ -625,7 +632,7 @@
 | *autoscaling* | `DescribeLifecycleHooks` | 0 |
 | *autoscaling* | `DescribeTerminationPolicyTypes` | 0 |
 | *autoscaling* | `DescribeScheduledActions` | 0 |
-| *autoscaling* | `DescribeAutoScalingGroups` | 0 |
+| *autoscaling* | `DescribeAutoScalingGroups` | 1 |
 | *autoscaling* | `EnableMetricsCollection` | 0 |
 | *autoscaling* | `DeleteNotificationConfiguration` | 0 |
 | *autoscaling* | `DescribeAutoScalingNotificationTypes` | 0 |
@@ -902,7 +909,7 @@
 | *cloudtrail* | `ListPublicKeys` | 0 |
 | *cloudtrail* | `StopLogging` | 0 |
 | *cloudtrail* | `PutEventSelectors` | 0 |
-| *cloudtrail* | `DescribeTrails` | 2 |
+| *cloudtrail* | `DescribeTrails` | 3 |
 | *cloudtrail* | `CreateTrail` | 1 |
 | *cloudtrail* | `UpdateTrail` | 0 |
 | *cloudtrail* | `ListTags` | 1 |
@@ -1557,7 +1564,7 @@
 | *ds* | `DeleteTrust` | 0 |
 | *ds* | `ShareDirectory` | 0 |
 | *ds* | `UpdateNumberOfDomainControllers` | 0 |
-| *ds* | `DescribeDirectories` | 1 |
+| *ds* | `DescribeDirectories` | 2 |
 | *ds* | `StartSchemaExtension` | 0 |
 | *ds* | `ListTagsForResource` | 0 |
 | *ds* | `CreateSnapshot` | 0 |
@@ -1901,7 +1908,7 @@
 | *ecs* | `ListAttributes` | 0 |
 | *ecs* | `CreateCluster` | 0 |
 | *ecs* | `SubmitTaskStateChange` | 0 |
-| *ecs* | `ListTaskDefinitionFamilies` | 0 |
+| *ecs* | `ListTaskDefinitionFamilies` | 1 |
 | *ecs* | `DeleteService` | 0 |
 | *ecs* | `ListContainerInstances` | 0 |
 | *ecs* | `DescribeServices` | 0 |
@@ -2158,26 +2165,26 @@
 | *es* | `DescribeElasticsearchDomain` | 0 |
 | *es* | `DescribeReservedElasticsearchInstances` | 0 |
 | *events* | `PutEvents` | 0 |
-| *events* | `EnableRule` | 0 |
+| *events* | `EnableRule` | 1 |
 | *events* | `DescribeRule` | 0 |
 | *events* | `ListTargetsByRule` | 0 |
 | *events* | `PutPermission` | 0 |
 | *events* | `PutTargets` | 0 |
-| *events* | `DeleteRule` | 0 |
+| *events* | `DeleteRule` | 1 |
 | *events* | `ListRuleNamesByTarget` | 0 |
 | *events* | `DescribeEventBus` | 0 |
 | *events* | `TestEventPattern` | 0 |
 | *events* | `RemovePermission` | 0 |
-| *events* | `ListRules` | 0 |
-| *events* | `DisableRule` | 0 |
-| *events* | `PutRule` | 0 |
+| *events* | `ListRules` | 1 |
+| *events* | `DisableRule` | 1 |
+| *events* | `PutRule` | 1 |
 | *events* | `RemoveTargets` | 0 |
 | *firehose* | `CreateDeliveryStream` | 0 |
 | *firehose* | `DescribeDeliveryStream` | 0 |
 | *firehose* | `UpdateDestination` | 0 |
 | *firehose* | `TagDeliveryStream` | 0 |
 | *firehose* | `DeleteDeliveryStream` | 0 |
-| *firehose* | `ListDeliveryStreams` | 0 |
+| *firehose* | `ListDeliveryStreams` | 1 |
 | *firehose* | `PutRecordBatch` | 0 |
 | *firehose* | `UntagDeliveryStream` | 0 |
 | *firehose* | `PutRecord` | 0 |
@@ -2528,7 +2535,7 @@
 | *iam* | `UploadServerCertificate` | 0 |
 | *iam* | `GetContextKeysForPrincipalPolicy` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
-| *iam* | `ListRoles` | 3 |
+| *iam* | `ListRoles` | 4 |
 | *iam* | `DeleteAccessKey` | 0 |
 | *iam* | `AddRoleToInstanceProfile` | 0 |
 | *iam* | `GetContextKeysForCustomPolicy` | 0 |
@@ -2895,7 +2902,7 @@
 | *kinesis* | `DescribeLimits` | 0 |
 | *kinesis* | `ListShards` | 0 |
 | *kinesis* | `SubscribeToShard` | 0 |
-| *kinesis* | `ListStreams` | 0 |
+| *kinesis* | `ListStreams` | 1 |
 | *kinesis* | `DeregisterStreamConsumer` | 0 |
 | *kinesis* | `ListStreamConsumers` | 0 |
 | *kinesis* | `UpdateShardCount` | 0 |
@@ -2962,7 +2969,7 @@
 | *kms* | `RetireGrant` | 0 |
 | *kms* | `TagResource` | 0 |
 | *kms* | `DescribeKey` | 1 |
-| *kms* | `ListKeys` | 2 |
+| *kms* | `ListKeys` | 3 |
 | *kms* | `GenerateRandom` | 0 |
 | *kms* | `GetKeyPolicy` | 0 |
 | *kms* | `CreateGrant` | 0 |
@@ -2985,11 +2992,11 @@
 | *lambda* | `DeleteFunction` | 0 |
 | *lambda* | `UpdateEventSourceMapping` | 0 |
 | *lambda* | `UpdateAlias` | 0 |
-| *lambda* | `ListFunctions` | 2 |
+| *lambda* | `ListFunctions` | 3 |
 | *lambda* | `CreateEventSourceMapping` | 0 |
 | *lambda* | `GetFunctionConfiguration` | 0 |
 | *lambda* | `DeleteFunctionConcurrency` | 0 |
-| *lambda* | `ListAliases` | 0 |
+| *lambda* | `ListAliases` | 1 |
 | *lambda* | `PutFunctionConcurrency` | 0 |
 | *lambda* | `GetPolicy` | 0 |
 | *lambda* | `Invoke` | 0 |
@@ -2997,7 +3004,7 @@
 | *lambda* | `GetFunction` | 0 |
 | *lambda* | `DeleteAlias` | 0 |
 | *lambda* | `AddPermission` | 0 |
-| *lambda* | `ListVersionsByFunction` | 0 |
+| *lambda* | `ListVersionsByFunction` | 1 |
 | *lambda* | `RemovePermission` | 0 |
 | *lambda* | `InvokeAsync` | 0 |
 | *lambda* | `CreateAlias` | 0 |
@@ -4317,7 +4324,7 @@
 | *sns* | `Subscribe` | 0 |
 | *sns* | `DeleteTopic` | 0 |
 | *sns* | `OptInPhoneNumber` | 0 |
-| *sns* | `ListTopics` | 2 |
+| *sns* | `ListTopics` | 3 |
 | *sqs* | `CreateQueue` | 0 |
 | *sqs* | `GetQueueAttributes` | 0 |
 | *sqs* | `SetQueueAttributes` | 0 |
@@ -4336,7 +4343,7 @@
 | *sqs* | `ListQueueTags` | 0 |
 | *sqs* | `DeleteMessage` | 0 |
 | *sqs* | `ReceiveMessage` | 0 |
-| *sqs* | `ListQueues` | 1 |
+| *sqs* | `ListQueues` | 2 |
 | *sqs* | `RemovePermission` | 0 |
 | *ssm* | `DescribeInventoryDeletions` | 0 |
 | *ssm* | `GetPatchBaselineForPatchGroup` | 0 |
@@ -4387,7 +4394,7 @@
 | *ssm* | `UpdateDocumentDefaultVersion` | 0 |
 | *ssm* | `ListComplianceItems` | 0 |
 | *ssm* | `ListAssociationVersions` | 0 |
-| *ssm* | `ListDocuments` | 0 |
+| *ssm* | `ListDocuments` | 1 |
 | *ssm* | `DeleteActivation` | 0 |
 | *ssm* | `DescribeAvailablePatches` | 0 |
 | *ssm* | `DescribeInstancePatches` | 0 |
@@ -4453,7 +4460,7 @@
 | *stepfunctions* | `DeleteActivity` | 0 |
 | *stepfunctions* | `SendTaskHeartbeat` | 0 |
 | *stepfunctions* | `DescribeExecution` | 0 |
-| *stepfunctions* | `ListStateMachines` | 0 |
+| *stepfunctions* | `ListStateMachines` | 1 |
 | *stepfunctions* | `GetExecutionHistory` | 0 |
 | *stepfunctions* | `GetActivityTask` | 0 |
 | *stepfunctions* | `ListActivities` | 0 |
@@ -4817,16 +4824,16 @@
 | *workmail* | `CreateUser` | 0 |
 | *workmail* | `UpdateResource` | 0 |
 | *workspaces* | `DeleteTags` | 0 |
-| *workspaces* | `TerminateWorkspaces` | 0 |
-| *workspaces* | `DescribeWorkspaceBundles` | 0 |
+| *workspaces* | `TerminateWorkspaces` | 1 |
+| *workspaces* | `DescribeWorkspaceBundles` | 1 |
 | *workspaces* | `DescribeIpGroups` | 0 |
 | *workspaces* | `RebootWorkspaces` | 0 |
-| *workspaces* | `CreateWorkspaces` | 0 |
+| *workspaces* | `CreateWorkspaces` | 1 |
 | *workspaces* | `ModifyWorkspaceState` | 0 |
 | *workspaces* | `UpdateRulesOfIpGroup` | 0 |
 | *workspaces* | `ModifyWorkspaceProperties` | 0 |
 | *workspaces* | `DeleteIpGroup` | 0 |
-| *workspaces* | `DescribeWorkspaces` | 0 |
+| *workspaces* | `DescribeWorkspaces` | 1 |
 | *workspaces* | `DisassociateIpGroups` | 0 |
 | *workspaces* | `RevokeIpRules` | 0 |
 | *workspaces* | `StopWorkspaces` | 0 |
@@ -4859,4 +4866,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 215**
+**Total Unique Occurances: 232**
