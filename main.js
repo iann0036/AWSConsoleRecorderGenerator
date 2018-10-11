@@ -80,7 +80,7 @@ function doAccept() {
         apimethod = selected_option.getAttribute('data-opname');
         apiservice = selected_option.getAttribute('data-service');
 
-        cs.outerHTML = apimethod + "." + apiservice;
+        cs.outerHTML = apiservice + "." + apimethod;
     } else {
         apimethod = response[i]['potentials'][j]['opname'];
         apiservice = response[i]['potentials'][j]['service'];
@@ -93,13 +93,18 @@ function doAccept() {
 
     [...document.getElementsByClassName(`inputMethodSelector${i}`)].forEach(
         (el, index, array) => {
+            if (el.tagName == "SELECT")
             el.innerHTML = "<option></option>";
             combined[apiservice]['operations'].forEach(operation => {
                 if (operation['name'] == apimethod) {
                     operation['inputs'].forEach(input => {
-                        var methodname = el.getAttribute('data-prop').split(".").pop();
-                        if (methodname.toLowerCase() == input.toLowerCase()) {
-                            el.innerHTML += `<option selected>${input}</option>`;
+                        if (el.getAttribute('data-prop')) {
+                            var methodname = el.getAttribute('data-prop').split(".").pop();
+                            if (methodname.toLowerCase() == input.toLowerCase()) {
+                                el.innerHTML += `<option selected>${input}</option>`;
+                            } else {
+                                el.innerHTML += `<option>${input}</option>`;
+                            }
                         } else {
                             el.innerHTML += `<option>${input}</option>`;
                         }
@@ -150,7 +155,12 @@ function doFinalize() {
                         cliprop = "max-items";
                     }
 
-                    var prop = el.getAttribute('data-prop');
+                    var prop = 'null';
+                    if (el.hasAttribute('data-prop')) {
+                        prop = el.getAttribute('data-prop');
+                    } else {
+                        prop = el.parentNode.lastChild.value;
+                    }
 
                     inputs_string += `        reqParams.boto3['${boto3prop}'] = ${prop};
         reqParams.cli['--${cliprop}'] = ${prop};
@@ -272,6 +282,10 @@ chrome.runtime.sendMessage(null, {
                         }, 1, i, j);
                     }
                 }
+            }
+
+            for (var j=0; j<4; j++) {
+                selectable_json += `<div><select class="inputMethodSelector${i}" id="inputMethodSelector-arbituary-${i}-${j}"></select>: <input style="width: 70%;" value="/${regex}/g.exec(details.url)[1]" /></div><br />`;
             }
             
             if (potentials_length > 0) {

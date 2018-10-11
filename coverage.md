@@ -1,28 +1,28 @@
 ## CloudFormation Resource Coverage
 
-**30/258 (11.0%)** Resources Covered
+**39/258 (15.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
 | *AWS::AmazonMQ::Broker* | 1 |
 | *AWS::AmazonMQ::Configuration* | 1 |
-| *AWS::ApiGateway::Account* | 0 |
-| *AWS::ApiGateway::ApiKey* | 0 |
-| *AWS::ApiGateway::Authorizer* | 0 |
+| *AWS::ApiGateway::Account* | 1 |
+| *AWS::ApiGateway::ApiKey* | 1 |
+| *AWS::ApiGateway::Authorizer* | 1 |
 | *AWS::ApiGateway::BasePathMapping* | 0 |
 | *AWS::ApiGateway::ClientCertificate* | 0 |
 | *AWS::ApiGateway::Deployment* | 0 |
-| *AWS::ApiGateway::DocumentationPart* | 0 |
+| *AWS::ApiGateway::DocumentationPart* | 1 |
 | *AWS::ApiGateway::DocumentationVersion* | 0 |
-| *AWS::ApiGateway::DomainName* | 0 |
-| *AWS::ApiGateway::GatewayResponse* | 0 |
-| *AWS::ApiGateway::Method* | 0 |
-| *AWS::ApiGateway::Model* | 0 |
+| *AWS::ApiGateway::DomainName* | 1 |
+| *AWS::ApiGateway::GatewayResponse* | 1 |
+| *AWS::ApiGateway::Method* | 1 |
+| *AWS::ApiGateway::Model* | 1 |
 | *AWS::ApiGateway::RequestValidator* | 0 |
 | *AWS::ApiGateway::Resource* | 0 |
 | *AWS::ApiGateway::RestApi* | 0 |
 | *AWS::ApiGateway::Stage* | 0 |
-| *AWS::ApiGateway::UsagePlan* | 0 |
+| *AWS::ApiGateway::UsagePlan* | 1 |
 | *AWS::ApiGateway::UsagePlanKey* | 0 |
 | *AWS::ApiGateway::VpcLink* | 0 |
 | *AWS::AppSync::ApiKey* | 0 |
@@ -267,12 +267,17 @@
 
 | Service | Coverage |
 | --- | --- |
+| *acm* | 1/12 (8.0%) |
+| *apigateway* | 31/120 (25.0%) |
 | *cloud9* | 6/10 (60.0%) |
 | *cloudtrail* | 6/14 (42.0%) |
+| *cloudwatch* | 1/17 (5.0%) |
+| *cognito-idp* | 1/95 (1.0%) |
 | *config* | 3/43 (6.0%) |
 | *ds* | 1/49 (2.0%) |
 | *ec2* | 72/274 (26.0%) |
 | *efs* | 11/12 (91.0%) |
+| *elbv2* | 1/34 (2.0%) |
 | *guardduty* | 21/42 (50.0%) |
 | *iam* | 19/127 (14.0%) |
 | *kms* | 2/35 (5.0%) |
@@ -292,7 +297,7 @@
 | --- | --- | --- |
 | *acm* | `ResendValidationEmail` | 0 |
 | *acm* | `AddTagsToCertificate` | 0 |
-| *acm* | `ListCertificates` | 0 |
+| *acm* | `ListCertificates` | 1 |
 | *acm* | `UpdateCertificateOptions` | 0 |
 | *acm* | `GetCertificate` | 0 |
 | *acm* | `ListTagsForCertificate` | 0 |
@@ -373,32 +378,32 @@
 | *apigateway* | `DeleteAuthorizer` | 0 |
 | *apigateway* | `UpdateModel` | 0 |
 | *apigateway* | `CreateDeployment` | 0 |
-| *apigateway* | `GetRestApi` | 0 |
+| *apigateway* | `GetRestApi` | 1 |
 | *apigateway* | `UpdateRequestValidator` | 0 |
 | *apigateway* | `GetGatewayResponse` | 0 |
-| *apigateway* | `DeleteClientCertificate` | 0 |
+| *apigateway* | `DeleteClientCertificate` | 1 |
 | *apigateway* | `GetAuthorizer` | 0 |
 | *apigateway* | `GetModels` | 0 |
 | *apigateway* | `GenerateClientCertificate` | 0 |
-| *apigateway* | `PutGatewayResponse` | 0 |
+| *apigateway* | `PutGatewayResponse` | 1 |
 | *apigateway* | `DeleteRestApi` | 0 |
 | *apigateway* | `GetMethod` | 0 |
 | *apigateway* | `GetSdkTypes` | 0 |
 | *apigateway* | `UpdateDocumentationVersion` | 0 |
-| *apigateway* | `CreateModel` | 0 |
+| *apigateway* | `CreateModel` | 1 |
 | *apigateway* | `FlushStageCache` | 0 |
 | *apigateway* | `CreateUsagePlanKey` | 0 |
 | *apigateway* | `GetUsagePlanKey` | 0 |
 | *apigateway* | `DeleteIntegration` | 0 |
 | *apigateway* | `GetMethodResponse` | 0 |
-| *apigateway* | `PutMethodResponse` | 0 |
-| *apigateway* | `DeleteModel` | 0 |
-| *apigateway* | `GetStage` | 0 |
-| *apigateway* | `GetStages` | 0 |
+| *apigateway* | `PutMethodResponse` | 1 |
+| *apigateway* | `DeleteModel` | 1 |
+| *apigateway* | `GetStage` | 1 |
+| *apigateway* | `GetStages` | 1 |
 | *apigateway* | `DeleteDocumentationVersion` | 0 |
 | *apigateway* | `UpdateIntegration` | 0 |
-| *apigateway* | `DeleteUsagePlan` | 0 |
-| *apigateway* | `GetDomainNames` | 0 |
+| *apigateway* | `DeleteUsagePlan` | 1 |
+| *apigateway* | `GetDomainNames` | 1 |
 | *apigateway* | `UpdateDocumentationPart` | 0 |
 | *apigateway* | `TestInvokeMethod` | 0 |
 | *apigateway* | `CreateVpcLink` | 0 |
@@ -409,7 +414,7 @@
 | *apigateway* | `TestInvokeAuthorizer` | 0 |
 | *apigateway* | `GetDocumentationVersion` | 0 |
 | *apigateway* | `UpdateMethod` | 0 |
-| *apigateway* | `GetApiKey` | 0 |
+| *apigateway* | `GetApiKey` | 1 |
 | *apigateway* | `GetSdkType` | 0 |
 | *apigateway* | `GetIntegration` | 0 |
 | *apigateway* | `TagResource` | 0 |
@@ -418,7 +423,7 @@
 | *apigateway* | `GetUsagePlan` | 0 |
 | *apigateway* | `GetVpcLink` | 0 |
 | *apigateway* | `UpdateUsagePlan` | 0 |
-| *apigateway* | `CreateAuthorizer` | 0 |
+| *apigateway* | `CreateAuthorizer` | 1 |
 | *apigateway* | `GetClientCertificate` | 0 |
 | *apigateway* | `UpdateDeployment` | 0 |
 | *apigateway* | `GetModelTemplate` | 0 |
@@ -431,16 +436,16 @@
 | *apigateway* | `CreateResource` | 0 |
 | *apigateway* | `GetApiKeys` | 0 |
 | *apigateway* | `DeleteApiKey` | 0 |
-| *apigateway* | `CreateApiKey` | 0 |
+| *apigateway* | `CreateApiKey` | 1 |
 | *apigateway* | `UpdateAuthorizer` | 0 |
 | *apigateway* | `GetModel` | 0 |
 | *apigateway* | `GetUsagePlanKeys` | 0 |
 | *apigateway* | `DeleteMethodResponse` | 0 |
-| *apigateway* | `GetResources` | 0 |
-| *apigateway* | `GetRestApis` | 0 |
+| *apigateway* | `GetResources` | 1 |
+| *apigateway* | `GetRestApis` | 1 |
 | *apigateway* | `GetResource` | 0 |
 | *apigateway* | `DeleteIntegrationResponse` | 0 |
-| *apigateway* | `GetUsagePlans` | 0 |
+| *apigateway* | `GetUsagePlans` | 1 |
 | *apigateway* | `ImportApiKeys` | 0 |
 | *apigateway* | `GetBasePathMapping` | 0 |
 | *apigateway* | `GetExport` | 0 |
@@ -448,44 +453,44 @@
 | *apigateway* | `GetDomainName` | 0 |
 | *apigateway* | `UpdateDomainName` | 0 |
 | *apigateway* | `UpdateClientCertificate` | 0 |
-| *apigateway* | `CreateDomainName` | 0 |
+| *apigateway* | `CreateDomainName` | 1 |
 | *apigateway* | `DeleteDomainName` | 0 |
-| *apigateway* | `PutMethod` | 0 |
+| *apigateway* | `PutMethod` | 1 |
 | *apigateway* | `DeleteStage` | 0 |
 | *apigateway* | `GetDocumentationPart` | 0 |
-| *apigateway* | `UpdateAccount` | 0 |
+| *apigateway* | `UpdateAccount` | 1 |
 | *apigateway* | `PutRestApi` | 0 |
 | *apigateway* | `GetUsage` | 0 |
-| *apigateway* | `GetDeployment` | 0 |
+| *apigateway* | `GetDeployment` | 1 |
 | *apigateway* | `CreateRestApi` | 0 |
 | *apigateway* | `GetTags` | 0 |
 | *apigateway* | `UpdateVpcLink` | 0 |
-| *apigateway* | `GetAuthorizers` | 0 |
+| *apigateway* | `GetAuthorizers` | 1 |
 | *apigateway* | `GetClientCertificates` | 0 |
-| *apigateway* | `DeleteDocumentationPart` | 0 |
+| *apigateway* | `DeleteDocumentationPart` | 1 |
 | *apigateway* | `DeleteResource` | 0 |
 | *apigateway* | `CreateStage` | 0 |
 | *apigateway* | `UpdateBasePathMapping` | 0 |
 | *apigateway* | `UpdateMethodResponse` | 0 |
 | *apigateway* | `UpdateUsage` | 0 |
-| *apigateway* | `GetDocumentationParts` | 0 |
-| *apigateway* | `CreateDocumentationPart` | 0 |
+| *apigateway* | `GetDocumentationParts` | 1 |
+| *apigateway* | `CreateDocumentationPart` | 1 |
 | *apigateway* | `CreateBasePathMapping` | 0 |
-| *apigateway* | `CreateUsagePlan` | 0 |
-| *apigateway* | `UpdateApiKey` | 0 |
+| *apigateway* | `CreateUsagePlan` | 1 |
+| *apigateway* | `UpdateApiKey` | 1 |
 | *apigateway* | `DeleteGatewayResponse` | 0 |
 | *apigateway* | `ImportRestApi` | 0 |
 | *apigateway* | `UpdateRestApi` | 0 |
 | *apigateway* | `CreateDocumentationVersion` | 0 |
-| *apigateway* | `PutIntegrationResponse` | 0 |
+| *apigateway* | `PutIntegrationResponse` | 1 |
 | *apigateway* | `GetDocumentationVersions` | 0 |
-| *apigateway* | `DeleteMethod` | 0 |
-| *apigateway* | `GetRequestValidators` | 0 |
-| *apigateway* | `GetAccount` | 0 |
+| *apigateway* | `DeleteMethod` | 1 |
+| *apigateway* | `GetRequestValidators` | 1 |
+| *apigateway* | `GetAccount` | 1 |
 | *apigateway* | `DeleteUsagePlanKey` | 0 |
 | *apigateway* | `DeleteRequestValidator` | 0 |
 | *apigateway* | `UntagResource` | 0 |
-| *apigateway* | `PutIntegration` | 0 |
+| *apigateway* | `PutIntegration` | 1 |
 | *apigateway* | `UpdateIntegrationResponse` | 0 |
 | *apigateway* | `GetVpcLinks` | 0 |
 | *application-autoscaling* | `DescribeScalingActivities` | 0 |
@@ -909,7 +914,7 @@
 | *cloudwatch* | `EnableAlarmActions` | 0 |
 | *cloudwatch* | `GetMetricData` | 0 |
 | *cloudwatch* | `PutMetricAlarm` | 0 |
-| *cloudwatch* | `GetMetricStatistics` | 0 |
+| *cloudwatch* | `GetMetricStatistics` | 1 |
 | *cloudwatch* | `DisableAlarmActions` | 0 |
 | *cloudwatch* | `SetAlarmState` | 0 |
 | *cloudwatch* | `PutDashboard` | 0 |
@@ -1114,7 +1119,7 @@
 | *cognito-idp* | `ForgetDevice` | 0 |
 | *cognito-idp* | `ConfirmForgotPassword` | 0 |
 | *cognito-idp* | `AdminDisableProviderForUser` | 0 |
-| *cognito-idp* | `ListUserPools` | 0 |
+| *cognito-idp* | `ListUserPools` | 1 |
 | *cognito-idp* | `AdminGetDevice` | 0 |
 | *cognito-idp* | `UpdateGroup` | 0 |
 | *cognito-idp* | `GetGroup` | 0 |
@@ -2087,7 +2092,7 @@
 | *elbv2* | `DeleteRule` | 0 |
 | *elbv2* | `DeleteTargetGroup` | 0 |
 | *elbv2* | `DescribeTargetGroupAttributes` | 0 |
-| *elbv2* | `DescribeLoadBalancers` | 0 |
+| *elbv2* | `DescribeLoadBalancers` | 1 |
 | *elbv2* | `DescribeListeners` | 0 |
 | *elbv2* | `RemoveTags` | 0 |
 | *elbv2* | `CreateListener` | 0 |
@@ -2980,7 +2985,7 @@
 | *lambda* | `DeleteFunction` | 0 |
 | *lambda* | `UpdateEventSourceMapping` | 0 |
 | *lambda* | `UpdateAlias` | 0 |
-| *lambda* | `ListFunctions` | 1 |
+| *lambda* | `ListFunctions` | 2 |
 | *lambda* | `CreateEventSourceMapping` | 0 |
 | *lambda* | `GetFunctionConfiguration` | 0 |
 | *lambda* | `DeleteFunctionConcurrency` | 0 |
@@ -4854,4 +4859,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 180**
+**Total Unique Occurances: 215**
