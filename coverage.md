@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**63/258 (24.0%)** Resources Covered
+**70/258 (27.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -243,17 +243,17 @@
 | *AWS::SSM::PatchBaseline* | 0 |
 | *AWS::SSM::ResourceDataSync* | 0 |
 | *AWS::ServiceCatalog::AcceptedPortfolioShare* | 0 |
-| *AWS::ServiceCatalog::CloudFormationProduct* | 0 |
+| *AWS::ServiceCatalog::CloudFormationProduct* | 1 |
 | *AWS::ServiceCatalog::CloudFormationProvisionedProduct* | 0 |
 | *AWS::ServiceCatalog::LaunchNotificationConstraint* | 0 |
 | *AWS::ServiceCatalog::LaunchRoleConstraint* | 0 |
 | *AWS::ServiceCatalog::LaunchTemplateConstraint* | 0 |
-| *AWS::ServiceCatalog::Portfolio* | 0 |
-| *AWS::ServiceCatalog::PortfolioPrincipalAssociation* | 0 |
-| *AWS::ServiceCatalog::PortfolioProductAssociation* | 0 |
-| *AWS::ServiceCatalog::PortfolioShare* | 0 |
-| *AWS::ServiceCatalog::TagOption* | 0 |
-| *AWS::ServiceCatalog::TagOptionAssociation* | 0 |
+| *AWS::ServiceCatalog::Portfolio* | 1 |
+| *AWS::ServiceCatalog::PortfolioPrincipalAssociation* | 1 |
+| *AWS::ServiceCatalog::PortfolioProductAssociation* | 1 |
+| *AWS::ServiceCatalog::PortfolioShare* | 1 |
+| *AWS::ServiceCatalog::TagOption* | 1 |
+| *AWS::ServiceCatalog::TagOptionAssociation* | 1 |
 | *AWS::WAF::ByteMatchSet* | 0 |
 | *AWS::WAF::IPSet* | 0 |
 | *AWS::WAF::Rule* | 0 |
@@ -300,6 +300,7 @@
 | *mq* | 6/17 (35.0%) |
 | *rekognition* | 3/34 (8.0%) |
 | *s3* | 23/78 (29.0%) |
+| *servicecatalog* | 10/60 (16.0%) |
 | *sns* | 1/30 (3.0%) |
 | *sqs* | 2/20 (10.0%) |
 | *ssm* | 2/108 (1.0%) |
@@ -4101,25 +4102,25 @@
 | *serverlessrepo* | `CreateApplication` | 0 |
 | *servicecatalog* | `CreateConstraint` | 0 |
 | *servicecatalog* | `DescribeProductAsAdmin` | 0 |
-| *servicecatalog* | `AssociateProductWithPortfolio` | 0 |
+| *servicecatalog* | `AssociateProductWithPortfolio` | 1 |
 | *servicecatalog* | `ListPrincipalsForPortfolio` | 0 |
 | *servicecatalog* | `UpdateTagOption` | 0 |
 | *servicecatalog* | `DisassociatePrincipalFromPortfolio` | 0 |
-| *servicecatalog* | `AssociatePrincipalWithPortfolio` | 0 |
+| *servicecatalog* | `AssociatePrincipalWithPortfolio` | 1 |
 | *servicecatalog* | `ListRecordHistory` | 0 |
 | *servicecatalog* | `UpdateProduct` | 0 |
 | *servicecatalog* | `SearchProductsAsAdmin` | 0 |
 | *servicecatalog* | `ListProvisionedProductPlans` | 0 |
 | *servicecatalog* | `CreateProvisioningArtifact` | 0 |
 | *servicecatalog* | `UpdateConstraint` | 0 |
-| *servicecatalog* | `ListPortfolios` | 0 |
+| *servicecatalog* | `ListPortfolios` | 1 |
 | *servicecatalog* | `DeleteProvisionedProductPlan` | 0 |
 | *servicecatalog* | `DescribeProduct` | 0 |
 | *servicecatalog* | `SearchProvisionedProducts` | 0 |
-| *servicecatalog* | `CreatePortfolioShare` | 0 |
-| *servicecatalog* | `ListTagOptions` | 0 |
+| *servicecatalog* | `CreatePortfolioShare` | 1 |
+| *servicecatalog* | `ListTagOptions` | 1 |
 | *servicecatalog* | `ListLaunchPaths` | 0 |
-| *servicecatalog* | `CreateProduct` | 0 |
+| *servicecatalog* | `CreateProduct` | 1 |
 | *servicecatalog* | `ListAcceptedPortfolioShares` | 0 |
 | *servicecatalog* | `ListPortfoliosForProduct` | 0 |
 | *servicecatalog* | `DeleteTagOption` | 0 |
@@ -4136,7 +4137,7 @@
 | *servicecatalog* | `DescribeProvisionedProductPlan` | 0 |
 | *servicecatalog* | `DeletePortfolio` | 0 |
 | *servicecatalog* | `DescribeRecord` | 0 |
-| *servicecatalog* | `AssociateTagOptionWithResource` | 0 |
+| *servicecatalog* | `AssociateTagOptionWithResource` | 1 |
 | *servicecatalog* | `DescribeCopyProductStatus` | 0 |
 | *servicecatalog* | `DeleteProduct` | 0 |
 | *servicecatalog* | `DescribeProductView` | 0 |
@@ -4145,7 +4146,7 @@
 | *servicecatalog* | `DeletePortfolioShare` | 0 |
 | *servicecatalog* | `CreateProvisionedProductPlan` | 0 |
 | *servicecatalog* | `ScanProvisionedProducts` | 0 |
-| *servicecatalog* | `CreateTagOption` | 0 |
+| *servicecatalog* | `CreateTagOption` | 1 |
 | *servicecatalog* | `UpdateProvisionedProduct` | 0 |
 | *servicecatalog* | `ListResourcesForTagOption` | 0 |
 | *servicecatalog* | `DescribeProvisioningArtifact` | 0 |
@@ -4156,9 +4157,9 @@
 | *servicecatalog* | `CopyProduct` | 0 |
 | *servicecatalog* | `DeleteConstraint` | 0 |
 | *servicecatalog* | `ProvisionProduct` | 0 |
-| *servicecatalog* | `CreatePortfolio` | 0 |
+| *servicecatalog* | `CreatePortfolio` | 1 |
 | *servicecatalog* | `DescribeProvisioningParameters` | 0 |
-| *servicecatalog* | `DescribeTagOption` | 0 |
+| *servicecatalog* | `DescribeTagOption` | 1 |
 | *servicediscovery* | `CreateService` | 0 |
 | *servicediscovery* | `DeregisterInstance` | 0 |
 | *servicediscovery* | `ListServices` | 0 |
@@ -4874,4 +4875,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 309 (6.0%)**
+**Total Unique Occurances: 319 (6.0%)**
