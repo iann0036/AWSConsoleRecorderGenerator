@@ -4866,4 +4866,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 232**
+**Total Unique Occurances: 232 (5.0%)**

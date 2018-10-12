@@ -6143,7 +6143,7 @@ function analyseRequest(details) {
     // autogen:workspaces:workspaces.CreateWorkspaces
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && getPipeSplitField(requestBody, 8) == "createRegistration") {
  
-        // create directory here
+        // TODO: create directory here
         // getPipeSplitField(requestBody, 15) // email
         // getPipeSplitField(requestBody, 16) // first
         // getPipeSplitField(requestBody, 17) // last

@@ -83,6 +83,6 @@ with open("coverage.md", "w") as f:
                 total_unique_occurances += 1
             f.write("| *%s* | `%s` | %s |\n" % (servicename, operation['name'], occurance_count))
 
-    f.write("\n\n**Total Services: %s**\n\n**Total Operations: %s**\n\n**Total Unique Occurances: %s**\n"
-        % (total_services, total_operations, total_unique_occurances)
+    f.write("\n\n**Total Services: %s**\n\n**Total Operations: %s**\n\n**Total Unique Occurances: %s (%s%%)**\n"
+        % (total_services, total_operations, total_unique_occurances, (math.floor(total_unique_occurances * 100 / total_operations)))
     )
