@@ -49,6 +49,7 @@ function deplural(str) {
 function logRequest(details) {
     var requestBody = null;
     var jsonRequestBody = null;
+    var regex_override = null;
 
     if (details.type != "xmlhttprequest") return;
 
@@ -58,7 +59,12 @@ function logRequest(details) {
         requestBody = decodeURIComponent(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes)));
         requestBody = requestBody.replace(/\"X-CSRF-TOKEN\"\:\"\[\{[a-zA-Z0-9-_",=+:/]+\}\]\"\,/g,""); // double-quote bug, remove CSRF token
         jsonRequestBody = JSON.parse(requestBody);
-    } catch(e) {;}
+    } catch(e) {
+        try {
+            requestBody = JSON.stringify(details.requestBody.formData);
+            jsonRequestBody = JSON.parse(requestBody);
+        } catch(e) {;}
+    }
 
     var rgx = /^.*console\.aws\.amazon\.com\/([a-zA-Z0-9-]+)\/(.+)$/g;
     var match = rgx.exec(details.url);
@@ -79,6 +85,13 @@ function logRequest(details) {
             service = "mq";
         } else if (service == "vpc") {
             service = "ec2";
+        } else if (service == "codesuite") {
+            rgx = /^.*console\.aws\.amazon\.com\/codesuite\/api\/([a-zA-Z0-9-]+)$/g;
+            match = rgx.exec(details.url);
+            if (match && match.length > 1) {
+                service = match[1];
+                regex_override = '.+' + escapeRegExp(`console.aws.amazon.com/codesuite/api/${service}`) + '$';
+            }
         }
 
         var valid_service = false;
@@ -116,7 +129,10 @@ function logRequest(details) {
                 }
             }
 
-            var regex = '.+' + escapeRegExp(`console.aws.amazon.com/${urlservice}/${pathending}`) + '$'; ///
+            var regex = '.+' + escapeRegExp(`console.aws.amazon.com/${urlservice}/${pathending}`) + '$';
+            if (regex_override) {
+                regex = regex_override;
+            }
             
             requests_with_potentials.push({
                 'url': details.url,
@@ -149,8 +165,10 @@ function getPipeSplitField(str, index) {
 var outputs = [];
 var tracked_resources = [];
 var blocking = false;
+var intercept = false;
 
 function analyseRequest(details) {
+
     var reqParams = {
         'boto3': {},
         'go': {},
@@ -159,12 +177,24 @@ function analyseRequest(details) {
     };
     var requestBody = "";
     var jsonRequestBody = {};
-    var region = 'us-west-2';
+    var region = 'us-east-1';
+
+    var region_check = /.+\/\/([a-zA-Z0-9-]+)\.console\.aws\.amazon\.com/g.exec(details.url);
+    if (region_check && region_check[1]) {
+        region = region_check[1];
+    }
 
     try {
-        requestBody = decodeURIComponent(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes)));
-        requestBody = requestBody.replace(/\"X-CSRF-TOKEN\"\:\"\[\{[a-zA-Z0-9-_",=+:/]+\}\]\"\,/g,""); // double-quote bug, remove CSRF token
-        jsonRequestBody = JSON.parse(requestBody);
+        try {
+            requestBody = decodeURIComponent(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes)));
+            requestBody = requestBody.replace(/\"X-CSRF-TOKEN\"\:\"\[\{[a-zA-Z0-9-_",=+:/]+\}\]\"\,/g,""); // double-quote bug, remove CSRF token
+            jsonRequestBody = JSON.parse(requestBody);
+        } catch(e) {
+            try {
+                requestBody = JSON.stringify(details.requestBody.formData);
+                jsonRequestBody = JSON.parse(requestBody);
+            } catch(e) {;}
+        }
 
         // check for string objects
         for (var prop in jsonRequestBody) {
@@ -176,12 +206,6 @@ function analyseRequest(details) {
             }
         }
     } catch(e) {;}
-
-    //--CloudFormation--//
-
-    if (details.method == "GET" && details.url.match(/.+console\.aws\.amazon\.com\/cloudformation\/service\/stacks\?/g)) {
-        console.log("TODO - CFN");
-    }
 
     //--EC2--//
     
@@ -2256,7 +2280,6 @@ function analyseRequest(details) {
     }
 
     // autogen:guardduty:guardduty.GetDetector
-    // modified for path split
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "GetDetector" && jsonRequestBody.method == "GET") {
         reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
@@ -2276,7 +2299,6 @@ function analyseRequest(details) {
     }
 
     // autogen:guardduty:guardduty.GetFindingsStatistics
-    // modified for path split
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "GetFindingsStatistics" && jsonRequestBody.method == "POST") {
         reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
@@ -2319,7 +2341,6 @@ function analyseRequest(details) {
     }
 
     // autogen:guardduty:guardduty.CreateMembers
-    // modified for path split
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "CreateMembers" && jsonRequestBody.method == "POST") {
         reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
@@ -2353,7 +2374,6 @@ function analyseRequest(details) {
     }
 
     // autogen:guardduty:guardduty.DeleteMembers
-    // modified for path split
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "DeleteMembers" && jsonRequestBody.method == "POST") {
         reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
@@ -2375,7 +2395,6 @@ function analyseRequest(details) {
     }
 
     // autogen:guardduty:guardduty.ListIPSets
-    // modified for path split
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "ListIPSets" && jsonRequestBody.method == "GET") {
         reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
@@ -2397,7 +2416,6 @@ function analyseRequest(details) {
     }
 
     // autogen:guardduty:guardduty.ListThreatIntelSets
-    // modified for path split
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "ListThreatIntelSets" && jsonRequestBody.method == "GET") {
         reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
@@ -2419,7 +2437,6 @@ function analyseRequest(details) {
     }
 
     // autogen:guardduty:iam.ListPolicyVersions
-    // modified for policyarn split
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/iam$/g) && jsonRequestBody.operation == "ListPolicyVersions" && jsonRequestBody.method == "POST") {
         reqParams.boto3['PolicyArn'] = jsonRequestBody.contentString.match(/PolicyArn\=(.+)\&Version/g)[1];
         reqParams.cli['--policy-arn'] = jsonRequestBody.contentString.match(/PolicyArn\=(.+)\&Version/g)[1]; // "Action=ListPolicyVersions&PolicyArn=arn:aws:iam::aws:policy/aws-service-role/AmazonGuardDutyServiceRolePolicy&Version=2010-05-08"
@@ -6209,6 +6226,2155 @@ function analyseRequest(details) {
                 'api': 'TerminateWorkspaces',
                 'boto3': 'terminate_workspaces',
                 'cli': 'terminate-workspaces'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:athena:athena.CreateNamedQuery
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/athena\/rpc\/query\/save$/g)) {
+        reqParams.boto3['Database'] = jsonRequestBody['query-database'];
+        reqParams.cli['--database'] = jsonRequestBody['query-database'];
+        reqParams.boto3['QueryString'] = jsonRequestBody['query-query'];
+        reqParams.cli['--query-string'] = jsonRequestBody['query-query'];
+        reqParams.boto3['Description'] = jsonRequestBody['saveform-desc'];
+        reqParams.cli['--description'] = jsonRequestBody['saveform-desc'];
+        reqParams.boto3['Name'] = jsonRequestBody['saveform-name'];
+        reqParams.cli['--name'] = jsonRequestBody['saveform-name'];
+
+        reqParams.cfn['Database'] = jsonRequestBody['query-database'];
+        reqParams.cfn['QueryString'] = jsonRequestBody['query-query'];
+        reqParams.cfn['Description'] = jsonRequestBody['saveform-desc'];
+        reqParams.cfn['Name'] = jsonRequestBody['saveform-name'];
+
+        outputs.push({
+            'region': region,
+            'service': 'athena',
+            'method': {
+                'api': 'CreateNamedQuery',
+                'boto3': 'create_named_query',
+                'cli': 'create-named-query'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'athena',
+            'type': 'AWS::Athena::NamedQuery',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:appsync.CreateGraphqlApi
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "createGraphqlApi") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['AuthenticationType'] = jsonRequestBody.contentString.authenticationType;
+        reqParams.cli['--authentication-type'] = jsonRequestBody.contentString.authenticationType;
+
+        reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cfn['AuthenticationType'] = jsonRequestBody.contentString.authenticationType;
+
+        outputs.push({
+            'region': region,
+            'service': 'appsync',
+            'method': {
+                'api': 'CreateGraphqlApi',
+                'boto3': 'create_graphql_api',
+                'cli': 'create-graphql-api'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'appsync',
+            'type': 'AWS::AppSync::GraphQLApi',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:appsync.CreateApiKey
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "createApiKey") {
+        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.cli['--description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
+
+        reqParams.cfn['Description'] = jsonRequestBody.contentString.description;
+        reqParams.cfn['ApiId'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'appsync',
+            'method': {
+                'api': 'CreateApiKey',
+                'boto3': 'create_api_key',
+                'cli': 'create-api-key'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'appsync',
+            'type': 'AWS::AppSync::ApiKey',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:dynamodb.CreateTable
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/dynamodb$/g) && jsonRequestBody.operation == "createTable") {
+        reqParams.boto3['TableName'] = jsonRequestBody.contentString.TableName;
+        reqParams.cli['--table-name'] = jsonRequestBody.contentString.TableName;
+        reqParams.boto3['KeySchema'] = jsonRequestBody.contentString.KeySchema;
+        reqParams.cli['--key-schema'] = jsonRequestBody.contentString.KeySchema;
+        reqParams.boto3['LocalSecondaryIndexes'] = jsonRequestBody.contentString.LocalSecondaryIndexes;
+        reqParams.cli['--local-secondary-indexes'] = jsonRequestBody.contentString.LocalSecondaryIndexes;
+        reqParams.boto3['AttributeDefinitions'] = jsonRequestBody.contentString.AttributeDefinitions;
+        reqParams.cli['--attribute-definitions'] = jsonRequestBody.contentString.AttributeDefinitions;
+        reqParams.boto3['ProvisionedThroughput'] = jsonRequestBody.contentString.ProvisionedThroughput;
+        reqParams.cli['--provisioned-throughput'] = jsonRequestBody.contentString.ProvisionedThroughput;
+
+        reqParams.cfn['TableName'] = jsonRequestBody.contentString.TableName;
+        reqParams.cfn['KeySchema'] = jsonRequestBody.contentString.KeySchema;
+        reqParams.cfn['LocalSecondaryIndexes'] = jsonRequestBody.contentString.LocalSecondaryIndexes;
+        reqParams.cfn['AttributeDefinitions'] = jsonRequestBody.contentString.AttributeDefinitions;
+        reqParams.cfn['ProvisionedThroughput'] = jsonRequestBody.contentString.ProvisionedThroughput;
+
+        outputs.push({
+            'region': region,
+            'service': 'dynamodb',
+            'method': {
+                'api': 'CreateTable',
+                'boto3': 'create_table',
+                'cli': 'create-table'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'dynamodb',
+            'type': 'AWS::DynamoDB::Table',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:dynamodb.DescribeTable
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/dynamodb$/g) && jsonRequestBody.operation == "describeTable") {
+        reqParams.boto3['TableName'] = jsonRequestBody.contentString.TableName;
+        reqParams.cli['--table-name'] = jsonRequestBody.contentString.TableName;
+
+        outputs.push({
+            'region': region,
+            'service': 'dynamodb',
+            'method': {
+                'api': 'DescribeTable',
+                'boto3': 'describe_table',
+                'cli': 'describe-table'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:appsync.StartSchemaCreation
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "startSchemaCreation") {
+        reqParams.boto3['Definition'] = jsonRequestBody.contentString.definition;
+        reqParams.cli['--definition'] = jsonRequestBody.contentString.definition;
+        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
+
+        reqParams.cfn['Definition'] = jsonRequestBody.contentString.definition;
+        reqParams.cfn['ApiId'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'appsync',
+            'method': {
+                'api': 'StartSchemaCreation',
+                'boto3': 'start_schema_creation',
+                'cli': 'start-schema-creation'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'appsync',
+            'type': 'AWS::AppSync::GraphQLSchema',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:appsync.GetSchemaCreationStatus
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "getSchemaCreationStatus") {
+        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'appsync',
+            'method': {
+                'api': 'GetSchemaCreationStatus',
+                'boto3': 'get_schema_creation_status',
+                'cli': 'get-schema-creation-status'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:appsync.CreateDataSource
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "createDataSource") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['Type'] = jsonRequestBody.contentString.type;
+        reqParams.cli['--type'] = jsonRequestBody.contentString.type;
+        reqParams.boto3['ServiceRoleArn'] = jsonRequestBody.contentString.serviceRoleArn;
+        reqParams.cli['--service-role-arn'] = jsonRequestBody.contentString.serviceRoleArn;
+        reqParams.boto3['DynamodbConfig'] = jsonRequestBody.contentString.dynamodbConfig;
+        reqParams.cli['--dynamodb-config'] = jsonRequestBody.contentString.dynamodbConfig;
+        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
+
+        reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cfn['Type'] = jsonRequestBody.contentString.type;
+        reqParams.cfn['ServiceRoleArn'] = jsonRequestBody.contentString.serviceRoleArn;
+        reqParams.cfn['DynamoDBConfig'] = jsonRequestBody.contentString.dynamodbConfig;
+        reqParams.cfn['ApiId'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'appsync',
+            'method': {
+                'api': 'CreateDataSource',
+                'boto3': 'create_data_source',
+                'cli': 'create-data-source'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'appsync',
+            'type': 'AWS::AppSync::DataSource',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:appsync.CreateResolver
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "createResolver") {
+        reqParams.boto3['FieldName'] = jsonRequestBody.contentString.fieldName;
+        reqParams.cli['--field-name'] = jsonRequestBody.contentString.fieldName;
+        reqParams.boto3['DataSourceName'] = jsonRequestBody.contentString.dataSourceName;
+        reqParams.cli['--data-source-name'] = jsonRequestBody.contentString.dataSourceName;
+        reqParams.boto3['RequestMappingTemplate'] = jsonRequestBody.contentString.requestMappingTemplate;
+        reqParams.cli['--request-mapping-template'] = jsonRequestBody.contentString.requestMappingTemplate;
+        reqParams.boto3['ResponseMappingTemplate'] = jsonRequestBody.contentString.responseMappingTemplate;
+        reqParams.cli['--response-mapping-template'] = jsonRequestBody.contentString.responseMappingTemplate;
+        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['TypeName'] = jsonRequestBody.path.split("/")[5];
+        reqParams.cli['--type-name'] = jsonRequestBody.path.split("/")[5];
+
+        reqParams.cfn['FieldName'] = jsonRequestBody.contentString.fieldName;
+        reqParams.cfn['DataSourceName'] = jsonRequestBody.contentString.dataSourceName;
+        reqParams.cfn['RequestMappingTemplate'] = jsonRequestBody.contentString.requestMappingTemplate;
+        reqParams.cfn['ResponseMappingTemplate'] = jsonRequestBody.contentString.responseMappingTemplate;
+        reqParams.cfn['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cfn['TypeName'] = jsonRequestBody.path.split("/")[5];
+
+        outputs.push({
+            'region': region,
+            'service': 'appsync',
+            'method': {
+                'api': 'CreateResolver',
+                'boto3': 'create_resolver',
+                'cli': 'create-resolver'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'appsync',
+            'type': 'AWS::AppSync::Resolver',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:appsync.ListResolvers
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "listResolvers") {
+        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.cli['--max-results'] = jsonRequestBody.params.maxResults;
+        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['TypeName'] = jsonRequestBody.path.split("/")[5];
+        reqParams.cli['--type-name'] = jsonRequestBody.path.split("/")[5];
+
+        outputs.push({
+            'region': region,
+            'service': 'appsync',
+            'method': {
+                'api': 'ListResolvers',
+                'boto3': 'list_resolvers',
+                'cli': 'list-resolvers'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:appsync.UpdateGraphqlApi
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "updateGraphqlApi") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['AuthenticationType'] = jsonRequestBody.contentString.authenticationType;
+        reqParams.cli['--authentication-type'] = jsonRequestBody.contentString.authenticationType;
+        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'appsync',
+            'method': {
+                'api': 'UpdateGraphqlApi',
+                'boto3': 'update_graphql_api',
+                'cli': 'update-graphql-api'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:appsync:appsync.DeleteGraphqlApi
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "deleteGraphqlApi") {
+        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'appsync',
+            'method': {
+                'api': 'DeleteGraphqlApi',
+                'boto3': 'delete_graphql_api',
+                'cli': 'delete-graphql-api'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeLaunchTemplates
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DescribeLaunchTemplates\?/g)) {
+        reqParams.boto3['LaunchTemplateNames'] = jsonRequestBody.LaunchTemplateNames;
+        reqParams.cli['--launch-template-names'] = jsonRequestBody.LaunchTemplateNames;
+        reqParams.boto3['MaxResults'] = jsonRequestBody.MaxResults;
+        reqParams.cli['--max-items'] = jsonRequestBody.MaxResults;
+        reqParams.boto3['NextToken'] = jsonRequestBody.NextToken;
+        reqParams.cli['--next-token'] = jsonRequestBody.NextToken;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeLaunchTemplates',
+                'boto3': 'describe_launch_templates',
+                'cli': 'describe-launch-templates'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DescribeLoadBalancers
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=getLoadBalancersAutoUpdate\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DescribeLoadBalancers',
+                'boto3': 'describe_load_balancers',
+                'cli': 'describe-load-balancers'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.CreateLaunchConfiguration
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=CreateLaunchConfiguration\?/g)) {
+        reqParams.boto3['UserData'] = jsonRequestBody.UserData;
+        reqParams.cli['--user-data'] = jsonRequestBody.UserData;
+        reqParams.boto3['ImageId'] = jsonRequestBody.ImageId;
+        reqParams.cli['--image-id'] = jsonRequestBody.ImageId;
+        reqParams.boto3['BlockDeviceMappings'] = jsonRequestBody.AutoScalingBlockDeviceMappings;
+        reqParams.cli['--block-device-mappings'] = jsonRequestBody.AutoScalingBlockDeviceMappings;
+        reqParams.boto3['EbsOptimized'] = jsonRequestBody.EbsOptimized;
+        reqParams.cli['--ebs-optimized'] = jsonRequestBody.EbsOptimized;
+        reqParams.boto3['IamInstanceProfile'] = jsonRequestBody.IamInstanceProfile;
+        reqParams.cli['--iam-instance-profile'] = jsonRequestBody.IamInstanceProfile;
+        reqParams.boto3['InstanceMonitoring'] = jsonRequestBody.InstanceMonitoring;
+        reqParams.cli['--instance-monitoring'] = jsonRequestBody.InstanceMonitoring;
+        reqParams.boto3['InstanceType'] = jsonRequestBody.InstanceType;
+        reqParams.cli['--instance-type'] = jsonRequestBody.InstanceType;
+        reqParams.boto3['KeyName'] = jsonRequestBody.KeyName;
+        reqParams.cli['--key-name'] = jsonRequestBody.KeyName;
+        reqParams.boto3['LaunchConfigurationName'] = jsonRequestBody.LaunchConfigurationName;
+        reqParams.cli['--launch-configuration-name'] = jsonRequestBody.LaunchConfigurationName;
+        reqParams.boto3['SecurityGroups'] = jsonRequestBody.SecurityGroups;
+        reqParams.cli['--security-groups'] = jsonRequestBody.SecurityGroups;
+        reqParams.boto3['AssociatePublicIpAddress'] = jsonRequestBody.AssociatePublicIpAddress;
+        reqParams.cli['--associate-public-ip-address'] = jsonRequestBody.AssociatePublicIpAddress;
+
+        reqParams.cfn['UserData'] = jsonRequestBody.UserData;
+        reqParams.cfn['ImageId'] = jsonRequestBody.ImageId;
+        reqParams.cfn['BlockDeviceMappings'] = jsonRequestBody.AutoScalingBlockDeviceMappings;
+        reqParams.cfn['EbsOptimized'] = jsonRequestBody.EbsOptimized;
+        reqParams.cfn['IamInstanceProfile'] = jsonRequestBody.IamInstanceProfile;
+        reqParams.cfn['InstanceMonitoring'] = jsonRequestBody.InstanceMonitoring;
+        reqParams.cfn['InstanceType'] = jsonRequestBody.InstanceType;
+        reqParams.cfn['KeyName'] = jsonRequestBody.KeyName;
+        reqParams.cfn['LaunchConfigurationName'] = jsonRequestBody.LaunchConfigurationName;
+        reqParams.cfn['SecurityGroups'] = jsonRequestBody.SecurityGroups;
+        reqParams.cfn['AssociatePublicIpAddress'] = jsonRequestBody.AssociatePublicIpAddress;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'CreateLaunchConfiguration',
+                'boto3': 'create_launch_configuration',
+                'cli': 'create-launch-configuration'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'autoscaling',
+            'type': 'AWS::AutoScaling::LaunchConfiguration',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DescribeLaunchConfigurations
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DescribeLaunchConfigurations\?/g)) {
+        reqParams.boto3['LaunchConfigurationNames'] = jsonRequestBody.LaunchConfigurationNames;
+        reqParams.cli['--launch-configuration-names'] = jsonRequestBody.LaunchConfigurationNames;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DescribeLaunchConfigurations',
+                'boto3': 'describe_launch_configurations',
+                'cli': 'describe-launch-configurations'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DescribeTargetGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2DescribeTargetGroups\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DescribeTargetGroups',
+                'boto3': 'describe_target_groups',
+                'cli': 'describe-target-groups'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.CreateAutoScalingGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=CreateAutoScalingGroup\?/g)) {
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.boto3['LaunchConfigurationName'] = jsonRequestBody.LaunchConfigurationName;
+        reqParams.cli['--launch-configuration-name'] = jsonRequestBody.LaunchConfigurationName;
+        reqParams.boto3['DesiredCapacity'] = jsonRequestBody.DesiredCapacity;
+        reqParams.cli['--desired-capacity'] = jsonRequestBody.DesiredCapacity;
+        reqParams.boto3['MinSize'] = jsonRequestBody.MinSize;
+        reqParams.cli['--min-size'] = jsonRequestBody.MinSize;
+        reqParams.boto3['MaxSize'] = jsonRequestBody.MaxSize;
+        reqParams.cli['--max-size'] = jsonRequestBody.MaxSize;
+        reqParams.boto3['HealthCheckGracePeriod'] = jsonRequestBody.HealthCheckGracePeriod;
+        reqParams.cli['--health-check-grace-period'] = jsonRequestBody.HealthCheckGracePeriod;
+        reqParams.boto3['Tags'] = jsonRequestBody.Tags;
+        reqParams.cli['--tags'] = jsonRequestBody.Tags;
+        reqParams.boto3['NewInstancesProtectedFromScaleIn'] = jsonRequestBody.NewInstancesProtectedFromScaleIn;
+        reqParams.cli['--new-instances-protected-from-scale-in'] = jsonRequestBody.NewInstancesProtectedFromScaleIn;
+        reqParams.boto3['ServiceLinkedRoleARN'] = jsonRequestBody.ServiceLinkedRoleARN;
+        reqParams.cli['--service-linked-role-arn'] = jsonRequestBody.ServiceLinkedRoleARN;
+        reqParams.boto3['VPCZoneIdentifier'] = jsonRequestBody.VPCZoneIdentifier;
+        reqParams.cli['--vpc-zone-identifier'] = jsonRequestBody.VPCZoneIdentifier;
+
+        reqParams.cfn['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cfn['LaunchConfigurationName'] = jsonRequestBody.LaunchConfigurationName;
+        reqParams.cfn['DesiredCapacity'] = jsonRequestBody.DesiredCapacity;
+        reqParams.cfn['MinSize'] = jsonRequestBody.MinSize;
+        reqParams.cfn['MaxSize'] = jsonRequestBody.MaxSize;
+        reqParams.cfn['HealthCheckGracePeriod'] = jsonRequestBody.HealthCheckGracePeriod;
+        reqParams.cfn['Tags'] = jsonRequestBody.Tags;
+        reqParams.cfn['ServiceLinkedRoleARN'] = jsonRequestBody.ServiceLinkedRoleARN;
+        reqParams.cfn['VPCZoneIdentifier'] = jsonRequestBody.VPCZoneIdentifier;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'CreateAutoScalingGroup',
+                'boto3': 'create_auto_scaling_group',
+                'cli': 'create-auto-scaling-group'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'autoscaling',
+            'type': 'AWS::AutoScaling::AutoScalingGroup',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.PutScalingPolicy
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=PutScalingPolicy\?/g)) {
+        reqParams.boto3['PolicyName'] = jsonRequestBody.PolicyName;
+        reqParams.cli['--policy-name'] = jsonRequestBody.PolicyName;
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.boto3['PolicyType'] = jsonRequestBody.PolicyType;
+        reqParams.cli['--policy-type'] = jsonRequestBody.PolicyType;
+        reqParams.boto3['TargetTrackingConfiguration'] = jsonRequestBody.TargetTrackingConfiguration;
+        reqParams.cli['--target-tracking-configuration'] = jsonRequestBody.TargetTrackingConfiguration;
+        reqParams.boto3['EstimatedInstanceWarmup'] = jsonRequestBody.EstimatedInstanceWarmup;
+        reqParams.cli['--estimated-instance-warmup'] = jsonRequestBody.EstimatedInstanceWarmup;
+
+        reqParams.cfn['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cfn['PolicyType'] = jsonRequestBody.PolicyType;
+        reqParams.cfn['TargetTrackingConfiguration'] = jsonRequestBody.TargetTrackingConfiguration;
+        reqParams.cfn['EstimatedInstanceWarmup'] = jsonRequestBody.EstimatedInstanceWarmup;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'PutScalingPolicy',
+                'boto3': 'put_scaling_policy',
+                'cli': 'put-scaling-policy'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'autoscaling',
+            'type': 'AWS::AutoScaling::ScalingPolicy',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.PutNotificationConfiguration
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=PutNotificationConfiguration\?/g)) {
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.boto3['TopicARN'] = jsonRequestBody.TopicARN;
+        reqParams.cli['--topic-arn'] = jsonRequestBody.TopicARN;
+        reqParams.boto3['NotificationTypes'] = jsonRequestBody.NotificationTypes;
+        reqParams.cli['--notification-types'] = jsonRequestBody.NotificationTypes;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'PutNotificationConfiguration',
+                'boto3': 'put_notification_configuration',
+                'cli': 'put-notification-configuration'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DescribeScalingActivities
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DescribeScalingActivities\?/g)) {
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.boto3['NextToken'] = jsonRequestBody.NextToken;
+        reqParams.cli['--next-token'] = jsonRequestBody.NextToken;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DescribeScalingActivities',
+                'boto3': 'describe_scaling_activities',
+                'cli': 'describe-scaling-activities'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DescribePolicies
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DescribePolicies\?/g)) {
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DescribePolicies',
+                'boto3': 'describe_policies',
+                'cli': 'describe-policies'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DescribeTags
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DescribeTags\?/g)) {
+        reqParams.boto3['Filters'] = jsonRequestBody.Filters;
+        reqParams.cli['--filters'] = jsonRequestBody.Filters;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DescribeTags',
+                'boto3': 'describe_tags',
+                'cli': 'describe-tags'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DescribeScheduledActions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DescribeScheduledActions\?/g)) {
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DescribeScheduledActions',
+                'boto3': 'describe_scheduled_actions',
+                'cli': 'describe-scheduled-actions'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DescribeLifecycleHooks
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DescribeLifecycleHooks\?/g)) {
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DescribeLifecycleHooks',
+                'boto3': 'describe_lifecycle_hooks',
+                'cli': 'describe-lifecycle-hooks'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DescribeNotificationConfigurations
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DescribeNotificationConfigurations\?/g)) {
+        reqParams.boto3['AutoScalingGroupNames'] = jsonRequestBody.AutoScalingGroupNames;
+        reqParams.cli['--auto-scaling-group-names'] = jsonRequestBody.AutoScalingGroupNames;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DescribeNotificationConfigurations',
+                'boto3': 'describe_notification_configurations',
+                'cli': 'describe-notification-configurations'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DeleteLaunchConfiguration
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DeleteLaunchConfiguration\?/g)) {
+        reqParams.boto3['LaunchConfigurationName'] = jsonRequestBody.LaunchConfigurationName;
+        reqParams.cli['--launch-configuration-name'] = jsonRequestBody.LaunchConfigurationName;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DeleteLaunchConfiguration',
+                'boto3': 'delete_launch_configuration',
+                'cli': 'delete-launch-configuration'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DeleteAutoScalingGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DeleteAutoScalingGroup\?/g)) {
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.boto3['ForceDelete'] = jsonRequestBody.ForceDelete;
+        reqParams.cli['--force-delete'] = jsonRequestBody.ForceDelete;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DeleteAutoScalingGroup',
+                'boto3': 'delete_auto_scaling_group',
+                'cli': 'delete-auto-scaling-group'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.PutScheduledUpdateGroupAction
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=PutScheduledUpdateGroupAction\?/g)) {
+        reqParams.boto3['ScheduledActionName'] = jsonRequestBody.ScheduledActionName;
+        reqParams.cli['--scheduled-action-name'] = jsonRequestBody.ScheduledActionName;
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.boto3['MinSize'] = jsonRequestBody.MinSize;
+        reqParams.cli['--min-size'] = jsonRequestBody.MinSize;
+        reqParams.boto3['MaxSize'] = jsonRequestBody.MaxSize;
+        reqParams.cli['--max-size'] = jsonRequestBody.MaxSize;
+        reqParams.boto3['DesiredCapacity'] = jsonRequestBody.DesiredCapacity;
+        reqParams.cli['--desired-capacity'] = jsonRequestBody.DesiredCapacity;
+        reqParams.boto3['StartTime'] = jsonRequestBody.StartTime;
+        reqParams.cli['--start-time'] = jsonRequestBody.StartTime;
+
+        reqParams.cfn['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cfn['MinSize'] = jsonRequestBody.MinSize;
+        reqParams.cfn['MaxSize'] = jsonRequestBody.MaxSize;
+        reqParams.cfn['DesiredCapacity'] = jsonRequestBody.DesiredCapacity;
+        reqParams.cfn['StartTime'] = jsonRequestBody.StartTime;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'PutScheduledUpdateGroupAction',
+                'boto3': 'put_scheduled_update_group_action',
+                'cli': 'put-scheduled-update-group-action'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'autoscaling',
+            'type': 'AWS::AutoScaling::ScheduledAction',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DeleteScheduledAction
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DeleteScheduledAction\?&/g)) {
+        reqParams.boto3['ScheduledActionName'] = jsonRequestBody.ScheduledActionName;
+        reqParams.cli['--scheduled-action-name'] = jsonRequestBody.ScheduledActionName;
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DeleteScheduledAction',
+                'boto3': 'delete_scheduled_action',
+                'cli': 'delete-scheduled-action'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.PutLifecycleHook
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=PutLifecycleHook\?/g)) {
+        reqParams.boto3['LifecycleHookName'] = jsonRequestBody.LifecycleHookName;
+        reqParams.cli['--lifecycle-hook-name'] = jsonRequestBody.LifecycleHookName;
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.boto3['HeartbeatTimeout'] = jsonRequestBody.HeartbeatTimeout;
+        reqParams.cli['--heartbeat-timeout'] = jsonRequestBody.HeartbeatTimeout;
+        reqParams.boto3['NotificationMetadata'] = jsonRequestBody.NotificationMetadata;
+        reqParams.cli['--notification-metadata'] = jsonRequestBody.NotificationMetadata;
+        reqParams.boto3['DefaultResult'] = jsonRequestBody.DefaultResult;
+        reqParams.cli['--default-result'] = jsonRequestBody.DefaultResult;
+        reqParams.boto3['LifecycleTransition'] = jsonRequestBody.LifecycleTransition;
+        reqParams.cli['--lifecycle-transition'] = jsonRequestBody.LifecycleTransition;
+
+        reqParams.cfn['LifecycleHookName'] = jsonRequestBody.LifecycleHookName;
+        reqParams.cfn['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cfn['HeartbeatTimeout'] = jsonRequestBody.HeartbeatTimeout;
+        reqParams.cfn['NotificationMetadata'] = jsonRequestBody.NotificationMetadata;
+        reqParams.cfn['DefaultResult'] = jsonRequestBody.DefaultResult;
+        reqParams.cfn['LifecycleTransition'] = jsonRequestBody.LifecycleTransition;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'PutLifecycleHook',
+                'boto3': 'put_lifecycle_hook',
+                'cli': 'put-lifecycle-hook'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'autoscaling',
+            'type': 'AWS::AutoScaling::LifecycleHook',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:autoscaling.DeleteLifecycleHook
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/autoscaling\/acb\?call=DeleteLifecycleHook\?/g)) {
+        reqParams.boto3['LifecycleHookName'] = jsonRequestBody.LifecycleHookName;
+        reqParams.cli['--lifecycle-hook-name'] = jsonRequestBody.LifecycleHookName;
+        reqParams.boto3['AutoScalingGroupName'] = jsonRequestBody.AutoScalingGroupName;
+        reqParams.cli['--auto-scaling-group-name'] = jsonRequestBody.AutoScalingGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'autoscaling',
+            'method': {
+                'api': 'DeleteLifecycleHook',
+                'boto3': 'delete_lifecycle_hook',
+                'cli': 'delete-lifecycle-hook'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.DescribeComputeEnvironments
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "describecomputeenvironments") {
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'DescribeComputeEnvironments',
+                'boto3': 'describe_compute_environments',
+                'cli': 'describe-compute-environments'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:iam.ListRoles
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/iam$/g) && jsonRequestBody.operation == "listRoles") {
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'ListRoles',
+                'boto3': 'list_roles',
+                'cli': 'list-roles'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.DescribeJobDefinitions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "describeJobDefinitions") {
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'DescribeJobDefinitions',
+                'boto3': 'describe_job_definitions',
+                'cli': 'describe-job-definitions'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:iam.ListInstanceProfiles
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/iam$/g) && jsonRequestBody.operation == "ListInstanceProfiles") {
+        reqParams.boto3['MaxItems'] = jsonRequestBody.params.MaxItems;
+        reqParams.cli['--max-items'] = jsonRequestBody.params.MaxItems;
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'ListInstanceProfiles',
+                'boto3': 'list_instance_profiles',
+                'cli': 'list-instance-profiles'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/ec2$/g) && jsonRequestBody.operation == "DescribeVpcs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:iam.ListInstanceProfiles
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/iam$/g) && jsonRequestBody.operation == "ListInstanceProfiles") {
+        reqParams.boto3['MaxItems'] = jsonRequestBody.params.MaxItems;
+        reqParams.cli['--max-items'] = jsonRequestBody.params.MaxItems;
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'ListInstanceProfiles',
+                'boto3': 'list_instance_profiles',
+                'cli': 'list-instance-profiles'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/ec2$/g) && jsonRequestBody.operation == "DescribeSubnets") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:ec2.DescribeSecurityGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/ec2$/g) && jsonRequestBody.operation == "DescribeSecurityGroups") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSecurityGroups',
+                'boto3': 'describe_security_groups',
+                'cli': 'describe-security-groups'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:iam.AttachRolePolicy
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/iam$/g) && jsonRequestBody.operation == "AttachRolePolicy") {
+        reqParams.boto3['PolicyArn'] = jsonRequestBody.params.PolicyArn;
+        reqParams.cli['--policy-arn'] = jsonRequestBody.params.PolicyArn;
+        reqParams.boto3['RoleName'] = jsonRequestBody.params.RoleName;
+        reqParams.cli['--role-name'] = jsonRequestBody.params.RoleName;
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'AttachRolePolicy',
+                'boto3': 'attach_role_policy',
+                'cli': 'attach-role-policy'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:iam.CreateInstanceProfile
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/iam$/g) && jsonRequestBody.operation == "CreateInstanceProfile") {
+        reqParams.boto3['InstanceProfileName'] = jsonRequestBody.params.InstanceProfileName;
+        reqParams.cli['--instance-profile-name'] = jsonRequestBody.params.InstanceProfileName;
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'CreateInstanceProfile',
+                'boto3': 'create_instance_profile',
+                'cli': 'create-instance-profile'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:iam.AddRoleToInstanceProfile
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/iam$/g) && jsonRequestBody.operation == "AddRoleToInstanceProfile") {
+        reqParams.boto3['InstanceProfileName'] = jsonRequestBody.params.InstanceProfileName;
+        reqParams.cli['--instance-profile-name'] = jsonRequestBody.params.InstanceProfileName;
+        reqParams.boto3['RoleName'] = jsonRequestBody.params.RoleName;
+        reqParams.cli['--role-name'] = jsonRequestBody.params.RoleName;
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'AddRoleToInstanceProfile',
+                'boto3': 'add_role_to_instance_profile',
+                'cli': 'add-role-to-instance-profile'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.CreateComputeEnvironment
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "createcomputeenvironment") {
+        reqParams.boto3['ComputeEnvironmentName'] = jsonRequestBody.contentString.computeEnvironmentName;
+        reqParams.cli['--compute-environment-name'] = jsonRequestBody.contentString.computeEnvironmentName;
+        reqParams.boto3['ComputeResources'] = jsonRequestBody.contentString.computeResources;
+        reqParams.cli['--compute-resources'] = jsonRequestBody.contentString.computeResources;
+        reqParams.boto3['ServiceRole'] = jsonRequestBody.contentString.serviceRole;
+        reqParams.cli['--service-role'] = jsonRequestBody.contentString.serviceRole;
+        reqParams.boto3['State'] = jsonRequestBody.contentString.state;
+        reqParams.cli['--state'] = jsonRequestBody.contentString.state;
+        reqParams.boto3['Type'] = jsonRequestBody.contentString.type;
+        reqParams.cli['--type'] = jsonRequestBody.contentString.type;
+
+        reqParams.cfn['ComputeEnvironmentName'] = jsonRequestBody.contentString.computeEnvironmentName;
+        reqParams.cfn['ComputeResources'] = jsonRequestBody.contentString.computeResources;
+        reqParams.cfn['ServiceRole'] = jsonRequestBody.contentString.serviceRole;
+        reqParams.cfn['State'] = jsonRequestBody.contentString.state;
+        reqParams.cfn['Type'] = jsonRequestBody.contentString.type;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'CreateComputeEnvironment',
+                'boto3': 'create_compute_environment',
+                'cli': 'create-compute-environment'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'batch',
+            'type': 'AWS::Batch::ComputeEnvironment',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.DescribeComputeEnvironments
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "describecomputeenvironments") {
+        reqParams.boto3['ComputeEnvironments'] = jsonRequestBody.contentString.computeEnvironments;
+        reqParams.cli['--compute-environments'] = jsonRequestBody.contentString.computeEnvironments;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'DescribeComputeEnvironments',
+                'boto3': 'describe_compute_environments',
+                'cli': 'describe-compute-environments'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.CreateJobQueue
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "createjobqueue") {
+        reqParams.boto3['ComputeEnvironmentOrder'] = jsonRequestBody.contentString.computeEnvironmentOrder;
+        reqParams.cli['--compute-environment-order'] = jsonRequestBody.contentString.computeEnvironmentOrder;
+        reqParams.boto3['JobQueueName'] = jsonRequestBody.contentString.jobQueueName;
+        reqParams.cli['--job-queue-name'] = jsonRequestBody.contentString.jobQueueName;
+        reqParams.boto3['Priority'] = jsonRequestBody.contentString.priority;
+        reqParams.cli['--priority'] = jsonRequestBody.contentString.priority;
+        reqParams.boto3['State'] = jsonRequestBody.contentString.state;
+        reqParams.cli['--state'] = jsonRequestBody.contentString.state;
+
+        reqParams.cfn['ComputeEnvironmentOrder'] = jsonRequestBody.contentString.computeEnvironmentOrder;
+        reqParams.cfn['JobQueueName'] = jsonRequestBody.contentString.jobQueueName;
+        reqParams.cfn['Priority'] = jsonRequestBody.contentString.priority;
+        reqParams.cfn['State'] = jsonRequestBody.contentString.state;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'CreateJobQueue',
+                'boto3': 'create_job_queue',
+                'cli': 'create-job-queue'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'batch',
+            'type': 'AWS::Batch::JobQueue',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.RegisterJobDefinition
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "registerjobdefinition") {
+        reqParams.boto3['ContainerProperties'] = jsonRequestBody.contentString.containerProperties;
+        reqParams.cli['--container-properties'] = jsonRequestBody.contentString.containerProperties;
+        reqParams.boto3['JobDefinitionName'] = jsonRequestBody.contentString.jobDefinitionName;
+        reqParams.cli['--job-definition-name'] = jsonRequestBody.contentString.jobDefinitionName;
+        reqParams.boto3['Parameters'] = jsonRequestBody.contentString.parameters;
+        reqParams.cli['--parameters'] = jsonRequestBody.contentString.parameters;
+        reqParams.boto3['Type'] = jsonRequestBody.contentString.type;
+        reqParams.cli['--type'] = jsonRequestBody.contentString.type;
+
+        reqParams.cfn['ContainerProperties'] = jsonRequestBody.contentString.containerProperties;
+        reqParams.cfn['JobDefinitionName'] = jsonRequestBody.contentString.jobDefinitionName;
+        reqParams.cfn['Parameters'] = jsonRequestBody.contentString.parameters;
+        reqParams.cfn['Type'] = jsonRequestBody.contentString.type;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'RegisterJobDefinition',
+                'boto3': 'register_job_definition',
+                'cli': 'register-job-definition'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'batch',
+            'type': 'AWS::Batch::JobDefinition',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.SubmitJob
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "submitjob") {
+        reqParams.boto3['JobDefinition'] = jsonRequestBody.contentString.jobDefinition;
+        reqParams.cli['--job-definition'] = jsonRequestBody.contentString.jobDefinition;
+        reqParams.boto3['JobName'] = jsonRequestBody.contentString.jobName;
+        reqParams.cli['--job-name'] = jsonRequestBody.contentString.jobName;
+        reqParams.boto3['JobQueue'] = jsonRequestBody.contentString.jobQueue;
+        reqParams.cli['--job-queue'] = jsonRequestBody.contentString.jobQueue;
+        reqParams.boto3['Parameters'] = jsonRequestBody.contentString.parameters;
+        reqParams.cli['--parameters'] = jsonRequestBody.contentString.parameters;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'SubmitJob',
+                'boto3': 'submit_job',
+                'cli': 'submit-job'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.ListJobs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "listjobs") {
+        reqParams.boto3['JobQueue'] = jsonRequestBody.contentString.jobQueue;
+        reqParams.cli['--job-queue'] = jsonRequestBody.contentString.jobQueue;
+        reqParams.boto3['JobStatus'] = jsonRequestBody.contentString.jobStatus;
+        reqParams.cli['--job-status'] = jsonRequestBody.contentString.jobStatus;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'ListJobs',
+                'boto3': 'list_jobs',
+                'cli': 'list-jobs'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.CancelJob
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "cancelJob") {
+        reqParams.boto3['JobId'] = jsonRequestBody.contentString.jobId;
+        reqParams.cli['--job-id'] = jsonRequestBody.contentString.jobId;
+        reqParams.boto3['Reason'] = jsonRequestBody.contentString.reason;
+        reqParams.cli['--reason'] = jsonRequestBody.contentString.reason;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'CancelJob',
+                'boto3': 'cancel_job',
+                'cli': 'cancel-job'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.DeleteComputeEnvironment
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "deletecomputeenvironment") {
+        reqParams.boto3['ComputeEnvironment'] = jsonRequestBody.contentString.computeEnvironment;
+        reqParams.cli['--compute-environment'] = jsonRequestBody.contentString.computeEnvironment;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'DeleteComputeEnvironment',
+                'boto3': 'delete_compute_environment',
+                'cli': 'delete-compute-environment'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.UpdateComputeEnvironment
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "updatecomputeenvironment") {
+        reqParams.boto3['ComputeEnvironment'] = jsonRequestBody.contentString.computeEnvironment;
+        reqParams.cli['--compute-environment'] = jsonRequestBody.contentString.computeEnvironment;
+        reqParams.boto3['State'] = jsonRequestBody.contentString.state;
+        reqParams.cli['--state'] = jsonRequestBody.contentString.state;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'UpdateComputeEnvironment',
+                'boto3': 'update_compute_environment',
+                'cli': 'update-compute-environment'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:batch:batch.DeregisterJobDefinition
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "deregisterjobdefinition") {
+        reqParams.boto3['JobDefinition'] = jsonRequestBody.contentString.jobDefinition;
+        reqParams.cli['--job-definition'] = jsonRequestBody.contentString.jobDefinition;
+
+        outputs.push({
+            'region': region,
+            'service': 'batch',
+            'method': {
+                'api': 'DeregisterJobDefinition',
+                'boto3': 'deregister_job_definition',
+                'cli': 'deregister-job-definition'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.CreateApplication
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "createApplication") {
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['ComputePlatform'] = jsonRequestBody.contentString.computePlatform;
+        reqParams.cli['--compute-platform'] = jsonRequestBody.contentString.computePlatform;
+
+        reqParams.cfn['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cfn['ComputePlatform'] = jsonRequestBody.contentString.computePlatform;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'CreateApplication',
+                'boto3': 'create_application',
+                'cli': 'create-application'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'codedeploy',
+            'type': 'AWS::CodeDeploy::Application',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.GetApplication
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "getApplication") {
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'GetApplication',
+                'boto3': 'get_application',
+                'cli': 'get-application'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.ListApplicationRevisions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "listApplicationRevisions") {
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['SortBy'] = jsonRequestBody.contentString.sortBy;
+        reqParams.cli['--sort-by'] = jsonRequestBody.contentString.sortBy;
+        reqParams.boto3['SortOrder'] = jsonRequestBody.contentString.sortOrder;
+        reqParams.cli['--sort-order'] = jsonRequestBody.contentString.sortOrder;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'ListApplicationRevisions',
+                'boto3': 'list_application_revisions',
+                'cli': 'list-application-revisions'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.ListDeploymentGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "listDeploymentGroups") {
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'ListDeploymentGroups',
+                'boto3': 'list_deployment_groups',
+                'cli': 'list-deployment-groups'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.ListDeploymentConfigs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "listDeploymentConfigs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'ListDeploymentConfigs',
+                'boto3': 'list_deployment_configs',
+                'cli': 'list-deployment-configs'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.CreateDeploymentGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "describeLoadBalancers" && jsonRequestBody.operation == "createDeploymentGroup") {
+        reqParams.boto3['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.cli['--deployment-config-name'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.boto3['DeploymentStyle'] = jsonRequestBody.contentString.deploymentStyle;
+        reqParams.cli['--deployment-style'] = jsonRequestBody.contentString.deploymentStyle;
+        reqParams.boto3['AutoScalingGroups'] = jsonRequestBody.contentString.autoScalingGroups;
+        reqParams.cli['--auto-scaling-groups'] = jsonRequestBody.contentString.autoScalingGroups;
+        reqParams.boto3['Ec2TagSet'] = jsonRequestBody.contentString.ec2TagSet;
+        reqParams.cli['--ec-2-tag-set'] = jsonRequestBody.contentString.ec2TagSet;
+        reqParams.boto3['OnPremisesTagSet'] = jsonRequestBody.contentString.onPremisesTagSet;
+        reqParams.cli['--on-premises-tag-set'] = jsonRequestBody.contentString.onPremisesTagSet;
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['TriggerConfigurations'] = jsonRequestBody.contentString.triggerConfigurations;
+        reqParams.cli['--trigger-configurations'] = jsonRequestBody.contentString.triggerConfigurations;
+        reqParams.boto3['ServiceRoleArn'] = jsonRequestBody.contentString.serviceRoleArn;
+        reqParams.cli['--service-role-arn'] = jsonRequestBody.contentString.serviceRoleArn;
+        reqParams.boto3['AutoRollbackConfiguration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
+        reqParams.cli['--auto-rollback-configuration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
+        reqParams.boto3['DeploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
+        reqParams.cli['--deployment-group-name'] = jsonRequestBody.contentString.deploymentGroupName;
+
+        reqParams.cfn['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.cfn['DeploymentStyle'] = jsonRequestBody.contentString.deploymentStyle;
+        reqParams.cfn['AutoScalingGroups'] = jsonRequestBody.contentString.autoScalingGroups;
+        reqParams.cfn['Ec2TagSet'] = jsonRequestBody.contentString.ec2TagSet;
+        reqParams.cfn['OnPremisesInstanceTagSet'] = jsonRequestBody.contentString.onPremisesTagSet;
+        reqParams.cfn['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cfn['TriggerConfigurations'] = jsonRequestBody.contentString.triggerConfigurations;
+        reqParams.cfn['ServiceRoleArn'] = jsonRequestBody.contentString.serviceRoleArn;
+        reqParams.cfn['AutoRollbackConfiguration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
+        reqParams.cfn['DeploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'CreateDeploymentGroup',
+                'boto3': 'create_deployment_group',
+                'cli': 'create-deployment-group'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'codedeploy',
+            'type': 'AWS::CodeDeploy::DeploymentGroup',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.GetDeploymentGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "getDeploymentGroup") {
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['DeploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
+        reqParams.cli['--deployment-group-name'] = jsonRequestBody.contentString.deploymentGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'GetDeploymentGroup',
+                'boto3': 'get_deployment_group',
+                'cli': 'get-deployment-group'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.ListDeployments
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "listDeployments") {
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['DeploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
+        reqParams.cli['--deployment-group-name'] = jsonRequestBody.contentString.deploymentGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'ListDeployments',
+                'boto3': 'list_deployments',
+                'cli': 'list-deployments'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.ListDeploymentConfigs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "listDeploymentConfigs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'ListDeploymentConfigs',
+                'boto3': 'list_deployment_configs',
+                'cli': 'list-deployment-configs'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.BatchGetDeploymentGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "batchGetDeploymentGroups") {
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['DeploymentGroupNames'] = jsonRequestBody.contentString.deploymentGroupNames;
+        reqParams.cli['--deployment-group-names'] = jsonRequestBody.contentString.deploymentGroupNames;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'BatchGetDeploymentGroups',
+                'boto3': 'batch_get_deployment_groups',
+                'cli': 'batch-get-deployment-groups'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.CreateDeployment
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "createDeployment") {
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['DeploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
+        reqParams.cli['--deployment-group-name'] = jsonRequestBody.contentString.deploymentGroupName;
+        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.cli['--description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['AutoRollbackConfiguration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
+        reqParams.cli['--auto-rollback-configuration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
+        reqParams.boto3['Revision'] = jsonRequestBody.contentString.revision;
+        reqParams.cli['--revision'] = jsonRequestBody.contentString.revision;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'CreateDeployment',
+                'boto3': 'create_deployment',
+                'cli': 'create-deployment'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.StopDeployment
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "stopDeployment") {
+        reqParams.boto3['AutoRollbackEnabled'] = jsonRequestBody.contentString.autoRollbackEnabled;
+        reqParams.cli['--auto-rollback-enabled'] = jsonRequestBody.contentString.autoRollbackEnabled;
+        reqParams.boto3['DeploymentId'] = jsonRequestBody.contentString.deploymentId;
+        reqParams.cli['--deployment-id'] = jsonRequestBody.contentString.deploymentId;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'StopDeployment',
+                'boto3': 'stop_deployment',
+                'cli': 'stop-deployment'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.CreateDeploymentConfig
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "createDeploymentConfig") {
+        reqParams.boto3['ComputePlatform'] = jsonRequestBody.contentString.computePlatform;
+        reqParams.cli['--compute-platform'] = jsonRequestBody.contentString.computePlatform;
+        reqParams.boto3['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.cli['--deployment-config-name'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.boto3['MinimumHealthyHosts'] = jsonRequestBody.contentString.minimumHealthyHosts;
+        reqParams.cli['--minimum-healthy-hosts'] = jsonRequestBody.contentString.minimumHealthyHosts;
+
+        reqParams.cfn['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.cfn['MinimumHealthyHosts'] = jsonRequestBody.contentString.minimumHealthyHosts;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'CreateDeploymentConfig',
+                'boto3': 'create_deployment_config',
+                'cli': 'create-deployment-config'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'codedeploy',
+            'type': 'AWS::CodeDeploy::DeploymentConfig',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.DeleteDeploymentConfig
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "deleteDeploymentConfig") {
+        reqParams.boto3['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.cli['--deployment-config-name'] = jsonRequestBody.contentString.deploymentConfigName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'DeleteDeploymentConfig',
+                'boto3': 'delete_deployment_config',
+                'cli': 'delete-deployment-config'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.BatchGetDeployments
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "batchGetDeployments") {
+        reqParams.boto3['DeploymentIds'] = jsonRequestBody.contentString.deploymentIds;
+        reqParams.cli['--deployment-ids'] = jsonRequestBody.contentString.deploymentIds;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'BatchGetDeployments',
+                'boto3': 'batch_get_deployments',
+                'cli': 'batch-get-deployments'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codedeploy:codedeploy.DeleteApplication
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "deleteApplication") {
+        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codedeploy',
+            'method': {
+                'api': 'DeleteApplication',
+                'boto3': 'delete_application',
+                'cli': 'delete-application'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codepipeline:codepipeline.ListActionTypes
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "listActionTypes") {
+
+        outputs.push({
+            'region': region,
+            'service': 'codepipeline',
+            'method': {
+                'api': 'ListActionTypes',
+                'boto3': 'list_action_types',
+                'cli': 'list-action-types'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codepipeline:codepipeline.ListPipelines
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "listPipelines") {
+
+        outputs.push({
+            'region': region,
+            'service': 'codepipeline',
+            'method': {
+                'api': 'ListPipelines',
+                'boto3': 'list_pipelines',
+                'cli': 'list-pipelines'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codebuild:codebuild.ListProjects
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codebuild$/g) && jsonRequestBody.operation == "listProjects") {
+
+        outputs.push({
+            'region': region,
+            'service': 'codebuild',
+            'method': {
+                'api': 'ListProjects',
+                'boto3': 'list_projects',
+                'cli': 'list-projects'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codecommit:codecommit.ListRepositories
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "listRepositories") {
+
+        outputs.push({
+            'region': region,
+            'service': 'codecommit',
+            'method': {
+                'api': 'ListRepositories',
+                'boto3': 'list_repositories',
+                'cli': 'list-repositories'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codebuild:codebuild.ListCuratedEnvironmentImages
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codebuild$/g) && jsonRequestBody.operation == "listCuratedEnvironmentImages") {
+
+        outputs.push({
+            'region': region,
+            'service': 'codebuild',
+            'method': {
+                'api': 'ListCuratedEnvironmentImages',
+                'boto3': 'list_curated_environment_images',
+                'cli': 'list-curated-environment-images'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codebuild:codebuild.CreateProject
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codebuild$/g) && jsonRequestBody.operation == "createProject") {
+        reqParams.boto3['TimeoutInMinutes'] = jsonRequestBody.contentString.timeoutInMinutes;
+        reqParams.cli['--timeout-in-minutes'] = jsonRequestBody.contentString.timeoutInMinutes;
+        reqParams.boto3['Artifacts'] = jsonRequestBody.contentString.artifacts;
+        reqParams.cli['--artifacts'] = jsonRequestBody.contentString.artifacts;
+        reqParams.boto3['Cache'] = jsonRequestBody.contentString.cache;
+        reqParams.cli['--cache'] = jsonRequestBody.contentString.cache;
+        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.cli['--description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['Environment'] = jsonRequestBody.contentString.environment;
+        reqParams.cli['--environment'] = jsonRequestBody.contentString.environment;
+        reqParams.boto3['ServiceRole'] = jsonRequestBody.contentString.serviceRole;
+        reqParams.cli['--service-role'] = jsonRequestBody.contentString.serviceRole;
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['Source'] = jsonRequestBody.contentString.source;
+        reqParams.cli['--source'] = jsonRequestBody.contentString.source;
+
+        reqParams.cfn['TimeoutInMinutes'] = jsonRequestBody.contentString.timeoutInMinutes;
+        reqParams.cfn['Artifacts'] = jsonRequestBody.contentString.artifacts;
+        reqParams.cfn['Cache'] = jsonRequestBody.contentString.cache;
+        reqParams.cfn['Description'] = jsonRequestBody.contentString.description;
+        reqParams.cfn['Environment'] = jsonRequestBody.contentString.environment;
+        reqParams.cfn['ServiceRole'] = jsonRequestBody.contentString.serviceRole;
+        reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cfn['Source'] = jsonRequestBody.contentString.source;
+
+        outputs.push({
+            'region': region,
+            'service': 'codebuild',
+            'method': {
+                'api': 'CreateProject',
+                'boto3': 'create_project',
+                'cli': 'create-project'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'codebuild',
+            'type': 'AWS::CodeBuild::Project',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:codebuild:codebuild.BatchGetProjects
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codebuild$/g) && jsonRequestBody.operation == "batchGetProjects") {
+        reqParams.boto3['Names'] = jsonRequestBody.contentString.names;
+        reqParams.cli['--names'] = jsonRequestBody.contentString.names;
+
+        outputs.push({
+            'region': region,
+            'service': 'codebuild',
+            'method': {
+                'api': 'BatchGetProjects',
+                'boto3': 'batch_get_projects',
+                'cli': 'batch-get-projects'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codepipeline:codepipeline.CreatePipeline
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "createPipeline") {
+        reqParams.boto3['Pipeline'] = jsonRequestBody.contentString.pipeline;
+        reqParams.cli['--pipeline'] = jsonRequestBody.contentString.pipeline;
+
+        reqParams.cfn['ArtifactStore'] = {
+            'Location': jsonRequestBody.contentString.pipeline.artifactStore.location,
+            'Type': jsonRequestBody.contentString.pipeline.artifactStore.type
+        };
+        reqParams.cfn['RoleArn'] = jsonRequestBody.contentString.pipeline.roleArn;
+        reqParams.cfn['Name'] = jsonRequestBody.contentString.pipeline.name;
+        reqParams.cfn['Stages'] = jsonRequestBody.contentString.pipeline.stages;
+
+        outputs.push({
+            'region': region,
+            'service': 'codepipeline',
+            'method': {
+                'api': 'CreatePipeline',
+                'boto3': 'create_pipeline',
+                'cli': 'create-pipeline'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'codepipeline',
+            'type': 'AWS::CodePipeline::Pipeline',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:codepipeline:codepipeline.GetPipeline
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "getPipeline") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.name;
+
+        outputs.push({
+            'region': region,
+            'service': 'codepipeline',
+            'method': {
+                'api': 'GetPipeline',
+                'boto3': 'get_pipeline',
+                'cli': 'get-pipeline'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codepipeline:codepipeline.GetPipelineState
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "getPipelineState") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.name;
+
+        outputs.push({
+            'region': region,
+            'service': 'codepipeline',
+            'method': {
+                'api': 'GetPipelineState',
+                'boto3': 'get_pipeline_state',
+                'cli': 'get-pipeline-state'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codepipeline:codepipeline.GetPipelineExecution
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "getPipelineExecution") {
+        reqParams.boto3['PipelineExecutionId'] = jsonRequestBody.contentString.pipelineExecutionId;
+        reqParams.cli['--pipeline-execution-id'] = jsonRequestBody.contentString.pipelineExecutionId;
+        reqParams.boto3['PipelineName'] = jsonRequestBody.contentString.pipelineName;
+        reqParams.cli['--pipeline-name'] = jsonRequestBody.contentString.pipelineName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codepipeline',
+            'method': {
+                'api': 'GetPipelineExecution',
+                'boto3': 'get_pipeline_execution',
+                'cli': 'get-pipeline-execution'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codepipeline:codepipeline.UpdatePipeline
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "updatePipeline") {
+        reqParams.boto3['Pipeline'] = jsonRequestBody.contentString.pipeline;
+        reqParams.cli['--pipeline'] = jsonRequestBody.contentString.pipeline;
+
+        outputs.push({
+            'region': region,
+            'service': 'codepipeline',
+            'method': {
+                'api': 'UpdatePipeline',
+                'boto3': 'update_pipeline',
+                'cli': 'update-pipeline'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codepipeline:codepipeline.DeletePipeline
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "deletePipeline") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.name;
+
+        outputs.push({
+            'region': region,
+            'service': 'codepipeline',
+            'method': {
+                'api': 'DeletePipeline',
+                'boto3': 'delete_pipeline',
+                'cli': 'delete-pipeline'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codecommit:codecommit.CreateRepository
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "createRepository") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['RepositoryDescription'] = jsonRequestBody.contentString.repositoryDescription;
+        reqParams.cli['--repository-description'] = jsonRequestBody.contentString.repositoryDescription;
+
+        reqParams.cfn['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cfn['RepositoryDescription'] = jsonRequestBody.contentString.repositoryDescription;
+
+        outputs.push({
+            'region': region,
+            'service': 'codecommit',
+            'method': {
+                'api': 'CreateRepository',
+                'boto3': 'create_repository',
+                'cli': 'create-repository'
+            },
+            'options': reqParams
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'codecommit',
+            'type': 'AWS::CodeCommit::Repository',
+            'options': reqParams,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:codecommit:codecommit.GetRepository
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "getRepository") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codecommit',
+            'method': {
+                'api': 'GetRepository',
+                'boto3': 'get_repository',
+                'cli': 'get-repository'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codecommit:codecommit.ListRepositories
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "listRepositories") {
+        reqParams.boto3['SortBy'] = jsonRequestBody.contentString.sortBy;
+        reqParams.cli['--sort-by'] = jsonRequestBody.contentString.sortBy;
+        reqParams.boto3['Order'] = jsonRequestBody.contentString.order;
+        reqParams.cli['--order'] = jsonRequestBody.contentString.order;
+
+        outputs.push({
+            'region': region,
+            'service': 'codecommit',
+            'method': {
+                'api': 'ListRepositories',
+                'boto3': 'list_repositories',
+                'cli': 'list-repositories'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codecommit:codecommit.ListPullRequests
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "listPullRequests") {
+        reqParams.boto3['MaxResults'] = jsonRequestBody.contentString.maxResults;
+        reqParams.cli['--max-results'] = jsonRequestBody.contentString.maxResults;
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['PullRequestStatus'] = jsonRequestBody.contentString.pullRequestStatus;
+        reqParams.cli['--pull-request-status'] = jsonRequestBody.contentString.pullRequestStatus;
+
+        outputs.push({
+            'region': region,
+            'service': 'codecommit',
+            'method': {
+                'api': 'ListPullRequests',
+                'boto3': 'list_pull_requests',
+                'cli': 'list-pull-requests'
+            },
+            'options': reqParams
+        });
+        
+        return {};
+    }
+
+    // autogen:codecommit:codecommit.DeleteRepository
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "deleteRepository") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+
+        outputs.push({
+            'region': region,
+            'service': 'codecommit',
+            'method': {
+                'api': 'DeleteRepository',
+                'boto3': 'delete_repository',
+                'cli': 'delete-repository'
             },
             'options': reqParams
         });

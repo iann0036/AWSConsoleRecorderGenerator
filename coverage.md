@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**42/258 (16.0%)** Resources Covered
+**63/258 (24.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -25,22 +25,22 @@
 | *AWS::ApiGateway::UsagePlan* | 1 |
 | *AWS::ApiGateway::UsagePlanKey* | 0 |
 | *AWS::ApiGateway::VpcLink* | 0 |
-| *AWS::AppSync::ApiKey* | 0 |
-| *AWS::AppSync::DataSource* | 0 |
-| *AWS::AppSync::GraphQLApi* | 0 |
-| *AWS::AppSync::GraphQLSchema* | 0 |
-| *AWS::AppSync::Resolver* | 0 |
+| *AWS::AppSync::ApiKey* | 1 |
+| *AWS::AppSync::DataSource* | 1 |
+| *AWS::AppSync::GraphQLApi* | 1 |
+| *AWS::AppSync::GraphQLSchema* | 1 |
+| *AWS::AppSync::Resolver* | 1 |
 | *AWS::ApplicationAutoScaling::ScalableTarget* | 0 |
 | *AWS::ApplicationAutoScaling::ScalingPolicy* | 0 |
-| *AWS::Athena::NamedQuery* | 0 |
-| *AWS::AutoScaling::AutoScalingGroup* | 0 |
-| *AWS::AutoScaling::LaunchConfiguration* | 0 |
-| *AWS::AutoScaling::LifecycleHook* | 0 |
-| *AWS::AutoScaling::ScalingPolicy* | 0 |
-| *AWS::AutoScaling::ScheduledAction* | 0 |
-| *AWS::Batch::ComputeEnvironment* | 0 |
-| *AWS::Batch::JobDefinition* | 0 |
-| *AWS::Batch::JobQueue* | 0 |
+| *AWS::Athena::NamedQuery* | 1 |
+| *AWS::AutoScaling::AutoScalingGroup* | 1 |
+| *AWS::AutoScaling::LaunchConfiguration* | 1 |
+| *AWS::AutoScaling::LifecycleHook* | 1 |
+| *AWS::AutoScaling::ScalingPolicy* | 1 |
+| *AWS::AutoScaling::ScheduledAction* | 1 |
+| *AWS::Batch::ComputeEnvironment* | 1 |
+| *AWS::Batch::JobDefinition* | 1 |
+| *AWS::Batch::JobQueue* | 1 |
 | *AWS::Budgets::Budget* | 0 |
 | *AWS::CertificateManager::Certificate* | 0 |
 | *AWS::CloudFormation::CustomResource* | 1 |
@@ -53,11 +53,11 @@
 | *AWS::CloudTrail::Trail* | 1 |
 | *AWS::CloudWatch::Alarm* | 0 |
 | *AWS::CloudWatch::Dashboard* | 0 |
-| *AWS::CodeDeploy::Application* | 0 |
-| *AWS::CodeDeploy::DeploymentConfig* | 0 |
-| *AWS::CodeDeploy::DeploymentGroup* | 0 |
+| *AWS::CodeDeploy::Application* | 1 |
+| *AWS::CodeDeploy::DeploymentConfig* | 1 |
+| *AWS::CodeDeploy::DeploymentGroup* | 1 |
 | *AWS::CodePipeline::CustomActionType* | 0 |
-| *AWS::CodePipeline::Pipeline* | 0 |
+| *AWS::CodePipeline::Pipeline* | 1 |
 | *AWS::CodePipeline::Webhook* | 0 |
 | *AWS::Cognito::IdentityPool* | 0 |
 | *AWS::Cognito::IdentityPoolRoleAttachment* | 0 |
@@ -80,7 +80,7 @@
 | *AWS::DataPipeline::Pipeline* | 0 |
 | *AWS::DirectoryService::MicrosoftAD* | 0 |
 | *AWS::DirectoryService::SimpleAD* | 0 |
-| *AWS::DynamoDB::Table* | 0 |
+| *AWS::DynamoDB::Table* | 1 |
 | *AWS::EC2::CustomerGateway* | 1 |
 | *AWS::EC2::DHCPOptions* | 0 |
 | *AWS::EC2::EIP* | 1 |
@@ -269,21 +269,29 @@
 | --- | --- |
 | *acm* | 1/12 (8.0%) |
 | *apigateway* | 31/120 (25.0%) |
-| *autoscaling* | 1/54 (1.0%) |
+| *appsync* | 9/27 (33.0%) |
+| *athena* | 1/11 (9.0%) |
+| *autoscaling* | 19/54 (35.0%) |
+| *batch* | 11/16 (68.0%) |
 | *cloud9* | 6/10 (60.0%) |
 | *cloudtrail* | 6/14 (42.0%) |
 | *cloudwatch* | 1/17 (5.0%) |
+| *codebuild* | 4/16 (25.0%) |
+| *codecommit* | 5/39 (12.0%) |
+| *codedeploy* | 15/40 (37.0%) |
+| *codepipeline* | 8/32 (25.0%) |
 | *cognito-idp* | 1/95 (1.0%) |
 | *config* | 3/43 (6.0%) |
 | *ds* | 1/49 (2.0%) |
+| *dynamodb* | 2/34 (5.0%) |
 | *ec2* | 72/274 (26.0%) |
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
-| *elbv2* | 1/34 (2.0%) |
+| *elbv2* | 2/34 (5.0%) |
 | *events* | 5/15 (33.0%) |
 | *firehose* | 1/10 (10.0%) |
 | *guardduty* | 21/42 (50.0%) |
-| *iam* | 19/127 (14.0%) |
+| *iam* | 22/127 (17.0%) |
 | *kinesis* | 1/28 (3.0%) |
 | *kms* | 2/35 (5.0%) |
 | *lambda* | 3/30 (10.0%) |
@@ -548,31 +556,31 @@
 | *appstream* | `DeleteImage` | 0 |
 | *appsync* | `UpdateResolver` | 0 |
 | *appsync* | `GetGraphqlApi` | 0 |
-| *appsync* | `CreateResolver` | 0 |
+| *appsync* | `CreateResolver` | 1 |
 | *appsync* | `ListTypes` | 0 |
 | *appsync* | `ListApiKeys` | 0 |
 | *appsync* | `ListGraphqlApis` | 0 |
-| *appsync* | `DeleteGraphqlApi` | 0 |
+| *appsync* | `DeleteGraphqlApi` | 1 |
 | *appsync* | `GetIntrospectionSchema` | 0 |
-| *appsync* | `ListResolvers` | 0 |
+| *appsync* | `ListResolvers` | 1 |
 | *appsync* | `GetResolver` | 0 |
 | *appsync* | `UpdateDataSource` | 0 |
 | *appsync* | `DeleteResolver` | 0 |
 | *appsync* | `UpdateApiKey` | 0 |
-| *appsync* | `GetSchemaCreationStatus` | 0 |
+| *appsync* | `GetSchemaCreationStatus` | 1 |
 | *appsync* | `UpdateType` | 0 |
-| *appsync* | `CreateGraphqlApi` | 0 |
+| *appsync* | `CreateGraphqlApi` | 1 |
 | *appsync* | `CreateType` | 0 |
 | *appsync* | `DeleteDataSource` | 0 |
-| *appsync* | `CreateApiKey` | 0 |
+| *appsync* | `CreateApiKey` | 1 |
 | *appsync* | `ListDataSources` | 0 |
-| *appsync* | `StartSchemaCreation` | 0 |
-| *appsync* | `CreateDataSource` | 0 |
+| *appsync* | `StartSchemaCreation` | 1 |
+| *appsync* | `CreateDataSource` | 1 |
 | *appsync* | `GetType` | 0 |
 | *appsync* | `GetDataSource` | 0 |
 | *appsync* | `DeleteType` | 0 |
 | *appsync* | `DeleteApiKey` | 0 |
-| *appsync* | `UpdateGraphqlApi` | 0 |
+| *appsync* | `UpdateGraphqlApi` | 1 |
 | *athena* | `BatchGetQueryExecution` | 0 |
 | *athena* | `DeleteNamedQuery` | 0 |
 | *athena* | `ListNamedQueries` | 0 |
@@ -583,55 +591,55 @@
 | *athena* | `ListQueryExecutions` | 0 |
 | *athena* | `GetQueryExecution` | 0 |
 | *athena* | `GetQueryResults` | 0 |
-| *athena* | `CreateNamedQuery` | 0 |
+| *athena* | `CreateNamedQuery` | 1 |
 | *autoscaling* | `DeleteTags` | 0 |
-| *autoscaling* | `DescribeScalingActivities` | 0 |
-| *autoscaling* | `CreateAutoScalingGroup` | 0 |
+| *autoscaling* | `DescribeScalingActivities` | 1 |
+| *autoscaling* | `CreateAutoScalingGroup` | 1 |
 | *autoscaling* | `ExecutePolicy` | 0 |
 | *autoscaling* | `SetInstanceProtection` | 0 |
 | *autoscaling* | `DetachLoadBalancerTargetGroups` | 0 |
-| *autoscaling* | `DescribeNotificationConfigurations` | 0 |
-| *autoscaling* | `DeleteAutoScalingGroup` | 0 |
+| *autoscaling* | `DescribeNotificationConfigurations` | 1 |
+| *autoscaling* | `DeleteAutoScalingGroup` | 1 |
 | *autoscaling* | `DeletePolicy` | 0 |
 | *autoscaling* | `ExitStandby` | 0 |
 | *autoscaling* | `SetInstanceHealth` | 0 |
 | *autoscaling* | `CreateOrUpdateTags` | 0 |
 | *autoscaling* | `DescribeScalingProcessTypes` | 0 |
-| *autoscaling* | `PutLifecycleHook` | 0 |
+| *autoscaling* | `PutLifecycleHook` | 1 |
 | *autoscaling* | `DetachLoadBalancers` | 0 |
 | *autoscaling* | `AttachInstances` | 0 |
-| *autoscaling* | `PutScheduledUpdateGroupAction` | 0 |
-| *autoscaling* | `PutScalingPolicy` | 0 |
-| *autoscaling* | `DeleteScheduledAction` | 0 |
+| *autoscaling* | `PutScheduledUpdateGroupAction` | 1 |
+| *autoscaling* | `PutScalingPolicy` | 1 |
+| *autoscaling* | `DeleteScheduledAction` | 1 |
 | *autoscaling* | `AttachLoadBalancers` | 0 |
 | *autoscaling* | `DetachInstances` | 0 |
 | *autoscaling* | `DescribeAdjustmentTypes` | 0 |
 | *autoscaling* | `TerminateInstanceInAutoScalingGroup` | 0 |
 | *autoscaling* | `AttachLoadBalancerTargetGroups` | 0 |
-| *autoscaling* | `DescribeLoadBalancers` | 0 |
+| *autoscaling* | `DescribeLoadBalancers` | 1 |
 | *autoscaling* | `CompleteLifecycleAction` | 0 |
 | *autoscaling* | `DescribeMetricCollectionTypes` | 0 |
 | *autoscaling* | `UpdateAutoScalingGroup` | 0 |
 | *autoscaling* | `RecordLifecycleActionHeartbeat` | 0 |
-| *autoscaling* | `PutNotificationConfiguration` | 0 |
+| *autoscaling* | `PutNotificationConfiguration` | 1 |
 | *autoscaling* | `ResumeProcesses` | 0 |
-| *autoscaling* | `CreateLaunchConfiguration` | 0 |
+| *autoscaling* | `CreateLaunchConfiguration` | 1 |
 | *autoscaling* | `DescribeLifecycleHookTypes` | 0 |
 | *autoscaling* | `DescribeAutoScalingInstances` | 0 |
-| *autoscaling* | `DescribeTags` | 0 |
+| *autoscaling* | `DescribeTags` | 1 |
 | *autoscaling* | `BatchDeleteScheduledAction` | 0 |
 | *autoscaling* | `DisableMetricsCollection` | 0 |
 | *autoscaling* | `BatchPutScheduledUpdateGroupAction` | 0 |
-| *autoscaling* | `DescribeLaunchConfigurations` | 0 |
+| *autoscaling* | `DescribeLaunchConfigurations` | 1 |
 | *autoscaling* | `EnterStandby` | 0 |
 | *autoscaling* | `SetDesiredCapacity` | 0 |
 | *autoscaling* | `DescribeLoadBalancerTargetGroups` | 0 |
-| *autoscaling* | `DeleteLaunchConfiguration` | 0 |
-| *autoscaling* | `DeleteLifecycleHook` | 0 |
-| *autoscaling* | `DescribePolicies` | 0 |
-| *autoscaling* | `DescribeLifecycleHooks` | 0 |
+| *autoscaling* | `DeleteLaunchConfiguration` | 1 |
+| *autoscaling* | `DeleteLifecycleHook` | 1 |
+| *autoscaling* | `DescribePolicies` | 1 |
+| *autoscaling* | `DescribeLifecycleHooks` | 1 |
 | *autoscaling* | `DescribeTerminationPolicyTypes` | 0 |
-| *autoscaling* | `DescribeScheduledActions` | 0 |
+| *autoscaling* | `DescribeScheduledActions` | 1 |
 | *autoscaling* | `DescribeAutoScalingGroups` | 1 |
 | *autoscaling* | `EnableMetricsCollection` | 0 |
 | *autoscaling* | `DeleteNotificationConfiguration` | 0 |
@@ -643,19 +651,19 @@
 | *autoscaling-plans* | `DeleteScalingPlan` | 0 |
 | *autoscaling-plans* | `DescribeScalingPlans` | 0 |
 | *autoscaling-plans* | `UpdateScalingPlan` | 0 |
-| *batch* | `ListJobs` | 0 |
-| *batch* | `SubmitJob` | 0 |
+| *batch* | `ListJobs` | 1 |
+| *batch* | `SubmitJob` | 1 |
 | *batch* | `UpdateJobQueue` | 0 |
-| *batch* | `UpdateComputeEnvironment` | 0 |
-| *batch* | `DeregisterJobDefinition` | 0 |
+| *batch* | `UpdateComputeEnvironment` | 1 |
+| *batch* | `DeregisterJobDefinition` | 1 |
 | *batch* | `DescribeJobQueues` | 0 |
-| *batch* | `CreateComputeEnvironment` | 0 |
-| *batch* | `DeleteComputeEnvironment` | 0 |
-| *batch* | `DescribeComputeEnvironments` | 0 |
-| *batch* | `CreateJobQueue` | 0 |
-| *batch* | `RegisterJobDefinition` | 0 |
-| *batch* | `CancelJob` | 0 |
-| *batch* | `DescribeJobDefinitions` | 0 |
+| *batch* | `CreateComputeEnvironment` | 1 |
+| *batch* | `DeleteComputeEnvironment` | 1 |
+| *batch* | `DescribeComputeEnvironments` | 2 |
+| *batch* | `CreateJobQueue` | 1 |
+| *batch* | `RegisterJobDefinition` | 1 |
+| *batch* | `CancelJob` | 1 |
+| *batch* | `DescribeJobDefinitions` | 1 |
 | *batch* | `DeleteJobQueue` | 0 |
 | *batch* | `DescribeJobs` | 0 |
 | *batch* | `TerminateJob` | 0 |
@@ -936,20 +944,20 @@
 | *codebuild* | `StopBuild` | 0 |
 | *codebuild* | `ListBuildsForProject` | 0 |
 | *codebuild* | `BatchGetBuilds` | 0 |
-| *codebuild* | `ListProjects` | 0 |
-| *codebuild* | `CreateProject` | 0 |
-| *codebuild* | `ListCuratedEnvironmentImages` | 0 |
+| *codebuild* | `ListProjects` | 1 |
+| *codebuild* | `CreateProject` | 1 |
+| *codebuild* | `ListCuratedEnvironmentImages` | 1 |
 | *codebuild* | `CreateWebhook` | 0 |
 | *codebuild* | `InvalidateProjectCache` | 0 |
 | *codebuild* | `StartBuild` | 0 |
 | *codebuild* | `DeleteProject` | 0 |
 | *codebuild* | `UpdateProject` | 0 |
 | *codebuild* | `DeleteWebhook` | 0 |
-| *codebuild* | `BatchGetProjects` | 0 |
+| *codebuild* | `BatchGetProjects` | 1 |
 | *codebuild* | `BatchDeleteBuilds` | 0 |
 | *codecommit* | `TestRepositoryTriggers` | 0 |
-| *codecommit* | `DeleteRepository` | 0 |
-| *codecommit* | `ListPullRequests` | 0 |
+| *codecommit* | `DeleteRepository` | 1 |
+| *codecommit* | `ListPullRequests` | 1 |
 | *codecommit* | `UpdateRepositoryDescription` | 0 |
 | *codecommit* | `UpdatePullRequestDescription` | 0 |
 | *codecommit* | `DeleteBranch` | 0 |
@@ -961,7 +969,7 @@
 | *codecommit* | `UpdateRepositoryName` | 0 |
 | *codecommit* | `PostCommentForPullRequest` | 0 |
 | *codecommit* | `CreateBranch` | 0 |
-| *codecommit* | `GetRepository` | 0 |
+| *codecommit* | `GetRepository` | 1 |
 | *codecommit* | `GetBlob` | 0 |
 | *codecommit* | `ListBranches` | 0 |
 | *codecommit* | `GetRepositoryTriggers` | 0 |
@@ -971,7 +979,7 @@
 | *codecommit* | `PutRepositoryTriggers` | 0 |
 | *codecommit* | `GetCommentsForComparedCommit` | 0 |
 | *codecommit* | `GetBranch` | 0 |
-| *codecommit* | `CreateRepository` | 0 |
+| *codecommit* | `CreateRepository` | 1 |
 | *codecommit* | `GetCommit` | 0 |
 | *codecommit* | `PostCommentReply` | 0 |
 | *codecommit* | `PutFile` | 0 |
@@ -982,44 +990,44 @@
 | *codecommit* | `GetCommentsForPullRequest` | 0 |
 | *codecommit* | `UpdatePullRequestStatus` | 0 |
 | *codecommit* | `PostCommentForComparedCommit` | 0 |
-| *codecommit* | `ListRepositories` | 0 |
+| *codecommit* | `ListRepositories` | 2 |
 | *codecommit* | `GetComment` | 0 |
 | *codecommit* | `UpdatePullRequestTitle` | 0 |
 | *codecommit* | `MergePullRequestByFastForward` | 0 |
 | *codedeploy* | `DeleteGitHubAccountToken` | 0 |
 | *codedeploy* | `GetDeploymentConfig` | 0 |
 | *codedeploy* | `UpdateDeploymentGroup` | 0 |
-| *codedeploy* | `BatchGetDeployments` | 0 |
+| *codedeploy* | `BatchGetDeployments` | 1 |
 | *codedeploy* | `ContinueDeployment` | 0 |
-| *codedeploy* | `GetDeploymentGroup` | 0 |
-| *codedeploy* | `ListDeploymentGroups` | 0 |
-| *codedeploy* | `DeleteApplication` | 0 |
-| *codedeploy* | `CreateDeployment` | 0 |
-| *codedeploy* | `StopDeployment` | 0 |
-| *codedeploy* | `DeleteDeploymentConfig` | 0 |
+| *codedeploy* | `GetDeploymentGroup` | 1 |
+| *codedeploy* | `ListDeploymentGroups` | 1 |
+| *codedeploy* | `DeleteApplication` | 1 |
+| *codedeploy* | `CreateDeployment` | 1 |
+| *codedeploy* | `StopDeployment` | 1 |
+| *codedeploy* | `DeleteDeploymentConfig` | 1 |
 | *codedeploy* | `RemoveTagsFromOnPremisesInstances` | 0 |
 | *codedeploy* | `RegisterOnPremisesInstance` | 0 |
 | *codedeploy* | `ListOnPremisesInstances` | 0 |
-| *codedeploy* | `ListDeploymentConfigs` | 0 |
-| *codedeploy* | `GetApplication` | 0 |
+| *codedeploy* | `ListDeploymentConfigs` | 2 |
+| *codedeploy* | `GetApplication` | 1 |
 | *codedeploy* | `GetDeploymentInstance` | 0 |
 | *codedeploy* | `SkipWaitTimeForInstanceTermination` | 0 |
-| *codedeploy* | `BatchGetDeploymentGroups` | 0 |
+| *codedeploy* | `BatchGetDeploymentGroups` | 1 |
 | *codedeploy* | `BatchGetOnPremisesInstances` | 0 |
 | *codedeploy* | `GetApplicationRevision` | 0 |
 | *codedeploy* | `BatchGetDeploymentInstances` | 0 |
 | *codedeploy* | `UpdateApplication` | 0 |
-| *codedeploy* | `CreateDeploymentGroup` | 0 |
-| *codedeploy* | `ListApplicationRevisions` | 0 |
+| *codedeploy* | `CreateDeploymentGroup` | 1 |
+| *codedeploy* | `ListApplicationRevisions` | 1 |
 | *codedeploy* | `ListDeploymentInstances` | 0 |
 | *codedeploy* | `BatchGetApplicationRevisions` | 0 |
 | *codedeploy* | `PutLifecycleEventHookExecutionStatus` | 0 |
 | *codedeploy* | `DeregisterOnPremisesInstance` | 0 |
-| *codedeploy* | `CreateDeploymentConfig` | 0 |
+| *codedeploy* | `CreateDeploymentConfig` | 1 |
 | *codedeploy* | `GetOnPremisesInstance` | 0 |
 | *codedeploy* | `AddTagsToOnPremisesInstances` | 0 |
-| *codedeploy* | `CreateApplication` | 0 |
-| *codedeploy* | `ListDeployments` | 0 |
+| *codedeploy* | `CreateApplication` | 1 |
+| *codedeploy* | `ListDeployments` | 1 |
 | *codedeploy* | `ListApplications` | 0 |
 | *codedeploy* | `DeleteDeploymentGroup` | 0 |
 | *codedeploy* | `ListGitHubAccountTokenNames` | 0 |
@@ -1032,29 +1040,29 @@
 | *codepipeline* | `ListWebhooks` | 0 |
 | *codepipeline* | `PollForThirdPartyJobs` | 0 |
 | *codepipeline* | `GetThirdPartyJobDetails` | 0 |
-| *codepipeline* | `DeletePipeline` | 0 |
-| *codepipeline* | `UpdatePipeline` | 0 |
+| *codepipeline* | `DeletePipeline` | 1 |
+| *codepipeline* | `UpdatePipeline` | 1 |
 | *codepipeline* | `PutJobFailureResult` | 0 |
-| *codepipeline* | `ListActionTypes` | 0 |
+| *codepipeline* | `ListActionTypes` | 1 |
 | *codepipeline* | `AcknowledgeThirdPartyJob` | 0 |
 | *codepipeline* | `PutWebhook` | 0 |
 | *codepipeline* | `DeleteWebhook` | 0 |
 | *codepipeline* | `DeregisterWebhookWithThirdParty` | 0 |
-| *codepipeline* | `GetPipelineExecution` | 0 |
+| *codepipeline* | `GetPipelineExecution` | 1 |
 | *codepipeline* | `PutThirdPartyJobSuccessResult` | 0 |
 | *codepipeline* | `AcknowledgeJob` | 0 |
 | *codepipeline* | `PutActionRevision` | 0 |
-| *codepipeline* | `ListPipelines` | 0 |
+| *codepipeline* | `ListPipelines` | 1 |
 | *codepipeline* | `StartPipelineExecution` | 0 |
 | *codepipeline* | `PutApprovalResult` | 0 |
 | *codepipeline* | `PutThirdPartyJobFailureResult` | 0 |
 | *codepipeline* | `PollForJobs` | 0 |
-| *codepipeline* | `GetPipelineState` | 0 |
+| *codepipeline* | `GetPipelineState` | 1 |
 | *codepipeline* | `CreateCustomActionType` | 0 |
-| *codepipeline* | `CreatePipeline` | 0 |
+| *codepipeline* | `CreatePipeline` | 1 |
 | *codepipeline* | `RegisterWebhookWithThirdParty` | 0 |
 | *codepipeline* | `GetJobDetails` | 0 |
-| *codepipeline* | `GetPipeline` | 0 |
+| *codepipeline* | `GetPipeline` | 1 |
 | *codepipeline* | `DeleteCustomActionType` | 0 |
 | *codepipeline* | `ListPipelineExecutions` | 0 |
 | *codepipeline* | `PutJobSuccessResult` | 0 |
@@ -1575,7 +1583,7 @@
 | *dynamodb* | `DescribeTimeToLive` | 0 |
 | *dynamodb* | `DeleteBackup` | 0 |
 | *dynamodb* | `DescribeGlobalTable` | 0 |
-| *dynamodb* | `CreateTable` | 0 |
+| *dynamodb* | `CreateTable` | 1 |
 | *dynamodb* | `RestoreTableFromBackup` | 0 |
 | *dynamodb* | `UpdateTimeToLive` | 0 |
 | *dynamodb* | `UpdateTable` | 0 |
@@ -1591,7 +1599,7 @@
 | *dynamodb* | `UpdateItem` | 0 |
 | *dynamodb* | `BatchGetItem` | 0 |
 | *dynamodb* | `DescribeGlobalTableSettings` | 0 |
-| *dynamodb* | `DescribeTable` | 0 |
+| *dynamodb* | `DescribeTable` | 1 |
 | *dynamodb* | `ListTables` | 0 |
 | *dynamodb* | `Query` | 0 |
 | *dynamodb* | `DeleteTable` | 0 |
@@ -1683,7 +1691,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 3 |
+| *ec2* | `DescribeVpcs` | 4 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1775,7 +1783,7 @@
 | *ec2* | `PurchaseReservedInstancesOffering` | 0 |
 | *ec2* | `ModifySubnetAttribute` | 0 |
 | *ec2* | `DescribeNetworkInterfaces` | 2 |
-| *ec2* | `DescribeLaunchTemplates` | 1 |
+| *ec2* | `DescribeLaunchTemplates` | 2 |
 | *ec2* | `ConfirmProductInstance` | 0 |
 | *ec2* | `DescribeExportTasks` | 0 |
 | *ec2* | `DetachInternetGateway` | 0 |
@@ -1834,7 +1842,7 @@
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 3 |
+| *ec2* | `DescribeSecurityGroups` | 4 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -1847,7 +1855,7 @@
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 0 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 4 |
+| *ec2* | `DescribeSubnets` | 5 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -2108,7 +2116,7 @@
 | *elbv2* | `ModifyRule` | 0 |
 | *elbv2* | `CreateTargetGroup` | 0 |
 | *elbv2* | `AddTags` | 0 |
-| *elbv2* | `DescribeTargetGroups` | 0 |
+| *elbv2* | `DescribeTargetGroups` | 1 |
 | *elbv2* | `DeregisterTargets` | 0 |
 | *elbv2* | `ModifyLoadBalancerAttributes` | 0 |
 | *elbv2* | `DescribeRules` | 0 |
@@ -2535,9 +2543,9 @@
 | *iam* | `UploadServerCertificate` | 0 |
 | *iam* | `GetContextKeysForPrincipalPolicy` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
-| *iam* | `ListRoles` | 4 |
+| *iam* | `ListRoles` | 5 |
 | *iam* | `DeleteAccessKey` | 0 |
-| *iam* | `AddRoleToInstanceProfile` | 0 |
+| *iam* | `AddRoleToInstanceProfile` | 1 |
 | *iam* | `GetContextKeysForCustomPolicy` | 0 |
 | *iam* | `GetGroupPolicy` | 0 |
 | *iam* | `DeleteServiceLinkedRole` | 0 |
@@ -2558,7 +2566,7 @@
 | *iam* | `CreateUser` | 1 |
 | *iam* | `AddUserToGroup` | 1 |
 | *iam* | `RemoveRoleFromInstanceProfile` | 0 |
-| *iam* | `ListInstanceProfiles` | 1 |
+| *iam* | `ListInstanceProfiles` | 3 |
 | *iam* | `UpdateServiceSpecificCredential` | 0 |
 | *iam* | `ListAttachedUserPolicies` | 0 |
 | *iam* | `CreatePolicyVersion` | 0 |
@@ -2622,7 +2630,7 @@
 | *iam* | `GetLoginProfile` | 1 |
 | *iam* | `CreateVirtualMFADevice` | 0 |
 | *iam* | `GetServerCertificate` | 0 |
-| *iam* | `AttachRolePolicy` | 0 |
+| *iam* | `AttachRolePolicy` | 1 |
 | *iam* | `RemoveClientIDFromOpenIDConnectProvider` | 0 |
 | *iam* | `UpdateAccountPasswordPolicy` | 0 |
 | *iam* | `GetRole` | 0 |
@@ -2632,7 +2640,7 @@
 | *iam* | `ResyncMFADevice` | 0 |
 | *iam* | `DeleteServerCertificate` | 0 |
 | *iam* | `GetAccountPasswordPolicy` | 0 |
-| *iam* | `CreateInstanceProfile` | 0 |
+| *iam* | `CreateInstanceProfile` | 1 |
 | *iam* | `DeleteOpenIDConnectProvider` | 0 |
 | *iam* | `DeleteGroupPolicy` | 0 |
 | *importexport* | `ListJobs` | 0 |
@@ -4866,4 +4874,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 232 (5.0%)**
+**Total Unique Occurances: 309 (6.0%)**

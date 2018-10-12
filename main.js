@@ -282,6 +282,17 @@ chrome.runtime.sendMessage(null, {
                         }, 1, i, j);
                     }
                 }
+
+                try {
+                    if (request_body.match(/([^|{}=&]+)\=([^|{}=&]+)(?:\&([^|{}=&]+)\=([^|{}=&]+))*/g)) {
+                        console.log(/([^|{}=&]+)\=([^|{}=&]+)(?:\&([^|{}=&]+)\=([^|{}=&]+))*/g.exec(request_body));
+                    } else {
+                        selectable_json += `<a id="formreq-${i}-_" data-prop="formRequestBody._" data-val="${request_body}" style="color: #2222cc;">FORMDATA _</a>: ${request_body} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-_" data-prop="formRequestBody._"></select><br />`;
+                        setTimeout(function(i){
+                            document.getElementById(`formreq-${i}-_`).onclick = addSelectable;
+                        }, 1, i);
+                    }
+                } catch(e) {;}
             }
 
             for (var j=0; j<4; j++) {
