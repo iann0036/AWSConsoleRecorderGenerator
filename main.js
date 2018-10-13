@@ -170,6 +170,9 @@ function doFinalize() {
         }
     );
 
+    if (response[i]['requestBody'].match(/^\{\"version\"\:\"[0-9.]+\"\, \"actions\"\:/g)) // dirty hack
+        document.getElementById('final_output').innerHTML += `} else if (action['action'] == "` + jsonRequestBody["actions"][0]["action"] + `") {`;
+
     document.getElementById('final_output').innerHTML += `
     // autogen:${service}:${apiservice}.${apimethod}
     if (details.method == "${method}" && details.url.match(/${regexval}/g)${selectables_string}) {
@@ -182,7 +185,8 @@ ${inputs_string}
                 'boto3': '${boto3method}',
                 'cli': '${climethod}'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -263,6 +267,18 @@ chrome.runtime.sendMessage(null, {
                             setTimeout(function(i, subprop){
                                 document.getElementById(`${i}-${subprop}`).onclick = addSelectable;
                             }, 1, i, subprop);
+                        }
+                    } else if (Array.isArray(jsonRequestBody[prop]) == true && prop == "actions") {
+                        console.log(jsonRequestBody[prop][0]);
+                        if (typeof jsonRequestBody["actions"][0]["parameters"][0] === "object") {
+                            for (var subprop in jsonRequestBody["actions"][0]["parameters"][0]) {
+                                var proppath = "action['parameters'][0]['" + subprop + "']";
+                                var val = JSON.stringify(jsonRequestBody["actions"][0]["parameters"][0][subprop]);
+                                selectable_json += `<a id="actions-${i}-${subprop}" data-prop="${proppath}" data-val=${val} style="color: #2222cc;">ACTION ${subprop}</a>: ${val} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${subprop}" data-prop="${proppath}"></select><br />`;
+                                setTimeout(function(i, subprop){
+                                    document.getElementById(`actions-${i}-${subprop}`).onclick = addSelectable;
+                                }, 1, i, subprop);
+                            }
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 var combined = null;
 var requests_with_potentials = [];
+var intercept = false;
 
 chrome.runtime.onMessage.addListener(
     function(message, sender, sendResponse) {
@@ -165,9 +166,9 @@ function getPipeSplitField(str, index) {
 var outputs = [];
 var tracked_resources = [];
 var blocking = false;
-var intercept = false;
 
 function analyseRequest(details) {
+    console.dir(details);
 
     var reqParams = {
         'boto3': {},
@@ -231,7 +232,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_instances',
                 'cli': 'describe-instances'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -270,7 +272,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_images',
                 'cli': 'describe-images'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -287,7 +290,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_images',
                 'cli': 'describe-images'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -303,7 +307,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpcs',
                 'cli': 'describe-vpcs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -319,7 +324,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_subnets',
                 'cli': 'describe-subnets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -346,7 +352,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_hosts',
                 'cli': 'describe-hosts'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -362,7 +369,8 @@ function analyseRequest(details) {
                 'boto3': 'list_instance_profiles',
                 'cli': 'list-instance-profiles'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -378,7 +386,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_network_interfaces',
                 'cli': 'describe-network-interfaces'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -394,7 +403,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_availability_zones',
                 'cli': 'describe-availability-zones'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -410,7 +420,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_security_groups',
                 'cli': 'describe-security-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -426,7 +437,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_key_pairs',
                 'cli': 'describe-key-pairs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -455,6 +467,7 @@ function analyseRequest(details) {
                 'cli': 'create-security-group'
             },
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
 
@@ -463,6 +476,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::SecurityGroup',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
 
@@ -524,6 +538,7 @@ function analyseRequest(details) {
                 'cli': 'authorize-security-group-ingress'
             },
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
 
@@ -605,6 +620,7 @@ function analyseRequest(details) {
                 'cli': 'run-instances'
             },
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
 
@@ -613,6 +629,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::Instance',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
 
@@ -638,6 +655,7 @@ function analyseRequest(details) {
                 'cli': 'terminate-instances'
             },
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
 
@@ -659,7 +677,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_launch_templates',
                 'cli': 'describe-launch-templates'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -675,7 +694,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_directories',
                 'cli': 'describe-directories'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -691,7 +711,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_placement_groups',
                 'cli': 'describe-placement-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -707,7 +728,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_spot_price_history',
                 'cli': 'describe-spot-price-history'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -755,7 +777,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_tags',
                 'cli': 'describe-tags'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -776,7 +799,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_instance_attribute',
                 'cli': 'describe-instance-attribute'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -799,7 +823,8 @@ function analyseRequest(details) {
                 'boto3': 'create_bucket',
                 'cli': 'create-bucket'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -807,6 +832,7 @@ function analyseRequest(details) {
             'service': 's3',
             'type': 'AWS::S3::Bucket',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
 
@@ -828,7 +854,8 @@ function analyseRequest(details) {
                 'boto3': 'put_bucket_versioning',
                 'cli': 'put-bucket-versioning'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -849,7 +876,8 @@ function analyseRequest(details) {
                 'boto3': 'put_bucket_metrics_configuration',
                 'cli': 'put-bucket-metrics-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -870,7 +898,8 @@ function analyseRequest(details) {
                 'boto3': 'put_bucket_tagging',
                 'cli': 'put-bucket-tagging'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -891,7 +920,8 @@ function analyseRequest(details) {
                 'boto3': 'put_bucket_acl',
                 'cli': 'put-bucket-acl'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -912,7 +942,8 @@ function analyseRequest(details) {
                 'boto3': 'put_bucket_logging',
                 'cli': 'put-bucket-logging'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -932,7 +963,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_bucket',
                 'cli': 'delete-bucket'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -954,7 +986,8 @@ function analyseRequest(details) {
                 'boto3': 'list_objects',
                 'cli': 'ls'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -974,7 +1007,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_versioning',
                 'cli': 'get-bucket-versioning'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -994,7 +1028,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_logging',
                 'cli': 'get-bucket-logging'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1014,7 +1049,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_tagging',
                 'cli': 'get-bucket-tagging'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1034,7 +1070,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_notification_configuration',
                 'cli': 'get-bucket-notification-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1054,7 +1091,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_website',
                 'cli': 'get-bucket-website'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1074,7 +1112,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_request_payment',
                 'cli': 'get-bucket-request-payment'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1094,7 +1133,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_accelerate_configuration',
                 'cli': 'get-bucket-accelerate-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1114,7 +1154,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_encryption',
                 'cli': 'get-bucket-encryption'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1134,7 +1175,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_replication',
                 'cli': 'get-bucket-replication'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1154,7 +1196,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_metrics_configuration',
                 'cli': 'get-bucket-metrics-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1174,7 +1217,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_analytics_configuration',
                 'cli': 'get-bucket-analytics-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1194,7 +1238,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_lifecycle_configuration',
                 'cli': 'get-bucket-lifecycle-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1214,7 +1259,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_cors',
                 'cli': 'get-bucket-cors'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1234,7 +1280,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_policy',
                 'cli': 'get-bucket-policy'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1254,7 +1301,8 @@ function analyseRequest(details) {
                 'boto3': 'get_bucket_acl',
                 'cli': 'get-bucket-acl'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1270,7 +1318,8 @@ function analyseRequest(details) {
                 'boto3': 'list_buckets',
                 'cli': 'ls'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1295,7 +1344,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_trails',
                 'cli': 'describe-trails'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         return {};
@@ -1318,7 +1368,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_environment_memberships',
                 'cli': 'describe-environment-memberships'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1337,7 +1388,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_environments',
                 'cli': 'describe-environments'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1356,7 +1408,8 @@ function analyseRequest(details) {
                 'boto3': 'list_environments',
                 'cli': 'list-environments'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1379,7 +1432,8 @@ function analyseRequest(details) {
                 'boto3': 'update_environment',
                 'cli': 'update-environment'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1396,7 +1450,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpcs',
                 'cli': 'describe-vpcs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1413,7 +1468,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_subnets',
                 'cli': 'describe-subnets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1442,7 +1498,8 @@ function analyseRequest(details) {
                 'boto3': 'create_environment_ec2',
                 'cli': 'create-environment-ec2'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1461,7 +1518,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_environment',
                 'cli': 'delete-environment'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1478,7 +1536,8 @@ function analyseRequest(details) {
                 'boto3': 'list_input_security_groups',
                 'cli': 'list-input-security-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1495,7 +1554,8 @@ function analyseRequest(details) {
                 'boto3': 'list_channels',
                 'cli': 'list-channels'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1514,7 +1574,8 @@ function analyseRequest(details) {
                 'boto3': 'create_input_security_group',
                 'cli': 'create-input-security-group'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1533,7 +1594,8 @@ function analyseRequest(details) {
                 'boto3': 'get_parameters_by_path',
                 'cli': 'get-parameters-by-path'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1550,7 +1612,8 @@ function analyseRequest(details) {
                 'boto3': 'list_roles',
                 'cli': 'list-roles'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1567,7 +1630,8 @@ function analyseRequest(details) {
                 'boto3': 'get_role_policy',
                 'cli': 'get-role-policy'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1600,7 +1664,8 @@ function analyseRequest(details) {
                 'boto3': 'create_channel',
                 'cli': 'create-channel'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1617,7 +1682,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_file_systems',
                 'cli': 'describe-file-systems'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1634,7 +1700,8 @@ function analyseRequest(details) {
                 'boto3': 'list_keys',
                 'cli': 'list-keys'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1653,7 +1720,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_key',
                 'cli': 'describe-key'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1686,7 +1754,8 @@ function analyseRequest(details) {
                 'boto3': 'create_file_system',
                 'cli': 'create-file-system'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -1694,6 +1763,7 @@ function analyseRequest(details) {
             'service': 'efs',
             'type': 'AWS::EFS::FileSystem',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -1721,7 +1791,8 @@ function analyseRequest(details) {
                 'boto3': 'create_mount_target',
                 'cli': 'create-mount-target'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -1729,6 +1800,7 @@ function analyseRequest(details) {
             'service': 'efs',
             'type': 'AWS::EFS::MountTarget',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -1748,7 +1820,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_mount_targets',
                 'cli': 'describe-mount-targets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1767,7 +1840,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_tags',
                 'cli': 'describe-tags'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1790,7 +1864,8 @@ function analyseRequest(details) {
                 'boto3': 'update_file_system',
                 'cli': 'update-file-system'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1809,7 +1884,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_mount_target',
                 'cli': 'delete-mount-target'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1828,7 +1904,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_file_system',
                 'cli': 'delete-file-system'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1847,7 +1924,8 @@ function analyseRequest(details) {
                 'boto3': 'get_event_selectors',
                 'cli': 'get-event-selectors'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1866,7 +1944,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_trails',
                 'cli': 'describe-trails'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1887,7 +1966,8 @@ function analyseRequest(details) {
                 'boto3': 'lookup_events',
                 'cli': 'lookup-events'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1904,7 +1984,8 @@ function analyseRequest(details) {
                 'boto3': 'list_topics',
                 'cli': 'list-topics'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1921,7 +2002,8 @@ function analyseRequest(details) {
                 'boto3': 'list_functions',
                 'cli': 'list-functions'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -1963,7 +2045,8 @@ function analyseRequest(details) {
                 'boto3': 'create_trail',
                 'cli': 'create-trail'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -1971,6 +2054,7 @@ function analyseRequest(details) {
             'service': 'cloudtrail',
             'type': 'AWS::CloudTrail::Trail',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -1990,7 +2074,8 @@ function analyseRequest(details) {
                 'boto3': 'get_trail_status',
                 'cli': 'get-trail-status'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2009,7 +2094,8 @@ function analyseRequest(details) {
                 'boto3': 'list_tags',
                 'cli': 'list-tags'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2026,7 +2112,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_pending_aggregation_requests',
                 'cli': 'describe-pending-aggregation-requests'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2043,7 +2130,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_configuration_recorders',
                 'cli': 'describe-configuration-recorders'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2060,7 +2148,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_delivery_channels',
                 'cli': 'describe-delivery-channels'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2077,7 +2166,8 @@ function analyseRequest(details) {
                 'boto3': 'list_roles',
                 'cli': 'list-roles'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2094,7 +2184,8 @@ function analyseRequest(details) {
                 'boto3': 'list_buckets',
                 'cli': 'list-buckets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2111,7 +2202,8 @@ function analyseRequest(details) {
                 'boto3': 'list_topics',
                 'cli': 'list-topics'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2130,7 +2222,8 @@ function analyseRequest(details) {
                 'boto3': 'create_service_linked_role',
                 'cli': 'create-service-linked-role'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2149,7 +2242,8 @@ function analyseRequest(details) {
                 'boto3': 'create_bucket',
                 'cli': 'create-bucket'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2166,7 +2260,8 @@ function analyseRequest(details) {
                 'boto3': 'list_detectors',
                 'cli': 'list-detectors'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2183,7 +2278,8 @@ function analyseRequest(details) {
                 'boto3': 'get_invitations_count',
                 'cli': 'get-invitations-count'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2204,7 +2300,8 @@ function analyseRequest(details) {
                 'boto3': 'create_detector',
                 'cli': 'create-detector'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -2212,6 +2309,7 @@ function analyseRequest(details) {
             'service': 'guardduty',
             'type': 'AWS::GuardDuty::Detector',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -2237,7 +2335,8 @@ function analyseRequest(details) {
                 'boto3': 'list_findings',
                 'cli': 'list-findings'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2254,7 +2353,8 @@ function analyseRequest(details) {
                 'boto3': 'get_master_account',
                 'cli': 'get-master-account'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2273,7 +2373,8 @@ function analyseRequest(details) {
                 'boto3': 'list_members',
                 'cli': 'list-members'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2292,7 +2393,8 @@ function analyseRequest(details) {
                 'boto3': 'get_detector',
                 'cli': 'get-detector'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2315,7 +2417,8 @@ function analyseRequest(details) {
                 'boto3': 'get_findings_statistics',
                 'cli': 'get-findings-statistics'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2334,7 +2437,8 @@ function analyseRequest(details) {
                 'boto3': 'list_filters',
                 'cli': 'list-filters'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2359,7 +2463,8 @@ function analyseRequest(details) {
                 'boto3': 'create_members',
                 'cli': 'create-members'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -2367,6 +2472,7 @@ function analyseRequest(details) {
             'service': 'guardduty',
             'type': 'AWS::GuardDuty::Member',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -2388,7 +2494,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_members',
                 'cli': 'delete-members'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2409,7 +2516,8 @@ function analyseRequest(details) {
                 'boto3': 'list_ip_sets',
                 'cli': 'list-ip-sets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2430,7 +2538,8 @@ function analyseRequest(details) {
                 'boto3': 'list_threat_intel_sets',
                 'cli': 'list-threat-intel-sets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2449,7 +2558,8 @@ function analyseRequest(details) {
                 'boto3': 'list_policy_versions',
                 'cli': 'list-policy-versions'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2482,7 +2592,8 @@ function analyseRequest(details) {
                 'boto3': 'create_ip_set',
                 'cli': 'create-ip-set'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -2490,6 +2601,7 @@ function analyseRequest(details) {
             'service': 'guardduty',
             'type': 'AWS::GuardDuty::IPSet',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -2511,7 +2623,8 @@ function analyseRequest(details) {
                 'boto3': 'list_ip_sets',
                 'cli': 'list-ip-sets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2532,7 +2645,8 @@ function analyseRequest(details) {
                 'boto3': 'get_ip_set',
                 'cli': 'get-ip-set'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2555,7 +2669,8 @@ function analyseRequest(details) {
                 'boto3': 'update_ip_set',
                 'cli': 'update-ip-set'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2576,7 +2691,8 @@ function analyseRequest(details) {
                 'boto3': 'archive_findings',
                 'cli': 'archive-findings'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2597,7 +2713,8 @@ function analyseRequest(details) {
                 'boto3': 'unarchive_findings',
                 'cli': 'unarchive-findings'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2620,7 +2737,8 @@ function analyseRequest(details) {
                 'boto3': 'get_findings',
                 'cli': 'get-findings'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2639,7 +2757,8 @@ function analyseRequest(details) {
                 'boto3': 'list_attached_role_policies',
                 'cli': 'list-attached-role-policies'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2658,7 +2777,8 @@ function analyseRequest(details) {
                 'boto3': 'create_sample_findings',
                 'cli': 'create-sample-findings'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2681,7 +2801,8 @@ function analyseRequest(details) {
                 'boto3': 'update_detector',
                 'cli': 'update-detector'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2704,7 +2825,8 @@ function analyseRequest(details) {
                     'boto3': 'create_tags',
                     'cli': 'create-tags'
                 },
-                'options': reqParams
+                'options': reqParams,
+            'requestId': details.requestId
             });
         }
         if (jsonRequestBody.removeKeys.length) {
@@ -2719,7 +2841,8 @@ function analyseRequest(details) {
                     'boto3': 'delete_tags',
                     'cli': 'delete-tags'
                 },
-                'options': reqParams
+                'options': reqParams,
+            'requestId': details.requestId
             });
         }
         
@@ -2741,7 +2864,8 @@ function analyseRequest(details) {
                 'boto3': 'modify_mount_target_security_groups',
                 'cli': 'modify-mount-target-security-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2760,7 +2884,8 @@ function analyseRequest(details) {
                 'boto3': 'list_brokers',
                 'cli': 'list-brokers'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2777,7 +2902,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpcs',
                 'cli': 'describe-vpcs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2798,7 +2924,8 @@ function analyseRequest(details) {
                 'boto3': 'list_configurations',
                 'cli': 'list-configurations'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2815,7 +2942,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_subnets',
                 'cli': 'describe-subnets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2832,7 +2960,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_security_groups',
                 'cli': 'describe-security-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2889,7 +3018,8 @@ function analyseRequest(details) {
                 'boto3': 'create_broker',
                 'cli': 'create-broker'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -2897,6 +3027,7 @@ function analyseRequest(details) {
             'service': 'mq',
             'type': 'AWS::AmazonMQ::Broker',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -2924,7 +3055,8 @@ function analyseRequest(details) {
                 'boto3': 'create_configuration',
                 'cli': 'create-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -2932,6 +3064,7 @@ function analyseRequest(details) {
             'service': 'mq',
             'type': 'AWS::AmazonMQ::Configuration',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -2951,7 +3084,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_configuration',
                 'cli': 'describe-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2972,7 +3106,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_configuration_revision',
                 'cli': 'describe-configuration-revision'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -2993,7 +3128,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_launch_template_versions',
                 'cli': 'describe-launch-template-versions'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3010,7 +3146,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_key_pairs',
                 'cli': 'describe-key-pairs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3027,7 +3164,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_availability_zones',
                 'cli': 'describe-availability-zones'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3044,7 +3182,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_hosts',
                 'cli': 'describe-hosts'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3061,7 +3200,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_security_groups',
                 'cli': 'describe-security-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3078,7 +3218,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_snapshots',
                 'cli': 'describe-snapshots'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3095,7 +3236,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_volumes',
                 'cli': 'describe-volumes'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3112,7 +3254,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_tags',
                 'cli': 'describe-tags'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3140,7 +3283,8 @@ function analyseRequest(details) {
                 'boto3': 'create_launch_template',
                 'cli': 'create-launch-template'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -3148,6 +3292,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::LaunchTemplate',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -3170,7 +3315,8 @@ function analyseRequest(details) {
                     'boto3': 'create_tags',
                     'cli': 'create-tags'
                 },
-                'options': reqParams
+                'options': reqParams,
+            'requestId': details.requestId
             });
         }
         if (jsonRequestBody.removeKeys.length) {
@@ -3185,7 +3331,8 @@ function analyseRequest(details) {
                     'boto3': 'delete_tags',
                     'cli': 'delete-tags'
                 },
-                'options': reqParams
+                'options': reqParams,
+            'requestId': details.requestId
             });
         }
         
@@ -3205,7 +3352,8 @@ function analyseRequest(details) {
                 'boto3': 'create_key_pair',
                 'cli': 'create-key-pair'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3224,7 +3372,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_key_pair',
                 'cli': 'delete-key-pair'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3245,7 +3394,8 @@ function analyseRequest(details) {
                 'boto3': 'import_key_pair',
                 'cli': 'import-key-pair'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3272,7 +3422,8 @@ function analyseRequest(details) {
                 'boto3': 'create_network_interface',
                 'cli': 'create-network-interface'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -3280,6 +3431,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::NetworkInterface',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -3297,7 +3449,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_flow_logs',
                 'cli': 'describe-flow-logs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3316,7 +3469,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_network_interface',
                 'cli': 'delete-network-interface'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3333,7 +3487,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_addresses',
                 'cli': 'describe-addresses'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3354,7 +3509,8 @@ function analyseRequest(details) {
                 'boto3': 'allocate_address',
                 'cli': 'allocate-address'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -3362,6 +3518,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::EIP',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -3381,7 +3538,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_instances',
                 'cli': 'describe-instances'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3400,7 +3558,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_network_interfaces',
                 'cli': 'describe-network-interfaces'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3429,7 +3588,8 @@ function analyseRequest(details) {
                 'boto3': 'associate_address',
                 'cli': 'associate-address'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -3437,6 +3597,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::EIPAssociation',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -3456,7 +3617,8 @@ function analyseRequest(details) {
                 'boto3': 'disassociate_address',
                 'cli': 'disassociate-address'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3475,7 +3637,8 @@ function analyseRequest(details) {
                 'boto3': 'release_address',
                 'cli': 'release-address'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3492,7 +3655,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_configuration_recorders',
                 'cli': 'describe-configuration-recorders'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3523,7 +3687,8 @@ function analyseRequest(details) {
                 'boto3': 'allocate_hosts',
                 'cli': 'allocate-hosts'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         for (var i=0; i<jsonRequestBody.quantity; i++) {
@@ -3532,6 +3697,7 @@ function analyseRequest(details) {
                 'service': 'ec2',
                 'type': 'AWS::EC2::Host',
                 'options': reqParams,
+            'requestId': details.requestId,
                 'was_blocked': blocking
             });
         }
@@ -3550,7 +3716,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_regions',
                 'cli': 'describe-regions'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3567,7 +3734,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_account_attributes',
                 'cli': 'describe-account-attributes'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3584,7 +3752,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_dhcp_options',
                 'cli': 'describe-dhcp-options'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3603,7 +3772,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpc_attribute',
                 'cli': 'describe-vpc-attribute'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3622,7 +3792,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_flow_logs',
                 'cli': 'describe-flow-logs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3639,7 +3810,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_subnets',
                 'cli': 'describe-subnets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3656,7 +3828,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_route_tables',
                 'cli': 'describe-route-tables'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3673,7 +3846,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_internet_gateways',
                 'cli': 'describe-internet-gateways'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3690,7 +3864,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_egress_only_internet_gateways',
                 'cli': 'describe-egress-only-internet-gateways'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3707,7 +3882,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_dhcp_options',
                 'cli': 'describe-dhcp-options'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3724,7 +3900,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_addresses',
                 'cli': 'describe-addresses'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3741,7 +3918,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpc_endpoints',
                 'cli': 'describe-vpc-endpoints'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3760,7 +3938,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpc_endpoint_service_configurations',
                 'cli': 'describe-vpc-endpoint-service-configurations'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3777,7 +3956,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_nat_gateways',
                 'cli': 'describe-nat-gateways'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3796,7 +3976,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_account_attributes',
                 'cli': 'describe-account-attributes'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3813,7 +3994,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpc_peering_connections',
                 'cli': 'describe-vpc-peering-connections'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3830,7 +4012,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_network_acls',
                 'cli': 'describe-network-acls'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3851,7 +4034,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_stale_security_groups',
                 'cli': 'describe-stale-security-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3868,7 +4052,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_customer_gateways',
                 'cli': 'describe-customer-gateways'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3885,7 +4070,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpn_gateways',
                 'cli': 'describe-vpn-gateways'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3902,7 +4088,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpn_connections',
                 'cli': 'describe-vpn-connections'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3926,7 +4113,8 @@ function analyseRequest(details) {
                 'boto3': 'create_vpc',
                 'cli': 'create-vpc'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -3934,6 +4122,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::VPC',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -3951,7 +4140,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_log_groups',
                 'cli': 'describe-log-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3970,7 +4160,8 @@ function analyseRequest(details) {
                 'boto3': 'list_roles',
                 'cli': 'list-roles'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -3999,7 +4190,8 @@ function analyseRequest(details) {
                 'boto3': 'create_flow_logs',
                 'cli': 'create-flow-logs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         for (var resource_id in jsonRequestBody.ResourceIds) {
@@ -4015,6 +4207,7 @@ function analyseRequest(details) {
                 'service': 'ec2',
                 'type': 'AWS::EC2::FlowLog',
                 'options': reqParams,
+            'requestId': details.requestId,
                 'was_blocked': blocking
             });
         }
@@ -4035,7 +4228,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_flow_logs',
                 'cli': 'delete-flow-logs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4054,7 +4248,8 @@ function analyseRequest(details) {
                 'boto3': 'disassociate_vpc_cidr_block',
                 'cli': 'disassociate-vpc-cidr-block'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4071,7 +4266,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_instances',
                 'cli': 'describe-instances'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4090,7 +4286,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_vpc',
                 'cli': 'delete-vpc'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4111,7 +4308,8 @@ function analyseRequest(details) {
                 'boto3': 'create_route_table',
                 'cli': 'create-route-table'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -4119,6 +4317,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::RouteTable',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -4136,7 +4335,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_route_tables',
                 'cli': 'describe-route-tables'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4155,7 +4355,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_egress_only_internet_gateway',
                 'cli': 'delete-egress-only-internet-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4176,7 +4377,8 @@ function analyseRequest(details) {
                 'boto3': 'create_egress_only_internet_gateway',
                 'cli': 'create-egress-only-internet-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -4184,6 +4386,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::EgressOnlyInternetGateway',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -4203,7 +4406,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_internet_gateway',
                 'cli': 'delete-internet-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4224,7 +4428,8 @@ function analyseRequest(details) {
                 'boto3': 'create_tags',
                 'cli': 'create-tags'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4241,7 +4446,8 @@ function analyseRequest(details) {
                 'boto3': 'create_internet_gateway',
                 'cli': 'create-internet-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -4249,6 +4455,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::InternetGateway',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -4268,7 +4475,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_route_table',
                 'cli': 'delete-route-table'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4287,7 +4495,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_dhcp_options',
                 'cli': 'delete-dhcp-options'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4311,7 +4520,8 @@ function analyseRequest(details) {
                 'boto3': 'create_nat_gateway',
                 'cli': 'create-nat-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -4319,6 +4529,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::NatGateway',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -4338,7 +4549,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_nat_gateway',
                 'cli': 'delete-nat-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4359,7 +4571,8 @@ function analyseRequest(details) {
                 'boto3': 'create_network_acl',
                 'cli': 'create-network-acl'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -4367,6 +4580,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::NetworkAcl',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -4386,7 +4600,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_network_acl',
                 'cli': 'delete-network-acl'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4410,7 +4625,8 @@ function analyseRequest(details) {
                 'boto3': 'create_customer_gateway',
                 'cli': 'create-customer-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -4418,6 +4634,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::CustomerGateway',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -4437,7 +4654,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_customer_gateway',
                 'cli': 'delete-customer-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4458,7 +4676,8 @@ function analyseRequest(details) {
                 'boto3': 'create_vpn_gateway',
                 'cli': 'create-vpn-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -4466,6 +4685,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::EC2::VPNGateway',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -4485,7 +4705,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_vpn_gateway',
                 'cli': 'delete-vpn-gateway'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4502,7 +4723,8 @@ function analyseRequest(details) {
                 'boto3': 'list_queues',
                 'cli': 'list-queues'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4519,7 +4741,8 @@ function analyseRequest(details) {
                 'boto3': 'list_keys',
                 'cli': 'list-keys'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4538,7 +4761,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_queue',
                 'cli': 'delete-queue'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4555,7 +4779,8 @@ function analyseRequest(details) {
                 'boto3': 'list_groups',
                 'cli': 'list-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4572,7 +4797,8 @@ function analyseRequest(details) {
                 'boto3': 'list_users',
                 'cli': 'list-users'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4589,7 +4815,8 @@ function analyseRequest(details) {
                 'boto3': 'list_policies',
                 'cli': 'list-policies'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4613,7 +4840,8 @@ function analyseRequest(details) {
                 'boto3': 'create_user',
                 'cli': 'create-user'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -4621,6 +4849,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::IAM::User',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -4642,7 +4871,8 @@ function analyseRequest(details) {
                 'boto3': 'attach_user_policy',
                 'cli': 'attach-user-policy'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4666,7 +4896,8 @@ function analyseRequest(details) {
                 'boto3': 'add_user_to_group',
                 'cli': 'add-user-to-group'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -4674,6 +4905,7 @@ function analyseRequest(details) {
             'service': 'ec2',
             'type': 'AWS::IAM::UserToGroupAddition',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -4693,7 +4925,8 @@ function analyseRequest(details) {
                 'boto3': 'list_groups_for_user',
                 'cli': 'list-groups-for-user'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4712,7 +4945,8 @@ function analyseRequest(details) {
                 'boto3': 'list_access_keys',
                 'cli': 'list-access-keys'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4731,7 +4965,8 @@ function analyseRequest(details) {
                 'boto3': 'get_login_profile',
                 'cli': 'get-login-profile'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4754,7 +4989,8 @@ function analyseRequest(details) {
                 'boto3': 'create_login_profile',
                 'cli': 'create-login-profile'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4771,7 +5007,8 @@ function analyseRequest(details) {
                 'boto3': 'list_account_aliases',
                 'cli': 'list-account-aliases'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4790,7 +5027,8 @@ function analyseRequest(details) {
                 'boto3': 'get_user',
                 'cli': 'get-user'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4809,7 +5047,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_user',
                 'cli': 'delete-user'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4826,7 +5065,8 @@ function analyseRequest(details) {
                 'boto3': 'get_account',
                 'cli': 'get-account'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4845,7 +5085,8 @@ function analyseRequest(details) {
                 'boto3': 'get_rest_apis',
                 'cli': 'get-rest-apis'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4864,7 +5105,8 @@ function analyseRequest(details) {
                 'boto3': 'get_rest_api',
                 'cli': 'get-rest-api'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4885,7 +5127,8 @@ function analyseRequest(details) {
                 'boto3': 'get_authorizers',
                 'cli': 'get-authorizers'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4906,7 +5149,8 @@ function analyseRequest(details) {
                 'boto3': 'get_request_validators',
                 'cli': 'get-request-validators'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4927,7 +5171,8 @@ function analyseRequest(details) {
                 'boto3': 'get_documentation_parts',
                 'cli': 'get-documentation-parts'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4950,7 +5195,8 @@ function analyseRequest(details) {
                 'boto3': 'get_resources',
                 'cli': 'get-resources'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4969,7 +5215,8 @@ function analyseRequest(details) {
                 'boto3': 'get_stages',
                 'cli': 'get-stages'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -4988,7 +5235,8 @@ function analyseRequest(details) {
                 'boto3': 'get_usage_plans',
                 'cli': 'get-usage-plans'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5021,7 +5269,8 @@ function analyseRequest(details) {
                 'boto3': 'put_method',
                 'cli': 'put-method'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -5029,6 +5278,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Method',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -5056,7 +5306,8 @@ function analyseRequest(details) {
                 'boto3': 'put_method_response',
                 'cli': 'put-method-response'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5073,7 +5324,8 @@ function analyseRequest(details) {
                 'boto3': 'list_functions',
                 'cli': 'list-functions'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5100,7 +5352,8 @@ function analyseRequest(details) {
                 'boto3': 'put_integration',
                 'cli': 'put-integration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5127,7 +5380,8 @@ function analyseRequest(details) {
                 'boto3': 'put_integration_response',
                 'cli': 'put-integration-response'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5154,7 +5408,8 @@ function analyseRequest(details) {
                 'boto3': 'create_documentation_part',
                 'cli': 'create-documentation-part'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -5162,6 +5417,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::DocumentationPart',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -5183,7 +5439,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_documentation_part',
                 'cli': 'delete-documentation-part'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5206,7 +5463,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_method',
                 'cli': 'delete-method'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5225,7 +5483,8 @@ function analyseRequest(details) {
                 'boto3': 'list_user_pools',
                 'cli': 'list-user-pools'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5267,7 +5526,8 @@ function analyseRequest(details) {
                 'boto3': 'create_authorizer',
                 'cli': 'create-authorizer'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -5275,6 +5535,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Authorizer',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -5308,7 +5569,8 @@ function analyseRequest(details) {
                 'boto3': 'put_gateway_response',
                 'cli': 'put-gateway-response'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -5316,6 +5578,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::GatewayResponse',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -5346,7 +5609,8 @@ function analyseRequest(details) {
                 'boto3': 'create_model',
                 'cli': 'create-model'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -5354,6 +5618,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Model',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -5375,7 +5640,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_model',
                 'cli': 'delete-model'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5404,7 +5670,8 @@ function analyseRequest(details) {
                 'boto3': 'get_metric_statistics',
                 'cli': 'get-metric-statistics'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5434,7 +5701,8 @@ function analyseRequest(details) {
                 'boto3': 'create_usage_plan',
                 'cli': 'create-usage-plan'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -5442,6 +5710,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::UsagePlan',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -5463,7 +5732,8 @@ function analyseRequest(details) {
                 'boto3': 'get_stage',
                 'cli': 'get-stage'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5486,7 +5756,8 @@ function analyseRequest(details) {
                 'boto3': 'get_deployment',
                 'cli': 'get-deployment'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5518,7 +5789,8 @@ function analyseRequest(details) {
                 'boto3': 'create_api_key',
                 'cli': 'create-api-key'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -5526,6 +5798,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::ApiKey',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -5545,7 +5818,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_usage_plan',
                 'cli': 'delete-usage-plan'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5566,7 +5840,8 @@ function analyseRequest(details) {
                 'boto3': 'get_api_key',
                 'cli': 'get-api-key'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5587,7 +5862,8 @@ function analyseRequest(details) {
                 'boto3': 'update_api_key',
                 'cli': 'update-api-key'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5604,7 +5880,8 @@ function analyseRequest(details) {
                 'boto3': 'list_certificates',
                 'cli': 'list-certificates'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5623,7 +5900,8 @@ function analyseRequest(details) {
                 'boto3': 'get_domain_names',
                 'cli': 'get-domain-names'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5650,7 +5928,8 @@ function analyseRequest(details) {
                 'boto3': 'create_domain_name',
                 'cli': 'create-domain-name'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -5658,6 +5937,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::DomainName',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -5677,7 +5957,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_client_certificate',
                 'cli': 'delete-client-certificate'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5694,7 +5975,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_load_balancers',
                 'cli': 'describe-load-balancers'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5713,7 +5995,8 @@ function analyseRequest(details) {
                 'boto3': 'update_account',
                 'cli': 'update-account'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -5721,6 +6004,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Account',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -5740,7 +6024,8 @@ function analyseRequest(details) {
                 'boto3': 'list_functions',
                 'cli': 'list-functions'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5759,7 +6044,8 @@ function analyseRequest(details) {
                 'boto3': 'list_streams',
                 'cli': 'list-streams'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5776,7 +6062,8 @@ function analyseRequest(details) {
                 'boto3': 'list_topics',
                 'cli': 'list-topics'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5793,7 +6080,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_auto_scaling_groups',
                 'cli': 'describe-auto-scaling-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5810,7 +6098,8 @@ function analyseRequest(details) {
                 'boto3': 'list_queues',
                 'cli': 'list-queues'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5827,7 +6116,8 @@ function analyseRequest(details) {
                 'boto3': 'list_task_definition_families',
                 'cli': 'list-task-definition-families'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5846,7 +6136,8 @@ function analyseRequest(details) {
                 'boto3': 'list_state_machines',
                 'cli': 'list-state-machines'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5867,7 +6158,8 @@ function analyseRequest(details) {
                 'boto3': 'list_documents',
                 'cli': 'list-documents'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5886,7 +6178,8 @@ function analyseRequest(details) {
                 'boto3': 'list_delivery_streams',
                 'cli': 'list-delivery-streams'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5905,7 +6198,8 @@ function analyseRequest(details) {
                 'boto3': 'list_roles',
                 'cli': 'list-roles'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5922,7 +6216,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_trails',
                 'cli': 'describe-trails'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5943,7 +6238,8 @@ function analyseRequest(details) {
                 'boto3': 'list_versions_by_function',
                 'cli': 'list-versions-by-function'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5964,7 +6260,8 @@ function analyseRequest(details) {
                 'boto3': 'list_aliases',
                 'cli': 'list-aliases'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -5997,7 +6294,8 @@ function analyseRequest(details) {
                 'boto3': 'put_rule',
                 'cli': 'put-rule'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6005,6 +6303,7 @@ function analyseRequest(details) {
             'service': 'apigateway',
             'type': 'AWS::Events::Rule',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6026,7 +6325,8 @@ function analyseRequest(details) {
                 'boto3': 'list_rules',
                 'cli': 'list-rules'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6045,7 +6345,8 @@ function analyseRequest(details) {
                 'boto3': 'disable_rule',
                 'cli': 'disable-rule'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6064,7 +6365,8 @@ function analyseRequest(details) {
                 'boto3': 'enable_rule',
                 'cli': 'enable-rule'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6083,7 +6385,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_rule',
                 'cli': 'delete-rule'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6100,7 +6403,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_directories',
                 'cli': 'describe-directories'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6117,7 +6421,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_workspace_bundles',
                 'cli': 'describe-workspace-bundles'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6134,7 +6439,8 @@ function analyseRequest(details) {
                 'boto3': 'list_keys',
                 'cli': 'list-keys'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6151,7 +6457,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_workspaces',
                 'cli': 'describe-workspaces'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6196,7 +6503,8 @@ function analyseRequest(details) {
                 'boto3': 'create_workspaces',
                 'cli': 'create-workspaces'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6204,6 +6512,7 @@ function analyseRequest(details) {
             'service': 'workspaces',
             'type': 'AWS::WorkSpaces::Workspace',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6227,7 +6536,8 @@ function analyseRequest(details) {
                 'boto3': 'terminate_workspaces',
                 'cli': 'terminate-workspaces'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6257,7 +6567,8 @@ function analyseRequest(details) {
                 'boto3': 'create_named_query',
                 'cli': 'create-named-query'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6265,6 +6576,7 @@ function analyseRequest(details) {
             'service': 'athena',
             'type': 'AWS::Athena::NamedQuery',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6289,7 +6601,8 @@ function analyseRequest(details) {
                 'boto3': 'create_graphql_api',
                 'cli': 'create-graphql-api'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6297,6 +6610,7 @@ function analyseRequest(details) {
             'service': 'appsync',
             'type': 'AWS::AppSync::GraphQLApi',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6321,7 +6635,8 @@ function analyseRequest(details) {
                 'boto3': 'create_api_key',
                 'cli': 'create-api-key'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6329,6 +6644,7 @@ function analyseRequest(details) {
             'service': 'appsync',
             'type': 'AWS::AppSync::ApiKey',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6362,7 +6678,8 @@ function analyseRequest(details) {
                 'boto3': 'create_table',
                 'cli': 'create-table'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6370,6 +6687,7 @@ function analyseRequest(details) {
             'service': 'dynamodb',
             'type': 'AWS::DynamoDB::Table',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6389,7 +6707,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_table',
                 'cli': 'describe-table'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6413,7 +6732,8 @@ function analyseRequest(details) {
                 'boto3': 'start_schema_creation',
                 'cli': 'start-schema-creation'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6421,6 +6741,7 @@ function analyseRequest(details) {
             'service': 'appsync',
             'type': 'AWS::AppSync::GraphQLSchema',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6440,7 +6761,8 @@ function analyseRequest(details) {
                 'boto3': 'get_schema_creation_status',
                 'cli': 'get-schema-creation-status'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6473,7 +6795,8 @@ function analyseRequest(details) {
                 'boto3': 'create_data_source',
                 'cli': 'create-data-source'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6481,6 +6804,7 @@ function analyseRequest(details) {
             'service': 'appsync',
             'type': 'AWS::AppSync::DataSource',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6517,7 +6841,8 @@ function analyseRequest(details) {
                 'boto3': 'create_resolver',
                 'cli': 'create-resolver'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6525,6 +6850,7 @@ function analyseRequest(details) {
             'service': 'appsync',
             'type': 'AWS::AppSync::Resolver',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6548,7 +6874,8 @@ function analyseRequest(details) {
                 'boto3': 'list_resolvers',
                 'cli': 'list-resolvers'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6571,7 +6898,8 @@ function analyseRequest(details) {
                 'boto3': 'update_graphql_api',
                 'cli': 'update-graphql-api'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6590,7 +6918,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_graphql_api',
                 'cli': 'delete-graphql-api'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6613,7 +6942,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_launch_templates',
                 'cli': 'describe-launch-templates'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6630,7 +6960,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_load_balancers',
                 'cli': 'describe-load-balancers'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6681,7 +7012,8 @@ function analyseRequest(details) {
                 'boto3': 'create_launch_configuration',
                 'cli': 'create-launch-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6689,6 +7021,7 @@ function analyseRequest(details) {
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::LaunchConfiguration',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6708,7 +7041,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_launch_configurations',
                 'cli': 'describe-launch-configurations'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6725,7 +7059,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_target_groups',
                 'cli': 'describe-target-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6772,7 +7107,8 @@ function analyseRequest(details) {
                 'boto3': 'create_auto_scaling_group',
                 'cli': 'create-auto-scaling-group'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6780,6 +7116,7 @@ function analyseRequest(details) {
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::AutoScalingGroup',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6812,7 +7149,8 @@ function analyseRequest(details) {
                 'boto3': 'put_scaling_policy',
                 'cli': 'put-scaling-policy'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -6820,6 +7158,7 @@ function analyseRequest(details) {
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::ScalingPolicy',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -6843,7 +7182,8 @@ function analyseRequest(details) {
                 'boto3': 'put_notification_configuration',
                 'cli': 'put-notification-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6864,7 +7204,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_scaling_activities',
                 'cli': 'describe-scaling-activities'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6883,7 +7224,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_policies',
                 'cli': 'describe-policies'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6902,7 +7244,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_tags',
                 'cli': 'describe-tags'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6921,7 +7264,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_scheduled_actions',
                 'cli': 'describe-scheduled-actions'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6940,7 +7284,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_lifecycle_hooks',
                 'cli': 'describe-lifecycle-hooks'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6959,7 +7304,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_notification_configurations',
                 'cli': 'describe-notification-configurations'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6978,7 +7324,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_launch_configuration',
                 'cli': 'delete-launch-configuration'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -6999,7 +7346,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_auto_scaling_group',
                 'cli': 'delete-auto-scaling-group'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7034,7 +7382,8 @@ function analyseRequest(details) {
                 'boto3': 'put_scheduled_update_group_action',
                 'cli': 'put-scheduled-update-group-action'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -7042,6 +7391,7 @@ function analyseRequest(details) {
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::ScheduledAction',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -7063,7 +7413,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_scheduled_action',
                 'cli': 'delete-scheduled-action'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7099,7 +7450,8 @@ function analyseRequest(details) {
                 'boto3': 'put_lifecycle_hook',
                 'cli': 'put-lifecycle-hook'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -7107,6 +7459,7 @@ function analyseRequest(details) {
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::LifecycleHook',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -7128,7 +7481,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_lifecycle_hook',
                 'cli': 'delete-lifecycle-hook'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7145,7 +7499,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_compute_environments',
                 'cli': 'describe-compute-environments'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7162,7 +7517,8 @@ function analyseRequest(details) {
                 'boto3': 'list_roles',
                 'cli': 'list-roles'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7179,7 +7535,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_job_definitions',
                 'cli': 'describe-job-definitions'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7198,7 +7555,8 @@ function analyseRequest(details) {
                 'boto3': 'list_instance_profiles',
                 'cli': 'list-instance-profiles'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7215,7 +7573,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_vpcs',
                 'cli': 'describe-vpcs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7234,7 +7593,8 @@ function analyseRequest(details) {
                 'boto3': 'list_instance_profiles',
                 'cli': 'list-instance-profiles'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7251,7 +7611,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_subnets',
                 'cli': 'describe-subnets'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7268,7 +7629,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_security_groups',
                 'cli': 'describe-security-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7289,7 +7651,8 @@ function analyseRequest(details) {
                 'boto3': 'attach_role_policy',
                 'cli': 'attach-role-policy'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7308,7 +7671,8 @@ function analyseRequest(details) {
                 'boto3': 'create_instance_profile',
                 'cli': 'create-instance-profile'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7329,7 +7693,8 @@ function analyseRequest(details) {
                 'boto3': 'add_role_to_instance_profile',
                 'cli': 'add-role-to-instance-profile'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7362,7 +7727,8 @@ function analyseRequest(details) {
                 'boto3': 'create_compute_environment',
                 'cli': 'create-compute-environment'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -7370,6 +7736,7 @@ function analyseRequest(details) {
             'service': 'batch',
             'type': 'AWS::Batch::ComputeEnvironment',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -7389,7 +7756,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_compute_environments',
                 'cli': 'describe-compute-environments'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7419,7 +7787,8 @@ function analyseRequest(details) {
                 'boto3': 'create_job_queue',
                 'cli': 'create-job-queue'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -7427,6 +7796,7 @@ function analyseRequest(details) {
             'service': 'batch',
             'type': 'AWS::Batch::JobQueue',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -7457,7 +7827,8 @@ function analyseRequest(details) {
                 'boto3': 'register_job_definition',
                 'cli': 'register-job-definition'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -7465,6 +7836,7 @@ function analyseRequest(details) {
             'service': 'batch',
             'type': 'AWS::Batch::JobDefinition',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -7490,7 +7862,8 @@ function analyseRequest(details) {
                 'boto3': 'submit_job',
                 'cli': 'submit-job'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7511,7 +7884,8 @@ function analyseRequest(details) {
                 'boto3': 'list_jobs',
                 'cli': 'list-jobs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7532,7 +7906,8 @@ function analyseRequest(details) {
                 'boto3': 'cancel_job',
                 'cli': 'cancel-job'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7551,7 +7926,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_compute_environment',
                 'cli': 'delete-compute-environment'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7572,7 +7948,8 @@ function analyseRequest(details) {
                 'boto3': 'update_compute_environment',
                 'cli': 'update-compute-environment'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7591,7 +7968,8 @@ function analyseRequest(details) {
                 'boto3': 'deregister_job_definition',
                 'cli': 'deregister-job-definition'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7615,7 +7993,8 @@ function analyseRequest(details) {
                 'boto3': 'create_application',
                 'cli': 'create-application'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -7623,6 +8002,7 @@ function analyseRequest(details) {
             'service': 'codedeploy',
             'type': 'AWS::CodeDeploy::Application',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -7642,7 +8022,8 @@ function analyseRequest(details) {
                 'boto3': 'get_application',
                 'cli': 'get-application'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7665,7 +8046,8 @@ function analyseRequest(details) {
                 'boto3': 'list_application_revisions',
                 'cli': 'list-application-revisions'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7684,7 +8066,8 @@ function analyseRequest(details) {
                 'boto3': 'list_deployment_groups',
                 'cli': 'list-deployment-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7701,7 +8084,8 @@ function analyseRequest(details) {
                 'boto3': 'list_deployment_configs',
                 'cli': 'list-deployment-configs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7749,7 +8133,8 @@ function analyseRequest(details) {
                 'boto3': 'create_deployment_group',
                 'cli': 'create-deployment-group'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -7757,6 +8142,7 @@ function analyseRequest(details) {
             'service': 'codedeploy',
             'type': 'AWS::CodeDeploy::DeploymentGroup',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -7778,7 +8164,8 @@ function analyseRequest(details) {
                 'boto3': 'get_deployment_group',
                 'cli': 'get-deployment-group'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7799,7 +8186,8 @@ function analyseRequest(details) {
                 'boto3': 'list_deployments',
                 'cli': 'list-deployments'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7816,7 +8204,8 @@ function analyseRequest(details) {
                 'boto3': 'list_deployment_configs',
                 'cli': 'list-deployment-configs'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7837,7 +8226,8 @@ function analyseRequest(details) {
                 'boto3': 'batch_get_deployment_groups',
                 'cli': 'batch-get-deployment-groups'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7864,7 +8254,8 @@ function analyseRequest(details) {
                 'boto3': 'create_deployment',
                 'cli': 'create-deployment'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7885,7 +8276,8 @@ function analyseRequest(details) {
                 'boto3': 'stop_deployment',
                 'cli': 'stop-deployment'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7911,7 +8303,8 @@ function analyseRequest(details) {
                 'boto3': 'create_deployment_config',
                 'cli': 'create-deployment-config'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -7919,6 +8312,7 @@ function analyseRequest(details) {
             'service': 'codedeploy',
             'type': 'AWS::CodeDeploy::DeploymentConfig',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -7938,7 +8332,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_deployment_config',
                 'cli': 'delete-deployment-config'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7957,7 +8352,8 @@ function analyseRequest(details) {
                 'boto3': 'batch_get_deployments',
                 'cli': 'batch-get-deployments'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7976,7 +8372,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_application',
                 'cli': 'delete-application'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -7993,7 +8390,8 @@ function analyseRequest(details) {
                 'boto3': 'list_action_types',
                 'cli': 'list-action-types'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8010,7 +8408,8 @@ function analyseRequest(details) {
                 'boto3': 'list_pipelines',
                 'cli': 'list-pipelines'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8027,7 +8426,8 @@ function analyseRequest(details) {
                 'boto3': 'list_projects',
                 'cli': 'list-projects'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8044,7 +8444,8 @@ function analyseRequest(details) {
                 'boto3': 'list_repositories',
                 'cli': 'list-repositories'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8061,7 +8462,8 @@ function analyseRequest(details) {
                 'boto3': 'list_curated_environment_images',
                 'cli': 'list-curated-environment-images'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8103,7 +8505,8 @@ function analyseRequest(details) {
                 'boto3': 'create_project',
                 'cli': 'create-project'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -8111,6 +8514,7 @@ function analyseRequest(details) {
             'service': 'codebuild',
             'type': 'AWS::CodeBuild::Project',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -8130,7 +8534,8 @@ function analyseRequest(details) {
                 'boto3': 'batch_get_projects',
                 'cli': 'batch-get-projects'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8157,7 +8562,8 @@ function analyseRequest(details) {
                 'boto3': 'create_pipeline',
                 'cli': 'create-pipeline'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -8165,6 +8571,7 @@ function analyseRequest(details) {
             'service': 'codepipeline',
             'type': 'AWS::CodePipeline::Pipeline',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -8184,7 +8591,8 @@ function analyseRequest(details) {
                 'boto3': 'get_pipeline',
                 'cli': 'get-pipeline'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8203,7 +8611,8 @@ function analyseRequest(details) {
                 'boto3': 'get_pipeline_state',
                 'cli': 'get-pipeline-state'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8224,7 +8633,8 @@ function analyseRequest(details) {
                 'boto3': 'get_pipeline_execution',
                 'cli': 'get-pipeline-execution'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8243,7 +8653,8 @@ function analyseRequest(details) {
                 'boto3': 'update_pipeline',
                 'cli': 'update-pipeline'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8262,7 +8673,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_pipeline',
                 'cli': 'delete-pipeline'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8286,7 +8698,8 @@ function analyseRequest(details) {
                 'boto3': 'create_repository',
                 'cli': 'create-repository'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -8294,6 +8707,7 @@ function analyseRequest(details) {
             'service': 'codecommit',
             'type': 'AWS::CodeCommit::Repository',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -8313,7 +8727,8 @@ function analyseRequest(details) {
                 'boto3': 'get_repository',
                 'cli': 'get-repository'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8334,7 +8749,8 @@ function analyseRequest(details) {
                 'boto3': 'list_repositories',
                 'cli': 'list-repositories'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8357,7 +8773,8 @@ function analyseRequest(details) {
                 'boto3': 'list_pull_requests',
                 'cli': 'list-pull-requests'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8376,7 +8793,8 @@ function analyseRequest(details) {
                 'boto3': 'delete_repository',
                 'cli': 'delete-repository'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8428,7 +8846,8 @@ function analyseRequest(details) {
                 'boto3': 'create_product',
                 'cli': 'create-product'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         if (jsonRequestBody.productType == "CLOUD_FORMATION_TEMPLATE") {
@@ -8437,6 +8856,7 @@ function analyseRequest(details) {
                 'service': 'servicecatalog',
                 'type': 'AWS::ServiceCatalog::CloudFormationProduct',
                 'options': reqParams,
+            'requestId': details.requestId,
                 'was_blocked': blocking
             });
         }
@@ -8457,7 +8877,8 @@ function analyseRequest(details) {
                 'boto3': 'list_portfolios',
                 'cli': 'list-portfolios'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8489,7 +8910,8 @@ function analyseRequest(details) {
                 'boto3': 'create_portfolio',
                 'cli': 'create-portfolio'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -8497,6 +8919,7 @@ function analyseRequest(details) {
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::Portfolio',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -8524,7 +8947,8 @@ function analyseRequest(details) {
                 'boto3': 'associate_product_with_portfolio',
                 'cli': 'associate-product-with-portfolio'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -8532,6 +8956,7 @@ function analyseRequest(details) {
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::PortfolioProductAssociation',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -8556,7 +8981,8 @@ function analyseRequest(details) {
                 'boto3': 'create_portfolio_share',
                 'cli': 'create-portfolio-share'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -8564,6 +8990,7 @@ function analyseRequest(details) {
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::PortfolioShare',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -8583,7 +9010,8 @@ function analyseRequest(details) {
                 'boto3': 'list_tag_options',
                 'cli': 'list-tag-options'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8607,7 +9035,8 @@ function analyseRequest(details) {
                 'boto3': 'create_tag_option',
                 'cli': 'create-tag-option'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -8615,6 +9044,7 @@ function analyseRequest(details) {
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::TagOption',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -8634,7 +9064,8 @@ function analyseRequest(details) {
                 'boto3': 'describe_tag_option',
                 'cli': 'describe-tag-option'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
         
         return {};
@@ -8658,7 +9089,8 @@ function analyseRequest(details) {
                 'boto3': 'associate_tag_option_with_resource',
                 'cli': 'associate-tag-option-with-resource'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -8666,6 +9098,7 @@ function analyseRequest(details) {
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::TagOptionAssociation',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
@@ -8693,7 +9126,8 @@ function analyseRequest(details) {
                 'boto3': 'associate_principal_with_portfolio',
                 'cli': 'associate-principal-with-portfolio'
             },
-            'options': reqParams
+            'options': reqParams,
+            'requestId': details.requestId
         });
 
         tracked_resources.push({
@@ -8701,9 +9135,748 @@ function analyseRequest(details) {
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::PortfolioPrincipalAssociation',
             'options': reqParams,
+            'requestId': details.requestId,
             'was_blocked': blocking
         });
         
+        return {};
+    }
+
+    // manual:elasticache:ec2.DescribeSecurityGroups
+    // manual:elasticache:elasticache.DescribeCacheClusters
+    // manual:elasticache:elasticache.DescribeCacheEngineVersions
+    // manual:elasticache:elasticache.DescribeCacheParameterGroups
+    // manual:elasticache:elasticache.DescribeCacheSubnetGroups
+    // manual:elasticache:ec2.DescribeVpcs
+    // manual:elasticache:sns.ListTopics
+    // manual:elasticache:ec2.DescribeSubnets
+    // manual:elasticache:elasticache.CreateCacheSubnetGroup
+    // manual:elasticache:elasticache.CreateCacheCluster
+    // manual:elasticache:elasticache.DescribeReservedCacheNodes
+    // manual:elasticache:elasticache.DescribeReplicationGroups
+    // manual:elasticache:elasticache.DescribeSnapshots
+    // manual:elasticache:elasticache.CreateCacheParameterGroup
+    // manual:elasticache:ec2.DescribeAvailabilityZones
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/elasticache\/rpc$/g)) {
+        for (var action in jsonRequestBody.portfolioId.actions) {
+            if (action['action'] == "EC2.DescribeSecurityGroupsDefault") {
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeSecurityGroups',
+                        'boto3': 'describe_security_groups',
+                        'cli': 'describe-security-groups'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheClusterContext.list") {
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'DescribeCacheClusters',
+                        'boto3': 'describe_cache_clusters',
+                        'cli': 'describe-cache-clusters'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheEngineVersionContext.describeCacheEngineVersions") {
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'DescribeCacheEngineVersions',
+                        'boto3': 'describe_cache_engine_versions',
+                        'cli': 'describe-cache-engine-versions'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheParameterGroupContext.list") {
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'DescribeCacheParameterGroups',
+                        'boto3': 'describe-cache-parameter_groups',
+                        'cli': 'describe_cache_parameter_groups'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheSubnetGroupContext.list") {
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'DescribeCacheSubnetGroups',
+                        'boto3': 'describe_cache_subnet_groups',
+                        'cli': 'describe-cache-engine-groups'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.gwt.ec2.requestfactory.shared.Ec2Context.describeVpcs") {
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeVpcs',
+                        'boto3': 'describe_vpcs',
+                        'cli': 'describe-vpcs'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.gwt.sns.requestfactory.shared.SnsRequestContext.listTopicArnsWithLimitedRecords") {
+                outputs.push({
+                    'region': region,
+                    'service': 'sns',
+                    'method': {
+                        'api': 'ListTopics',
+                        'boto3': 'list_topics',
+                        'cli': 'list-topics'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "EC2.DescribeSubnetsDefault") {
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeSubnets',
+                        'boto3': 'describe_subnets',
+                        'cli': 'describe-subnets'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheSubnetGroupContext.create") {
+                reqParams.boto3['CacheSubnetGroupName'] = action['parameters'][0]['cacheSubnetGroupName'];
+                reqParams.cli['--cache-subnet-group-name'] = action['parameters'][0]['cacheSubnetGroupName'];
+                reqParams.boto3['CacheSubnetGroupDescription'] = action['parameters'][0]['cacheSubnetGroupDescription'];
+                reqParams.cli['--cache-subnet-group-description'] = action['parameters'][0]['cacheSubnetGroupDescription'];
+                reqParams.boto3['SubnetIds'] = action['parameters'][0]['subnetIds'];
+                reqParams.cli['--subnet-ids'] = action['parameters'][0]['subnetIds'];
+
+                reqParams.cfn['CacheSubnetGroupName'] = action['parameters'][0]['cacheSubnetGroupName'];
+                reqParams.cfn['Description'] = action['parameters'][0]['cacheSubnetGroupDescription'];
+                reqParams.cfn['SubnetIds'] = action['parameters'][0]['subnetIds'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'CreateCacheSubnetGroup',
+                        'boto3': 'create_cache_subnet_group',
+                        'cli': 'create-cache-subnet-group'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+
+                tracked_resources.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'type': 'AWS::ElastiCache::SubnetGroup',
+                    'options': reqParams,
+                    'requestId': details.requestId,
+                    'was_blocked': blocking
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheClusterContext.create") {
+                reqParams.boto3['NumCacheNodes'] = action['parameters'][0]['numCacheNodes'];
+                reqParams.cli['--num-cache-nodes'] = action['parameters'][0]['numCacheNodes'];
+                reqParams.boto3['Port'] = action['parameters'][0]['port'];
+                reqParams.cli['--port'] = action['parameters'][0]['port'];
+                reqParams.boto3['CacheClusterId'] = action['parameters'][0]['cacheClusterId'];
+                reqParams.cli['--cache-cluster-id'] = action['parameters'][0]['cacheClusterId'];
+                reqParams.boto3['CacheNodeType'] = action['parameters'][0]['cacheNodeType'];
+                reqParams.cli['--cache-node-type'] = action['parameters'][0]['cacheNodeType'];
+                reqParams.boto3['CacheParameterGroupName'] = action['parameters'][0]['cacheParameterGroupName'];
+                reqParams.cli['--cache-parameter-group-name'] = action['parameters'][0]['cacheParameterGroupName'];
+                reqParams.boto3['CacheSubnetGroupName'] = action['parameters'][0]['cacheSubnetGroupName'];
+                reqParams.cli['--cache-subnet-group-name'] = action['parameters'][0]['cacheSubnetGroupName'];
+                reqParams.boto3['Engine'] = action['parameters'][0]['engine'];
+                reqParams.cli['--engine'] = action['parameters'][0]['engine'];
+                reqParams.boto3['EngineVersion'] = action['parameters'][0]['engineVersion'];
+                reqParams.cli['--engine-version'] = action['parameters'][0]['engineVersion'];
+                reqParams.boto3['NotificationTopicArn'] = action['parameters'][0]['notificationTopicArn'];
+                reqParams.cli['--notification-topic-arn'] = action['parameters'][0]['notificationTopicArn'];
+                reqParams.boto3['PreferredMaintenanceWindow'] = action['parameters'][0]['preferredMaintenanceWindow'];
+                reqParams.cli['--preferred-maintenance-window'] = action['parameters'][0]['preferredMaintenanceWindow'];
+                reqParams.boto3['PreferredAvailabilityZones'] = action['parameters'][0]['preferredAvailabilityZones'];
+                reqParams.cli['--preferred-availability-zones'] = action['parameters'][0]['preferredAvailabilityZones'];
+                reqParams.boto3['SecurityGroupIds'] = action['parameters'][0]['securityGroupIds'];
+                reqParams.cli['--security-group-ids'] = action['parameters'][0]['securityGroupIds'];
+
+                reqParams.cfn['NumCacheNodes'] = action['parameters'][0]['numCacheNodes'];
+                reqParams.cfn['Port'] = action['parameters'][0]['port'];
+                reqParams.cfn['ClusterName'] = action['parameters'][0]['cacheClusterId'];
+                reqParams.cfn['CacheNodeType'] = action['parameters'][0]['cacheNodeType'];
+                reqParams.cfn['CacheParameterGroupName'] = action['parameters'][0]['cacheParameterGroupName'];
+                reqParams.cfn['CacheSubnetGroupName'] = action['parameters'][0]['cacheSubnetGroupName'];
+                reqParams.cfn['Engine'] = action['parameters'][0]['engine'];
+                reqParams.cfn['EngineVersion'] = action['parameters'][0]['engineVersion'];
+                reqParams.cfn['NotificationTopicArn'] = action['parameters'][0]['notificationTopicArn'];
+                reqParams.cfn['PreferredMaintenanceWindow'] = action['parameters'][0]['preferredMaintenanceWindow'];
+                reqParams.cfn['PreferredAvailabilityZones'] = action['parameters'][0]['preferredAvailabilityZones'];
+                reqParams.cfn['VpcSecurityGroupIds'] = action['parameters'][0]['securityGroupIds'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'CreateCacheCluster',
+                        'boto3': 'create_cache_cluster',
+                        'cli': 'create-cache-cluster'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+
+                tracked_resources.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'type': 'AWS::ElastiCache::CacheCluster',
+                    'options': reqParams,
+                    'requestId': details.requestId,
+                    'was_blocked': blocking
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.ReservedCacheNodeRequestContext.findAll") {
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'DescribeReservedCacheNodes',
+                        'boto3': 'describe_reserved_cache_nodes',
+                        'cli': 'describe-reserved-cache-nodes'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.ReplicationGroupContext.paginatedList") {
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'DescribeReplicationGroups',
+                        'boto3': 'describe_replication_groups',
+                        'cli': 'describe-replication-groups'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.SnapshotContext.list") {
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'DescribeSnapshots',
+                        'boto3': 'describe_snapshots',
+                        'cli': 'describe-snapshots'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheParameterGroupContext.create") {
+                reqParams.boto3['CacheParameterGroupFamily'] = action['parameters'][0]['cacheParameterGroupFamily'];
+                reqParams.cli['--cache-parameter-group-family'] = action['parameters'][0]['cacheParameterGroupFamily'];
+                reqParams.boto3['CacheParameterGroupName'] = action['parameters'][0]['cacheParameterGroupName'];
+                reqParams.cli['--cache-parameter-group-name'] = action['parameters'][0]['cacheParameterGroupName'];
+                reqParams.boto3['Description'] = action['parameters'][0]['description'];
+                reqParams.cli['--description'] = action['parameters'][0]['description'];
+
+                reqParams.cfn['CacheParameterGroupFamily'] = action['parameters'][0]['cacheParameterGroupFamily'];
+                reqParams.cfn['Description'] = action['parameters'][0]['description'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'method': {
+                        'api': 'CreateCacheParameterGroup',
+                        'boto3': 'create_cache_parameter_group',
+                        'cli': 'create-cache-parameter-group'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+
+                tracked_resources.push({
+                    'region': region,
+                    'service': 'elasticache',
+                    'type': 'AWS::ElastiCache::ParameterGroup',
+                    'options': reqParams,
+                    'requestId': details.requestId,
+                    'was_blocked': blocking
+                });
+            } else if (action['action'] == "EC2.DescribeAvailabilityZonesDefault") {
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeAvailabilityZones',
+                        'boto3': 'describe_availability_zones',
+                        'cli': 'describe-availability-zones'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            }
+        }
+        
+        return {};
+    }
+
+    // autogen:glue:glue.GetDatabases
+    // autogen:glue:s3.ListBuckets
+    // autogen:glue:glue.CreateTable
+    // autogen:glue:glue.GetCatalogImportStatus
+    // autogen:glue:glue.GetTables
+    // autogen:glue:glue.GetConnections
+    // autogen:glue:glue.GetConnection
+    // autogen:glue:rds.DescribeDBInstances
+    // autogen:glue:glue.GetConnection
+    // autogen:glue:ec2.DescribeVpcs
+    // autogen:glue:ec2.DescribeSubnets
+    // autogen:glue:ec2.DescribeSecurityGroups
+    // autogen:glue:glue.CreateConnection
+    // autogen:glue:glue.GetClassifiers
+    // autogen:glue:glue.CreateClassifier
+    // autogen:glue:glue.PutDataCatalogEncryptionSettings
+    // autogen:glue:glue.GetDataCatalogEncryptionSettings
+    // autogen:glue:glue.GetJobs
+    // autogen:glue:glue.GetTriggers
+    // autogen:glue:glue.GetSecurityConfigurations
+    // autogen:glue:glue.CreateSecurityConfiguration
+    // autogen:glue:glue.DeleteSecurityConfiguration
+    // autogen:glue:glue.PutDataCatalogEncryptionSettings
+    // autogen:glue:glue.DeleteClassifier
+    // autogen:glue:glue.BatchDeleteConnection
+    // autogen:glue:glue.BatchDeleteTable
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/glue\/rpc$/g)) {
+        for (var action in jsonRequestBody.portfolioId.actions) {
+            if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getDatabases") {
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetDatabases',
+                        'boto3': 'get_databases',
+                        'cli': 'get-databases'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonS3Context.listBuckets") {
+                outputs.push({
+                    'region': region,
+                    'service': 's3',
+                    'method': {
+                        'api': 'ListBuckets',
+                        'boto3': 'list_buckets',
+                        'cli': 'list-buckets'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.createTable") {
+                reqParams.boto3['TableInput'] = action['parameters'][0]['tableInput'];
+                reqParams.cli['--table-input'] = action['parameters'][0]['tableInput'];
+                reqParams.boto3['DatabaseName'] = action['parameters'][0]['databaseName'];
+                reqParams.cli['--database-name'] = action['parameters'][0]['databaseName'];
+
+                reqParams.cfn['TableInput'] = action['parameters'][0]['tableInput'];
+                reqParams.cfn['DatabaseName'] = action['parameters'][0]['databaseName'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'CreateTable',
+                        'boto3': 'create_table',
+                        'cli': 'create-table'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+
+                tracked_resources.push({
+                    'region': region,
+                    'service': 'glue',
+                    'type': 'AWS::Glue::Table',
+                    'options': reqParams,
+                    'requestId': details.requestId,
+                    'was_blocked': blocking
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getCatalogImportStatus") {
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetCatalogImportStatus',
+                        'boto3': 'get_catalog_import_status',
+                        'cli': 'get-catalog-import-status'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonDataCatalogContext.findObjects" && action['parameters'][0]['entity'] == "TABLE") {
+                reqParams.boto3['CatalogId'] = action['parameters'][0]['catalogId'];
+                reqParams.cli['--catalog-id'] = action['parameters'][0]['catalogId'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetTables',
+                        'boto3': 'get_tables',
+                        'cli': 'get-tables'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getConnections") {
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetConnections',
+                        'boto3': 'get_connections',
+                        'cli': 'get-connections'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getConnection") {
+                reqParams.boto3['Name'] = action['parameters'][0]['name'];
+                reqParams.cli['--name'] = action['parameters'][0]['name'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetConnection',
+                        'boto3': 'get_connection',
+                        'cli': 'get-connection'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonRDSContext.describeDBInstances") {
+                outputs.push({
+                    'region': region,
+                    'service': 'rds',
+                    'method': {
+                        'api': 'DescribeDBInstances',
+                        'boto3': 'describe_db_instances',
+                        'cli': 'describe-db-instances'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getConnection") {
+                reqParams.boto3['Name'] = action['parameters'][0]['name'];
+                reqParams.cli['--name'] = action['parameters'][0]['name'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetConnection',
+                        'boto3': 'get_connection',
+                        'cli': 'get-connection'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonEC2Context.describeVpcs") {
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeVpcs',
+                        'boto3': 'describe_vpcs',
+                        'cli': 'describe-vpcs'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonEC2Context.describeSubnets") {
+                reqParams.boto3['Filters'] = action['parameters'][0]['filters'];
+                reqParams.cli['--filters'] = action['parameters'][0]['filters'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeSubnets',
+                        'boto3': 'describe_subnets',
+                        'cli': 'describe-subnets'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonEC2Context.describeSecurityGroups") {
+                reqParams.boto3['Filters'] = action['parameters'][0]['filters'];
+                reqParams.cli['--filters'] = action['parameters'][0]['filters'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeSecurityGroups',
+                        'boto3': 'describe_security_groups',
+                        'cli': 'describe-security-groups'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.createConnection") {
+                reqParams.boto3['ConnectionInput'] = jsonRequestBody.actions;
+                reqParams.cli['--connection-input'] = jsonRequestBody.actions;
+
+                reqParams.cfn['ConnectionInput'] = jsonRequestBody.actions;
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'CreateConnection',
+                        'boto3': 'create_connection',
+                        'cli': 'create-connection'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+
+                tracked_resources.push({
+                    'region': region,
+                    'service': 'glue',
+                    'type': 'AWS::Glue::Connection',
+                    'options': reqParams,
+                    'requestId': details.requestId,
+                    'was_blocked': blocking
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getClassifiers") {
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetClassifiers',
+                        'boto3': 'get_classifiers',
+                        'cli': 'get-classifiers'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.createClassifier") {
+                if ('jsonClassifier' in action['parameters'][0]) {
+                    reqParams.boto3['JsonClassifier'] = action['parameters'][0]['jsonClassifier'];
+                    reqParams.cli['--json-classifier'] = action['parameters'][0]['jsonClassifier'];
+                    reqParams.cfn['JsonClassifier'] = action['parameters'][0]['jsonClassifier'];
+                }
+                if ('grokClassifier' in action['parameters'][0]) {
+                    reqParams.boto3['GrokClassifier'] = action['parameters'][0]['grokClassifier'];
+                    reqParams.cli['--grok-classifier'] = action['parameters'][0]['grokClassifier'];
+                    reqParams.cfn['GrokClassifier'] = action['parameters'][0]['grokClassifier'];
+                }
+                if ('xmlClassifier' in action['parameters'][0]) {
+                    reqParams.boto3['XMLClassifier'] = action['parameters'][0]['xmlClassifier'];
+                    reqParams.cli['--xml-classifier'] = action['parameters'][0]['xmlClassifier'];
+                    reqParams.cfn['XMLClassifier'] = action['parameters'][0]['xmlClassifier'];
+                }
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'CreateClassifier',
+                        'boto3': 'create_classifier',
+                        'cli': 'create-classifier'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+
+                tracked_resources.push({
+                    'region': region,
+                    'service': 'glue',
+                    'type': 'AWS::Glue::Classifier',
+                    'options': reqParams,
+                    'requestId': details.requestId,
+                    'was_blocked': blocking
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getDataCatalogEncryptionSettings") {
+                reqParams.boto3['CatalogId'] = action['parameters'][0]['catalogId'];
+                reqParams.cli['--catalog-id'] = action['parameters'][0]['catalogId'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetDataCatalogEncryptionSettings',
+                        'boto3': 'get_data_catalog_encryption_settings',
+                        'cli': 'get-data-catalog-encryption-settings'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.putDataCatalogEncryptionSettings") {
+                reqParams.boto3['DataCatalogEncryptionSettings'] = action['parameters'][0]['dataCatalogEncryptionSettings'];
+                reqParams.cli['--data-catalog-encryption-settings'] = action['parameters'][0]['dataCatalogEncryptionSettings'];
+                reqParams.boto3['CatalogId'] = action['parameters'][0]['catalogId'];
+                reqParams.cli['--catalog-id'] = action['parameters'][0]['catalogId'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'PutDataCatalogEncryptionSettings',
+                        'boto3': 'put_data_catalog_encryption_settings',
+                        'cli': 'put-data-catalog-encryption-settings'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getJobs") {
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetJobs',
+                        'boto3': 'get_jobs',
+                        'cli': 'get-jobs'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getTriggers") {
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetTriggers',
+                        'boto3': 'get_triggers',
+                        'cli': 'get-triggers'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getSecurityConfigurations") {
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'GetSecurityConfigurations',
+                        'boto3': 'get_security_configurations',
+                        'cli': 'get-security-configurations'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.createSecurityConfiguration") {
+                reqParams.boto3['EncryptionConfiguration'] = action['parameters'][0]['encryptionConfiguration'];
+                reqParams.cli['--encryption-configuration'] = action['parameters'][0]['encryptionConfiguration'];
+                reqParams.boto3['Name'] = action['parameters'][0]['name'];
+                reqParams.cli['--name'] = action['parameters'][0]['name'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'CreateSecurityConfiguration',
+                        'boto3': 'create_security_configuration',
+                        'cli': 'create-security-configuration'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.deleteSecurityConfiguration") {
+                reqParams.boto3['Name'] = action['parameters'][0]['name'];
+                reqParams.cli['--name'] = action['parameters'][0]['name'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'DeleteSecurityConfiguration',
+                        'boto3': 'delete_security_configuration',
+                        'cli': 'delete-security-configuration'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.putDataCatalogEncryptionSettings") {
+                reqParams.boto3['DataCatalogEncryptionSettings'] = action['parameters'][0]['dataCatalogEncryptionSettings'];
+                reqParams.cli['--data-catalog-encryption-settings'] = action['parameters'][0]['dataCatalogEncryptionSettings'];
+                reqParams.boto3['CatalogId'] = action['parameters'][0]['catalogId'];
+                reqParams.cli['--catalog-id'] = action['parameters'][0]['catalogId'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'PutDataCatalogEncryptionSettings',
+                        'boto3': 'put_data_catalog_encryption_settings',
+                        'cli': 'put-data-catalog-encryption-settings'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.deleteClassifier") {
+                reqParams.boto3['Name'] = action['parameters'][0]['name'];
+                reqParams.cli['--name'] = action['parameters'][0]['name'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'DeleteClassifier',
+                        'boto3': 'delete_classifier',
+                        'cli': 'delete-classifier'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.batchDeleteConnection") {
+                reqParams.boto3['ConnectionNameList'] = action['parameters'][0]['connectionNameList'];
+                reqParams.cli['--connection-name-list'] = action['parameters'][0]['connectionNameList'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'BatchDeleteConnection',
+                        'boto3': 'batch_delete_connection',
+                        'cli': 'batch-delete-connection'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.batchDeleteTable") {
+                reqParams.boto3['DatabaseName'] = action['parameters'][0]['databaseName'];
+                reqParams.cli['--database-name'] = action['parameters'][0]['databaseName'];
+                reqParams.boto3['TablesToDelete'] = action['parameters'][0]['tablesToDelete'];
+                reqParams.cli['--tables-to-delete'] = action['parameters'][0]['tablesToDelete'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'glue',
+                    'method': {
+                        'api': 'BatchDeleteTable',
+                        'boto3': 'batch_delete_table',
+                        'cli': 'batch-delete-table'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+            }
+        }
+
         return {};
     }
 

@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**70/258 (27.0%)** Resources Covered
+**76/258 (29.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -135,12 +135,12 @@
 | *AWS::EMR::InstanceGroupConfig* | 0 |
 | *AWS::EMR::SecurityConfiguration* | 0 |
 | *AWS::EMR::Step* | 0 |
-| *AWS::ElastiCache::CacheCluster* | 0 |
-| *AWS::ElastiCache::ParameterGroup* | 0 |
+| *AWS::ElastiCache::CacheCluster* | 1 |
+| *AWS::ElastiCache::ParameterGroup* | 1 |
 | *AWS::ElastiCache::ReplicationGroup* | 0 |
 | *AWS::ElastiCache::SecurityGroup* | 0 |
 | *AWS::ElastiCache::SecurityGroupIngress* | 0 |
-| *AWS::ElastiCache::SubnetGroup* | 0 |
+| *AWS::ElastiCache::SubnetGroup* | 1 |
 | *AWS::ElasticBeanstalk::Application* | 0 |
 | *AWS::ElasticBeanstalk::ApplicationVersion* | 0 |
 | *AWS::ElasticBeanstalk::ConfigurationTemplate* | 0 |
@@ -156,14 +156,14 @@
 | *AWS::GameLift::Alias* | 0 |
 | *AWS::GameLift::Build* | 0 |
 | *AWS::GameLift::Fleet* | 0 |
-| *AWS::Glue::Classifier* | 0 |
-| *AWS::Glue::Connection* | 0 |
+| *AWS::Glue::Classifier* | 1 |
+| *AWS::Glue::Connection* | 1 |
 | *AWS::Glue::Crawler* | 0 |
 | *AWS::Glue::Database* | 0 |
 | *AWS::Glue::DevEndpoint* | 0 |
 | *AWS::Glue::Job* | 0 |
 | *AWS::Glue::Partition* | 0 |
-| *AWS::Glue::Table* | 0 |
+| *AWS::Glue::Table* | 1 |
 | *AWS::Glue::Trigger* | 0 |
 | *AWS::GuardDuty::Detector* | 1 |
 | *AWS::GuardDuty::Filter* | 0 |
@@ -287,9 +287,11 @@
 | *ec2* | 72/274 (26.0%) |
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
+| *elasticache* | 10/42 (23.0%) |
 | *elbv2* | 2/34 (5.0%) |
 | *events* | 5/15 (33.0%) |
 | *firehose* | 1/10 (10.0%) |
+| *glue* | 19/84 (22.0%) |
 | *guardduty* | 21/42 (50.0%) |
 | *iam* | 22/127 (17.0%) |
 | *kinesis* | 1/28 (3.0%) |
@@ -298,6 +300,7 @@
 | *logs* | 1/33 (3.0%) |
 | *medialive* | 4/25 (16.0%) |
 | *mq* | 6/17 (35.0%) |
+| *rds* | 1/96 (1.0%) |
 | *rekognition* | 3/34 (8.0%) |
 | *s3* | 23/78 (29.0%) |
 | *servicecatalog* | 10/60 (16.0%) |
@@ -1636,7 +1639,7 @@
 | *ec2* | `AssociateDhcpOptions` | 0 |
 | *ec2* | `ModifyVpcEndpointServicePermissions` | 0 |
 | *ec2* | `ImportKeyPair` | 1 |
-| *ec2* | `DescribeAvailabilityZones` | 2 |
+| *ec2* | `DescribeAvailabilityZones` | 3 |
 | *ec2* | `RequestSpotInstances` | 0 |
 | *ec2* | `DescribeSnapshots` | 1 |
 | *ec2* | `AcceptVpcPeeringConnection` | 0 |
@@ -1692,7 +1695,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 4 |
+| *ec2* | `DescribeVpcs` | 6 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1843,7 +1846,7 @@
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 4 |
+| *ec2* | `DescribeSecurityGroups` | 6 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -1856,7 +1859,7 @@
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 0 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 5 |
+| *ec2* | `DescribeSubnets` | 7 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -1959,45 +1962,45 @@
 | *eks* | `DeleteCluster` | 0 |
 | *eks* | `ListClusters` | 0 |
 | *eks* | `CreateCluster` | 0 |
-| *elasticache* | `DescribeCacheEngineVersions` | 0 |
+| *elasticache* | `DescribeCacheEngineVersions` | 1 |
 | *elasticache* | `DeleteCacheSubnetGroup` | 0 |
 | *elasticache* | `ResetCacheParameterGroup` | 0 |
 | *elasticache* | `DeleteCacheSecurityGroup` | 0 |
 | *elasticache* | `DescribeEvents` | 0 |
 | *elasticache* | `DescribeEngineDefaultParameters` | 0 |
-| *elasticache* | `DescribeCacheSubnetGroups` | 0 |
+| *elasticache* | `DescribeCacheSubnetGroups` | 1 |
 | *elasticache* | `DescribeCacheSecurityGroups` | 0 |
 | *elasticache* | `RebootCacheCluster` | 0 |
 | *elasticache* | `DecreaseReplicaCount` | 0 |
 | *elasticache* | `ModifyCacheSubnetGroup` | 0 |
-| *elasticache* | `DescribeCacheParameterGroups` | 0 |
+| *elasticache* | `DescribeCacheParameterGroups` | 1 |
 | *elasticache* | `DeleteCacheParameterGroup` | 0 |
 | *elasticache* | `AuthorizeCacheSecurityGroupIngress` | 0 |
 | *elasticache* | `CopySnapshot` | 0 |
 | *elasticache* | `AddTagsToResource` | 0 |
 | *elasticache* | `IncreaseReplicaCount` | 0 |
-| *elasticache* | `DescribeCacheClusters` | 0 |
+| *elasticache* | `DescribeCacheClusters` | 1 |
 | *elasticache* | `ModifyCacheCluster` | 0 |
 | *elasticache* | `CreateReplicationGroup` | 0 |
 | *elasticache* | `RemoveTagsFromResource` | 0 |
 | *elasticache* | `DescribeCacheParameters` | 0 |
-| *elasticache* | `CreateCacheParameterGroup` | 0 |
+| *elasticache* | `CreateCacheParameterGroup` | 1 |
 | *elasticache* | `TestFailover` | 0 |
-| *elasticache* | `DescribeReplicationGroups` | 0 |
+| *elasticache* | `DescribeReplicationGroups` | 1 |
 | *elasticache* | `DeleteReplicationGroup` | 0 |
 | *elasticache* | `DescribeReservedCacheNodesOfferings` | 0 |
-| *elasticache* | `CreateCacheCluster` | 0 |
-| *elasticache* | `CreateCacheSubnetGroup` | 0 |
+| *elasticache* | `CreateCacheCluster` | 1 |
+| *elasticache* | `CreateCacheSubnetGroup` | 1 |
 | *elasticache* | `ModifyReplicationGroup` | 0 |
 | *elasticache* | `ModifyCacheParameterGroup` | 0 |
-| *elasticache* | `DescribeSnapshots` | 0 |
+| *elasticache* | `DescribeSnapshots` | 1 |
 | *elasticache* | `ModifyReplicationGroupShardConfiguration` | 0 |
 | *elasticache* | `DeleteCacheCluster` | 0 |
 | *elasticache* | `PurchaseReservedCacheNodesOffering` | 0 |
 | *elasticache* | `DeleteSnapshot` | 0 |
 | *elasticache* | `RevokeCacheSecurityGroupIngress` | 0 |
 | *elasticache* | `ListAllowedNodeTypeModifications` | 0 |
-| *elasticache* | `DescribeReservedCacheNodes` | 0 |
+| *elasticache* | `DescribeReservedCacheNodes` | 1 |
 | *elasticache* | `CreateCacheSecurityGroup` | 0 |
 | *elasticache* | `ListTagsForResource` | 0 |
 | *elasticache* | `CreateSnapshot` | 0 |
@@ -2318,27 +2321,27 @@
 | *glue* | `DeleteTableVersion` | 0 |
 | *glue* | `GetTableVersion` | 0 |
 | *glue* | `UpdateUserDefinedFunction` | 0 |
-| *glue* | `GetSecurityConfigurations` | 0 |
+| *glue* | `GetSecurityConfigurations` | 1 |
 | *glue* | `GetPlan` | 0 |
-| *glue* | `GetConnections` | 0 |
-| *glue* | `DeleteClassifier` | 0 |
-| *glue* | `CreateTable` | 0 |
+| *glue* | `GetConnections` | 1 |
+| *glue* | `DeleteClassifier` | 1 |
+| *glue* | `CreateTable` | 1 |
 | *glue* | `CreateTrigger` | 0 |
-| *glue* | `BatchDeleteTable` | 0 |
+| *glue* | `BatchDeleteTable` | 1 |
 | *glue* | `DeleteDevEndpoint` | 0 |
 | *glue* | `DeleteTrigger` | 0 |
 | *glue* | `GetTableVersions` | 0 |
 | *glue* | `GetCrawlers` | 0 |
 | *glue* | `DeleteUserDefinedFunction` | 0 |
 | *glue* | `CreateCrawler` | 0 |
-| *glue* | `DeleteSecurityConfiguration` | 0 |
-| *glue* | `PutDataCatalogEncryptionSettings` | 0 |
+| *glue* | `DeleteSecurityConfiguration` | 1 |
+| *glue* | `PutDataCatalogEncryptionSettings` | 2 |
 | *glue* | `UpdateDevEndpoint` | 0 |
 | *glue* | `UpdateCrawlerSchedule` | 0 |
 | *glue* | `GetCrawler` | 0 |
-| *glue* | `GetTriggers` | 0 |
-| *glue* | `GetConnection` | 0 |
-| *glue* | `GetTables` | 0 |
+| *glue* | `GetTriggers` | 1 |
+| *glue* | `GetConnection` | 2 |
+| *glue* | `GetTables` | 1 |
 | *glue* | `StartCrawlerSchedule` | 0 |
 | *glue* | `DeleteTable` | 0 |
 | *glue* | `StopCrawler` | 0 |
@@ -2346,19 +2349,19 @@
 | *glue* | `GetJobRuns` | 0 |
 | *glue* | `GetPartitions` | 0 |
 | *glue* | `GetUserDefinedFunction` | 0 |
-| *glue* | `CreateSecurityConfiguration` | 0 |
+| *glue* | `CreateSecurityConfiguration` | 1 |
 | *glue* | `CreateScript` | 0 |
-| *glue* | `GetCatalogImportStatus` | 0 |
+| *glue* | `GetCatalogImportStatus` | 1 |
 | *glue* | `StopCrawlerSchedule` | 0 |
 | *glue* | `CreateDatabase` | 0 |
 | *glue* | `GetDevEndpoint` | 0 |
 | *glue* | `GetDatabase` | 0 |
-| *glue* | `GetDataCatalogEncryptionSettings` | 0 |
+| *glue* | `GetDataCatalogEncryptionSettings` | 1 |
 | *glue* | `GetCrawlerMetrics` | 0 |
 | *glue* | `StartJobRun` | 0 |
 | *glue* | `CreateJob` | 0 |
 | *glue* | `DeleteCrawler` | 0 |
-| *glue* | `GetJobs` | 0 |
+| *glue* | `GetJobs` | 1 |
 | *glue* | `CreatePartition` | 0 |
 | *glue* | `GetDevEndpoints` | 0 |
 | *glue* | `UpdateCrawler` | 0 |
@@ -2371,24 +2374,24 @@
 | *glue* | `BatchDeletePartition` | 0 |
 | *glue* | `BatchDeleteTableVersion` | 0 |
 | *glue* | `CreateDevEndpoint` | 0 |
-| *glue* | `CreateConnection` | 0 |
+| *glue* | `CreateConnection` | 1 |
 | *glue* | `ResetJobBookmark` | 0 |
-| *glue* | `GetDatabases` | 0 |
+| *glue* | `GetDatabases` | 1 |
 | *glue* | `CreateUserDefinedFunction` | 0 |
 | *glue* | `GetPartition` | 0 |
 | *glue* | `ImportCatalogToGlue` | 0 |
-| *glue* | `BatchDeleteConnection` | 0 |
+| *glue* | `BatchDeleteConnection` | 1 |
 | *glue* | `BatchGetPartition` | 0 |
 | *glue* | `DeleteConnection` | 0 |
 | *glue* | `BatchCreatePartition` | 0 |
-| *glue* | `CreateClassifier` | 0 |
+| *glue* | `CreateClassifier` | 1 |
 | *glue* | `StartTrigger` | 0 |
 | *glue* | `GetMapping` | 0 |
 | *glue* | `DeleteJob` | 0 |
 | *glue* | `GetJobRun` | 0 |
 | *glue* | `DeleteDatabase` | 0 |
 | *glue* | `GetJob` | 0 |
-| *glue* | `GetClassifiers` | 0 |
+| *glue* | `GetClassifiers` | 1 |
 | *glue* | `UpdateDatabase` | 0 |
 | *glue* | `GetTable` | 0 |
 | *glue* | `GetTrigger` | 0 |
@@ -3702,7 +3705,7 @@
 | *rds* | `ModifyDBClusterParameterGroup` | 0 |
 | *rds* | `FailoverDBCluster` | 0 |
 | *rds* | `ApplyPendingMaintenanceAction` | 0 |
-| *rds* | `DescribeDBInstances` | 0 |
+| *rds* | `DescribeDBInstances` | 1 |
 | *rds* | `PurchaseReservedDBInstancesOffering` | 0 |
 | *rds* | `DescribeOrderableDBInstanceOptions` | 0 |
 | *rds* | `RestoreDBInstanceFromS3` | 0 |
@@ -3965,7 +3968,7 @@
 | *s3* | `GetBucketLogging` | 1 |
 | *s3* | `HeadBucket` | 0 |
 | *s3* | `ListBucketMetricsConfigurations` | 0 |
-| *s3* | `ListBuckets` | 2 |
+| *s3* | `ListBuckets` | 3 |
 | *s3* | `DeleteBucketWebsite` | 0 |
 | *s3* | `DeleteBucketInventoryConfiguration` | 0 |
 | *s3* | `GetBucketNotificationConfiguration` | 1 |
@@ -4333,7 +4336,7 @@
 | *sns* | `Subscribe` | 0 |
 | *sns* | `DeleteTopic` | 0 |
 | *sns* | `OptInPhoneNumber` | 0 |
-| *sns* | `ListTopics` | 3 |
+| *sns* | `ListTopics` | 4 |
 | *sqs* | `CreateQueue` | 0 |
 | *sqs* | `GetQueueAttributes` | 0 |
 | *sqs* | `SetQueueAttributes` | 0 |
@@ -4875,4 +4878,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 319 (6.0%)**
+**Total Unique Occurances: 349 (7.0%)**
