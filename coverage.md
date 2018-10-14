@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**76/258 (29.0%)** Resources Covered
+**81/258 (31.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -211,14 +211,14 @@
 | *AWS::OpsWorks::UserProfile* | 0 |
 | *AWS::OpsWorks::Volume* | 0 |
 | *AWS::RDS::DBCluster* | 0 |
-| *AWS::RDS::DBClusterParameterGroup* | 0 |
-| *AWS::RDS::DBInstance* | 0 |
-| *AWS::RDS::DBParameterGroup* | 0 |
+| *AWS::RDS::DBClusterParameterGroup* | 1 |
+| *AWS::RDS::DBInstance* | 1 |
+| *AWS::RDS::DBParameterGroup* | 1 |
 | *AWS::RDS::DBSecurityGroup* | 0 |
 | *AWS::RDS::DBSecurityGroupIngress* | 0 |
-| *AWS::RDS::DBSubnetGroup* | 0 |
+| *AWS::RDS::DBSubnetGroup* | 1 |
 | *AWS::RDS::EventSubscription* | 0 |
-| *AWS::RDS::OptionGroup* | 0 |
+| *AWS::RDS::OptionGroup* | 1 |
 | *AWS::Redshift::Cluster* | 0 |
 | *AWS::Redshift::ClusterParameterGroup* | 0 |
 | *AWS::Redshift::ClusterSecurityGroup* | 0 |
