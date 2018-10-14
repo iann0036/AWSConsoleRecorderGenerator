@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**81/258 (31.0%)** Resources Covered
+**82/258 (31.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -217,7 +217,7 @@
 | *AWS::RDS::DBSecurityGroup* | 0 |
 | *AWS::RDS::DBSecurityGroupIngress* | 0 |
 | *AWS::RDS::DBSubnetGroup* | 1 |
-| *AWS::RDS::EventSubscription* | 0 |
+| *AWS::RDS::EventSubscription* | 1 |
 | *AWS::RDS::OptionGroup* | 1 |
 | *AWS::Redshift::Cluster* | 0 |
 | *AWS::Redshift::ClusterParameterGroup* | 0 |

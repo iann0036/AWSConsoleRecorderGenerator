@@ -10407,6 +10407,12 @@ function analyseRequest(details) {
                 reqParams.cli['--event-categories'] = action['parameters'][0]['eventCategories'];
                 reqParams.boto3['SourceIds'] = action['parameters'][0]['sourceIds'];
                 reqParams.cli['--source-ids'] = action['parameters'][0]['sourceIds'];
+
+                reqParams.cfn['Enabled'] = action['parameters'][0]['enabled'];
+                reqParams.cfn['SnsTopicArn'] = action['parameters'][0]['snsTopicArn'];
+                reqParams.cfn['SourceType'] = action['parameters'][0]['sourceType'];
+                reqParams.cfn['EventCategories'] = action['parameters'][0]['eventCategories'];
+                reqParams.cfn['SourceIds'] = action['parameters'][0]['sourceIds'];
         
                 outputs.push({
                     'region': region,
@@ -10418,6 +10424,15 @@ function analyseRequest(details) {
                     },
                     'options': reqParams,
                     'requestId': details.requestId
+                });
+
+                tracked_resources.push({
+                    'region': region,
+                    'service': 'rds',
+                    'type': 'AWS::RDS::EventSubscription',
+                    'options': reqParams,
+                    'requestId': details.requestId,
+                    'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.EventSubscriptionContext.list") {
                 outputs.push({
