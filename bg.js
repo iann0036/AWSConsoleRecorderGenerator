@@ -101,6 +101,8 @@ function logRequest(details) {
                 service = match[1];
                 regex_override = '.+' + escapeRegExp(`console.aws.amazon.com/codesuite/api/${service}`) + '$';
             }
+        } else if (service == "directoryservicev2") {
+            service = "ds";
         }
 
         var valid_service = false;
@@ -11235,6 +11237,370 @@ function analyseRequest(details) {
             },
             'options': reqParams,
             'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:sns:sns.ListTopics
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sns\/v2\/ListTopics$/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'ListTopics',
+                'boto3': 'list_topics',
+                'cli': 'list-topics'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:sns:sns.ListSubscriptions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sns\/v2\/ListSubscriptions$/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'ListSubscriptions',
+                'boto3': 'list_subscriptions',
+                'cli': 'list-subscriptions'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:sns:sns.CreateTopic
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sns\/v2\/CreateTopic$/g)) {
+        reqParams.boto3['Name'] = jsonRequestBody.topicName;
+        reqParams.cli['--name'] = jsonRequestBody.topicName;
+
+        reqParams.boto3['TopicName'] = jsonRequestBody.topicName;
+
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'CreateTopic',
+                'boto3': 'create_topic',
+                'cli': 'create-topic'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'sns',
+            'type': 'AWS::SNS::Topic',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:sns:sns.SetTopicAttributes
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sns\/v2\/SetTopicAttributes$/g)) {
+        reqParams.boto3['TopicArn'] = jsonRequestBody.topicArn;
+        reqParams.cli['--topic-arn'] = jsonRequestBody.topicArn;
+        reqParams.boto3['AttributeName'] = jsonRequestBody.attributeName;
+        reqParams.cli['--attribute-name'] = jsonRequestBody.attributeName;
+        reqParams.boto3['AttributeValue'] = jsonRequestBody.attributeValue;
+        reqParams.cli['--attribute-value'] = jsonRequestBody.attributeValue;
+
+        if (jsonRequestBody.attributeName == "Policy") {
+            reqParams.cfn['PolicyDocument'] = jsonRequestBody.attributeValue;
+            reqParams.cfn['Topics'] = [jsonRequestBody.topicArn];
+
+            tracked_resources.push({
+                'region': region,
+                'service': 'sns',
+                'type': 'AWS::SNS::TopicPolicy',
+                'options': reqParams,
+                'requestId': details.requestId,
+                'was_blocked': blocking
+            });
+        }
+
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'SetTopicAttributes',
+                'boto3': 'set_topic_attributes',
+                'cli': 'set-topic-attributes'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:sns:sns.DeleteTopic
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sns\/v2\/DeleteTopic$/g)) {
+        reqParams.boto3['TopicArn'] = jsonRequestBody.topicArn;
+        reqParams.cli['--topic-arn'] = jsonRequestBody.topicArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'DeleteTopic',
+                'boto3': 'delete_topic',
+                'cli': 'delete-topic'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:sns:sns.ListPlatformApplications
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sns\/v2\/ListPlatformApplications$/g)) {
+        reqParams.boto3['NextToken'] = jsonRequestBody.nextToken;
+        reqParams.cli['--next-token'] = jsonRequestBody.nextToken;
+
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'ListPlatformApplications',
+                'boto3': 'list_platform_applications',
+                'cli': 'list-platform-applications'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:sns:sns.Subscribe
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sns\/v2\/Subscribe$/g)) {
+        reqParams.boto3['TopicArn'] = jsonRequestBody.topicArn;
+        reqParams.cli['--topic-arn'] = jsonRequestBody.topicArn;
+        reqParams.boto3['Endpoint'] = jsonRequestBody.endpoint;
+        reqParams.cli['--endpoint'] = jsonRequestBody.endpoint;
+        reqParams.boto3['Protocol'] = jsonRequestBody.protocol;
+        reqParams.cli['--protocol'] = jsonRequestBody.protocol;
+
+        reqParams.cfn['TopicArn'] = jsonRequestBody.topicArn;
+        reqParams.cfn['Endpoint'] = jsonRequestBody.endpoint;
+        reqParams.cfn['Protocol'] = jsonRequestBody.protocol;
+
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'Subscribe',
+                'boto3': 'subscribe',
+                'cli': 'subscribe'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'sns',
+            'type': 'AWS::SNS::Subscription',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:sns:sns.GetTopicAttributes
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sns\/v2\/GetTopicAttributes$/g)) {
+        reqParams.boto3['TopicArn'] = jsonRequestBody.topicArn;
+        reqParams.cli['--topic-arn'] = jsonRequestBody.topicArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'GetTopicAttributes',
+                'boto3': 'get_topic_attributes',
+                'cli': 'get-topic-attributes'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ds:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/directoryservicev2\/api\/ec2$/g) && jsonRequestBody.operation == "describeVpcs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ds:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/directoryservicev2\/api\/ec2$/g) && jsonRequestBody.operation == "describeSubnets") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ds:ds.CreateDirectory
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/directoryservicev2\/api\/galaxy$/g) && jsonRequestBody.operation == "CreateDirectory") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.Name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.Name;
+        reqParams.boto3['Password'] = jsonRequestBody.contentString.Password;
+        reqParams.cli['--password'] = jsonRequestBody.contentString.Password;
+        reqParams.boto3['ShortName'] = jsonRequestBody.contentString.ShortName;
+        reqParams.cli['--short-name'] = jsonRequestBody.contentString.ShortName;
+        reqParams.boto3['Size'] = jsonRequestBody.contentString.Type;
+        reqParams.cli['--size'] = jsonRequestBody.contentString.Type;
+        reqParams.boto3['VpcSettings'] = jsonRequestBody.contentString.VpcSettings;
+        reqParams.cli['--vpc-settings'] = jsonRequestBody.contentString.VpcSettings;
+
+        reqParams.cfn['Name'] = jsonRequestBody.contentString.Name;
+        reqParams.cfn['Password'] = jsonRequestBody.contentString.Password;
+        reqParams.cfn['ShortName'] = jsonRequestBody.contentString.ShortName;
+        reqParams.cfn['Size'] = jsonRequestBody.contentString.Type;
+        reqParams.cfn['VpcSettings'] = jsonRequestBody.contentString.VpcSettings;
+
+        outputs.push({
+            'region': region,
+            'service': 'ds',
+            'method': {
+                'api': 'CreateDirectory',
+                'boto3': 'create_directory',
+                'cli': 'create-directory'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ds',
+            'type': 'AWS::DirectoryService::SimpleAD',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ds:ds.DescribeDirectories
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/directoryservicev2\/api\/galaxy$/g) && jsonRequestBody.operation == "DescribeDirectories") {
+        reqParams.boto3['DirectoryIds'] = jsonRequestBody.contentString.DirectoryIds;
+        reqParams.cli['--directory-ids'] = jsonRequestBody.contentString.DirectoryIds;
+
+        outputs.push({
+            'region': region,
+            'service': 'ds',
+            'method': {
+                'api': 'DescribeDirectories',
+                'boto3': 'describe_directories',
+                'cli': 'describe-directories'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ds:ds.DeleteDirectory
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/directoryservicev2\/api\/galaxy$/g) && jsonRequestBody.operation == "DeleteDirectory") {
+        reqParams.boto3['DirectoryId'] = jsonRequestBody.contentString.DirectoryId;
+        reqParams.cli['--directory-id'] = jsonRequestBody.contentString.DirectoryId;
+
+        outputs.push({
+            'region': region,
+            'service': 'ds',
+            'method': {
+                'api': 'DeleteDirectory',
+                'boto3': 'delete_directory',
+                'cli': 'delete-directory'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ds:ds.CreateMicrosoftAD
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/directoryservicev2\/api\/galaxy$/g) && jsonRequestBody.operation == "CreateMicrosoftAD") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.Name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.Name;
+        reqParams.boto3['Password'] = jsonRequestBody.contentString.Password;
+        reqParams.cli['--password'] = jsonRequestBody.contentString.Password;
+        reqParams.boto3['ShortName'] = jsonRequestBody.contentString.ShortName;
+        reqParams.cli['--short-name'] = jsonRequestBody.contentString.ShortName;
+        reqParams.boto3['Edition'] = jsonRequestBody.contentString.Edition;
+        reqParams.cli['--edition'] = jsonRequestBody.contentString.Edition;
+        reqParams.boto3['VpcSettings'] = jsonRequestBody.contentString.VpcSettings;
+        reqParams.cli['--vpc-settings'] = jsonRequestBody.contentString.VpcSettings;
+
+        reqParams.cfn['Name'] = jsonRequestBody.contentString.Name;
+        reqParams.cfn['Password'] = jsonRequestBody.contentString.Password;
+        reqParams.cfn['ShortName'] = jsonRequestBody.contentString.ShortName;
+        reqParams.cfn['Edition'] = jsonRequestBody.contentString.Edition;
+        reqParams.cfn['VpcSettings'] = jsonRequestBody.contentString.VpcSettings;
+
+        outputs.push({
+            'region': region,
+            'service': 'ds',
+            'method': {
+                'api': 'CreateMicrosoftAD',
+                'boto3': 'create_microsoft_ad',
+                'cli': 'create-microsoft-ad'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ds',
+            'type': 'AWS::DirectoryService::MicrosoftAD',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
         });
         
         return {};

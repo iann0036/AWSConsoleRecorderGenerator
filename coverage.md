@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**86/258 (33.0%)** Resources Covered
+**91/258 (35.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -78,8 +78,8 @@
 | *AWS::DMS::ReplicationSubnetGroup* | 0 |
 | *AWS::DMS::ReplicationTask* | 0 |
 | *AWS::DataPipeline::Pipeline* | 0 |
-| *AWS::DirectoryService::MicrosoftAD* | 0 |
-| *AWS::DirectoryService::SimpleAD* | 0 |
+| *AWS::DirectoryService::MicrosoftAD* | 1 |
+| *AWS::DirectoryService::SimpleAD* | 1 |
 | *AWS::DynamoDB::Table* | 1 |
 | *AWS::EC2::CustomerGateway* | 1 |
 | *AWS::EC2::DHCPOptions* | 0 |
@@ -231,9 +231,9 @@
 | *AWS::S3::Bucket* | 1 |
 | *AWS::S3::BucketPolicy* | 0 |
 | *AWS::SDB::Domain* | 1 |
-| *AWS::SNS::Subscription* | 0 |
-| *AWS::SNS::Topic* | 0 |
-| *AWS::SNS::TopicPolicy* | 0 |
+| *AWS::SNS::Subscription* | 1 |
+| *AWS::SNS::Topic* | 1 |
+| *AWS::SNS::TopicPolicy* | 1 |
 | *AWS::SQS::Queue* | 0 |
 | *AWS::SQS::QueuePolicy* | 0 |
 | *AWS::SSM::Association* | 0 |
@@ -282,7 +282,7 @@
 | *codepipeline* | 8/32 (25.0%) |
 | *cognito-idp* | 1/95 (1.0%) |
 | *config* | 3/43 (6.0%) |
-| *ds* | 1/49 (2.0%) |
+| *ds* | 4/49 (8.0%) |
 | *dynamodb* | 2/34 (5.0%) |
 | *ec2* | 72/274 (26.0%) |
 | *ecs* | 1/31 (3.0%) |
@@ -305,7 +305,7 @@
 | *rekognition* | 3/34 (8.0%) |
 | *s3* | 23/78 (29.0%) |
 | *servicecatalog* | 10/60 (16.0%) |
-| *sns* | 1/30 (3.0%) |
+| *sns* | 8/30 (26.0%) |
 | *sqs* | 2/20 (10.0%) |
 | *ssm* | 2/108 (1.0%) |
 | *stepfunctions* | 1/19 (5.0%) |
@@ -1541,7 +1541,7 @@
 | *ds* | `EnableRadius` | 0 |
 | *ds* | `ListLogSubscriptions` | 0 |
 | *ds* | `DeleteConditionalForwarder` | 0 |
-| *ds* | `CreateDirectory` | 0 |
+| *ds* | `CreateDirectory` | 1 |
 | *ds* | `ResetUserPassword` | 0 |
 | *ds* | `DescribeSnapshots` | 0 |
 | *ds* | `VerifyTrust` | 0 |
@@ -1557,7 +1557,7 @@
 | *ds* | `RemoveIpRoutes` | 0 |
 | *ds* | `CreateAlias` | 0 |
 | *ds* | `ConnectDirectory` | 0 |
-| *ds* | `DeleteDirectory` | 0 |
+| *ds* | `DeleteDirectory` | 1 |
 | *ds* | `AddIpRoutes` | 0 |
 | *ds* | `CreateLogSubscription` | 0 |
 | *ds* | `CancelSchemaExtension` | 0 |
@@ -1571,13 +1571,13 @@
 | *ds* | `UpdateConditionalForwarder` | 0 |
 | *ds* | `CreateTrust` | 0 |
 | *ds* | `GetDirectoryLimits` | 0 |
-| *ds* | `CreateMicrosoftAD` | 0 |
+| *ds* | `CreateMicrosoftAD` | 1 |
 | *ds* | `RegisterEventTopic` | 0 |
 | *ds* | `GetSnapshotLimits` | 0 |
 | *ds* | `DeleteTrust` | 0 |
 | *ds* | `ShareDirectory` | 0 |
 | *ds* | `UpdateNumberOfDomainControllers` | 0 |
-| *ds* | `DescribeDirectories` | 2 |
+| *ds* | `DescribeDirectories` | 3 |
 | *ds* | `StartSchemaExtension` | 0 |
 | *ds* | `ListTagsForResource` | 0 |
 | *ds* | `CreateSnapshot` | 0 |
@@ -1696,7 +1696,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 9 |
+| *ec2* | `DescribeVpcs` | 10 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1860,7 +1860,7 @@
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 0 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 8 |
+| *ec2* | `DescribeSubnets` | 9 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -4308,13 +4308,13 @@
 | *snowball* | `DescribeJob` | 0 |
 | *snowball* | `DescribeCluster` | 0 |
 | *snowball* | `UpdateCluster` | 0 |
-| *sns* | `ListPlatformApplications` | 0 |
+| *sns* | `ListPlatformApplications` | 1 |
 | *sns* | `SetPlatformApplicationAttributes` | 0 |
 | *sns* | `ListSubscriptionsByTopic` | 0 |
-| *sns* | `ListSubscriptions` | 0 |
+| *sns* | `ListSubscriptions` | 1 |
 | *sns* | `ListPhoneNumbersOptedOut` | 0 |
 | *sns* | `ConfirmSubscription` | 0 |
-| *sns* | `SetTopicAttributes` | 0 |
+| *sns* | `SetTopicAttributes` | 1 |
 | *sns* | `SetEndpointAttributes` | 0 |
 | *sns* | `CheckIfPhoneNumberIsOptedOut` | 0 |
 | *sns* | `AddPermission` | 0 |
@@ -4322,7 +4322,7 @@
 | *sns* | `GetSubscriptionAttributes` | 0 |
 | *sns* | `CreatePlatformEndpoint` | 0 |
 | *sns* | `RemovePermission` | 0 |
-| *sns* | `CreateTopic` | 0 |
+| *sns* | `CreateTopic` | 1 |
 | *sns* | `SetSubscriptionAttributes` | 0 |
 | *sns* | `CreatePlatformApplication` | 0 |
 | *sns* | `GetPlatformApplicationAttributes` | 0 |
@@ -4333,11 +4333,11 @@
 | *sns* | `GetEndpointAttributes` | 0 |
 | *sns* | `DeleteEndpoint` | 0 |
 | *sns* | `DeletePlatformApplication` | 0 |
-| *sns* | `GetTopicAttributes` | 0 |
-| *sns* | `Subscribe` | 0 |
-| *sns* | `DeleteTopic` | 0 |
+| *sns* | `GetTopicAttributes` | 1 |
+| *sns* | `Subscribe` | 1 |
+| *sns* | `DeleteTopic` | 1 |
 | *sns* | `OptInPhoneNumber` | 0 |
-| *sns* | `ListTopics` | 5 |
+| *sns* | `ListTopics` | 6 |
 | *sqs* | `CreateQueue` | 0 |
 | *sqs* | `GetQueueAttributes` | 0 |
 | *sqs* | `SetQueueAttributes` | 0 |
@@ -4879,4 +4879,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 390 (8.0%)**
+**Total Unique Occurances: 400 (8.0%)**
