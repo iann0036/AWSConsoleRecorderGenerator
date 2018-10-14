@@ -300,7 +300,7 @@
 | *logs* | 1/33 (3.0%) |
 | *medialive* | 4/25 (16.0%) |
 | *mq* | 6/17 (35.0%) |
-| *rds* | 1/96 (1.0%) |
+| *rds* | 22/96 (22.0%) |
 | *rekognition* | 3/34 (8.0%) |
 | *s3* | 23/78 (29.0%) |
 | *servicecatalog* | 10/60 (16.0%) |
@@ -1639,7 +1639,7 @@
 | *ec2* | `AssociateDhcpOptions` | 0 |
 | *ec2* | `ModifyVpcEndpointServicePermissions` | 0 |
 | *ec2* | `ImportKeyPair` | 1 |
-| *ec2* | `DescribeAvailabilityZones` | 3 |
+| *ec2* | `DescribeAvailabilityZones` | 4 |
 | *ec2* | `RequestSpotInstances` | 0 |
 | *ec2* | `DescribeSnapshots` | 1 |
 | *ec2* | `AcceptVpcPeeringConnection` | 0 |
@@ -1695,7 +1695,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 6 |
+| *ec2* | `DescribeVpcs` | 7 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1846,7 +1846,7 @@
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 6 |
+| *ec2* | `DescribeSecurityGroups` | 9 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -2980,7 +2980,7 @@
 | *kms* | `DeleteAlias` | 0 |
 | *kms* | `RetireGrant` | 0 |
 | *kms* | `TagResource` | 0 |
-| *kms* | `DescribeKey` | 1 |
+| *kms* | `DescribeKey` | 2 |
 | *kms* | `ListKeys` | 3 |
 | *kms* | `GenerateRandom` | 0 |
 | *kms* | `GetKeyPolicy` | 0 |
@@ -3651,12 +3651,12 @@
 | *rds* | `RestoreDBClusterToPointInTime` | 0 |
 | *rds* | `DescribeEngineDefaultParameters` | 0 |
 | *rds* | `DeleteDBClusterSnapshot` | 0 |
-| *rds* | `CreateDBParameterGroup` | 0 |
+| *rds* | `CreateDBParameterGroup` | 1 |
 | *rds* | `AuthorizeDBSecurityGroupIngress` | 0 |
-| *rds* | `DescribeDBSubnetGroups` | 0 |
+| *rds* | `DescribeDBSubnetGroups` | 2 |
 | *rds* | `DescribeDBEngineVersions` | 0 |
 | *rds* | `CopyDBSnapshot` | 0 |
-| *rds* | `StopDBCluster` | 0 |
+| *rds* | `StopDBCluster` | 1 |
 | *rds* | `DeleteEventSubscription` | 0 |
 | *rds* | `CreateDBInstanceReadReplica` | 0 |
 | *rds* | `CreateDBClusterSnapshot` | 0 |
@@ -3667,21 +3667,21 @@
 | *rds* | `ModifyDBSnapshot` | 0 |
 | *rds* | `DeleteDBSubnetGroup` | 0 |
 | *rds* | `RestoreDBInstanceFromDBSnapshot` | 0 |
-| *rds* | `DescribeOptionGroups` | 0 |
+| *rds* | `DescribeOptionGroups` | 1 |
 | *rds* | `RestoreDBClusterFromS3` | 0 |
-| *rds* | `DeleteDBInstance` | 0 |
-| *rds* | `CreateDBClusterParameterGroup` | 0 |
+| *rds* | `DeleteDBInstance` | 1 |
+| *rds* | `CreateDBClusterParameterGroup` | 1 |
 | *rds* | `DeleteDBParameterGroup` | 0 |
 | *rds* | `DescribeEventCategories` | 0 |
 | *rds* | `DescribeDBClusterBacktracks` | 0 |
 | *rds* | `AddTagsToResource` | 0 |
 | *rds* | `ModifyOptionGroup` | 0 |
-| *rds* | `DescribeDBLogFiles` | 0 |
+| *rds* | `DescribeDBLogFiles` | 1 |
 | *rds* | `BacktrackDBCluster` | 0 |
 | *rds* | `RemoveTagsFromResource` | 0 |
-| *rds* | `DescribeReservedDBInstances` | 0 |
+| *rds* | `DescribeReservedDBInstances` | 1 |
 | *rds* | `CopyOptionGroup` | 0 |
-| *rds* | `CreateDBInstance` | 0 |
+| *rds* | `CreateDBInstance` | 1 |
 | *rds* | `ModifyEventSubscription` | 0 |
 | *rds* | `ModifyDBSubnetGroup` | 0 |
 | *rds* | `DeleteDBSecurityGroup` | 0 |
@@ -3695,13 +3695,13 @@
 | *rds* | `PromoteReadReplicaDBCluster` | 0 |
 | *rds* | `DescribeDBClusterParameters` | 0 |
 | *rds* | `DeleteDBSnapshot` | 0 |
-| *rds* | `DescribeEvents` | 0 |
-| *rds* | `DescribeEventSubscriptions` | 0 |
+| *rds* | `DescribeEvents` | 1 |
+| *rds* | `DescribeEventSubscriptions` | 1 |
 | *rds* | `DeleteOptionGroup` | 0 |
 | *rds* | `PromoteReadReplica` | 0 |
 | *rds* | `AddRoleToDBCluster` | 0 |
 | *rds* | `ModifyDBSnapshotAttribute` | 0 |
-| *rds* | `DescribeDBParameterGroups` | 0 |
+| *rds* | `DescribeDBParameterGroups` | 2 |
 | *rds* | `ModifyDBClusterParameterGroup` | 0 |
 | *rds* | `FailoverDBCluster` | 0 |
 | *rds* | `ApplyPendingMaintenanceAction` | 0 |
@@ -3709,14 +3709,14 @@
 | *rds* | `PurchaseReservedDBInstancesOffering` | 0 |
 | *rds* | `DescribeOrderableDBInstanceOptions` | 0 |
 | *rds* | `RestoreDBInstanceFromS3` | 0 |
-| *rds* | `CreateOptionGroup` | 0 |
+| *rds* | `CreateOptionGroup` | 1 |
 | *rds* | `DescribeOptionGroupOptions` | 0 |
 | *rds* | `ResetDBParameterGroup` | 0 |
 | *rds* | `DescribeEngineDefaultClusterParameters` | 0 |
 | *rds* | `CreateDBSnapshot` | 0 |
 | *rds* | `CreateDBCluster` | 0 |
 | *rds* | `DescribeAccountAttributes` | 0 |
-| *rds* | `DescribeDBSnapshots` | 0 |
+| *rds* | `DescribeDBSnapshots` | 2 |
 | *rds* | `ModifyDBClusterSnapshotAttribute` | 0 |
 | *rds* | `CreateDBSecurityGroup` | 0 |
 | *rds* | `ModifyCurrentDBClusterCapacity` | 0 |
@@ -3724,22 +3724,22 @@
 | *rds* | `StopDBInstance` | 0 |
 | *rds* | `RemoveRoleFromDBCluster` | 0 |
 | *rds* | `RevokeDBSecurityGroupIngress` | 0 |
-| *rds* | `CreateEventSubscription` | 0 |
+| *rds* | `CreateEventSubscription` | 1 |
 | *rds* | `CopyDBParameterGroup` | 0 |
 | *rds* | `RebootDBInstance` | 0 |
-| *rds* | `CreateDBSubnetGroup` | 0 |
+| *rds* | `CreateDBSubnetGroup` | 1 |
 | *rds* | `ModifyDBCluster` | 0 |
 | *rds* | `DescribeDBSnapshotAttributes` | 0 |
 | *rds* | `DescribeSourceRegions` | 0 |
 | *rds* | `DownloadDBLogFilePortion` | 0 |
-| *rds* | `DescribeDBClusters` | 0 |
-| *rds* | `DescribeDBClusterSnapshots` | 0 |
+| *rds* | `DescribeDBClusters` | 1 |
+| *rds* | `DescribeDBClusterSnapshots` | 1 |
 | *rds* | `ModifyDBParameterGroup` | 0 |
-| *rds* | `StartDBCluster` | 0 |
-| *rds* | `DescribeDBSecurityGroups` | 0 |
+| *rds* | `StartDBCluster` | 1 |
+| *rds* | `DescribeDBSecurityGroups` | 1 |
 | *rds* | `DeleteDBClusterParameterGroup` | 0 |
 | *rds* | `DescribePendingMaintenanceActions` | 0 |
-| *rds* | `DescribeDBClusterParameterGroups` | 0 |
+| *rds* | `DescribeDBClusterParameterGroups` | 1 |
 | *rds* | `CopyDBClusterSnapshot` | 0 |
 | *rds* | `ModifyDBInstance` | 0 |
 | *rds* | `RemoveSourceIdentifierFromSubscription` | 0 |
@@ -4336,7 +4336,7 @@
 | *sns* | `Subscribe` | 0 |
 | *sns* | `DeleteTopic` | 0 |
 | *sns* | `OptInPhoneNumber` | 0 |
-| *sns* | `ListTopics` | 4 |
+| *sns* | `ListTopics` | 5 |
 | *sqs* | `CreateQueue` | 0 |
 | *sqs* | `GetQueueAttributes` | 0 |
 | *sqs* | `SetQueueAttributes` | 0 |
@@ -4878,4 +4878,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 349 (7.0%)**
+**Total Unique Occurances: 370 (8.0%)**
