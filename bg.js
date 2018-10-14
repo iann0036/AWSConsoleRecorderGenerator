@@ -32,7 +32,7 @@ fetch("combined.json")
   .then(json => combined = json);
 
 function escapeRegExp(str) {
-    return str.replace(/[.*+?^${}\/()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    return str.replace(/[.*+?^\-${}\/()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
 function deplural(str) {
@@ -69,6 +69,14 @@ function logRequest(details) {
 
     var rgx = /^.*console\.aws\.amazon\.com\/([a-zA-Z0-9-]+)\/(.+)$/g;
     var match = rgx.exec(details.url);
+
+    if (!match) {
+        rgx = /^.+\/\/([a-z0-9-]+).[a-zA-Z0-9-]+\.amazonaws\.com\/(.+)$/g;
+        match = rgx.exec(details.url);
+        if (match && match.length > 2) {
+            regex_override = '.+' + escapeRegExp(`${match[1]}.`) + '[a-z-]+' + escapeRegExp(`.amazonaws.com/${match[2]}`) + '$';
+        }
+    }
 
     if (match && match.length > 2) {
         var service = match[1];
@@ -181,6 +189,11 @@ function analyseRequest(details) {
     var region_check = /.+\/\/([a-zA-Z0-9-]+)\.console\.aws\.amazon\.com/g.exec(details.url);
     if (region_check && region_check[1]) {
         region = region_check[1];
+    } else {
+        region_check = /.+\/\/[a-z0-9-]+.([a-zA-Z0-9-]+)\.amazonaws\.com/g.exec(details.url);
+        if (region_check && region_check[1]) {
+            region = region_check[1];
+        }
     }
 
     try {
@@ -10530,6 +10543,702 @@ function analyseRequest(details) {
 
         return {};
     }
+       
+    // autogen:lambda:lambda.ListFunctions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=listFunctions&/g)) {
 
-    return false;        
+        outputs.push({
+            'region': region,
+            'service': 'lambda',
+            'method': {
+                'api': 'ListFunctions',
+                'boto3': 'list_functions',
+                'cli': 'list-functions'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:iam.ListRoles
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=listRoles&/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'ListRoles',
+                'boto3': 'list_roles',
+                'cli': 'list-roles'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:iam.ListRoles
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=listRoles&/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'ListRoles',
+                'boto3': 'list_roles',
+                'cli': 'list-roles'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=listVpcs&/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:lambda.GetFunctionConfiguration
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=getFunctionConfiguration&/g)) {
+        reqParams.boto3['FunctionName'] = jsonRequestBody.functionName;
+        reqParams.cli['--function-name'] = jsonRequestBody.functionName;
+
+        outputs.push({
+            'region': region,
+            'service': 'lambda',
+            'method': {
+                'api': 'GetFunctionConfiguration',
+                'boto3': 'get_function_configuration',
+                'cli': 'get-function-configuration'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:lambda.GetFunction
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=getFunctionCode&/g)) {
+        reqParams.boto3['FunctionName'] = jsonRequestBody.functionName;
+        reqParams.cli['--function-name'] = jsonRequestBody.functionName;
+
+        outputs.push({
+            'region': region,
+            'service': 'lambda',
+            'method': {
+                'api': 'GetFunction',
+                'boto3': 'get_function',
+                'cli': 'get-function'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:lambda.ListTags
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=listTags&/g)) {
+        reqParams.boto3['Resource'] = jsonRequestBody.functionName;
+        reqParams.cli['--resource'] = jsonRequestBody.functionName;
+
+        outputs.push({
+            'region': region,
+            'service': 'lambda',
+            'method': {
+                'api': 'ListTags',
+                'boto3': 'list_tags',
+                'cli': 'list-tags'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:iam.GetRole
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=getRole&/g)) {
+        reqParams.boto3['RoleName'] = jsonRequestBody.roleName;
+        reqParams.cli['--role-name'] = jsonRequestBody.roleName;
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'GetRole',
+                'boto3': 'get_role',
+                'cli': 'get-role'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:kms.ListKeys
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=listKmsKeys&/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'kms',
+            'method': {
+                'api': 'ListKeys',
+                'boto3': 'list_keys',
+                'cli': 'list-keys'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:lambda.CreateAlias
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=createAlias&/g)) {
+        reqParams.boto3['FunctionName'] = jsonRequestBody.functionName;
+        reqParams.cli['--function-name'] = jsonRequestBody.functionName;
+        reqParams.boto3['Name'] = jsonRequestBody.name;
+        reqParams.cli['--name'] = jsonRequestBody.name;
+        reqParams.boto3['Description'] = jsonRequestBody.description;
+        reqParams.cli['--description'] = jsonRequestBody.description;
+        reqParams.boto3['FunctionVersion'] = jsonRequestBody.functionVersion;
+        reqParams.cli['--function-version'] = jsonRequestBody.functionVersion;
+
+        reqParams.cfn['FunctionName'] = jsonRequestBody.functionName;
+        reqParams.cfn['Name'] = jsonRequestBody.name;
+        reqParams.cfn['Description'] = jsonRequestBody.description;
+        reqParams.cfn['FunctionVersion'] = jsonRequestBody.functionVersion;
+
+        outputs.push({
+            'region': region,
+            'service': 'lambda',
+            'method': {
+                'api': 'CreateAlias',
+                'boto3': 'create_alias',
+                'cli': 'create-alias'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'lambda',
+            'type': 'AWS::Lambda::Alias',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:lambda.GetAlias
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=getAlias&/g)) {
+        reqParams.boto3['FunctionName'] = jsonRequestBody.functionName;
+        reqParams.cli['--function-name'] = jsonRequestBody.functionName;
+        reqParams.boto3['Name'] = jsonRequestBody.name;
+        reqParams.cli['--name'] = jsonRequestBody.name;
+
+        outputs.push({
+            'region': region,
+            'service': 'lambda',
+            'method': {
+                'api': 'GetAlias',
+                'boto3': 'get_alias',
+                'cli': 'get-alias'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:lambda.DeleteFunction
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=deleteFunction&/g)) {
+        reqParams.boto3['FunctionName'] = jsonRequestBody.functionName;
+        reqParams.cli['--function-name'] = jsonRequestBody.functionName;
+        reqParams.boto3['Qualifier'] = jsonRequestBody.qualifier;
+        reqParams.cli['--qualifier'] = jsonRequestBody.qualifier;
+
+        outputs.push({
+            'region': region,
+            'service': 'lambda',
+            'method': {
+                'api': 'DeleteFunction',
+                'boto3': 'delete_function',
+                'cli': 'delete-function'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:lambda:lambda.PublishVersion
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/lambda\/services\/ajax\?operation=publishVersion&/g)) {
+        reqParams.boto3['FunctionName'] = jsonRequestBody.payload.functionName;
+        reqParams.cli['--function-name'] = jsonRequestBody.payload.functionName;
+        reqParams.boto3['Description'] = jsonRequestBody.payload.description;
+        reqParams.cli['--description'] = jsonRequestBody.payload.description;
+
+        reqParams.cfn['FunctionName'] = jsonRequestBody.payload.functionName;
+        reqParams.cfn['Description'] = jsonRequestBody.payload.description;
+
+        outputs.push({
+            'region': region,
+            'service': 'lambda',
+            'method': {
+                'api': 'PublishVersion',
+                'boto3': 'publish_version',
+                'cli': 'publish-version'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'lambda',
+            'type': 'AWS::Lambda::Version',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+ 
+    // autogen:lambda:lambda.CreateFunction
+    if (details.method == "POST" && details.url.match(/.+lambda\.[a-z0-9-]+\.amazonaws\.com\/2015\-03\-31\/functions$/g)) {
+        reqParams.boto3['Code'] = jsonRequestBody.Code;
+        reqParams.cli['--code'] = jsonRequestBody.Code;
+        reqParams.boto3['Description'] = jsonRequestBody.Description;
+        reqParams.cli['--description'] = jsonRequestBody.Description;
+        reqParams.boto3['FunctionName'] = jsonRequestBody.FunctionName;
+        reqParams.cli['--function-name'] = jsonRequestBody.FunctionName;
+        reqParams.boto3['Handler'] = jsonRequestBody.Handler;
+        reqParams.cli['--handler'] = jsonRequestBody.Handler;
+        reqParams.boto3['MemorySize'] = jsonRequestBody.MemorySize;
+        reqParams.cli['--memory-size'] = jsonRequestBody.MemorySize;
+        reqParams.boto3['Role'] = jsonRequestBody.Role;
+        reqParams.cli['--role'] = jsonRequestBody.Role;
+        reqParams.boto3['Runtime'] = jsonRequestBody.Runtime;
+        reqParams.cli['--runtime'] = jsonRequestBody.Runtime;
+        reqParams.boto3['Timeout'] = jsonRequestBody.Timeout;
+        reqParams.cli['--timeout'] = jsonRequestBody.Timeout;
+        reqParams.boto3['DeadLetterConfig'] = jsonRequestBody.DeadLetterConfig;
+        reqParams.cli['--dead-letter-config'] = jsonRequestBody.DeadLetterConfig;
+        reqParams.boto3['KMSKeyArn'] = jsonRequestBody.KMSKeyArn;
+        reqParams.cli['--kms-key-arn'] = jsonRequestBody.KMSKeyArn;
+        reqParams.boto3['TracingConfig'] = jsonRequestBody.TracingConfig;
+        reqParams.cli['--tracing-config'] = jsonRequestBody.TracingConfig;
+
+        reqParams.cfn['Code'] = jsonRequestBody.Code;
+        reqParams.cfn['Description'] = jsonRequestBody.Description;
+        reqParams.cfn['FunctionName'] = jsonRequestBody.FunctionName;
+        reqParams.cfn['Handler'] = jsonRequestBody.Handler;
+        reqParams.cfn['MemorySize'] = jsonRequestBody.MemorySize;
+        reqParams.cfn['Role'] = jsonRequestBody.Role;
+        reqParams.cfn['Runtime'] = jsonRequestBody.Runtime;
+        reqParams.cfn['Timeout'] = jsonRequestBody.Timeout;
+        reqParams.cfn['DeadLetterConfig'] = jsonRequestBody.DeadLetterConfig;
+        reqParams.cfn['KmsKeyArn'] = jsonRequestBody.KMSKeyArn;
+        reqParams.cfn['TracingConfig'] = jsonRequestBody.TracingConfig;
+
+        outputs.push({
+            'region': region,
+            'service': 'lambda',
+            'method': {
+                'api': 'CreateFunction',
+                'boto3': 'create_function',
+                'cli': 'create-function'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'lambda',
+            'type': 'AWS::Lambda::Function',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.ListDomainNames
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "ListDomainNames") {
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'ListDomainNames',
+                'boto3': 'list_domain_names',
+                'cli': 'list-domain-names'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.ListElasticsearchVersions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "ListElasticsearchVersions") {
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'ListElasticsearchVersions',
+                'boto3': 'list_elasticsearch_versions',
+                'cli': 'list-elasticsearch-versions'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.ListElasticsearchInstanceTypes
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "listElasticsearchInstanceTypes") {
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'ListElasticsearchInstanceTypes',
+                'boto3': 'list_elasticsearch_instance_types',
+                'cli': 'list-elasticsearch-instance-types'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:kms.DescribeKey
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/kms$/g) && jsonRequestBody.operation == "DescribeKey") {
+        reqParams.boto3['KeyId'] = jsonRequestBody.contentString.KeyId;
+        reqParams.cli['--key-id'] = jsonRequestBody.contentString.KeyId;
+
+        outputs.push({
+            'region': region,
+            'service': 'kms',
+            'method': {
+                'api': 'DescribeKey',
+                'boto3': 'describe_key',
+                'cli': 'describe-key'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/ec2$/g) && jsonRequestBody.operation == "DescribeVpcs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:iam.GetRole
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/iam$/g) && jsonRequestBody.operation == "GetRole") {
+        reqParams.boto3['RoleName'] = jsonRequestBody.params.RoleName;
+        reqParams.cli['--role-name'] = jsonRequestBody.params.RoleName;
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'GetRole',
+                'boto3': 'get_role',
+                'cli': 'get-role'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/ec2$/g) && jsonRequestBody.operation == "DescribeSubnets") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:ec2.DescribeSecurityGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/ec2$/g) && jsonRequestBody.operation == "DescribeSecurityGroups") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSecurityGroups',
+                'boto3': 'describe_security_groups',
+                'cli': 'describe-security-groups'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.CreateElasticsearchDomain
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "CreateElasticsearchDomain") {
+        reqParams.boto3['ElasticsearchClusterConfig'] = jsonRequestBody.contentString.ElasticsearchClusterConfig;
+        reqParams.cli['--elasticsearch-cluster-config'] = jsonRequestBody.contentString.ElasticsearchClusterConfig;
+        reqParams.boto3['EBSOptions'] = jsonRequestBody.contentString.EBSOptions;
+        reqParams.cli['--ebs-options'] = jsonRequestBody.contentString.EBSOptions;
+        reqParams.boto3['EncryptionAtRestOptions'] = jsonRequestBody.contentString.EncryptionAtRestOptions;
+        reqParams.cli['--encryption-at-rest-options'] = jsonRequestBody.contentString.EncryptionAtRestOptions;
+        reqParams.boto3['SnapshotOptions'] = jsonRequestBody.contentString.SnapshotOptions;
+        reqParams.cli['--snapshot-options'] = jsonRequestBody.contentString.SnapshotOptions;
+        reqParams.boto3['VPCOptions'] = jsonRequestBody.contentString.VPCOptions;
+        reqParams.cli['--vpc-options'] = jsonRequestBody.contentString.VPCOptions;
+        reqParams.boto3['AdvancedOptions'] = jsonRequestBody.contentString.AdvancedOptions;
+        reqParams.cli['--advanced-options'] = jsonRequestBody.contentString.AdvancedOptions;
+        reqParams.boto3['CognitoOptions'] = jsonRequestBody.contentString.CognitoOptions;
+        reqParams.cli['--cognito-options'] = jsonRequestBody.contentString.CognitoOptions;
+        reqParams.boto3['NodeToNodeEncryptionOptions'] = jsonRequestBody.contentString.NodeToNodeEncryptionOptions;
+        reqParams.cli['--node-to-node-encryption-options'] = jsonRequestBody.contentString.NodeToNodeEncryptionOptions;
+        reqParams.boto3['DomainName'] = jsonRequestBody.contentString.DomainName;
+        reqParams.cli['--domain-name'] = jsonRequestBody.contentString.DomainName;
+        reqParams.boto3['ElasticsearchVersion'] = jsonRequestBody.contentString.ElasticsearchVersion;
+        reqParams.cli['--elasticsearch-version'] = jsonRequestBody.contentString.ElasticsearchVersion;
+        reqParams.boto3['AccessPolicies'] = jsonRequestBody.contentString.AccessPolicies;
+        reqParams.cli['--access-policies'] = jsonRequestBody.contentString.AccessPolicies;
+
+        reqParams.cfn['ElasticsearchClusterConfig'] = jsonRequestBody.contentString.ElasticsearchClusterConfig;
+        reqParams.cfn['EBSOptions'] = jsonRequestBody.contentString.EBSOptions;
+        reqParams.cfn['EncryptionAtRestOptions'] = jsonRequestBody.contentString.EncryptionAtRestOptions;
+        reqParams.cfn['SnapshotOptions'] = jsonRequestBody.contentString.SnapshotOptions;
+        reqParams.cfn['VPCOptions'] = jsonRequestBody.contentString.VPCOptions;
+        reqParams.cfn['AdvancedOptions'] = jsonRequestBody.contentString.AdvancedOptions;
+        reqParams.cfn['DomainName'] = jsonRequestBody.contentString.DomainName;
+        reqParams.cfn['ElasticsearchVersion'] = jsonRequestBody.contentString.ElasticsearchVersion;
+        reqParams.cfn['AccessPolicies'] = jsonRequestBody.contentString.AccessPolicies;
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'CreateElasticsearchDomain',
+                'boto3': 'create_elasticsearch_domain',
+                'cli': 'create-elasticsearch-domain'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'es',
+            'type': 'AWS::Elasticsearch::Domain',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.DescribeElasticsearchDomain
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "DescribeElasticsearchDomain") {
+        reqParams.boto3['DomainName'] = jsonRequestBody.path.split("/")[4];
+        reqParams.cli['--domain-name'] = jsonRequestBody.path.split("/")[4];
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'DescribeElasticsearchDomain',
+                'boto3': 'describe_elasticsearch_domain',
+                'cli': 'describe-elasticsearch-domain'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.GetUpgradeStatus
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "GetUpgradeStatus") {
+        reqParams.boto3['DomainName'] = jsonRequestBody.path.split("/")[4];
+        reqParams.cli['--domain-name'] = jsonRequestBody.path.split("/")[4];
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'GetUpgradeStatus',
+                'boto3': 'get_upgrade_status',
+                'cli': 'get-upgrade-status'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.GetCompatibleElasticsearchVersions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "GetCompatibleElasticsearchVersions") {
+        reqParams.boto3['DomainName'] = jsonRequestBody.params.domainName;
+        reqParams.cli['--domain-name'] = jsonRequestBody.params.domainName;
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'GetCompatibleElasticsearchVersions',
+                'boto3': 'get_compatible_elasticsearch_versions',
+                'cli': 'get-compatible-elasticsearch-versions'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.GetUpgradeHistory
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "GetUpgradeHistory") {
+        reqParams.boto3['DomainName'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--domain-name'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'GetUpgradeHistory',
+                'boto3': 'get_upgrade_history',
+                'cli': 'get-upgrade-history'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.DeleteElasticsearchDomain
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "DeleteElasticsearchDomain") {
+        reqParams.boto3['DomainName'] = jsonRequestBody.path.split("/")[4];
+        reqParams.cli['--domain-name'] = jsonRequestBody.path.split("/")[4];
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'DeleteElasticsearchDomain',
+                'boto3': 'delete_elasticsearch_domain',
+                'cli': 'delete-elasticsearch-domain'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.DescribeReservedElasticsearchInstances
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "DescribeReservedElasticsearchInstances") {
+        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.cli['--max-items'] = jsonRequestBody.params.maxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'DescribeReservedElasticsearchInstances',
+                'boto3': 'describe_reserved_elasticsearch_instances',
+                'cli': 'describe-reserved-elasticsearch-instances'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:es:es.DescribeElasticsearchDomains
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/es\/api\/es$/g) && jsonRequestBody.operation == "DescribeElasticsearchDomains") {
+        reqParams.boto3['DomainNames'] = jsonRequestBody.contentString.DomainNames;
+        reqParams.cli['--domain-names'] = jsonRequestBody.contentString.DomainNames;
+
+        outputs.push({
+            'region': region,
+            'service': 'es',
+            'method': {
+                'api': 'DescribeElasticsearchDomains',
+                'boto3': 'describe_elasticsearch_domains',
+                'cli': 'describe-elasticsearch-domains'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    return false;
 }

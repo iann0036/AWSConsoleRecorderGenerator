@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**82/258 (31.0%)** Resources Covered
+**86/258 (33.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -151,7 +151,7 @@
 | *AWS::ElasticLoadBalancingV2::ListenerRule* | 0 |
 | *AWS::ElasticLoadBalancingV2::LoadBalancer* | 0 |
 | *AWS::ElasticLoadBalancingV2::TargetGroup* | 0 |
-| *AWS::Elasticsearch::Domain* | 0 |
+| *AWS::Elasticsearch::Domain* | 1 |
 | *AWS::Events::Rule* | 1 |
 | *AWS::GameLift::Alias* | 0 |
 | *AWS::GameLift::Build* | 0 |
@@ -193,11 +193,11 @@
 | *AWS::KMS::Key* | 0 |
 | *AWS::Kinesis::Stream* | 0 |
 | *AWS::KinesisFirehose::DeliveryStream* | 0 |
-| *AWS::Lambda::Alias* | 0 |
+| *AWS::Lambda::Alias* | 1 |
 | *AWS::Lambda::EventSourceMapping* | 0 |
-| *AWS::Lambda::Function* | 0 |
+| *AWS::Lambda::Function* | 1 |
 | *AWS::Lambda::Permission* | 0 |
-| *AWS::Lambda::Version* | 0 |
+| *AWS::Lambda::Version* | 1 |
 | *AWS::Logs::Destination* | 0 |
 | *AWS::Logs::LogGroup* | 0 |
 | *AWS::Logs::LogStream* | 0 |
@@ -289,14 +289,15 @@
 | *efs* | 11/12 (91.0%) |
 | *elasticache* | 10/42 (23.0%) |
 | *elbv2* | 2/34 (5.0%) |
+| *es* | 11/21 (52.0%) |
 | *events* | 5/15 (33.0%) |
 | *firehose* | 1/10 (10.0%) |
 | *glue* | 19/84 (22.0%) |
 | *guardduty* | 21/42 (50.0%) |
-| *iam* | 22/127 (17.0%) |
+| *iam* | 23/127 (18.0%) |
 | *kinesis* | 1/28 (3.0%) |
 | *kms* | 2/35 (5.0%) |
-| *lambda* | 3/30 (10.0%) |
+| *lambda* | 11/30 (36.0%) |
 | *logs* | 1/33 (3.0%) |
 | *medialive* | 4/25 (16.0%) |
 | *mq* | 6/17 (35.0%) |
@@ -1695,7 +1696,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 7 |
+| *ec2* | `DescribeVpcs` | 9 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1846,7 +1847,7 @@
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 9 |
+| *ec2* | `DescribeSecurityGroups` | 10 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -1859,7 +1860,7 @@
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 0 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 7 |
+| *ec2* | `DescribeSubnets` | 8 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -2156,26 +2157,26 @@
 | *emr* | `ListInstanceGroups` | 0 |
 | *emr* | `DescribeStep` | 0 |
 | *es* | `RemoveTags` | 0 |
-| *es* | `DeleteElasticsearchDomain` | 0 |
+| *es* | `DeleteElasticsearchDomain` | 1 |
 | *es* | `AddTags` | 0 |
-| *es* | `GetCompatibleElasticsearchVersions` | 0 |
-| *es* | `GetUpgradeHistory` | 0 |
+| *es* | `GetCompatibleElasticsearchVersions` | 1 |
+| *es* | `GetUpgradeHistory` | 1 |
 | *es* | `DescribeElasticsearchInstanceTypeLimits` | 0 |
 | *es* | `PurchaseReservedElasticsearchInstanceOffering` | 0 |
 | *es* | `UpdateElasticsearchDomainConfig` | 0 |
 | *es* | `UpgradeElasticsearchDomain` | 0 |
 | *es* | `DescribeElasticsearchDomainConfig` | 0 |
-| *es* | `CreateElasticsearchDomain` | 0 |
+| *es* | `CreateElasticsearchDomain` | 1 |
 | *es* | `DeleteElasticsearchServiceRole` | 0 |
-| *es* | `DescribeElasticsearchDomains` | 0 |
+| *es* | `DescribeElasticsearchDomains` | 1 |
 | *es* | `DescribeReservedElasticsearchInstanceOfferings` | 0 |
-| *es* | `ListElasticsearchInstanceTypes` | 0 |
-| *es* | `GetUpgradeStatus` | 0 |
-| *es* | `ListElasticsearchVersions` | 0 |
-| *es* | `ListDomainNames` | 0 |
+| *es* | `ListElasticsearchInstanceTypes` | 1 |
+| *es* | `GetUpgradeStatus` | 1 |
+| *es* | `ListElasticsearchVersions` | 1 |
+| *es* | `ListDomainNames` | 1 |
 | *es* | `ListTags` | 0 |
-| *es* | `DescribeElasticsearchDomain` | 0 |
-| *es* | `DescribeReservedElasticsearchInstances` | 0 |
+| *es* | `DescribeElasticsearchDomain` | 1 |
+| *es* | `DescribeReservedElasticsearchInstances` | 1 |
 | *events* | `PutEvents` | 0 |
 | *events* | `EnableRule` | 1 |
 | *events* | `DescribeRule` | 0 |
@@ -2547,7 +2548,7 @@
 | *iam* | `UploadServerCertificate` | 0 |
 | *iam* | `GetContextKeysForPrincipalPolicy` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
-| *iam* | `ListRoles` | 5 |
+| *iam* | `ListRoles` | 7 |
 | *iam* | `DeleteAccessKey` | 0 |
 | *iam* | `AddRoleToInstanceProfile` | 1 |
 | *iam* | `GetContextKeysForCustomPolicy` | 0 |
@@ -2637,7 +2638,7 @@
 | *iam* | `AttachRolePolicy` | 1 |
 | *iam* | `RemoveClientIDFromOpenIDConnectProvider` | 0 |
 | *iam* | `UpdateAccountPasswordPolicy` | 0 |
-| *iam* | `GetRole` | 0 |
+| *iam* | `GetRole` | 2 |
 | *iam* | `DeletePolicyVersion` | 0 |
 | *iam* | `ListPolicies` | 1 |
 | *iam* | `PutUserPolicy` | 0 |
@@ -2980,8 +2981,8 @@
 | *kms* | `DeleteAlias` | 0 |
 | *kms* | `RetireGrant` | 0 |
 | *kms* | `TagResource` | 0 |
-| *kms* | `DescribeKey` | 2 |
-| *kms* | `ListKeys` | 3 |
+| *kms* | `DescribeKey` | 3 |
+| *kms* | `ListKeys` | 4 |
 | *kms* | `GenerateRandom` | 0 |
 | *kms* | `GetKeyPolicy` | 0 |
 | *kms* | `CreateGrant` | 0 |
@@ -3001,34 +3002,34 @@
 | *kms* | `RevokeGrant` | 0 |
 | *kms* | `PutKeyPolicy` | 0 |
 | *lambda* | `ListEventSourceMappings` | 0 |
-| *lambda* | `DeleteFunction` | 0 |
+| *lambda* | `DeleteFunction` | 1 |
 | *lambda* | `UpdateEventSourceMapping` | 0 |
 | *lambda* | `UpdateAlias` | 0 |
-| *lambda* | `ListFunctions` | 3 |
+| *lambda* | `ListFunctions` | 4 |
 | *lambda* | `CreateEventSourceMapping` | 0 |
-| *lambda* | `GetFunctionConfiguration` | 0 |
+| *lambda* | `GetFunctionConfiguration` | 1 |
 | *lambda* | `DeleteFunctionConcurrency` | 0 |
 | *lambda* | `ListAliases` | 1 |
 | *lambda* | `PutFunctionConcurrency` | 0 |
 | *lambda* | `GetPolicy` | 0 |
 | *lambda* | `Invoke` | 0 |
-| *lambda* | `PublishVersion` | 0 |
-| *lambda* | `GetFunction` | 0 |
+| *lambda* | `PublishVersion` | 1 |
+| *lambda* | `GetFunction` | 1 |
 | *lambda* | `DeleteAlias` | 0 |
 | *lambda* | `AddPermission` | 0 |
 | *lambda* | `ListVersionsByFunction` | 1 |
 | *lambda* | `RemovePermission` | 0 |
 | *lambda* | `InvokeAsync` | 0 |
-| *lambda* | `CreateAlias` | 0 |
-| *lambda* | `ListTags` | 0 |
+| *lambda* | `CreateAlias` | 1 |
+| *lambda* | `ListTags` | 1 |
 | *lambda* | `TagResource` | 0 |
 | *lambda* | `DeleteEventSourceMapping` | 0 |
 | *lambda* | `UpdateFunctionConfiguration` | 0 |
 | *lambda* | `GetEventSourceMapping` | 0 |
 | *lambda* | `UntagResource` | 0 |
-| *lambda* | `GetAlias` | 0 |
+| *lambda* | `GetAlias` | 1 |
 | *lambda* | `GetAccountSettings` | 0 |
-| *lambda* | `CreateFunction` | 0 |
+| *lambda* | `CreateFunction` | 1 |
 | *lambda* | `UpdateFunctionCode` | 0 |
 | *lex-models* | `CreateBotVersion` | 0 |
 | *lex-models* | `DeleteBotAlias` | 0 |
@@ -4878,4 +4879,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 370 (8.0%)**
+**Total Unique Occurances: 390 (8.0%)**
