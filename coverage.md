@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**109/258 (41.0%)** Resources Covered
+**113/258 (42.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -225,7 +225,7 @@
 | *AWS::Redshift::ClusterSecurityGroupIngress* | 0 |
 | *AWS::Redshift::ClusterSubnetGroup* | 0 |
 | *AWS::Route53::HealthCheck* | 0 |
-| *AWS::Route53::HostedZone* | 0 |
+| *AWS::Route53::HostedZone* | 2 |
 | *AWS::Route53::RecordSet* | 0 |
 | *AWS::Route53::RecordSetGroup* | 0 |
 | *AWS::S3::Bucket* | 1 |
@@ -234,8 +234,8 @@
 | *AWS::SNS::Subscription* | 1 |
 | *AWS::SNS::Topic* | 1 |
 | *AWS::SNS::TopicPolicy* | 1 |
-| *AWS::SQS::Queue* | 0 |
-| *AWS::SQS::QueuePolicy* | 0 |
+| *AWS::SQS::Queue* | 1 |
+| *AWS::SQS::QueuePolicy* | 1 |
 | *AWS::SSM::Association* | 0 |
 | *AWS::SSM::Document* | 0 |
 | *AWS::SSM::MaintenanceWindowTask* | 0 |
@@ -304,10 +304,11 @@
 | *mq* | 6/17 (35.0%) |
 | *rds* | 22/96 (22.0%) |
 | *rekognition* | 3/34 (8.0%) |
+| *route53* | 6/56 (10.0%) |
 | *s3* | 23/78 (29.0%) |
 | *servicecatalog* | 10/60 (16.0%) |
 | *sns* | 8/30 (26.0%) |
-| *sqs* | 2/20 (10.0%) |
+| *sqs* | 6/20 (30.0%) |
 | *ssm* | 2/108 (1.0%) |
 | *stepfunctions* | 1/19 (5.0%) |
 | *waf-regional* | 1/77 (1.0%) |
@@ -3879,14 +3880,14 @@
 | *route53* | `DeleteReusableDelegationSet` | 0 |
 | *route53* | `DeleteTrafficPolicyInstance` | 0 |
 | *route53* | `GetReusableDelegationSetLimit` | 0 |
-| *route53* | `GetHostedZoneCount` | 0 |
+| *route53* | `GetHostedZoneCount` | 1 |
 | *route53* | `GetTrafficPolicyInstanceCount` | 0 |
 | *route53* | `UpdateTrafficPolicyComment` | 0 |
 | *route53* | `ChangeResourceRecordSets` | 0 |
 | *route53* | `DeleteTrafficPolicy` | 0 |
-| *route53* | `CreateHostedZone` | 0 |
+| *route53* | `CreateHostedZone` | 2 |
 | *route53* | `CreateVPCAssociationAuthorization` | 0 |
-| *route53* | `DeleteHostedZone` | 0 |
+| *route53* | `DeleteHostedZone` | 1 |
 | *route53* | `GetHealthCheckStatus` | 0 |
 | *route53* | `TestDNSAnswer` | 0 |
 | *route53* | `ListReusableDelegationSets` | 0 |
@@ -3894,7 +3895,7 @@
 | *route53* | `CreateTrafficPolicyInstance` | 0 |
 | *route53* | `GetGeoLocation` | 0 |
 | *route53* | `GetReusableDelegationSet` | 0 |
-| *route53* | `ListHostedZones` | 0 |
+| *route53* | `ListHostedZones` | 1 |
 | *route53* | `GetTrafficPolicy` | 0 |
 | *route53* | `ListQueryLoggingConfigs` | 0 |
 | *route53* | `UpdateHealthCheck` | 0 |
@@ -3906,7 +3907,7 @@
 | *route53* | `CreateHealthCheck` | 0 |
 | *route53* | `CreateTrafficPolicyVersion` | 0 |
 | *route53* | `CreateTrafficPolicy` | 0 |
-| *route53* | `ListGeoLocations` | 0 |
+| *route53* | `ListGeoLocations` | 1 |
 | *route53* | `ListTagsForResources` | 0 |
 | *route53* | `GetQueryLoggingConfig` | 0 |
 | *route53* | `GetHostedZoneLimit` | 0 |
@@ -3920,7 +3921,7 @@
 | *route53* | `DeleteQueryLoggingConfig` | 0 |
 | *route53* | `ListResourceRecordSets` | 0 |
 | *route53* | `ListTagsForResource` | 0 |
-| *route53* | `ListHealthChecks` | 0 |
+| *route53* | `ListHealthChecks` | 1 |
 | *route53* | `ListTrafficPolicyVersions` | 0 |
 | *route53domains* | `CheckDomainTransferability` | 0 |
 | *route53domains* | `ResendContactReachabilityEmail` | 0 |
@@ -4340,9 +4341,9 @@
 | *sns* | `DeleteTopic` | 1 |
 | *sns* | `OptInPhoneNumber` | 0 |
 | *sns* | `ListTopics` | 6 |
-| *sqs* | `CreateQueue` | 0 |
-| *sqs* | `GetQueueAttributes` | 0 |
-| *sqs* | `SetQueueAttributes` | 0 |
+| *sqs* | `CreateQueue` | 1 |
+| *sqs* | `GetQueueAttributes` | 1 |
+| *sqs* | `SetQueueAttributes` | 1 |
 | *sqs* | `GetQueueUrl` | 0 |
 | *sqs* | `DeleteMessageBatch` | 0 |
 | *sqs* | `SendMessageBatch` | 0 |
@@ -4353,7 +4354,7 @@
 | *sqs* | `AddPermission` | 0 |
 | *sqs* | `ChangeMessageVisibilityBatch` | 0 |
 | *sqs* | `SendMessage` | 0 |
-| *sqs* | `DeleteQueue` | 1 |
+| *sqs* | `DeleteQueue` | 2 |
 | *sqs* | `PurgeQueue` | 0 |
 | *sqs* | `ListQueueTags` | 0 |
 | *sqs* | `DeleteMessage` | 0 |
@@ -4881,4 +4882,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 427 (9.0%)**
+**Total Unique Occurances: 436 (9.0%)**

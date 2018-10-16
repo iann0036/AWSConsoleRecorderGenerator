@@ -1,3 +1,4 @@
 rekognition.ListCollections
 rekognition.CreateCollection
 rekognition.DescribeCollection
+sqs.AddPermission
