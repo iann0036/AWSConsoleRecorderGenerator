@@ -219,6 +219,7 @@ chrome.runtime.sendMessage(null, {
     chrome.runtime.sendMessage(null, {
         "action": "getRequests"
     }, null, function(xresponse){
+        console.log(xresponse);
         response = xresponse;
         for (var i=0; i<response.length; i++) {
             var potentials_length = response[i]['potentials'].length;
@@ -288,27 +289,29 @@ chrome.runtime.sendMessage(null, {
                 };
                 selectable_json += "<b><i>not-json</i></b> " + request_body;
 
-                if ((request_body.match(/\|/g) || []).length > 6) {
-                    var pipesplit_body = request_body.split("|");
-                    for (var j=0; j<pipesplit_body.length; j++) {
-                        var field = pipesplit_body[j];
-                        selectable_json += `<a id="pipesplit-${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})" data-val="${field}" style="color: #2222cc;">PIPESPLIT${j}</a>: ${field} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})"></select><br />`;
-                        setTimeout(function(i, j){
-                            document.getElementById(`pipesplit-${i}-${j}`).onclick = addSelectable;
-                        }, 1, i, j);
+                if (request_body) {
+                    if ((request_body.match(/\|/g) || []).length > 6) {
+                        var pipesplit_body = request_body.split("|");
+                        for (var j=0; j<pipesplit_body.length; j++) {
+                            var field = pipesplit_body[j];
+                            selectable_json += `<a id="pipesplit-${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})" data-val="${field}" style="color: #2222cc;">PIPESPLIT${j}</a>: ${field} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})"></select><br />`;
+                            setTimeout(function(i, j){
+                                document.getElementById(`pipesplit-${i}-${j}`).onclick = addSelectable;
+                            }, 1, i, j);
+                        }
                     }
-                }
 
-                try {
-                    if (request_body.match(/([^|{}=&]+)\=([^|{}=&]+)(?:\&([^|{}=&]+)\=([^|{}=&]+))*/g)) {
-                        console.log(/([^|{}=&]+)\=([^|{}=&]+)(?:\&([^|{}=&]+)\=([^|{}=&]+))*/g.exec(request_body));
-                    } else {
-                        selectable_json += `<a id="formreq-${i}-_" data-prop="formRequestBody._" data-val="${request_body}" style="color: #2222cc;">FORMDATA _</a>: ${request_body} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-_" data-prop="formRequestBody._"></select><br />`;
-                        setTimeout(function(i){
-                            document.getElementById(`formreq-${i}-_`).onclick = addSelectable;
-                        }, 1, i);
-                    }
-                } catch(e) {;}
+                    try {
+                        if (request_body.match(/([^|{}=&]+)\=([^|{}=&]+)(?:\&([^|{}=&]+)\=([^|{}=&]+))*/g)) {
+                            console.log(/([^|{}=&]+)\=([^|{}=&]+)(?:\&([^|{}=&]+)\=([^|{}=&]+))*/g.exec(request_body));
+                        } else {
+                            selectable_json += `<a id="formreq-${i}-_" data-prop="formRequestBody._" data-val="${request_body}" style="color: #2222cc;">FORMDATA _</a>: ${request_body} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-_" data-prop="formRequestBody._"></select><br />`;
+                            setTimeout(function(i){
+                                document.getElementById(`formreq-${i}-_`).onclick = addSelectable;
+                            }, 1, i);
+                        }
+                    } catch(e) {;}
+                }
             }
 
             for (var j=0; j<4; j++) {

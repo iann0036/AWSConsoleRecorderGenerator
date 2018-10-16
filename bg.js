@@ -59,13 +59,15 @@ function logRequest(details) {
     try {
         requestBody = decodeURIComponent(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes)));
         requestBody = requestBody.replace(/\"X-CSRF-TOKEN\"\:\"\[\{[a-zA-Z0-9-_",=+:/]+\}\]\"\,/g,""); // double-quote bug, remove CSRF token
-        jsonRequestBody = JSON.parse(requestBody);
     } catch(e) {
         try {
             requestBody = JSON.stringify(details.requestBody.formData);
-            jsonRequestBody = JSON.parse(requestBody);
         } catch(e) {;}
     }
+
+    try {
+        jsonRequestBody = JSON.parse(requestBody);
+    } catch(e) {;}
 
     var rgx = /^.*console\.aws\.amazon\.com\/([a-zA-Z0-9-]+)\/(.+)$/g;
     var match = rgx.exec(details.url);
@@ -128,7 +130,7 @@ function logRequest(details) {
                             'opname': combined[testing_service]['operations'][operation]['name'],
                             'foundinuri': true
                         });
-                    } else if (requestBody.toLowerCase().includes(operation_name) || requestBody.toLowerCase().replace("get", "describe").includes(operation_name)) {
+                    } else if (requestBody && (requestBody.toLowerCase().includes(operation_name) || requestBody.toLowerCase().replace("get", "describe").includes(operation_name))) {
                         console.log("Potential Match: " + testing_service + "." + combined[testing_service]['operations'][operation]['name']);
                         potentials.push({
                             'service': testing_service,
@@ -166,9 +168,17 @@ function getUrlValue(url, key) {
 }
 
 function getPipeSplitField(str, index) {
+    if (!str) return null;
+    
     var pipesplit = str.split("|");
 
-    return pipesplit[index];
+    var result = pipesplit[parseInt(index)];
+
+    if (isNaN(result)) {
+        return result;
+    }
+
+    return parseInt(result);
 }
 
 /********/
@@ -202,13 +212,15 @@ function analyseRequest(details) {
         try {
             requestBody = decodeURIComponent(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes)));
             requestBody = requestBody.replace(/\"X-CSRF-TOKEN\"\:\"\[\{[a-zA-Z0-9-_",=+:/]+\}\]\"\,/g,""); // double-quote bug, remove CSRF token
-            jsonRequestBody = JSON.parse(requestBody);
         } catch(e) {
             try {
                 requestBody = JSON.stringify(details.requestBody.formData);
-                jsonRequestBody = JSON.parse(requestBody);
             } catch(e) {;}
         }
+    
+        try {
+            jsonRequestBody = JSON.parse(requestBody);
+        } catch(e) {;}
 
         // check for string objects
         for (var prop in jsonRequestBody) {
@@ -11602,6 +11614,1483 @@ function analyseRequest(details) {
             'requestId': details.requestId,
             'was_blocked': blocking
         });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeVpcClassicLinkDnsSupport
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\?call=callSdk_com\.amazonaws\.services\.ec2\.AmazonEC2Client_describeVpcClassicLinkDnsSupport\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcClassicLinkDnsSupport',
+                'boto3': 'describe_vpc_classic_link_dns_support',
+                'cli': 'describe-vpc-classic-link-dns-support'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2ux\.elasticconsole\.generated\.ElasticConsoleBackendGenerated\.MergedDescribeSubnets\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.DescribeVpcs\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeAvailabilityZones
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.DescribeAvailabilityZones\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeAvailabilityZones',
+                'boto3': 'describe_availability_zones',
+                'cli': 'describe-availability-zones'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.CreateSubnet
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.CreateSubnet\?/g)) {
+        reqParams.boto3['VpcId'] = jsonRequestBody.VpcId;
+        reqParams.cli['--vpc-id'] = jsonRequestBody.VpcId;
+        reqParams.boto3['CidrBlock'] = jsonRequestBody.CidrBlock;
+        reqParams.cli['--cidr-block'] = jsonRequestBody.CidrBlock;
+        reqParams.boto3['AvailabilityZone'] = jsonRequestBody.AvailabilityZone;
+        reqParams.cli['--availability-zone'] = jsonRequestBody.AvailabilityZone;
+        reqParams.boto3['Ipv6CidrBlock'] = jsonRequestBody.Ipv6CidrBlock;
+        reqParams.cli['--ipv-6-cidr-block'] = jsonRequestBody.Ipv6CidrBlock;
+
+        reqParams.cfn['VpcId'] = jsonRequestBody.VpcId;
+        reqParams.cfn['CidrBlock'] = jsonRequestBody.CidrBlock;
+        reqParams.cfn['AvailabilityZone'] = jsonRequestBody.AvailabilityZone;
+        reqParams.cfn['Ipv6CidrBlock'] = jsonRequestBody.Ipv6CidrBlock;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'CreateSubnet',
+                'boto3': 'create_subnet',
+                'cli': 'create-subnet'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::EC2::Subnet',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeNatGateways
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\?call=getNatGatewayUnsupportedZones\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeNatGateways',
+                'boto3': 'describe_nat_gateways',
+                'cli': 'describe-nat-gateways'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeInstances
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.DescribeInstances\?/g)) {
+        reqParams.boto3['Filters'] = jsonRequestBody.filters;
+        reqParams.cli['--filters'] = jsonRequestBody.filters;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeInstances',
+                'boto3': 'describe_instances',
+                'cli': 'describe-instances'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeNetworkInterfaces
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.DescribeNetworkInterfaces\?/g)) {
+        reqParams.boto3['Filters'] = jsonRequestBody.filters;
+        reqParams.cli['--filters'] = jsonRequestBody.filters;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeNetworkInterfaces',
+                'boto3': 'describe_network_interfaces',
+                'cli': 'describe-network-interfaces'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeVpcEndpoints
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\?call=callSdk_com\.amazonaws\.services\.ec2\.AmazonEC2Client_describeVpcEndpoints\?/g)) {
+        reqParams.boto3['Filters'] = jsonRequestBody.request.filters;
+        reqParams.cli['--filters'] = jsonRequestBody.request.filters;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcEndpoints',
+                'boto3': 'describe_vpc_endpoints',
+                'cli': 'describe-vpc-endpoints'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeEgressOnlyInternetGateways
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\?call=callSdk_com\.amazonaws\.services\.ec2\.AmazonEC2Client_describeEgressOnlyInternetGateways\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeEgressOnlyInternetGateways',
+                'boto3': 'describe_egress_only_internet_gateways',
+                'cli': 'describe-egress-only-internet-gateways'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DeleteNatGateway
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\?call=callSdk_com\.amazonaws\.services\.ec2\.AmazonEC2Client_deleteNatGateway\?/g)) {
+        reqParams.boto3['NatGatewayId'] = jsonRequestBody.request.natGatewayId;
+        reqParams.cli['--nat-gateway-id'] = jsonRequestBody.request.natGatewayId;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DeleteNatGateway',
+                'boto3': 'delete_nat_gateway',
+                'cli': 'delete-nat-gateway'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.CreateVpc
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createVpc") {
+        reqParams.boto3['CidrBlock'] = getPipeSplitField(requestBody, 18);
+        reqParams.cli['--cidr-block'] = getPipeSplitField(requestBody, 18);
+        reqParams.boto3['InstanceTenancy'] = getPipeSplitField(requestBody, 19);
+        reqParams.cli['--instance-tenancy'] = getPipeSplitField(requestBody, 19);
+
+        reqParams.cfn['CidrBlock'] = getPipeSplitField(requestBody, 18);
+        reqParams.cfn['InstanceTenancy'] = getPipeSplitField(requestBody, 19);
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'CreateVpc',
+                'boto3': 'create_vpc',
+                'cli': 'create-vpc'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::EC2::VPC',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getVpcs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeDhcpOptions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getDHCPOptions") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeDhcpOptions',
+                'boto3': 'describe_dhcp_options',
+                'cli': 'describe-dhcp-options'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeVpcAttribute
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getVpcAttributes") {
+        reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
+        reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcAttribute',
+                'boto3': 'describe_vpc_attribute',
+                'cli': 'describe-vpc-attribute'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeRouteTables
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getRouteTables") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeRouteTables',
+                'boto3': 'describe_route_tables',
+                'cli': 'describe-route-tables'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.CreateRouteTable
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createRouteTable") {
+        reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
+        reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
+
+        reqParams.cfn['VpcId'] = getPipeSplitField(requestBody, 17);
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'CreateRouteTable',
+                'boto3': 'create_route_table',
+                'cli': 'create-route-table'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::EC2::RouteTable',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeNetworkAcls
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createDHCPOption" && getPipeSplitField(requestBody, 8) == "getNetworkACLs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeNetworkAcls',
+                'boto3': 'describe_network_acls',
+                'cli': 'describe-network-acls'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.CreateNetworkAcl
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createNetworkACL") {
+        reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
+        reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
+
+        reqParams.cfn['VpcId'] = getPipeSplitField(requestBody, 17);
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'CreateNetworkAcl',
+                'boto3': 'create_network_acl',
+                'cli': 'create-network-acl'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::EC2::NetworkAcl',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DeleteNetworkAcl
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "modifyIngressRulesForNetworkACL" && getPipeSplitField(requestBody, 8) == "deleteNetworkACL") {
+        reqParams.boto3['NetworkAclId'] = getPipeSplitField(requestBody, 17);
+        reqParams.cli['--network-acl-id'] = getPipeSplitField(requestBody, 17);
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DeleteNetworkAcl',
+                'boto3': 'delete_network_acl',
+                'cli': 'delete-network-acl'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DeleteRouteTable
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "deleteRouteTable") {
+        reqParams.boto3['RouteTableId'] = getPipeSplitField(requestBody, 17);
+        reqParams.cli['--route-table-id'] = getPipeSplitField(requestBody, 17);
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DeleteRouteTable',
+                'boto3': 'delete_route_table',
+                'cli': 'delete-route-table'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.DescribeSubnets\?/g)) {
+        reqParams.boto3['Filters'] = jsonRequestBody.Filters;
+        reqParams.cli['--filters'] = jsonRequestBody.Filters;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getSubnets") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // manual:ec2:ec2.CreateNetworkAclEntry
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && (getPipeSplitField(requestBody, 8) == "modifyIngressRulesForNetworkACL" || getPipeSplitField(requestBody, 8) == "modifyEgressRulesForNetworkACL")) {
+        var headerCount = getPipeSplitField(requestBody, 2);
+        var offset = headerCount + 32;
+
+        console.log(requestBody.split("|"));
+        
+        while (getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2) && getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2).includes("FirewallRule")) {
+            var reqParams = {
+                'boto3': {},
+                'go': {},
+                'cfn': {},
+                'cli': {}
+            };
+            
+            if (getPipeSplitField(requestBody, 8) == "modifyIngressRulesForNetworkACL") {
+                reqParams.boto3['Egress'] = false;
+                reqParams.cli['--ingress'] = null;
+                reqParams.cfn['Egress'] = false;
+            } else {
+                reqParams.boto3['Egress'] = true;
+                reqParams.cli['--egress'] = null;
+                reqParams.cfn['Egress'] = true;
+            }
+            
+            reqParams.boto3['NetworkAclId'] = getPipeSplitField(requestBody, 18);
+            reqParams.cli['--network-acl-id'] = getPipeSplitField(requestBody, 18);
+            reqParams.cfn['NetworkAclId'] = getPipeSplitField(requestBody, 18);
+            offset += 1;
+            reqParams.boto3['RuleNumber'] = getPipeSplitField(requestBody, offset);
+            reqParams.cli['--rule-number'] = getPipeSplitField(requestBody, offset);
+            reqParams.cfn['RuleNumber'] = getPipeSplitField(requestBody, offset);
+            offset += 1;
+            reqParams.boto3['Protocol'] = getPipeSplitField(requestBody, offset);
+            reqParams.cli['--protocol'] = getPipeSplitField(requestBody, offset);
+            reqParams.cfn['Protocol'] = getPipeSplitField(requestBody, offset);
+            offset += 1;
+            if (getPipeSplitField(requestBody, offset) > 0) { // don't set ICMP PortRange
+                reqParams.boto3['PortRange'] = {
+                    'From': getPipeSplitField(requestBody, offset),
+                    'To': getPipeSplitField(requestBody, (offset + 1))
+                };
+                reqParams.cli['--port-range'] = {
+                    'From': getPipeSplitField(requestBody, offset),
+                    'To': getPipeSplitField(requestBody, (offset + 1))
+                };
+                reqParams.cfn['PortRange'] = {
+                    'From': getPipeSplitField(requestBody, offset),
+                    'To': getPipeSplitField(requestBody, (offset + 1))
+                };
+            }
+            offset += 4;
+            if (getPipeSplitField(requestBody, offset) > 0) {
+                offset += 1;
+                reqParams.boto3['CidrBlock'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
+                reqParams.cli['--cidr-block'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
+                reqParams.cfn['CidrBlock'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
+            } else {
+                reqParams.boto3['CidrBlock'] = '???'; // TODO - Fix this
+                reqParams.cli['--cidr-block'] = '???';
+                reqParams.cfn['CidrBlock'] = '???';
+            }
+            offset += 1;
+            if (getPipeSplitField(requestBody, offset) == 0) {
+                offset += 1;
+            } else if (getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2).includes("ArrayList")) {
+                offset += getPipeSplitField(requestBody, (offset + 1)) + 2;
+            }
+            if (getPipeSplitField(requestBody, offset) == 0) {
+                offset += 1;
+            } else if (getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2).includes("ArrayList")) {
+                offset += getPipeSplitField(requestBody, (offset + 1)) + 2;
+            }
+            reqParams.boto3['RuleAction'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
+            reqParams.cli['--rule-action'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
+            reqParams.cfn['RuleAction'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
+
+            offset += 2;
+
+            if (reqParams.boto3['RuleNumber'] != 32767) { // ignore default rule
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'CreateNetworkAclEntry',
+                        'boto3': 'create_network_acl_entry',
+                        'cli': 'create-network-acl-entry'
+                    },
+                    'options': reqParams,
+                    'requestId': details.requestId
+                });
+
+                tracked_resources.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'type': 'AWS::EC2::NetworkAclEntry',
+                    'options': reqParams,
+                    'requestId': details.requestId,
+                    'was_blocked': blocking
+                });
+            }
+        }
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.AssociateDhcpOptions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "modifyDHCPOptions") {
+        reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
+        reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
+        reqParams.boto3['DhcpOptionsId'] = getPipeSplitField(requestBody, 18);
+        reqParams.cli['--dhcp-options-id'] = getPipeSplitField(requestBody, 18);
+
+        reqParams.cfn['VpcId'] = getPipeSplitField(requestBody, 17);
+        reqParams.cfn['DhcpOptionsId'] = getPipeSplitField(requestBody, 18);
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'AssociateDhcpOptions',
+                'boto3': 'associate_dhcp_options',
+                'cli': 'associate-dhcp-options'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::EC2::VPCDHCPOptionsAssociation',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeNatGateways
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getNatGateways") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeNatGateways',
+                'boto3': 'describe_nat_gateways',
+                'cli': 'describe-nat-gateways'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.AssociateVpcCidrBlock
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.AssociateVpcCidrBlock\?/g)) {
+        reqParams.boto3['VpcId'] = jsonRequestBody.vpcId;
+        reqParams.cli['--vpc-id'] = jsonRequestBody.vpcId;
+        reqParams.boto3['CidrBlock'] = jsonRequestBody.cidrBlock;
+        reqParams.cli['--cidr-block'] = jsonRequestBody.cidrBlock;
+        reqParams.boto3['AmazonProvidedIpv6CidrBlock'] = jsonRequestBody.amazonProvidedIpv6CidrBlock;
+        reqParams.cli['--amazon-provided-ipv-6-cidr-block'] = jsonRequestBody.amazonProvidedIpv6CidrBlock;
+
+        reqParams.cfn['VpcId'] = jsonRequestBody.vpcId;
+        reqParams.cfn['CidrBlock'] = jsonRequestBody.cidrBlock;
+        reqParams.cfn['AmazonProvidedIpv6CidrBlock'] = jsonRequestBody.amazonProvidedIpv6CidrBlock;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'AssociateVpcCidrBlock',
+                'boto3': 'associate_vpc_cidr_block',
+                'cli': 'associate-vpc-cidr-block'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::EC2::VPCCidrBlock',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DescribeLoadBalancers
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2GetLoadBalancers\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DescribeLoadBalancers',
+                'boto3': 'describe_load_balancers',
+                'cli': 'describe-load-balancers'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeInternetGateways
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=getInternetGateways\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeInternetGateways',
+                'boto3': 'describe_internet_gateways',
+                'cli': 'describe-internet-gateways'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeRouteTables
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=getRouteTables\?/g)) {
+        reqParams.boto3['Filters'] = jsonRequestBody.filters;
+        reqParams.cli['--filters'] = jsonRequestBody.filters;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeRouteTables',
+                'boto3': 'describe_route_tables',
+                'cli': 'describe-route-tables'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:acm.ListCertificates
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=listAcmCertificates\?/g)) {
+        reqParams.boto3['CertificateStatuses'] = jsonRequestBody.CertificateStatusList;
+        reqParams.cli['--certificate-statuses'] = jsonRequestBody.CertificateStatusList;
+
+        outputs.push({
+            'region': region,
+            'service': 'acm',
+            'method': {
+                'api': 'ListCertificates',
+                'boto3': 'list_certificates',
+                'cli': 'list-certificates'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:iam.ListServerCertificates
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=listServerCertificates\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'ListServerCertificates',
+                'boto3': 'list_server_certificates',
+                'cli': 'list-server-certificates'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DescribeSSLPolicies
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2DescribeSSLPolicies\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DescribeSSLPolicies',
+                'boto3': 'describe_ssl_policies',
+                'cli': 'describe-ssl-policies'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DescribeAccountLimits
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=getAccountLimits\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DescribeAccountLimits',
+                'boto3': 'describe_account_limits',
+                'cli': 'describe-account-limits'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeInstances
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=getMergedInstanceListAutoUpdate\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeInstances',
+                'boto3': 'describe_instances',
+                'cli': 'describe-instances'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeSecurityGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=getSecurityGroupsAutoUpdate\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSecurityGroups',
+                'boto3': 'describe_security_groups',
+                'cli': 'describe-security-groups'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.CreateLoadBalancer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2CreateLoadBalancer\?/g)) {
+        reqParams.boto3['Name'] = jsonRequestBody.name;
+        reqParams.cli['--name'] = jsonRequestBody.name;
+        reqParams.boto3['Scheme'] = jsonRequestBody.scheme;
+        reqParams.cli['--scheme'] = jsonRequestBody.scheme;
+        reqParams.boto3['SecurityGroups'] = jsonRequestBody.securityGroups;
+        reqParams.cli['--security-groups'] = jsonRequestBody.securityGroups;
+        reqParams.boto3['Subnets'] = jsonRequestBody.subnets;
+        reqParams.cli['--subnets'] = jsonRequestBody.subnets;
+        reqParams.boto3['Tags'] = jsonRequestBody.tags;
+        reqParams.cli['--tags'] = jsonRequestBody.tags;
+        reqParams.boto3['IpAddressType'] = jsonRequestBody.ipAddressType;
+        reqParams.cli['--ip-address-type'] = jsonRequestBody.ipAddressType;
+        reqParams.boto3['Type'] = jsonRequestBody.type;
+        reqParams.cli['--type'] = jsonRequestBody.type;
+
+        reqParams.cfn['Name'] = jsonRequestBody.name;
+        reqParams.cfn['Scheme'] = jsonRequestBody.scheme;
+        reqParams.cfn['SecurityGroups'] = jsonRequestBody.securityGroups;
+        reqParams.cfn['Subnets'] = jsonRequestBody.subnets;
+        reqParams.cfn['Tags'] = jsonRequestBody.tags;
+        reqParams.cfn['IpAddressType'] = jsonRequestBody.ipAddressType;
+        reqParams.cfn['Type'] = jsonRequestBody.type;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'CreateLoadBalancer',
+                'boto3': 'create_load_balancer',
+                'cli': 'create-load-balancer'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::ElasticLoadBalancingV2::LoadBalancer',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.CreateTargetGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2CreateTargetGroup\?/g)) {
+        reqParams.boto3['HealthCheckIntervalSeconds'] = jsonRequestBody.HealthCheckIntervalSeconds;
+        reqParams.cli['--health-check-interval-seconds'] = jsonRequestBody.HealthCheckIntervalSeconds;
+        reqParams.boto3['HealthCheckPath'] = jsonRequestBody.HealthCheckPath;
+        reqParams.cli['--health-check-path'] = jsonRequestBody.HealthCheckPath;
+        reqParams.boto3['HealthCheckProtocol'] = jsonRequestBody.HealthCheckProtocol;
+        reqParams.cli['--health-check-protocol'] = jsonRequestBody.HealthCheckProtocol;
+        reqParams.boto3['HealthCheckTimeoutSeconds'] = jsonRequestBody.HealthCheckTimeoutSeconds;
+        reqParams.cli['--health-check-timeout-seconds'] = jsonRequestBody.HealthCheckTimeoutSeconds;
+        reqParams.boto3['HealthyThresholdCount'] = jsonRequestBody.HealthyThresholdCount;
+        reqParams.cli['--healthy-threshold-count'] = jsonRequestBody.HealthyThresholdCount;
+        reqParams.boto3['Matcher'] = jsonRequestBody.Matcher;
+        reqParams.cli['--matcher'] = jsonRequestBody.Matcher;
+        reqParams.boto3['Name'] = jsonRequestBody.Name;
+        reqParams.cli['--name'] = jsonRequestBody.Name;
+        reqParams.boto3['Port'] = jsonRequestBody.Port;
+        reqParams.cli['--port'] = jsonRequestBody.Port;
+        reqParams.boto3['Protocol'] = jsonRequestBody.Protocol;
+        reqParams.cli['--protocol'] = jsonRequestBody.Protocol;
+        reqParams.boto3['TargetType'] = jsonRequestBody.targetType;
+        reqParams.cli['--target-type'] = jsonRequestBody.targetType;
+        reqParams.boto3['UnhealthyThresholdCount'] = jsonRequestBody.UnhealthyThresholdCount;
+        reqParams.cli['--unhealthy-threshold-count'] = jsonRequestBody.UnhealthyThresholdCount;
+        reqParams.boto3['VpcId'] = jsonRequestBody.VpcId;
+        reqParams.cli['--vpc-id'] = jsonRequestBody.VpcId;
+
+        reqParams.cfn['HealthCheckIntervalSeconds'] = jsonRequestBody.HealthCheckIntervalSeconds;
+        reqParams.cfn['HealthCheckPath'] = jsonRequestBody.HealthCheckPath;
+        reqParams.cfn['HealthCheckProtocol'] = jsonRequestBody.HealthCheckProtocol;
+        reqParams.cfn['HealthCheckTimeoutSeconds'] = jsonRequestBody.HealthCheckTimeoutSeconds;
+        reqParams.cfn['HealthyThresholdCount'] = jsonRequestBody.HealthyThresholdCount;
+        reqParams.cfn['Matcher'] = jsonRequestBody.Matcher;
+        reqParams.cfn['Name'] = jsonRequestBody.Name;
+        reqParams.cfn['Port'] = jsonRequestBody.Port;
+        reqParams.cfn['Protocol'] = jsonRequestBody.Protocol;
+        reqParams.cfn['TargetType'] = jsonRequestBody.targetType;
+        reqParams.cfn['UnhealthyThresholdCount'] = jsonRequestBody.UnhealthyThresholdCount;
+        reqParams.cfn['VpcId'] = jsonRequestBody.VpcId;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'CreateTargetGroup',
+                'boto3': 'create_target_group',
+                'cli': 'create-target-group'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::ElasticLoadBalancingV2::TargetGroup',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.CreateListener
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2CreateListener\?/g)) {
+        reqParams.boto3['Port'] = jsonRequestBody.port;
+        reqParams.cli['--port'] = jsonRequestBody.port;
+        reqParams.boto3['Protocol'] = jsonRequestBody.protocol;
+        reqParams.cli['--protocol'] = jsonRequestBody.protocol;
+        reqParams.boto3['LoadBalancerArn'] = jsonRequestBody.loadBalancerArn;
+        reqParams.cli['--load-balancer-arn'] = jsonRequestBody.loadBalancerArn;
+        reqParams.boto3['DefaultActions'] = jsonRequestBody.defaultActions;
+        reqParams.cli['--default-actions'] = jsonRequestBody.defaultActions;
+
+        reqParams.cfn['Port'] = jsonRequestBody.port;
+        reqParams.cfn['Protocol'] = jsonRequestBody.protocol;
+        reqParams.cfn['LoadBalancerArn'] = jsonRequestBody.loadBalancerArn;
+        reqParams.cfn['DefaultActions'] = jsonRequestBody.defaultActions;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'CreateListener',
+                'boto3': 'create_listener',
+                'cli': 'create-listener'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::ElasticLoadBalancingV2::Listener',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DescribeLoadBalancers
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2GetLoadBalancers\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DescribeLoadBalancers',
+                'boto3': 'describe_load_balancers',
+                'cli': 'describe-load-balancers'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DescribeLoadBalancerAttributes
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2DescribeLoadBalancerAttributes\?/g)) {
+        reqParams.boto3['LoadBalancerArn'] = jsonRequestBody.loadBalancerArn;
+        reqParams.cli['--load-balancer-arn'] = jsonRequestBody.loadBalancerArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DescribeLoadBalancerAttributes',
+                'boto3': 'describe_load_balancer_attributes',
+                'cli': 'describe-load-balancer-attributes'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:config.DescribeConfigurationRecorders
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=describeConfigurationRecorders\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'config',
+            'method': {
+                'api': 'DescribeConfigurationRecorders',
+                'boto3': 'describe_configuration_recorders',
+                'cli': 'describe-configuration-recorders'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:waf-regional.GetWebACLForResource
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=getWebACLForResource\?/g)) {
+        reqParams.boto3['ResourceArn'] = jsonRequestBody.resourceArn;
+        reqParams.cli['--resource-arn'] = jsonRequestBody.resourceArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'waf-regional',
+            'method': {
+                'api': 'GetWebACLForResource',
+                'boto3': 'get_web_acl_for_resource',
+                'cli': 'get-web-acl-for-resource'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DescribeRules
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2DescribeRules\?/g)) {
+        reqParams.boto3['ListenerArn'] = jsonRequestBody.listenerArn;
+        reqParams.cli['--listener-arn'] = jsonRequestBody.listenerArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DescribeRules',
+                'boto3': 'describe_rules',
+                'cli': 'describe-rules'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DescribeListeners
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2DescribeListeners\?/g)) {
+        reqParams.boto3['LoadBalancerArn'] = jsonRequestBody.loadBalancerArn;
+        reqParams.cli['--load-balancer-arn'] = jsonRequestBody.loadBalancerArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DescribeListeners',
+                'boto3': 'describe_listeners',
+                'cli': 'describe-listeners'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.CreateRule
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2CreateRule\?/g)) {
+        reqParams.boto3['Conditions'] = jsonRequestBody.conditions;
+        reqParams.cli['--conditions'] = jsonRequestBody.conditions;
+        reqParams.boto3['Actions'] = jsonRequestBody.actions;
+        reqParams.cli['--actions'] = jsonRequestBody.actions;
+
+        reqParams.cfn['Conditions'] = jsonRequestBody.conditions;
+        reqParams.cfn['Actions'] = jsonRequestBody.actions;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'CreateRule',
+                'boto3': 'create_rule',
+                'cli': 'create-rule'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::ElasticLoadBalancingV2::ListenerRule',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DeleteRule
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2DeleteRule\?/g)) {
+        reqParams.boto3['RuleArn'] = jsonRequestBody.ruleArn;
+        reqParams.cli['--rule-arn'] = jsonRequestBody.ruleArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DeleteRule',
+                'boto3': 'delete_rule',
+                'cli': 'delete-rule'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DeleteListener
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2DeleteListener\?/g)) {
+        reqParams.boto3['ListenerArn'] = jsonRequestBody.listenerArn;
+        reqParams.cli['--listener-arn'] = jsonRequestBody.listenerArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DeleteListener',
+                'boto3': 'delete_listener',
+                'cli': 'delete-listener'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DeleteLoadBalancer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2DeleteLoadBalancer\?/g)) {
+        reqParams.boto3['LoadBalancerArn'] = jsonRequestBody.loadBalancerArn;
+        reqParams.cli['--load-balancer-arn'] = jsonRequestBody.loadBalancerArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DeleteLoadBalancer',
+                'boto3': 'delete_load_balancer',
+                'cli': 'delete-load-balancer'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DeleteTargetGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=elbV2DeleteTargetGroup\?/g)) {
+        reqParams.boto3['TargetGroupArn'] = jsonRequestBody.targetGroupArn;
+        reqParams.cli['--target-group-arn'] = jsonRequestBody.targetGroupArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DeleteTargetGroup',
+                'boto3': 'delete_target_group',
+                'cli': 'delete-target-group'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elb.CreateLoadBalancer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=createLoadBalancer\?/g)) {
+        reqParams.boto3['LoadBalancerName'] = jsonRequestBody.loadBalancerName;
+        reqParams.cli['--load-balancer-name'] = jsonRequestBody.loadBalancerName;
+        reqParams.boto3['Scheme'] = jsonRequestBody.scheme;
+        reqParams.cli['--scheme'] = jsonRequestBody.scheme;
+        reqParams.boto3['Tags'] = jsonRequestBody.tags;
+        reqParams.cli['--tags'] = jsonRequestBody.tags;
+        reqParams.boto3['Listeners'] = jsonRequestBody.listeners;
+        reqParams.cli['--listeners'] = jsonRequestBody.listeners;
+        reqParams.boto3['SecurityGroups'] = jsonRequestBody.securityGroups;
+        reqParams.cli['--security-groups'] = jsonRequestBody.securityGroups;
+        reqParams.boto3['Subnets'] = jsonRequestBody.subnets;
+        reqParams.cli['--subnets'] = jsonRequestBody.subnets;
+
+        reqParams.cfn['LoadBalancerName'] = jsonRequestBody.loadBalancerName;
+        reqParams.cfn['Scheme'] = jsonRequestBody.scheme;
+        reqParams.cfn['Tags'] = jsonRequestBody.tags;
+        reqParams.cfn['Listeners'] = jsonRequestBody.listeners;
+        reqParams.cfn['SecurityGroups'] = jsonRequestBody.securityGroups;
+        reqParams.cfn['Subnets'] = jsonRequestBody.subnets;
+
+        outputs.push({
+            'region': region,
+            'service': 'elb',
+            'method': {
+                'api': 'CreateLoadBalancer',
+                'boto3': 'create_load_balancer',
+                'cli': 'create-load-balancer'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+
+        tracked_resources.push({
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::ElasticLoadBalancing::LoadBalancer',
+            'options': reqParams,
+            'requestId': details.requestId,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elb.ConfigureHealthCheck
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=configureHealthCheck\?/g)) {
+        reqParams.boto3['HealthCheck'] = jsonRequestBody.healthCheck;
+        reqParams.cli['--health-check'] = jsonRequestBody.healthCheck;
+        reqParams.boto3['LoadBalancerName'] = jsonRequestBody.loadBalancerName;
+        reqParams.cli['--load-balancer-name'] = jsonRequestBody.loadBalancerName;
+
+        outputs.push({
+            'region': region,
+            'service': 'elb',
+            'method': {
+                'api': 'ConfigureHealthCheck',
+                'boto3': 'configure_health_check',
+                'cli': 'configure-health-check'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elb.ModifyLoadBalancerAttributes
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=modifyLoadBalancerAttributes\?/g)) {
+        reqParams.boto3['LoadBalancerName'] = jsonRequestBody.loadBalancerName;
+        reqParams.cli['--load-balancer-name'] = jsonRequestBody.loadBalancerName;
+        var attributes = {};
+        if (jsonRequestBody.crossZone) {
+            attributes['CrossZoneLoadBalancing'] = {
+                'Enabled': jsonRequestBody.crossZone
+            };
+        }
+        if (jsonRequestBody.connectionDraining) {
+            attributes['ConnectionDraining'] = {
+                'Enabled': jsonRequestBody.connectionDraining.enabled,
+                'Timeout': jsonRequestBody.connectionDraining.timeout
+            }
+        }
+        
+        reqParams.boto3['LoadBalancerAttributes'] = attributes;
+        reqParams.cli['--load-balancer-attributes'] = attributes;
+
+        outputs.push({
+            'region': region,
+            'service': 'elb',
+            'method': {
+                'api': 'ModifyLoadBalancerAttributes',
+                'boto3': 'modify_load_balancer_attributes',
+                'cli': 'modify-load-balancer-attributes'
+            },
+            'options': reqParams,
+            'requestId': details.requestId
+        });
+        
+        return {};
+    }
+
+    // manual:cloudwatch:logs.CreateLogGroup
+    // manual:cloudwatch:logs.CreateLogStream
+    // manual:cloudwatch:logs.PutMetricFilter
+    // manual:cloudwatch:logs.PutSubscriptionFilter
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloudwatch\/CloudWatch\//g)) {
+        if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "wuLyBG8jCdQ61w9bK2g4kaSdI4Q") {
+            reqParams.boto3['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.cli['--log-group-name'] = jsonRequestBody.I[0]["P"][0];
+
+            reqParams.cfn['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
+
+            outputs.push({
+                'region': region,
+                'service': 'logs',
+                'method': {
+                    'api': 'CreateLogGroup',
+                    'boto3': 'create_log_group',
+                    'cli': 'create-log-group'
+                },
+                'options': reqParams,
+                'requestId': details.requestId
+            });
+
+            tracked_resources.push({
+                'region': region,
+                'service': 'logs',
+                'type': 'AWS::Logs::LogGroup',
+                'options': reqParams,
+                'requestId': details.requestId,
+                'was_blocked': blocking
+            });
+        } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "bDg0Lbt_pKcqOJ8vSNZWGQW7Rfk=") {
+            reqParams.boto3['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.cli['--log-group-name'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.boto3['LogStreamName'] = jsonRequestBody.I[0]["P"][1];
+            reqParams.cli['--log-stream-name'] = jsonRequestBody.I[0]["P"][1];
+
+            reqParams.cfn['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.cfn['LogStreamName'] = jsonRequestBody.I[0]["P"][1];
+    
+            outputs.push({
+                'region': region,
+                'service': 'logs',
+                'method': {
+                    'api': 'CreateLogStream',
+                    'boto3': 'create_log_stream',
+                    'cli': 'create-log-stream'
+                },
+                'options': reqParams,
+                'requestId': details.requestId
+            });
+
+            tracked_resources.push({
+                'region': region,
+                'service': 'logs',
+                'type': 'AWS::Logs::LogStream',
+                'options': reqParams,
+                'requestId': details.requestId,
+                'was_blocked': blocking
+            });
+        } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "w3zy8wcdTk4$qD2iBc81AziNanc=") {
+            reqParams.boto3['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.cli['--log-group-name'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.boto3['FilterName'] = jsonRequestBody.I[0]["P"][1];
+            reqParams.cli['--filter-name'] = jsonRequestBody.I[0]["P"][1];
+            reqParams.boto3['FilterPattern'] = jsonRequestBody.I[0]["P"][2];
+            reqParams.cli['--filter-pattern'] = jsonRequestBody.I[0]["P"][2];
+            reqParams.boto3['MetricTransformations'] = jsonRequestBody.O[0]["P"];
+            reqParams.cli['--metric-transformations'] = jsonRequestBody.O[0]["P"];
+
+            reqParams.cfn['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.cfn['FilterPattern'] = jsonRequestBody.I[0]["P"][2];
+            reqParams.cfn['MetricTransformations'] = jsonRequestBody.O[0]["P"];
+    
+            outputs.push({
+                'region': region,
+                'service': 'logs',
+                'method': {
+                    'api': 'PutMetricFilter',
+                    'boto3': 'put_metric_filter',
+                    'cli': 'put-metric-filter'
+                },
+                'options': reqParams,
+                'requestId': details.requestId
+            });
+
+            tracked_resources.push({
+                'region': region,
+                'service': 'logs',
+                'type': 'AWS::Logs::MetricFilter',
+                'options': reqParams,
+                'requestId': details.requestId,
+                'was_blocked': blocking
+            });
+        } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "lRd9M18y9YlzeZbi97CtbWseYDE=") {
+            reqParams.boto3['DestinationArn'] = jsonRequestBody.O[0]["P"]["destinationArn"];
+            reqParams.cli['--destination-arn'] = jsonRequestBody.O[0]["P"]["destinationArn"];
+            reqParams.boto3['FilterName'] = jsonRequestBody.O[0]["P"]["filterName"];
+            reqParams.cli['--filter-name'] = jsonRequestBody.O[0]["P"]["filterName"];
+            reqParams.boto3['FilterPattern'] = jsonRequestBody.O[0]["P"]["filterPattern"];
+            reqParams.cli['--filter-pattern'] = jsonRequestBody.O[0]["P"]["filterPattern"];
+            reqParams.boto3['LogGroupName'] = jsonRequestBody.O[0]["P"]["logGroupName"];
+            reqParams.cli['--log-group-name'] = jsonRequestBody.O[0]["P"]["logGroupName"];
+            reqParams.boto3['RoleArn'] = jsonRequestBody.O[0]["P"]["roleArn"];
+            reqParams.cli['--role-arn'] = jsonRequestBody.O[0]["P"]["roleArn"];
+
+            reqParams.cfn['DestinationArn'] = jsonRequestBody.O[0]["P"]["destinationArn"];
+            reqParams.cfn['FilterPattern'] = jsonRequestBody.O[0]["P"]["filterPattern"];
+            reqParams.cfn['LogGroupName'] = jsonRequestBody.O[0]["P"]["logGroupName"];
+            reqParams.cfn['RoleArn'] = jsonRequestBody.O[0]["P"]["roleArn"];
+    
+            outputs.push({
+                'region': region,
+                'service': 'logs',
+                'method': {
+                    'api': 'PutSubscriptionFilter',
+                    'boto3': 'put_subscription_filter',
+                    'cli': 'put-subscription-filter'
+                },
+                'options': reqParams,
+                'requestId': details.requestId
+            });
+
+            tracked_resources.push({
+                'region': region,
+                'service': 'logs',
+                'type': 'AWS::Logs::SubscriptionFilter',
+                'options': reqParams,
+                'requestId': details.requestId,
+                'was_blocked': blocking
+            });
+        }
         
         return {};
     }

@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**91/258 (35.0%)** Resources Covered
+**109/258 (41.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -92,26 +92,26 @@
 | *AWS::EC2::InternetGateway* | 1 |
 | *AWS::EC2::LaunchTemplate* | 1 |
 | *AWS::EC2::NatGateway* | 1 |
-| *AWS::EC2::NetworkAcl* | 1 |
-| *AWS::EC2::NetworkAclEntry* | 0 |
+| *AWS::EC2::NetworkAcl* | 2 |
+| *AWS::EC2::NetworkAclEntry* | 1 |
 | *AWS::EC2::NetworkInterface* | 1 |
 | *AWS::EC2::NetworkInterfaceAttachment* | 0 |
 | *AWS::EC2::NetworkInterfacePermission* | 0 |
 | *AWS::EC2::PlacementGroup* | 0 |
 | *AWS::EC2::Route* | 0 |
-| *AWS::EC2::RouteTable* | 1 |
+| *AWS::EC2::RouteTable* | 2 |
 | *AWS::EC2::SecurityGroup* | 1 |
-| *AWS::EC2::SecurityGroupEgress* | 0 |
-| *AWS::EC2::SecurityGroupIngress* | 0 |
+| *AWS::EC2::SecurityGroupEgress* | 1 |
+| *AWS::EC2::SecurityGroupIngress* | 1 |
 | *AWS::EC2::SpotFleet* | 0 |
-| *AWS::EC2::Subnet* | 0 |
+| *AWS::EC2::Subnet* | 1 |
 | *AWS::EC2::SubnetCidrBlock* | 0 |
 | *AWS::EC2::SubnetNetworkAclAssociation* | 0 |
 | *AWS::EC2::SubnetRouteTableAssociation* | 0 |
 | *AWS::EC2::TrunkInterfaceAssociation* | 0 |
-| *AWS::EC2::VPC* | 1 |
-| *AWS::EC2::VPCCidrBlock* | 0 |
-| *AWS::EC2::VPCDHCPOptionsAssociation* | 0 |
+| *AWS::EC2::VPC* | 2 |
+| *AWS::EC2::VPCCidrBlock* | 1 |
+| *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 0 |
 | *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
 | *AWS::EC2::VPCEndpointService* | 0 |
@@ -145,12 +145,12 @@
 | *AWS::ElasticBeanstalk::ApplicationVersion* | 0 |
 | *AWS::ElasticBeanstalk::ConfigurationTemplate* | 0 |
 | *AWS::ElasticBeanstalk::Environment* | 0 |
-| *AWS::ElasticLoadBalancing::LoadBalancer* | 0 |
-| *AWS::ElasticLoadBalancingV2::Listener* | 0 |
+| *AWS::ElasticLoadBalancing::LoadBalancer* | 1 |
+| *AWS::ElasticLoadBalancingV2::Listener* | 1 |
 | *AWS::ElasticLoadBalancingV2::ListenerCertificate* | 0 |
-| *AWS::ElasticLoadBalancingV2::ListenerRule* | 0 |
-| *AWS::ElasticLoadBalancingV2::LoadBalancer* | 0 |
-| *AWS::ElasticLoadBalancingV2::TargetGroup* | 0 |
+| *AWS::ElasticLoadBalancingV2::ListenerRule* | 1 |
+| *AWS::ElasticLoadBalancingV2::LoadBalancer* | 1 |
+| *AWS::ElasticLoadBalancingV2::TargetGroup* | 1 |
 | *AWS::Elasticsearch::Domain* | 1 |
 | *AWS::Events::Rule* | 1 |
 | *AWS::GameLift::Alias* | 0 |
@@ -199,10 +199,10 @@
 | *AWS::Lambda::Permission* | 0 |
 | *AWS::Lambda::Version* | 1 |
 | *AWS::Logs::Destination* | 0 |
-| *AWS::Logs::LogGroup* | 0 |
-| *AWS::Logs::LogStream* | 0 |
-| *AWS::Logs::MetricFilter* | 0 |
-| *AWS::Logs::SubscriptionFilter* | 0 |
+| *AWS::Logs::LogGroup* | 1 |
+| *AWS::Logs::LogStream* | 1 |
+| *AWS::Logs::MetricFilter* | 1 |
+| *AWS::Logs::SubscriptionFilter* | 1 |
 | *AWS::OpsWorks::App* | 0 |
 | *AWS::OpsWorks::ElasticLoadBalancerAttachment* | 0 |
 | *AWS::OpsWorks::Instance* | 0 |
@@ -284,21 +284,22 @@
 | *config* | 3/43 (6.0%) |
 | *ds* | 4/49 (8.0%) |
 | *dynamodb* | 2/34 (5.0%) |
-| *ec2* | 72/274 (26.0%) |
+| *ec2* | 77/274 (28.0%) |
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
 | *elasticache* | 10/42 (23.0%) |
-| *elbv2* | 2/34 (5.0%) |
+| *elb* | 3/29 (10.0%) |
+| *elbv2* | 15/34 (44.0%) |
 | *es* | 11/21 (52.0%) |
 | *events* | 5/15 (33.0%) |
 | *firehose* | 1/10 (10.0%) |
 | *glue* | 19/84 (22.0%) |
 | *guardduty* | 21/42 (50.0%) |
-| *iam* | 23/127 (18.0%) |
+| *iam* | 24/127 (18.0%) |
 | *kinesis* | 1/28 (3.0%) |
 | *kms* | 2/35 (5.0%) |
 | *lambda* | 11/30 (36.0%) |
-| *logs* | 1/33 (3.0%) |
+| *logs* | 5/33 (15.0%) |
 | *medialive* | 4/25 (16.0%) |
 | *mq* | 6/17 (35.0%) |
 | *rds* | 22/96 (22.0%) |
@@ -309,6 +310,7 @@
 | *sqs* | 2/20 (10.0%) |
 | *ssm* | 2/108 (1.0%) |
 | *stepfunctions* | 1/19 (5.0%) |
+| *waf-regional* | 1/77 (1.0%) |
 | *workspaces* | 4/23 (17.0%) |
 
 ## Operation Coverage
@@ -317,7 +319,7 @@
 | --- | --- | --- |
 | *acm* | `ResendValidationEmail` | 0 |
 | *acm* | `AddTagsToCertificate` | 0 |
-| *acm* | `ListCertificates` | 1 |
+| *acm* | `ListCertificates` | 2 |
 | *acm* | `UpdateCertificateOptions` | 0 |
 | *acm* | `GetCertificate` | 0 |
 | *acm* | `ListTagsForCertificate` | 0 |
@@ -1258,7 +1260,7 @@
 | *config* | `DeleteRetentionConfiguration` | 0 |
 | *config* | `PutEvaluations` | 0 |
 | *config* | `DeleteConfigRule` | 0 |
-| *config* | `DescribeConfigurationRecorders` | 2 |
+| *config* | `DescribeConfigurationRecorders` | 3 |
 | *config* | `DescribeAggregationAuthorizations` | 0 |
 | *config* | `PutConfigurationRecorder` | 0 |
 | *config* | `DescribeConfigurationRecorderStatus` | 0 |
@@ -1625,22 +1627,22 @@
 | *ec2* | `DescribeCustomerGateways` | 1 |
 | *ec2* | `ReplaceIamInstanceProfileAssociation` | 0 |
 | *ec2* | `EnableVpcClassicLinkDnsSupport` | 0 |
-| *ec2* | `DescribeNetworkAcls` | 1 |
+| *ec2* | `DescribeNetworkAcls` | 2 |
 | *ec2* | `DescribeImageAttribute` | 0 |
 | *ec2* | `CancelConversionTask` | 0 |
 | *ec2* | `CancelImportTask` | 0 |
 | *ec2* | `CreateVpnConnectionRoute` | 0 |
 | *ec2* | `CreateVpcEndpointConnectionNotification` | 0 |
-| *ec2* | `DescribeRouteTables` | 2 |
+| *ec2* | `DescribeRouteTables` | 4 |
 | *ec2* | `ResetImageAttribute` | 0 |
-| *ec2* | `CreateRouteTable` | 1 |
+| *ec2* | `CreateRouteTable` | 2 |
 | *ec2* | `ReplaceRouteTableAssociation` | 0 |
 | *ec2* | `CreateVpcEndpoint` | 0 |
 | *ec2* | `RegisterImage` | 0 |
-| *ec2* | `AssociateDhcpOptions` | 0 |
+| *ec2* | `AssociateDhcpOptions` | 1 |
 | *ec2* | `ModifyVpcEndpointServicePermissions` | 0 |
 | *ec2* | `ImportKeyPair` | 1 |
-| *ec2* | `DescribeAvailabilityZones` | 4 |
+| *ec2* | `DescribeAvailabilityZones` | 5 |
 | *ec2* | `RequestSpotInstances` | 0 |
 | *ec2* | `DescribeSnapshots` | 1 |
 | *ec2* | `AcceptVpcPeeringConnection` | 0 |
@@ -1658,12 +1660,12 @@
 | *ec2* | `PurchaseHostReservation` | 0 |
 | *ec2* | `BundleInstance` | 0 |
 | *ec2* | `DescribeReservedInstances` | 0 |
-| *ec2* | `CreateNetworkAcl` | 1 |
+| *ec2* | `CreateNetworkAcl` | 2 |
 | *ec2* | `CreateImage` | 0 |
 | *ec2* | `ModifyHosts` | 0 |
 | *ec2* | `CreateFleet` | 0 |
 | *ec2* | `RebootInstances` | 0 |
-| *ec2* | `DescribeVpcEndpoints` | 1 |
+| *ec2* | `DescribeVpcEndpoints` | 2 |
 | *ec2* | `ModifyIdentityIdFormat` | 0 |
 | *ec2* | `DescribeSpotFleetRequestHistory` | 0 |
 | *ec2* | `PurchaseScheduledInstances` | 0 |
@@ -1674,20 +1676,20 @@
 | *ec2* | `CancelExportTask` | 0 |
 | *ec2* | `AcceptVpcEndpointConnections` | 0 |
 | *ec2* | `DetachVpnGateway` | 0 |
-| *ec2* | `DescribeVpcAttribute` | 1 |
+| *ec2* | `DescribeVpcAttribute` | 2 |
 | *ec2* | `CancelBundleTask` | 0 |
-| *ec2* | `DescribeNatGateways` | 1 |
+| *ec2* | `DescribeNatGateways` | 3 |
 | *ec2* | `DisassociateSubnetCidrBlock` | 0 |
 | *ec2* | `CreateVpcPeeringConnection` | 0 |
 | *ec2* | `ModifyIdFormat` | 0 |
 | *ec2* | `DescribeSpotFleetRequests` | 0 |
 | *ec2* | `AllocateHosts` | 1 |
-| *ec2* | `DeleteNetworkAcl` | 1 |
+| *ec2* | `DeleteNetworkAcl` | 2 |
 | *ec2* | `GetHostReservationPurchasePreview` | 0 |
 | *ec2* | `DeleteSecurityGroup` | 0 |
 | *ec2* | `UpdateSecurityGroupRuleDescriptionsEgress` | 0 |
 | *ec2* | `CreateSnapshot` | 0 |
-| *ec2* | `CreateSubnet` | 0 |
+| *ec2* | `CreateSubnet` | 1 |
 | *ec2* | `RequestSpotFleet` | 0 |
 | *ec2* | `ModifyImageAttribute` | 0 |
 | *ec2* | `AssociateSubnetCidrBlock` | 0 |
@@ -1696,13 +1698,13 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 10 |
+| *ec2* | `DescribeVpcs` | 12 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
 | *ec2* | `ModifyVpcEndpointConnectionNotification` | 0 |
 | *ec2* | `ModifyInstanceAttribute` | 0 |
-| *ec2* | `CreateVpc` | 1 |
+| *ec2* | `CreateVpc` | 2 |
 | *ec2* | `DescribeVpcEndpointServices` | 0 |
 | *ec2* | `CancelSpotFleetRequests` | 0 |
 | *ec2* | `UnmonitorInstances` | 0 |
@@ -1713,7 +1715,7 @@
 | *ec2* | `DescribeHostReservationOfferings` | 0 |
 | *ec2* | `DescribeVolumesModifications` | 0 |
 | *ec2* | `DescribeVpnGateways` | 1 |
-| *ec2* | `AssociateVpcCidrBlock` | 0 |
+| *ec2* | `AssociateVpcCidrBlock` | 1 |
 | *ec2* | `AssociateAddress` | 1 |
 | *ec2* | `DeleteCustomerGateway` | 1 |
 | *ec2* | `CopyFpgaImage` | 0 |
@@ -1721,10 +1723,10 @@
 | *ec2* | `CreateLaunchTemplate` | 1 |
 | *ec2* | `AttachClassicLinkVpc` | 0 |
 | *ec2* | `DescribeSpotPriceHistory` | 1 |
-| *ec2* | `DescribeDhcpOptions` | 2 |
+| *ec2* | `DescribeDhcpOptions` | 3 |
 | *ec2* | `DeleteVpcPeeringConnection` | 0 |
 | *ec2* | `DescribeFlowLogs` | 2 |
-| *ec2* | `CreateNetworkAclEntry` | 0 |
+| *ec2* | `CreateNetworkAclEntry` | 1 |
 | *ec2* | `ReleaseHosts` | 0 |
 | *ec2* | `RestoreAddressToClassic` | 0 |
 | *ec2* | `CreateNetworkInterface` | 1 |
@@ -1754,7 +1756,7 @@
 | *ec2* | `DeleteVpcEndpoints` | 0 |
 | *ec2* | `DescribeVolumeAttribute` | 0 |
 | *ec2* | `DeleteKeyPair` | 1 |
-| *ec2* | `DeleteNatGateway` | 1 |
+| *ec2* | `DeleteNatGateway` | 2 |
 | *ec2* | `UnassignIpv6Addresses` | 0 |
 | *ec2* | `ModifyInstancePlacement` | 0 |
 | *ec2* | `ReplaceNetworkAclEntry` | 0 |
@@ -1787,7 +1789,7 @@
 | *ec2* | `DescribeSnapshotAttribute` | 0 |
 | *ec2* | `PurchaseReservedInstancesOffering` | 0 |
 | *ec2* | `ModifySubnetAttribute` | 0 |
-| *ec2* | `DescribeNetworkInterfaces` | 2 |
+| *ec2* | `DescribeNetworkInterfaces` | 3 |
 | *ec2* | `DescribeLaunchTemplates` | 2 |
 | *ec2* | `ConfirmProductInstance` | 0 |
 | *ec2* | `DescribeExportTasks` | 0 |
@@ -1798,7 +1800,7 @@
 | *ec2* | `StopInstances` | 0 |
 | *ec2* | `ResetInstanceAttribute` | 0 |
 | *ec2* | `CreateSecurityGroup` | 1 |
-| *ec2* | `DescribeInternetGateways` | 1 |
+| *ec2* | `DescribeInternetGateways` | 2 |
 | *ec2* | `ModifyNetworkInterfaceAttribute` | 0 |
 | *ec2* | `AttachVolume` | 0 |
 | *ec2* | `DescribeFleetHistory` | 0 |
@@ -1806,7 +1808,7 @@
 | *ec2* | `AcceptReservedInstancesExchangeQuote` | 0 |
 | *ec2* | `DeleteSpotDatafeedSubscription` | 0 |
 | *ec2* | `DeletePlacementGroup` | 0 |
-| *ec2* | `DeleteRouteTable` | 1 |
+| *ec2* | `DeleteRouteTable` | 2 |
 | *ec2* | `DescribeFleetInstances` | 0 |
 | *ec2* | `DescribeInstanceCreditSpecifications` | 0 |
 | *ec2* | `DescribeKeyPairs` | 2 |
@@ -1843,11 +1845,11 @@
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
 | *ec2* | `DescribePlacementGroups` | 1 |
 | *ec2* | `DescribeRegions` | 1 |
-| *ec2* | `DescribeInstances` | 3 |
+| *ec2* | `DescribeInstances` | 5 |
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 10 |
+| *ec2* | `DescribeSecurityGroups` | 11 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -1858,9 +1860,9 @@
 | *ec2* | `ModifySpotFleetRequest` | 0 |
 | *ec2* | `DeleteVolume` | 0 |
 | *ec2* | `DescribeConversionTasks` | 0 |
-| *ec2* | `DescribeVpcClassicLinkDnsSupport` | 0 |
+| *ec2* | `DescribeVpcClassicLinkDnsSupport` | 1 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 9 |
+| *ec2* | `DescribeSubnets` | 12 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -1889,7 +1891,7 @@
 | *ec2* | `CreateReservedInstancesListing` | 0 |
 | *ec2* | `DeleteNetworkInterfacePermission` | 0 |
 | *ec2* | `DescribeHostReservations` | 0 |
-| *ec2* | `DescribeEgressOnlyInternetGateways` | 1 |
+| *ec2* | `DescribeEgressOnlyInternetGateways` | 2 |
 | *ec2* | `DescribeAggregateIdFormat` | 0 |
 | *ec2* | `ModifyVolume` | 0 |
 | *ec2* | `RunScheduledInstances` | 0 |
@@ -2083,52 +2085,52 @@
 | *elb* | `DescribeLoadBalancerPolicyTypes` | 0 |
 | *elb* | `ApplySecurityGroupsToLoadBalancer` | 0 |
 | *elb* | `DescribeTags` | 0 |
-| *elb* | `ConfigureHealthCheck` | 0 |
+| *elb* | `ConfigureHealthCheck` | 1 |
 | *elb* | `AttachLoadBalancerToSubnets` | 0 |
 | *elb* | `SetLoadBalancerListenerSSLCertificate` | 0 |
 | *elb* | `DetachLoadBalancerFromSubnets` | 0 |
 | *elb* | `DeregisterInstancesFromLoadBalancer` | 0 |
 | *elb* | `RegisterInstancesWithLoadBalancer` | 0 |
 | *elb* | `AddTags` | 0 |
-| *elb* | `ModifyLoadBalancerAttributes` | 0 |
+| *elb* | `ModifyLoadBalancerAttributes` | 1 |
 | *elb* | `CreateLoadBalancerListeners` | 0 |
-| *elb* | `CreateLoadBalancer` | 0 |
+| *elb* | `CreateLoadBalancer` | 1 |
 | *elb* | `DescribeAccountLimits` | 0 |
 | *elb* | `DisableAvailabilityZonesForLoadBalancer` | 0 |
 | *elbv2* | `RegisterTargets` | 0 |
-| *elbv2* | `DescribeSSLPolicies` | 0 |
+| *elbv2* | `DescribeSSLPolicies` | 1 |
 | *elbv2* | `SetSecurityGroups` | 0 |
 | *elbv2* | `AddListenerCertificates` | 0 |
-| *elbv2* | `DeleteListener` | 0 |
+| *elbv2* | `DeleteListener` | 1 |
 | *elbv2* | `ModifyTargetGroup` | 0 |
-| *elbv2* | `CreateRule` | 0 |
+| *elbv2* | `CreateRule` | 1 |
 | *elbv2* | `SetRulePriorities` | 0 |
 | *elbv2* | `ModifyTargetGroupAttributes` | 0 |
-| *elbv2* | `DescribeLoadBalancerAttributes` | 0 |
+| *elbv2* | `DescribeLoadBalancerAttributes` | 1 |
 | *elbv2* | `SetIpAddressType` | 0 |
 | *elbv2* | `RemoveListenerCertificates` | 0 |
 | *elbv2* | `ModifyListener` | 0 |
-| *elbv2* | `DeleteLoadBalancer` | 0 |
-| *elbv2* | `DeleteRule` | 0 |
-| *elbv2* | `DeleteTargetGroup` | 0 |
+| *elbv2* | `DeleteLoadBalancer` | 1 |
+| *elbv2* | `DeleteRule` | 1 |
+| *elbv2* | `DeleteTargetGroup` | 1 |
 | *elbv2* | `DescribeTargetGroupAttributes` | 0 |
-| *elbv2* | `DescribeLoadBalancers` | 1 |
-| *elbv2* | `DescribeListeners` | 0 |
+| *elbv2* | `DescribeLoadBalancers` | 3 |
+| *elbv2* | `DescribeListeners` | 1 |
 | *elbv2* | `RemoveTags` | 0 |
-| *elbv2* | `CreateListener` | 0 |
+| *elbv2* | `CreateListener` | 1 |
 | *elbv2* | `SetSubnets` | 0 |
 | *elbv2* | `DescribeTags` | 0 |
 | *elbv2* | `ModifyRule` | 0 |
-| *elbv2* | `CreateTargetGroup` | 0 |
+| *elbv2* | `CreateTargetGroup` | 1 |
 | *elbv2* | `AddTags` | 0 |
 | *elbv2* | `DescribeTargetGroups` | 1 |
 | *elbv2* | `DeregisterTargets` | 0 |
 | *elbv2* | `ModifyLoadBalancerAttributes` | 0 |
-| *elbv2* | `DescribeRules` | 0 |
+| *elbv2* | `DescribeRules` | 1 |
 | *elbv2* | `DescribeListenerCertificates` | 0 |
 | *elbv2* | `DescribeTargetHealth` | 0 |
-| *elbv2* | `CreateLoadBalancer` | 0 |
-| *elbv2* | `DescribeAccountLimits` | 0 |
+| *elbv2* | `CreateLoadBalancer` | 1 |
+| *elbv2* | `DescribeAccountLimits` | 1 |
 | *emr* | `CancelSteps` | 0 |
 | *emr* | `RemoveAutoScalingPolicy` | 0 |
 | *emr* | `CreateSecurityConfiguration` | 0 |
@@ -2579,7 +2581,7 @@
 | *iam* | `AttachUserPolicy` | 1 |
 | *iam* | `ListVirtualMFADevices` | 0 |
 | *iam* | `UpdateAssumeRolePolicy` | 0 |
-| *iam* | `ListServerCertificates` | 0 |
+| *iam* | `ListServerCertificates` | 1 |
 | *iam* | `DeleteGroup` | 0 |
 | *iam* | `UpdateOpenIDConnectProviderThumbprint` | 0 |
 | *iam* | `CreateGroup` | 0 |
@@ -3150,9 +3152,9 @@
 | *logs* | `DeleteLogGroup` | 0 |
 | *logs* | `DescribeMetricFilters` | 0 |
 | *logs* | `FilterLogEvents` | 0 |
-| *logs* | `CreateLogGroup` | 0 |
+| *logs* | `CreateLogGroup` | 1 |
 | *logs* | `DeleteSubscriptionFilter` | 0 |
-| *logs* | `PutMetricFilter` | 0 |
+| *logs* | `PutMetricFilter` | 1 |
 | *logs* | `DeleteResourcePolicy` | 0 |
 | *logs* | `PutLogEvents` | 0 |
 | *logs* | `DescribeLogGroups` | 1 |
@@ -3162,10 +3164,10 @@
 | *logs* | `DescribeSubscriptionFilters` | 0 |
 | *logs* | `DescribeExportTasks` | 0 |
 | *logs* | `TagLogGroup` | 0 |
-| *logs* | `PutSubscriptionFilter` | 0 |
+| *logs* | `PutSubscriptionFilter` | 1 |
 | *logs* | `DeleteMetricFilter` | 0 |
 | *logs* | `PutDestinationPolicy` | 0 |
-| *logs* | `CreateLogStream` | 0 |
+| *logs* | `CreateLogStream` | 1 |
 | *logs* | `CancelExportTask` | 0 |
 | *logs* | `UntagLogGroup` | 0 |
 | *logs* | `DisassociateKmsKey` | 0 |
@@ -4749,7 +4751,7 @@
 | *waf-regional* | `CreateRuleGroup` | 0 |
 | *waf-regional* | `GetRule` | 0 |
 | *waf-regional* | `DeleteSizeConstraintSet` | 0 |
-| *waf-regional* | `GetWebACLForResource` | 0 |
+| *waf-regional* | `GetWebACLForResource` | 1 |
 | *waf-regional* | `UpdateSizeConstraintSet` | 0 |
 | *waf-regional* | `ListActivatedRulesInRuleGroup` | 0 |
 | *waf-regional* | `ListResourcesForWebACL` | 0 |
@@ -4879,4 +4881,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 400 (8.0%)**
+**Total Unique Occurances: 427 (9.0%)**

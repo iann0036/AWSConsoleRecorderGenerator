@@ -13,7 +13,9 @@ cfn_occurances = [
     "AWS::CloudFormation::CustomResource",
     "AWS::CloudFormation::WaitCondition",
     "AWS::CloudFormation::WaitConditionHandle",
-    "AWS::SDB::Domain"
+    "AWS::SDB::Domain",
+    "AWS::EC2::SecurityGroupEgress",
+    "AWS::EC2::SecurityGroupIngress"
 ]
 
 with open("combined.json", "r") as f:
