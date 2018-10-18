@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**113/258 (42.0%)** Resources Covered
+**126/258 (46.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -100,7 +100,7 @@
 | *AWS::EC2::PlacementGroup* | 0 |
 | *AWS::EC2::Route* | 0 |
 | *AWS::EC2::RouteTable* | 2 |
-| *AWS::EC2::SecurityGroup* | 1 |
+| *AWS::EC2::SecurityGroup* | 2 |
 | *AWS::EC2::SecurityGroupEgress* | 1 |
 | *AWS::EC2::SecurityGroupIngress* | 1 |
 | *AWS::EC2::SpotFleet* | 0 |
@@ -203,13 +203,13 @@
 | *AWS::Logs::LogStream* | 1 |
 | *AWS::Logs::MetricFilter* | 1 |
 | *AWS::Logs::SubscriptionFilter* | 1 |
-| *AWS::OpsWorks::App* | 0 |
-| *AWS::OpsWorks::ElasticLoadBalancerAttachment* | 0 |
-| *AWS::OpsWorks::Instance* | 0 |
-| *AWS::OpsWorks::Layer* | 0 |
-| *AWS::OpsWorks::Stack* | 0 |
-| *AWS::OpsWorks::UserProfile* | 0 |
-| *AWS::OpsWorks::Volume* | 0 |
+| *AWS::OpsWorks::App* | 1 |
+| *AWS::OpsWorks::ElasticLoadBalancerAttachment* | 1 |
+| *AWS::OpsWorks::Instance* | 1 |
+| *AWS::OpsWorks::Layer* | 1 |
+| *AWS::OpsWorks::Stack* | 1 |
+| *AWS::OpsWorks::UserProfile* | 1 |
+| *AWS::OpsWorks::Volume* | 1 |
 | *AWS::RDS::DBCluster* | 0 |
 | *AWS::RDS::DBClusterParameterGroup* | 1 |
 | *AWS::RDS::DBInstance* | 1 |
@@ -219,11 +219,11 @@
 | *AWS::RDS::DBSubnetGroup* | 1 |
 | *AWS::RDS::EventSubscription* | 1 |
 | *AWS::RDS::OptionGroup* | 1 |
-| *AWS::Redshift::Cluster* | 0 |
-| *AWS::Redshift::ClusterParameterGroup* | 0 |
-| *AWS::Redshift::ClusterSecurityGroup* | 0 |
-| *AWS::Redshift::ClusterSecurityGroupIngress* | 0 |
-| *AWS::Redshift::ClusterSubnetGroup* | 0 |
+| *AWS::Redshift::Cluster* | 1 |
+| *AWS::Redshift::ClusterParameterGroup* | 1 |
+| *AWS::Redshift::ClusterSecurityGroup* | 1 |
+| *AWS::Redshift::ClusterSecurityGroupIngress* | 1 |
+| *AWS::Redshift::ClusterSubnetGroup* | 1 |
 | *AWS::Route53::HealthCheck* | 0 |
 | *AWS::Route53::HostedZone* | 2 |
 | *AWS::Route53::RecordSet* | 0 |
@@ -288,7 +288,7 @@
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
 | *elasticache* | 10/42 (23.0%) |
-| *elb* | 3/29 (10.0%) |
+| *elb* | 4/29 (13.0%) |
 | *elbv2* | 15/34 (44.0%) |
 | *es* | 11/21 (52.0%) |
 | *events* | 5/15 (33.0%) |
@@ -302,7 +302,9 @@
 | *logs* | 5/33 (15.0%) |
 | *medialive* | 4/25 (16.0%) |
 | *mq* | 6/17 (35.0%) |
+| *opsworks* | 16/74 (21.0%) |
 | *rds* | 22/96 (22.0%) |
+| *redshift* | 5/69 (7.0%) |
 | *rekognition* | 3/34 (8.0%) |
 | *route53* | 6/56 (10.0%) |
 | *s3* | 23/78 (29.0%) |
@@ -1643,7 +1645,7 @@
 | *ec2* | `AssociateDhcpOptions` | 1 |
 | *ec2* | `ModifyVpcEndpointServicePermissions` | 0 |
 | *ec2* | `ImportKeyPair` | 1 |
-| *ec2* | `DescribeAvailabilityZones` | 5 |
+| *ec2* | `DescribeAvailabilityZones` | 6 |
 | *ec2* | `RequestSpotInstances` | 0 |
 | *ec2* | `DescribeSnapshots` | 1 |
 | *ec2* | `AcceptVpcPeeringConnection` | 0 |
@@ -1655,7 +1657,7 @@
 | *ec2* | `AttachVpnGateway` | 0 |
 | *ec2* | `DeleteLaunchTemplate` | 0 |
 | *ec2* | `ImportImage` | 0 |
-| *ec2* | `DescribeAddresses` | 2 |
+| *ec2* | `DescribeAddresses` | 3 |
 | *ec2* | `DisassociateIamInstanceProfile` | 0 |
 | *ec2* | `AssociateIamInstanceProfile` | 0 |
 | *ec2* | `PurchaseHostReservation` | 0 |
@@ -1699,7 +1701,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 12 |
+| *ec2* | `DescribeVpcs` | 14 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1850,7 +1852,7 @@
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 11 |
+| *ec2* | `DescribeSecurityGroups` | 12 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -1863,7 +1865,7 @@
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 1 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 12 |
+| *ec2* | `DescribeSubnets` | 13 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -2074,7 +2076,7 @@
 | *elb* | `SetLoadBalancerPoliciesOfListener` | 0 |
 | *elb* | `DescribeLoadBalancerAttributes` | 0 |
 | *elb* | `DeleteLoadBalancerListeners` | 0 |
-| *elb* | `DeleteLoadBalancer` | 0 |
+| *elb* | `DeleteLoadBalancer` | 1 |
 | *elb* | `CreateLoadBalancerPolicy` | 0 |
 | *elb* | `DeleteLoadBalancerPolicy` | 0 |
 | *elb* | `CreateLBCookieStickinessPolicy` | 0 |
@@ -3441,17 +3443,17 @@
 | *opsworks* | `StartStack` | 0 |
 | *opsworks* | `UnassignInstance` | 0 |
 | *opsworks* | `DisassociateElasticIp` | 0 |
-| *opsworks* | `CreateUserProfile` | 0 |
-| *opsworks* | `AttachElasticLoadBalancer` | 0 |
+| *opsworks* | `CreateUserProfile` | 1 |
+| *opsworks* | `AttachElasticLoadBalancer` | 1 |
 | *opsworks* | `RegisterEcsCluster` | 0 |
-| *opsworks* | `DescribeLayers` | 0 |
+| *opsworks* | `DescribeLayers` | 1 |
 | *opsworks* | `UpdateElasticIp` | 0 |
-| *opsworks* | `DeleteInstance` | 0 |
-| *opsworks* | `DetachElasticLoadBalancer` | 0 |
+| *opsworks* | `DeleteInstance` | 1 |
+| *opsworks* | `DetachElasticLoadBalancer` | 1 |
 | *opsworks* | `CreateDeployment` | 0 |
 | *opsworks* | `UnassignVolume` | 0 |
 | *opsworks* | `DeleteUserProfile` | 0 |
-| *opsworks* | `CreateStack` | 0 |
+| *opsworks* | `CreateStack` | 1 |
 | *opsworks* | `UpdateRdsDbInstance` | 0 |
 | *opsworks* | `GetHostnameSuggestion` | 0 |
 | *opsworks* | `DescribeInstances` | 0 |
@@ -3465,21 +3467,21 @@
 | *opsworks* | `UpdateVolume` | 0 |
 | *opsworks* | `StartInstance` | 0 |
 | *opsworks* | `UpdateMyUserProfile` | 0 |
-| *opsworks* | `DeleteApp` | 0 |
+| *opsworks* | `DeleteApp` | 1 |
 | *opsworks* | `UpdateInstance` | 0 |
 | *opsworks* | `RegisterElasticIp` | 0 |
 | *opsworks* | `TagResource` | 0 |
 | *opsworks* | `DeregisterRdsDbInstance` | 0 |
 | *opsworks* | `DescribeRaidArrays` | 0 |
-| *opsworks* | `RegisterVolume` | 0 |
+| *opsworks* | `RegisterVolume` | 1 |
 | *opsworks* | `SetPermission` | 0 |
 | *opsworks* | `DescribeDeployments` | 0 |
 | *opsworks* | `ListTags` | 0 |
 | *opsworks* | `CloneStack` | 0 |
 | *opsworks* | `DescribeServiceErrors` | 0 |
 | *opsworks* | `AssociateElasticIp` | 0 |
-| *opsworks* | `CreateInstance` | 0 |
-| *opsworks* | `DescribeElasticLoadBalancers` | 0 |
+| *opsworks* | `CreateInstance` | 1 |
+| *opsworks* | `DescribeElasticLoadBalancers` | 1 |
 | *opsworks* | `DescribeOperatingSystems` | 0 |
 | *opsworks* | `DeregisterEcsCluster` | 0 |
 | *opsworks* | `DescribeEcsClusters` | 0 |
@@ -3491,23 +3493,23 @@
 | *opsworks* | `DescribeStackSummary` | 0 |
 | *opsworks* | `StopInstance` | 0 |
 | *opsworks* | `DescribeStacks` | 0 |
-| *opsworks* | `CreateLayer` | 0 |
+| *opsworks* | `CreateLayer` | 1 |
 | *opsworks* | `UpdateStack` | 0 |
 | *opsworks* | `GrantAccess` | 0 |
-| *opsworks* | `CreateApp` | 0 |
+| *opsworks* | `CreateApp` | 1 |
 | *opsworks* | `UntagResource` | 0 |
 | *opsworks* | `DescribePermissions` | 0 |
-| *opsworks* | `DeleteLayer` | 0 |
-| *opsworks* | `DescribeVolumes` | 0 |
+| *opsworks* | `DeleteLayer` | 1 |
+| *opsworks* | `DescribeVolumes` | 1 |
 | *opsworks* | `DescribeStackProvisioningParameters` | 0 |
 | *opsworks* | `RegisterInstance` | 0 |
-| *opsworks* | `DeleteStack` | 0 |
+| *opsworks* | `DeleteStack` | 1 |
 | *opsworks* | `AssignVolume` | 0 |
 | *opsworks* | `UpdateApp` | 0 |
 | *opsworks* | `DescribeRdsDbInstances` | 0 |
 | *opsworks* | `UpdateUserProfile` | 0 |
 | *opsworks* | `DescribeUserProfiles` | 0 |
-| *opsworks* | `UpdateLayer` | 0 |
+| *opsworks* | `UpdateLayer` | 1 |
 | *opsworkscm* | `DescribeServers` | 0 |
 | *opsworkscm* | `DescribeNodeAssociationStatus` | 0 |
 | *opsworkscm* | `DeleteServer` | 0 |
@@ -3749,9 +3751,9 @@
 | *rds* | `RemoveSourceIdentifierFromSubscription` | 0 |
 | *redshift* | `DeleteTags` | 0 |
 | *redshift* | `DescribeDefaultClusterParameters` | 0 |
-| *redshift* | `DescribeClusterParameterGroups` | 0 |
+| *redshift* | `DescribeClusterParameterGroups` | 1 |
 | *redshift* | `RestoreFromClusterSnapshot` | 0 |
-| *redshift* | `CreateCluster` | 0 |
+| *redshift* | `CreateCluster` | 1 |
 | *redshift* | `CopyClusterSnapshot` | 0 |
 | *redshift* | `CreateClusterSecurityGroup` | 0 |
 | *redshift* | `DescribeEvents` | 0 |
@@ -3780,17 +3782,17 @@
 | *redshift* | `DeleteClusterSecurityGroup` | 0 |
 | *redshift* | `ModifyClusterParameterGroup` | 0 |
 | *redshift* | `DescribeClusterSnapshots` | 0 |
-| *redshift* | `CreateClusterParameterGroup` | 0 |
+| *redshift* | `CreateClusterParameterGroup` | 1 |
 | *redshift* | `DisableLogging` | 0 |
 | *redshift* | `DescribeClusterVersions` | 0 |
 | *redshift* | `DescribeResize` | 0 |
-| *redshift* | `DescribeClusterSubnetGroups` | 0 |
+| *redshift* | `DescribeClusterSubnetGroups` | 1 |
 | *redshift* | `AuthorizeClusterSecurityGroupIngress` | 0 |
 | *redshift* | `DescribeHsmConfigurations` | 0 |
 | *redshift* | `DeleteEventSubscription` | 0 |
 | *redshift* | `DescribeTags` | 0 |
 | *redshift* | `DeleteHsmConfiguration` | 0 |
-| *redshift* | `CreateClusterSubnetGroup` | 0 |
+| *redshift* | `CreateClusterSubnetGroup` | 1 |
 | *redshift* | `ResizeCluster` | 0 |
 | *redshift* | `ModifyClusterDbRevision` | 0 |
 | *redshift* | `DescribeClusterParameters` | 0 |
@@ -4340,7 +4342,7 @@
 | *sns* | `Subscribe` | 1 |
 | *sns* | `DeleteTopic` | 1 |
 | *sns* | `OptInPhoneNumber` | 0 |
-| *sns* | `ListTopics` | 6 |
+| *sns* | `ListTopics` | 7 |
 | *sqs* | `CreateQueue` | 1 |
 | *sqs* | `GetQueueAttributes` | 1 |
 | *sqs* | `SetQueueAttributes` | 1 |
@@ -4882,4 +4884,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 436 (9.0%)**
+**Total Unique Occurances: 458 (10.0%)**

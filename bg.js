@@ -181,6 +181,8 @@ function getPipeSplitField(str, index) {
     return parseInt(result);
 }
 
+function getResourceName(service, reqId) {;}
+
 /********/
 
 var outputs = [];
@@ -232,8 +234,6 @@ function analyseRequest(details) {
             }
         }
     } catch(e) {;}
-
-    //--EC2--//
     
     // manual:ec2:ec2.DescribeInstances
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call\=getMergedInstanceList\?/g)) {
@@ -258,7 +258,7 @@ function analyseRequest(details) {
                 'cli': 'describe-instances'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -298,7 +298,7 @@ function analyseRequest(details) {
                 'cli': 'describe-images'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -316,7 +316,7 @@ function analyseRequest(details) {
                 'cli': 'describe-images'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -333,7 +333,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpcs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -350,7 +350,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -378,7 +378,7 @@ function analyseRequest(details) {
                 'cli': 'describe-hosts'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -395,7 +395,7 @@ function analyseRequest(details) {
                 'cli': 'list-instance-profiles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -412,7 +412,7 @@ function analyseRequest(details) {
                 'cli': 'describe-network-interfaces'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -429,7 +429,7 @@ function analyseRequest(details) {
                 'cli': 'describe-availability-zones'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -446,7 +446,7 @@ function analyseRequest(details) {
                 'cli': 'describe-security-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -463,7 +463,7 @@ function analyseRequest(details) {
                 'cli': 'describe-key-pairs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -492,16 +492,17 @@ function analyseRequest(details) {
                 'cli': 'create-security-group'
             },
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::SecurityGroup',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
 
@@ -563,7 +564,7 @@ function analyseRequest(details) {
                 'cli': 'authorize-security-group-ingress'
             },
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
 
@@ -636,6 +637,20 @@ function analyseRequest(details) {
             reqParams.cli['--no-ebs-optimized'] = null;
         reqParams.cli['--block-device-mappings'] = jsonRequestBody.BlockDeviceMappings;
 
+        for (var i=0; i<tracked_resources.length; i++) { // example correlation
+            if (tracked_resources[i].type == "AWS::EC2::SecurityGroup" && tracked_resources[i].returnValues) {
+                var securityGroupIds = [];
+                for (var j=0; j<reqParams.cfn['SecurityGroupIds'].length; j++) {
+                    if (reqParams.cfn['SecurityGroupIds'][j] == tracked_resources[i].returnValues.Ref) {
+                        securityGroupIds[j] = "!Ref " + tracked_resources[i].logicalId;
+                    } else {
+                        securityGroupIds[j] = reqParams.cfn['SecurityGroupIds'][j];
+                    }
+                }
+                reqParams.cfn['SecurityGroupIds'] = securityGroupIds;
+            }
+        }
+
         outputs.push({
             'region': region,
             'service': 'ec2',
@@ -645,16 +660,17 @@ function analyseRequest(details) {
                 'cli': 'run-instances'
             },
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::Instance',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
 
@@ -680,7 +696,7 @@ function analyseRequest(details) {
                 'cli': 'terminate-instances'
             },
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
 
@@ -703,7 +719,7 @@ function analyseRequest(details) {
                 'cli': 'describe-launch-templates'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -720,7 +736,7 @@ function analyseRequest(details) {
                 'cli': 'describe-directories'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -737,7 +753,7 @@ function analyseRequest(details) {
                 'cli': 'describe-placement-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -754,7 +770,7 @@ function analyseRequest(details) {
                 'cli': 'describe-spot-price-history'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -803,7 +819,7 @@ function analyseRequest(details) {
                 'cli': 'describe-tags'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -825,7 +841,7 @@ function analyseRequest(details) {
                 'cli': 'describe-instance-attribute'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -849,15 +865,16 @@ function analyseRequest(details) {
                 'cli': 'create-bucket'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('s3', details.requestId),
             'region': region,
             'service': 's3',
             'type': 'AWS::S3::Bucket',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
 
@@ -880,7 +897,7 @@ function analyseRequest(details) {
                 'cli': 'put-bucket-versioning'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -902,7 +919,7 @@ function analyseRequest(details) {
                 'cli': 'put-bucket-metrics-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -924,7 +941,7 @@ function analyseRequest(details) {
                 'cli': 'put-bucket-tagging'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -946,7 +963,7 @@ function analyseRequest(details) {
                 'cli': 'put-bucket-acl'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -968,7 +985,7 @@ function analyseRequest(details) {
                 'cli': 'put-bucket-logging'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -989,7 +1006,7 @@ function analyseRequest(details) {
                 'cli': 'delete-bucket'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1012,7 +1029,7 @@ function analyseRequest(details) {
                 'cli': 'ls'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1033,7 +1050,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-versioning'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1054,7 +1071,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-logging'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1075,7 +1092,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-tagging'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1096,7 +1113,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-notification-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1117,7 +1134,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-website'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1138,7 +1155,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-request-payment'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1159,7 +1176,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-accelerate-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1180,7 +1197,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-encryption'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1201,7 +1218,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-replication'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1222,7 +1239,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-metrics-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1243,7 +1260,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-analytics-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1264,7 +1281,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-lifecycle-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1285,7 +1302,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-cors'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1306,7 +1323,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-policy'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1327,7 +1344,7 @@ function analyseRequest(details) {
                 'cli': 'get-bucket-acl'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1344,7 +1361,7 @@ function analyseRequest(details) {
                 'cli': 'ls'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1370,7 +1387,7 @@ function analyseRequest(details) {
                 'cli': 'describe-trails'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         return {};
@@ -1394,7 +1411,7 @@ function analyseRequest(details) {
                 'cli': 'describe-environment-memberships'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1414,7 +1431,7 @@ function analyseRequest(details) {
                 'cli': 'describe-environments'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1434,7 +1451,7 @@ function analyseRequest(details) {
                 'cli': 'list-environments'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1458,7 +1475,7 @@ function analyseRequest(details) {
                 'cli': 'update-environment'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1476,7 +1493,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpcs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1494,7 +1511,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1524,7 +1541,7 @@ function analyseRequest(details) {
                 'cli': 'create-environment-ec2'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1544,7 +1561,7 @@ function analyseRequest(details) {
                 'cli': 'delete-environment'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1562,7 +1579,7 @@ function analyseRequest(details) {
                 'cli': 'list-input-security-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1580,7 +1597,7 @@ function analyseRequest(details) {
                 'cli': 'list-channels'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1600,7 +1617,7 @@ function analyseRequest(details) {
                 'cli': 'create-input-security-group'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1620,7 +1637,7 @@ function analyseRequest(details) {
                 'cli': 'get-parameters-by-path'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1638,7 +1655,7 @@ function analyseRequest(details) {
                 'cli': 'list-roles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1656,7 +1673,7 @@ function analyseRequest(details) {
                 'cli': 'get-role-policy'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1690,7 +1707,7 @@ function analyseRequest(details) {
                 'cli': 'create-channel'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1708,7 +1725,7 @@ function analyseRequest(details) {
                 'cli': 'describe-file-systems'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1726,7 +1743,7 @@ function analyseRequest(details) {
                 'cli': 'list-keys'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1746,7 +1763,7 @@ function analyseRequest(details) {
                 'cli': 'describe-key'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1780,15 +1797,16 @@ function analyseRequest(details) {
                 'cli': 'create-file-system'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('efs', details.requestId),
             'region': region,
             'service': 'efs',
             'type': 'AWS::EFS::FileSystem',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -1817,15 +1835,16 @@ function analyseRequest(details) {
                 'cli': 'create-mount-target'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('efs', details.requestId),
             'region': region,
             'service': 'efs',
             'type': 'AWS::EFS::MountTarget',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -1846,7 +1865,7 @@ function analyseRequest(details) {
                 'cli': 'describe-mount-targets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1866,7 +1885,7 @@ function analyseRequest(details) {
                 'cli': 'describe-tags'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1890,7 +1909,7 @@ function analyseRequest(details) {
                 'cli': 'update-file-system'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1910,7 +1929,7 @@ function analyseRequest(details) {
                 'cli': 'delete-mount-target'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1930,7 +1949,7 @@ function analyseRequest(details) {
                 'cli': 'delete-file-system'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1950,7 +1969,7 @@ function analyseRequest(details) {
                 'cli': 'get-event-selectors'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1970,7 +1989,7 @@ function analyseRequest(details) {
                 'cli': 'describe-trails'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -1992,7 +2011,7 @@ function analyseRequest(details) {
                 'cli': 'lookup-events'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2010,7 +2029,7 @@ function analyseRequest(details) {
                 'cli': 'list-topics'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2028,7 +2047,7 @@ function analyseRequest(details) {
                 'cli': 'list-functions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2071,15 +2090,16 @@ function analyseRequest(details) {
                 'cli': 'create-trail'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('cloudtrail', details.requestId),
             'region': region,
             'service': 'cloudtrail',
             'type': 'AWS::CloudTrail::Trail',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -2100,7 +2120,7 @@ function analyseRequest(details) {
                 'cli': 'get-trail-status'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2120,7 +2140,7 @@ function analyseRequest(details) {
                 'cli': 'list-tags'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2138,7 +2158,7 @@ function analyseRequest(details) {
                 'cli': 'describe-pending-aggregation-requests'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2156,7 +2176,7 @@ function analyseRequest(details) {
                 'cli': 'describe-configuration-recorders'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2174,7 +2194,7 @@ function analyseRequest(details) {
                 'cli': 'describe-delivery-channels'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2192,7 +2212,7 @@ function analyseRequest(details) {
                 'cli': 'list-roles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2210,7 +2230,7 @@ function analyseRequest(details) {
                 'cli': 'list-buckets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2228,7 +2248,7 @@ function analyseRequest(details) {
                 'cli': 'list-topics'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2248,7 +2268,7 @@ function analyseRequest(details) {
                 'cli': 'create-service-linked-role'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2268,7 +2288,7 @@ function analyseRequest(details) {
                 'cli': 'create-bucket'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2286,7 +2306,7 @@ function analyseRequest(details) {
                 'cli': 'list-detectors'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2304,7 +2324,7 @@ function analyseRequest(details) {
                 'cli': 'get-invitations-count'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2326,15 +2346,16 @@ function analyseRequest(details) {
                 'cli': 'create-detector'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('guardduty', details.requestId),
             'region': region,
             'service': 'guardduty',
             'type': 'AWS::GuardDuty::Detector',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -2361,7 +2382,7 @@ function analyseRequest(details) {
                 'cli': 'list-findings'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2379,7 +2400,7 @@ function analyseRequest(details) {
                 'cli': 'get-master-account'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2399,7 +2420,7 @@ function analyseRequest(details) {
                 'cli': 'list-members'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2419,7 +2440,7 @@ function analyseRequest(details) {
                 'cli': 'get-detector'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2443,7 +2464,7 @@ function analyseRequest(details) {
                 'cli': 'get-findings-statistics'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2463,7 +2484,7 @@ function analyseRequest(details) {
                 'cli': 'list-filters'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2489,15 +2510,16 @@ function analyseRequest(details) {
                 'cli': 'create-members'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('guardduty', details.requestId),
             'region': region,
             'service': 'guardduty',
             'type': 'AWS::GuardDuty::Member',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -2520,7 +2542,7 @@ function analyseRequest(details) {
                 'cli': 'delete-members'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2542,7 +2564,7 @@ function analyseRequest(details) {
                 'cli': 'list-ip-sets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2564,7 +2586,7 @@ function analyseRequest(details) {
                 'cli': 'list-threat-intel-sets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2584,7 +2606,7 @@ function analyseRequest(details) {
                 'cli': 'list-policy-versions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2618,15 +2640,16 @@ function analyseRequest(details) {
                 'cli': 'create-ip-set'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('guardduty', details.requestId),
             'region': region,
             'service': 'guardduty',
             'type': 'AWS::GuardDuty::IPSet',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -2649,7 +2672,7 @@ function analyseRequest(details) {
                 'cli': 'list-ip-sets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2671,7 +2694,7 @@ function analyseRequest(details) {
                 'cli': 'get-ip-set'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2695,7 +2718,7 @@ function analyseRequest(details) {
                 'cli': 'update-ip-set'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2717,7 +2740,7 @@ function analyseRequest(details) {
                 'cli': 'archive-findings'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2739,7 +2762,7 @@ function analyseRequest(details) {
                 'cli': 'unarchive-findings'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2763,7 +2786,7 @@ function analyseRequest(details) {
                 'cli': 'get-findings'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2783,7 +2806,7 @@ function analyseRequest(details) {
                 'cli': 'list-attached-role-policies'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2803,7 +2826,7 @@ function analyseRequest(details) {
                 'cli': 'create-sample-findings'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2827,7 +2850,7 @@ function analyseRequest(details) {
                 'cli': 'update-detector'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2851,7 +2874,7 @@ function analyseRequest(details) {
                     'cli': 'create-tags'
                 },
                 'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
             });
         }
         if (jsonRequestBody.removeKeys.length) {
@@ -2867,7 +2890,7 @@ function analyseRequest(details) {
                     'cli': 'delete-tags'
                 },
                 'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
             });
         }
         
@@ -2890,7 +2913,7 @@ function analyseRequest(details) {
                 'cli': 'modify-mount-target-security-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2910,7 +2933,7 @@ function analyseRequest(details) {
                 'cli': 'list-brokers'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2928,7 +2951,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpcs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2950,7 +2973,7 @@ function analyseRequest(details) {
                 'cli': 'list-configurations'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2968,7 +2991,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -2986,7 +3009,7 @@ function analyseRequest(details) {
                 'cli': 'describe-security-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3044,15 +3067,16 @@ function analyseRequest(details) {
                 'cli': 'create-broker'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('mq', details.requestId),
             'region': region,
             'service': 'mq',
             'type': 'AWS::AmazonMQ::Broker',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -3081,15 +3105,16 @@ function analyseRequest(details) {
                 'cli': 'create-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('mq', details.requestId),
             'region': region,
             'service': 'mq',
             'type': 'AWS::AmazonMQ::Configuration',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -3110,7 +3135,7 @@ function analyseRequest(details) {
                 'cli': 'describe-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3132,7 +3157,7 @@ function analyseRequest(details) {
                 'cli': 'describe-configuration-revision'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3154,7 +3179,7 @@ function analyseRequest(details) {
                 'cli': 'describe-launch-template-versions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3172,7 +3197,7 @@ function analyseRequest(details) {
                 'cli': 'describe-key-pairs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3190,7 +3215,7 @@ function analyseRequest(details) {
                 'cli': 'describe-availability-zones'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3208,7 +3233,7 @@ function analyseRequest(details) {
                 'cli': 'describe-hosts'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3226,7 +3251,7 @@ function analyseRequest(details) {
                 'cli': 'describe-security-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3244,7 +3269,7 @@ function analyseRequest(details) {
                 'cli': 'describe-snapshots'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3262,7 +3287,7 @@ function analyseRequest(details) {
                 'cli': 'describe-volumes'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3280,7 +3305,7 @@ function analyseRequest(details) {
                 'cli': 'describe-tags'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3309,15 +3334,16 @@ function analyseRequest(details) {
                 'cli': 'create-launch-template'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::LaunchTemplate',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -3341,7 +3367,7 @@ function analyseRequest(details) {
                     'cli': 'create-tags'
                 },
                 'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
             });
         }
         if (jsonRequestBody.removeKeys.length) {
@@ -3357,7 +3383,7 @@ function analyseRequest(details) {
                     'cli': 'delete-tags'
                 },
                 'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
             });
         }
         
@@ -3378,7 +3404,7 @@ function analyseRequest(details) {
                 'cli': 'create-key-pair'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3398,7 +3424,7 @@ function analyseRequest(details) {
                 'cli': 'delete-key-pair'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3420,7 +3446,7 @@ function analyseRequest(details) {
                 'cli': 'import-key-pair'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3448,15 +3474,16 @@ function analyseRequest(details) {
                 'cli': 'create-network-interface'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::NetworkInterface',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -3475,7 +3502,7 @@ function analyseRequest(details) {
                 'cli': 'describe-flow-logs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3495,7 +3522,7 @@ function analyseRequest(details) {
                 'cli': 'delete-network-interface'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3513,7 +3540,7 @@ function analyseRequest(details) {
                 'cli': 'describe-addresses'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3535,15 +3562,16 @@ function analyseRequest(details) {
                 'cli': 'allocate-address'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::EIP',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -3564,7 +3592,7 @@ function analyseRequest(details) {
                 'cli': 'describe-instances'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3584,7 +3612,7 @@ function analyseRequest(details) {
                 'cli': 'describe-network-interfaces'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3614,15 +3642,16 @@ function analyseRequest(details) {
                 'cli': 'associate-address'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::EIPAssociation',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -3643,7 +3672,7 @@ function analyseRequest(details) {
                 'cli': 'disassociate-address'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3663,7 +3692,7 @@ function analyseRequest(details) {
                 'cli': 'release-address'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3681,7 +3710,7 @@ function analyseRequest(details) {
                 'cli': 'describe-configuration-recorders'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3713,16 +3742,17 @@ function analyseRequest(details) {
                 'cli': 'allocate-hosts'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         for (var i=0; i<jsonRequestBody.quantity; i++) {
             tracked_resources.push({
+                'logicalId': getResourceName('ec2', details.requestId),
                 'region': region,
                 'service': 'ec2',
                 'type': 'AWS::EC2::Host',
                 'options': reqParams,
-            'requestId': details.requestId,
+                'requestDetails': details,
                 'was_blocked': blocking
             });
         }
@@ -3742,7 +3772,7 @@ function analyseRequest(details) {
                 'cli': 'describe-regions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3760,7 +3790,7 @@ function analyseRequest(details) {
                 'cli': 'describe-account-attributes'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3778,7 +3808,7 @@ function analyseRequest(details) {
                 'cli': 'describe-dhcp-options'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3798,7 +3828,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpc-attribute'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3818,7 +3848,7 @@ function analyseRequest(details) {
                 'cli': 'describe-flow-logs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3836,7 +3866,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3854,7 +3884,7 @@ function analyseRequest(details) {
                 'cli': 'describe-route-tables'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3872,7 +3902,7 @@ function analyseRequest(details) {
                 'cli': 'describe-internet-gateways'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3890,7 +3920,7 @@ function analyseRequest(details) {
                 'cli': 'describe-egress-only-internet-gateways'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3908,7 +3938,7 @@ function analyseRequest(details) {
                 'cli': 'describe-dhcp-options'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3926,7 +3956,7 @@ function analyseRequest(details) {
                 'cli': 'describe-addresses'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3944,7 +3974,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpc-endpoints'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3964,7 +3994,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpc-endpoint-service-configurations'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -3982,7 +4012,7 @@ function analyseRequest(details) {
                 'cli': 'describe-nat-gateways'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4002,7 +4032,7 @@ function analyseRequest(details) {
                 'cli': 'describe-account-attributes'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4020,7 +4050,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpc-peering-connections'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4038,7 +4068,7 @@ function analyseRequest(details) {
                 'cli': 'describe-network-acls'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4060,7 +4090,7 @@ function analyseRequest(details) {
                 'cli': 'describe-stale-security-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4078,7 +4108,7 @@ function analyseRequest(details) {
                 'cli': 'describe-customer-gateways'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4096,7 +4126,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpn-gateways'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4114,7 +4144,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpn-connections'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4139,15 +4169,16 @@ function analyseRequest(details) {
                 'cli': 'create-vpc'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPC',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4166,7 +4197,7 @@ function analyseRequest(details) {
                 'cli': 'describe-log-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4186,7 +4217,7 @@ function analyseRequest(details) {
                 'cli': 'list-roles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4216,7 +4247,7 @@ function analyseRequest(details) {
                 'cli': 'create-flow-logs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         for (var resource_id in jsonRequestBody.ResourceIds) {
@@ -4228,11 +4259,12 @@ function analyseRequest(details) {
             reqParams.cfn['DeliverLogsPermissionArn'] = jsonRequestBody.DeliverLogsPermissionArn;
 
             tracked_resources.push({
+                'logicalId': getResourceName('ec2', details.requestId),
                 'region': region,
                 'service': 'ec2',
                 'type': 'AWS::EC2::FlowLog',
                 'options': reqParams,
-            'requestId': details.requestId,
+                'requestDetails': details,
                 'was_blocked': blocking
             });
         }
@@ -4254,7 +4286,7 @@ function analyseRequest(details) {
                 'cli': 'delete-flow-logs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4274,7 +4306,7 @@ function analyseRequest(details) {
                 'cli': 'disassociate-vpc-cidr-block'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4292,7 +4324,7 @@ function analyseRequest(details) {
                 'cli': 'describe-instances'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4312,7 +4344,7 @@ function analyseRequest(details) {
                 'cli': 'delete-vpc'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4334,15 +4366,16 @@ function analyseRequest(details) {
                 'cli': 'create-route-table'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::RouteTable',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4361,7 +4394,7 @@ function analyseRequest(details) {
                 'cli': 'describe-route-tables'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4381,7 +4414,7 @@ function analyseRequest(details) {
                 'cli': 'delete-egress-only-internet-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4403,15 +4436,16 @@ function analyseRequest(details) {
                 'cli': 'create-egress-only-internet-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::EgressOnlyInternetGateway',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4432,7 +4466,7 @@ function analyseRequest(details) {
                 'cli': 'delete-internet-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4454,7 +4488,7 @@ function analyseRequest(details) {
                 'cli': 'create-tags'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4472,15 +4506,16 @@ function analyseRequest(details) {
                 'cli': 'create-internet-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::InternetGateway',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4501,7 +4536,7 @@ function analyseRequest(details) {
                 'cli': 'delete-route-table'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4521,7 +4556,7 @@ function analyseRequest(details) {
                 'cli': 'delete-dhcp-options'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4546,15 +4581,16 @@ function analyseRequest(details) {
                 'cli': 'create-nat-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::NatGateway',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4575,7 +4611,7 @@ function analyseRequest(details) {
                 'cli': 'delete-nat-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4597,15 +4633,16 @@ function analyseRequest(details) {
                 'cli': 'create-network-acl'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::NetworkAcl',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4626,7 +4663,7 @@ function analyseRequest(details) {
                 'cli': 'delete-network-acl'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4651,15 +4688,16 @@ function analyseRequest(details) {
                 'cli': 'create-customer-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::CustomerGateway',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4680,7 +4718,7 @@ function analyseRequest(details) {
                 'cli': 'delete-customer-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4702,15 +4740,16 @@ function analyseRequest(details) {
                 'cli': 'create-vpn-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPNGateway',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4731,7 +4770,7 @@ function analyseRequest(details) {
                 'cli': 'delete-vpn-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4749,7 +4788,7 @@ function analyseRequest(details) {
                 'cli': 'list-queues'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4767,7 +4806,7 @@ function analyseRequest(details) {
                 'cli': 'list-keys'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4787,7 +4826,7 @@ function analyseRequest(details) {
                 'cli': 'delete-queue'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4805,7 +4844,7 @@ function analyseRequest(details) {
                 'cli': 'list-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4823,7 +4862,7 @@ function analyseRequest(details) {
                 'cli': 'list-users'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4841,7 +4880,7 @@ function analyseRequest(details) {
                 'cli': 'list-policies'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4866,15 +4905,16 @@ function analyseRequest(details) {
                 'cli': 'create-user'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::IAM::User',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4897,7 +4937,7 @@ function analyseRequest(details) {
                 'cli': 'attach-user-policy'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4922,15 +4962,16 @@ function analyseRequest(details) {
                 'cli': 'add-user-to-group'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::IAM::UserToGroupAddition',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -4951,7 +4992,7 @@ function analyseRequest(details) {
                 'cli': 'list-groups-for-user'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4971,7 +5012,7 @@ function analyseRequest(details) {
                 'cli': 'list-access-keys'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -4991,7 +5032,7 @@ function analyseRequest(details) {
                 'cli': 'get-login-profile'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5015,7 +5056,7 @@ function analyseRequest(details) {
                 'cli': 'create-login-profile'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5033,7 +5074,7 @@ function analyseRequest(details) {
                 'cli': 'list-account-aliases'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5053,7 +5094,7 @@ function analyseRequest(details) {
                 'cli': 'get-user'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5073,7 +5114,7 @@ function analyseRequest(details) {
                 'cli': 'delete-user'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5091,7 +5132,7 @@ function analyseRequest(details) {
                 'cli': 'get-account'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5111,7 +5152,7 @@ function analyseRequest(details) {
                 'cli': 'get-rest-apis'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5131,7 +5172,7 @@ function analyseRequest(details) {
                 'cli': 'get-rest-api'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5153,7 +5194,7 @@ function analyseRequest(details) {
                 'cli': 'get-authorizers'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5175,7 +5216,7 @@ function analyseRequest(details) {
                 'cli': 'get-request-validators'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5197,7 +5238,7 @@ function analyseRequest(details) {
                 'cli': 'get-documentation-parts'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5221,7 +5262,7 @@ function analyseRequest(details) {
                 'cli': 'get-resources'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5241,7 +5282,7 @@ function analyseRequest(details) {
                 'cli': 'get-stages'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5261,7 +5302,7 @@ function analyseRequest(details) {
                 'cli': 'get-usage-plans'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5295,15 +5336,16 @@ function analyseRequest(details) {
                 'cli': 'put-method'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Method',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -5332,7 +5374,7 @@ function analyseRequest(details) {
                 'cli': 'put-method-response'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5350,7 +5392,7 @@ function analyseRequest(details) {
                 'cli': 'list-functions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5378,7 +5420,7 @@ function analyseRequest(details) {
                 'cli': 'put-integration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5406,7 +5448,7 @@ function analyseRequest(details) {
                 'cli': 'put-integration-response'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5434,15 +5476,16 @@ function analyseRequest(details) {
                 'cli': 'create-documentation-part'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::DocumentationPart',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -5465,7 +5508,7 @@ function analyseRequest(details) {
                 'cli': 'delete-documentation-part'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5489,7 +5532,7 @@ function analyseRequest(details) {
                 'cli': 'delete-method'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5509,7 +5552,7 @@ function analyseRequest(details) {
                 'cli': 'list-user-pools'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5552,15 +5595,16 @@ function analyseRequest(details) {
                 'cli': 'create-authorizer'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Authorizer',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -5595,15 +5639,16 @@ function analyseRequest(details) {
                 'cli': 'put-gateway-response'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::GatewayResponse',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -5635,15 +5680,16 @@ function analyseRequest(details) {
                 'cli': 'create-model'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Model',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -5666,7 +5712,7 @@ function analyseRequest(details) {
                 'cli': 'delete-model'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5696,7 +5742,7 @@ function analyseRequest(details) {
                 'cli': 'get-metric-statistics'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5727,15 +5773,16 @@ function analyseRequest(details) {
                 'cli': 'create-usage-plan'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::UsagePlan',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -5758,7 +5805,7 @@ function analyseRequest(details) {
                 'cli': 'get-stage'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5782,7 +5829,7 @@ function analyseRequest(details) {
                 'cli': 'get-deployment'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5815,15 +5862,16 @@ function analyseRequest(details) {
                 'cli': 'create-api-key'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::ApiKey',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -5844,7 +5892,7 @@ function analyseRequest(details) {
                 'cli': 'delete-usage-plan'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5866,7 +5914,7 @@ function analyseRequest(details) {
                 'cli': 'get-api-key'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5888,7 +5936,7 @@ function analyseRequest(details) {
                 'cli': 'update-api-key'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5906,7 +5954,7 @@ function analyseRequest(details) {
                 'cli': 'list-certificates'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5926,7 +5974,7 @@ function analyseRequest(details) {
                 'cli': 'get-domain-names'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -5954,15 +6002,16 @@ function analyseRequest(details) {
                 'cli': 'create-domain-name'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::DomainName',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -5983,7 +6032,7 @@ function analyseRequest(details) {
                 'cli': 'delete-client-certificate'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6001,7 +6050,7 @@ function analyseRequest(details) {
                 'cli': 'describe-load-balancers'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6021,15 +6070,16 @@ function analyseRequest(details) {
                 'cli': 'update-account'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Account',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6050,7 +6100,7 @@ function analyseRequest(details) {
                 'cli': 'list-functions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6070,7 +6120,7 @@ function analyseRequest(details) {
                 'cli': 'list-streams'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6088,7 +6138,7 @@ function analyseRequest(details) {
                 'cli': 'list-topics'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6106,7 +6156,7 @@ function analyseRequest(details) {
                 'cli': 'describe-auto-scaling-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6124,7 +6174,7 @@ function analyseRequest(details) {
                 'cli': 'list-queues'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6142,7 +6192,7 @@ function analyseRequest(details) {
                 'cli': 'list-task-definition-families'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6162,7 +6212,7 @@ function analyseRequest(details) {
                 'cli': 'list-state-machines'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6184,7 +6234,7 @@ function analyseRequest(details) {
                 'cli': 'list-documents'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6204,7 +6254,7 @@ function analyseRequest(details) {
                 'cli': 'list-delivery-streams'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6224,7 +6274,7 @@ function analyseRequest(details) {
                 'cli': 'list-roles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6242,7 +6292,7 @@ function analyseRequest(details) {
                 'cli': 'describe-trails'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6264,7 +6314,7 @@ function analyseRequest(details) {
                 'cli': 'list-versions-by-function'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6286,7 +6336,7 @@ function analyseRequest(details) {
                 'cli': 'list-aliases'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6320,15 +6370,16 @@ function analyseRequest(details) {
                 'cli': 'put-rule'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::Events::Rule',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6351,7 +6402,7 @@ function analyseRequest(details) {
                 'cli': 'list-rules'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6371,7 +6422,7 @@ function analyseRequest(details) {
                 'cli': 'disable-rule'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6391,7 +6442,7 @@ function analyseRequest(details) {
                 'cli': 'enable-rule'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6411,7 +6462,7 @@ function analyseRequest(details) {
                 'cli': 'delete-rule'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6429,7 +6480,7 @@ function analyseRequest(details) {
                 'cli': 'describe-directories'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6447,7 +6498,7 @@ function analyseRequest(details) {
                 'cli': 'describe-workspace-bundles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6465,7 +6516,7 @@ function analyseRequest(details) {
                 'cli': 'list-keys'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6483,7 +6534,7 @@ function analyseRequest(details) {
                 'cli': 'describe-workspaces'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6529,15 +6580,16 @@ function analyseRequest(details) {
                 'cli': 'create-workspaces'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('workspaces', details.requestId),
             'region': region,
             'service': 'workspaces',
             'type': 'AWS::WorkSpaces::Workspace',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6562,7 +6614,7 @@ function analyseRequest(details) {
                 'cli': 'terminate-workspaces'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6593,15 +6645,16 @@ function analyseRequest(details) {
                 'cli': 'create-named-query'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('athena', details.requestId),
             'region': region,
             'service': 'athena',
             'type': 'AWS::Athena::NamedQuery',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6627,15 +6680,16 @@ function analyseRequest(details) {
                 'cli': 'create-graphql-api'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('appsync', details.requestId),
             'region': region,
             'service': 'appsync',
             'type': 'AWS::AppSync::GraphQLApi',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6661,15 +6715,16 @@ function analyseRequest(details) {
                 'cli': 'create-api-key'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('appsync', details.requestId),
             'region': region,
             'service': 'appsync',
             'type': 'AWS::AppSync::ApiKey',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6704,15 +6759,16 @@ function analyseRequest(details) {
                 'cli': 'create-table'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('dynamodb', details.requestId),
             'region': region,
             'service': 'dynamodb',
             'type': 'AWS::DynamoDB::Table',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6733,7 +6789,7 @@ function analyseRequest(details) {
                 'cli': 'describe-table'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6758,15 +6814,16 @@ function analyseRequest(details) {
                 'cli': 'start-schema-creation'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('appsync', details.requestId),
             'region': region,
             'service': 'appsync',
             'type': 'AWS::AppSync::GraphQLSchema',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6787,7 +6844,7 @@ function analyseRequest(details) {
                 'cli': 'get-schema-creation-status'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6821,15 +6878,16 @@ function analyseRequest(details) {
                 'cli': 'create-data-source'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('appsync', details.requestId),
             'region': region,
             'service': 'appsync',
             'type': 'AWS::AppSync::DataSource',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6867,15 +6925,16 @@ function analyseRequest(details) {
                 'cli': 'create-resolver'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('appsync', details.requestId),
             'region': region,
             'service': 'appsync',
             'type': 'AWS::AppSync::Resolver',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -6900,7 +6959,7 @@ function analyseRequest(details) {
                 'cli': 'list-resolvers'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6924,7 +6983,7 @@ function analyseRequest(details) {
                 'cli': 'update-graphql-api'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6944,7 +7003,7 @@ function analyseRequest(details) {
                 'cli': 'delete-graphql-api'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6968,7 +7027,7 @@ function analyseRequest(details) {
                 'cli': 'describe-launch-templates'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -6986,7 +7045,7 @@ function analyseRequest(details) {
                 'cli': 'describe-load-balancers'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7038,15 +7097,16 @@ function analyseRequest(details) {
                 'cli': 'create-launch-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('autoscaling', details.requestId),
             'region': region,
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::LaunchConfiguration',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -7067,7 +7127,7 @@ function analyseRequest(details) {
                 'cli': 'describe-launch-configurations'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7085,7 +7145,7 @@ function analyseRequest(details) {
                 'cli': 'describe-target-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7133,15 +7193,16 @@ function analyseRequest(details) {
                 'cli': 'create-auto-scaling-group'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('autoscaling', details.requestId),
             'region': region,
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::AutoScalingGroup',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -7175,15 +7236,16 @@ function analyseRequest(details) {
                 'cli': 'put-scaling-policy'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('autoscaling', details.requestId),
             'region': region,
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::ScalingPolicy',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -7208,7 +7270,7 @@ function analyseRequest(details) {
                 'cli': 'put-notification-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7230,7 +7292,7 @@ function analyseRequest(details) {
                 'cli': 'describe-scaling-activities'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7250,7 +7312,7 @@ function analyseRequest(details) {
                 'cli': 'describe-policies'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7270,7 +7332,7 @@ function analyseRequest(details) {
                 'cli': 'describe-tags'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7290,7 +7352,7 @@ function analyseRequest(details) {
                 'cli': 'describe-scheduled-actions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7310,7 +7372,7 @@ function analyseRequest(details) {
                 'cli': 'describe-lifecycle-hooks'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7330,7 +7392,7 @@ function analyseRequest(details) {
                 'cli': 'describe-notification-configurations'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7350,7 +7412,7 @@ function analyseRequest(details) {
                 'cli': 'delete-launch-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7372,7 +7434,7 @@ function analyseRequest(details) {
                 'cli': 'delete-auto-scaling-group'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7408,15 +7470,16 @@ function analyseRequest(details) {
                 'cli': 'put-scheduled-update-group-action'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('autoscaling', details.requestId),
             'region': region,
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::ScheduledAction',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -7439,7 +7502,7 @@ function analyseRequest(details) {
                 'cli': 'delete-scheduled-action'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7476,15 +7539,16 @@ function analyseRequest(details) {
                 'cli': 'put-lifecycle-hook'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('autoscaling', details.requestId),
             'region': region,
             'service': 'autoscaling',
             'type': 'AWS::AutoScaling::LifecycleHook',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -7507,7 +7571,7 @@ function analyseRequest(details) {
                 'cli': 'delete-lifecycle-hook'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7525,7 +7589,7 @@ function analyseRequest(details) {
                 'cli': 'describe-compute-environments'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7543,7 +7607,7 @@ function analyseRequest(details) {
                 'cli': 'list-roles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7561,7 +7625,7 @@ function analyseRequest(details) {
                 'cli': 'describe-job-definitions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7581,7 +7645,7 @@ function analyseRequest(details) {
                 'cli': 'list-instance-profiles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7599,7 +7663,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpcs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7619,7 +7683,7 @@ function analyseRequest(details) {
                 'cli': 'list-instance-profiles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7637,7 +7701,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7655,7 +7719,7 @@ function analyseRequest(details) {
                 'cli': 'describe-security-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7677,7 +7741,7 @@ function analyseRequest(details) {
                 'cli': 'attach-role-policy'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7697,7 +7761,7 @@ function analyseRequest(details) {
                 'cli': 'create-instance-profile'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7719,7 +7783,7 @@ function analyseRequest(details) {
                 'cli': 'add-role-to-instance-profile'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7753,15 +7817,16 @@ function analyseRequest(details) {
                 'cli': 'create-compute-environment'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('batch', details.requestId),
             'region': region,
             'service': 'batch',
             'type': 'AWS::Batch::ComputeEnvironment',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -7782,7 +7847,7 @@ function analyseRequest(details) {
                 'cli': 'describe-compute-environments'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7813,15 +7878,16 @@ function analyseRequest(details) {
                 'cli': 'create-job-queue'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('batch', details.requestId),
             'region': region,
             'service': 'batch',
             'type': 'AWS::Batch::JobQueue',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -7853,15 +7919,16 @@ function analyseRequest(details) {
                 'cli': 'register-job-definition'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('batch', details.requestId),
             'region': region,
             'service': 'batch',
             'type': 'AWS::Batch::JobDefinition',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -7888,7 +7955,7 @@ function analyseRequest(details) {
                 'cli': 'submit-job'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7910,7 +7977,7 @@ function analyseRequest(details) {
                 'cli': 'list-jobs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7932,7 +7999,7 @@ function analyseRequest(details) {
                 'cli': 'cancel-job'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7952,7 +8019,7 @@ function analyseRequest(details) {
                 'cli': 'delete-compute-environment'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7974,7 +8041,7 @@ function analyseRequest(details) {
                 'cli': 'update-compute-environment'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -7994,7 +8061,7 @@ function analyseRequest(details) {
                 'cli': 'deregister-job-definition'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8019,15 +8086,16 @@ function analyseRequest(details) {
                 'cli': 'create-application'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('codedeploy', details.requestId),
             'region': region,
             'service': 'codedeploy',
             'type': 'AWS::CodeDeploy::Application',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -8048,7 +8116,7 @@ function analyseRequest(details) {
                 'cli': 'get-application'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8072,7 +8140,7 @@ function analyseRequest(details) {
                 'cli': 'list-application-revisions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8092,7 +8160,7 @@ function analyseRequest(details) {
                 'cli': 'list-deployment-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8110,7 +8178,7 @@ function analyseRequest(details) {
                 'cli': 'list-deployment-configs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8159,15 +8227,16 @@ function analyseRequest(details) {
                 'cli': 'create-deployment-group'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('codedeploy', details.requestId),
             'region': region,
             'service': 'codedeploy',
             'type': 'AWS::CodeDeploy::DeploymentGroup',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -8190,7 +8259,7 @@ function analyseRequest(details) {
                 'cli': 'get-deployment-group'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8212,7 +8281,7 @@ function analyseRequest(details) {
                 'cli': 'list-deployments'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8230,7 +8299,7 @@ function analyseRequest(details) {
                 'cli': 'list-deployment-configs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8252,7 +8321,7 @@ function analyseRequest(details) {
                 'cli': 'batch-get-deployment-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8280,7 +8349,7 @@ function analyseRequest(details) {
                 'cli': 'create-deployment'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8302,7 +8371,7 @@ function analyseRequest(details) {
                 'cli': 'stop-deployment'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8329,15 +8398,16 @@ function analyseRequest(details) {
                 'cli': 'create-deployment-config'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('codedeploy', details.requestId),
             'region': region,
             'service': 'codedeploy',
             'type': 'AWS::CodeDeploy::DeploymentConfig',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -8358,7 +8428,7 @@ function analyseRequest(details) {
                 'cli': 'delete-deployment-config'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8378,7 +8448,7 @@ function analyseRequest(details) {
                 'cli': 'batch-get-deployments'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8398,7 +8468,7 @@ function analyseRequest(details) {
                 'cli': 'delete-application'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8416,7 +8486,7 @@ function analyseRequest(details) {
                 'cli': 'list-action-types'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8434,7 +8504,7 @@ function analyseRequest(details) {
                 'cli': 'list-pipelines'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8452,7 +8522,7 @@ function analyseRequest(details) {
                 'cli': 'list-projects'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8470,7 +8540,7 @@ function analyseRequest(details) {
                 'cli': 'list-repositories'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8488,7 +8558,7 @@ function analyseRequest(details) {
                 'cli': 'list-curated-environment-images'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8531,15 +8601,16 @@ function analyseRequest(details) {
                 'cli': 'create-project'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('codebuild', details.requestId),
             'region': region,
             'service': 'codebuild',
             'type': 'AWS::CodeBuild::Project',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -8560,7 +8631,7 @@ function analyseRequest(details) {
                 'cli': 'batch-get-projects'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8588,15 +8659,16 @@ function analyseRequest(details) {
                 'cli': 'create-pipeline'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('codepipeline', details.requestId),
             'region': region,
             'service': 'codepipeline',
             'type': 'AWS::CodePipeline::Pipeline',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -8617,7 +8689,7 @@ function analyseRequest(details) {
                 'cli': 'get-pipeline'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8637,7 +8709,7 @@ function analyseRequest(details) {
                 'cli': 'get-pipeline-state'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8659,7 +8731,7 @@ function analyseRequest(details) {
                 'cli': 'get-pipeline-execution'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8679,7 +8751,7 @@ function analyseRequest(details) {
                 'cli': 'update-pipeline'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8699,7 +8771,7 @@ function analyseRequest(details) {
                 'cli': 'delete-pipeline'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8724,15 +8796,16 @@ function analyseRequest(details) {
                 'cli': 'create-repository'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('codecommit', details.requestId),
             'region': region,
             'service': 'codecommit',
             'type': 'AWS::CodeCommit::Repository',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -8753,7 +8826,7 @@ function analyseRequest(details) {
                 'cli': 'get-repository'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8775,7 +8848,7 @@ function analyseRequest(details) {
                 'cli': 'list-repositories'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8799,7 +8872,7 @@ function analyseRequest(details) {
                 'cli': 'list-pull-requests'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8819,7 +8892,7 @@ function analyseRequest(details) {
                 'cli': 'delete-repository'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8872,16 +8945,17 @@ function analyseRequest(details) {
                 'cli': 'create-product'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         if (jsonRequestBody.productType == "CLOUD_FORMATION_TEMPLATE") {
             tracked_resources.push({
+                'logicalId': getResourceName('servicecatalog', details.requestId),
                 'region': region,
                 'service': 'servicecatalog',
                 'type': 'AWS::ServiceCatalog::CloudFormationProduct',
                 'options': reqParams,
-            'requestId': details.requestId,
+                'requestDetails': details,
                 'was_blocked': blocking
             });
         }
@@ -8903,7 +8977,7 @@ function analyseRequest(details) {
                 'cli': 'list-portfolios'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -8936,15 +9010,16 @@ function analyseRequest(details) {
                 'cli': 'create-portfolio'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('servicecatalog', details.requestId),
             'region': region,
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::Portfolio',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -8973,15 +9048,16 @@ function analyseRequest(details) {
                 'cli': 'associate-product-with-portfolio'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('servicecatalog', details.requestId),
             'region': region,
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::PortfolioProductAssociation',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -9007,15 +9083,16 @@ function analyseRequest(details) {
                 'cli': 'create-portfolio-share'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('servicecatalog', details.requestId),
             'region': region,
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::PortfolioShare',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -9036,7 +9113,7 @@ function analyseRequest(details) {
                 'cli': 'list-tag-options'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -9061,15 +9138,16 @@ function analyseRequest(details) {
                 'cli': 'create-tag-option'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('servicecatalog', details.requestId),
             'region': region,
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::TagOption',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -9090,7 +9168,7 @@ function analyseRequest(details) {
                 'cli': 'describe-tag-option'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -9115,15 +9193,16 @@ function analyseRequest(details) {
                 'cli': 'associate-tag-option-with-resource'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('servicecatalog', details.requestId),
             'region': region,
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::TagOptionAssociation',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -9152,15 +9231,16 @@ function analyseRequest(details) {
                 'cli': 'associate-principal-with-portfolio'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('servicecatalog', details.requestId),
             'region': region,
             'service': 'servicecatalog',
             'type': 'AWS::ServiceCatalog::PortfolioPrincipalAssociation',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -9195,7 +9275,7 @@ function analyseRequest(details) {
                         'cli': 'describe-security-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheClusterContext.list") {
                 outputs.push({
@@ -9207,7 +9287,7 @@ function analyseRequest(details) {
                         'cli': 'describe-cache-clusters'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheEngineVersionContext.describeCacheEngineVersions") {
                 outputs.push({
@@ -9219,7 +9299,7 @@ function analyseRequest(details) {
                         'cli': 'describe-cache-engine-versions'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheParameterGroupContext.list") {
                 outputs.push({
@@ -9231,7 +9311,7 @@ function analyseRequest(details) {
                         'cli': 'describe_cache_parameter_groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheSubnetGroupContext.list") {
                 outputs.push({
@@ -9243,7 +9323,7 @@ function analyseRequest(details) {
                         'cli': 'describe-cache-engine-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.gwt.ec2.requestfactory.shared.Ec2Context.describeVpcs") {
                 outputs.push({
@@ -9255,7 +9335,7 @@ function analyseRequest(details) {
                         'cli': 'describe-vpcs'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.gwt.sns.requestfactory.shared.SnsRequestContext.listTopicArnsWithLimitedRecords") {
                 outputs.push({
@@ -9267,7 +9347,7 @@ function analyseRequest(details) {
                         'cli': 'list-topics'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "EC2.DescribeSubnetsDefault") {
                 outputs.push({
@@ -9279,7 +9359,7 @@ function analyseRequest(details) {
                         'cli': 'describe-subnets'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheSubnetGroupContext.create") {
                 reqParams.boto3['CacheSubnetGroupName'] = action['parameters'][0]['cacheSubnetGroupName'];
@@ -9302,15 +9382,16 @@ function analyseRequest(details) {
                         'cli': 'create-cache-subnet-group'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('elasticache', details.requestId),
                     'region': region,
                     'service': 'elasticache',
                     'type': 'AWS::ElastiCache::SubnetGroup',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheClusterContext.create") {
@@ -9361,15 +9442,16 @@ function analyseRequest(details) {
                         'cli': 'create-cache-cluster'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('elasticache', details.requestId),
                     'region': region,
                     'service': 'elasticache',
                     'type': 'AWS::ElastiCache::CacheCluster',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.ReservedCacheNodeRequestContext.findAll") {
@@ -9382,7 +9464,7 @@ function analyseRequest(details) {
                         'cli': 'describe-reserved-cache-nodes'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.ReplicationGroupContext.paginatedList") {
                 outputs.push({
@@ -9394,7 +9476,7 @@ function analyseRequest(details) {
                         'cli': 'describe-replication-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.SnapshotContext.list") {
                 outputs.push({
@@ -9406,7 +9488,7 @@ function analyseRequest(details) {
                         'cli': 'describe-snapshots'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheParameterGroupContext.create") {
                 reqParams.boto3['CacheParameterGroupFamily'] = action['parameters'][0]['cacheParameterGroupFamily'];
@@ -9428,15 +9510,16 @@ function analyseRequest(details) {
                         'cli': 'create-cache-parameter-group'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('elasticache', details.requestId),
                     'region': region,
                     'service': 'elasticache',
                     'type': 'AWS::ElastiCache::ParameterGroup',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "EC2.DescribeAvailabilityZonesDefault") {
@@ -9449,7 +9532,7 @@ function analyseRequest(details) {
                         'cli': 'describe-availability-zones'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             }
         }
@@ -9496,7 +9579,7 @@ function analyseRequest(details) {
                         'cli': 'get-databases'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonS3Context.listBuckets") {
                 outputs.push({
@@ -9508,7 +9591,7 @@ function analyseRequest(details) {
                         'cli': 'list-buckets'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.createTable") {
                 reqParams.boto3['TableInput'] = action['parameters'][0]['tableInput'];
@@ -9528,15 +9611,16 @@ function analyseRequest(details) {
                         'cli': 'create-table'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('glue', details.requestId),
                     'region': region,
                     'service': 'glue',
                     'type': 'AWS::Glue::Table',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getCatalogImportStatus") {
@@ -9549,7 +9633,7 @@ function analyseRequest(details) {
                         'cli': 'get-catalog-import-status'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonDataCatalogContext.findObjects" && action['parameters'][0]['entity'] == "TABLE") {
                 reqParams.boto3['CatalogId'] = action['parameters'][0]['catalogId'];
@@ -9564,7 +9648,7 @@ function analyseRequest(details) {
                         'cli': 'get-tables'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getConnections") {
                 outputs.push({
@@ -9576,7 +9660,7 @@ function analyseRequest(details) {
                         'cli': 'get-connections'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getConnection") {
                 reqParams.boto3['Name'] = action['parameters'][0]['name'];
@@ -9591,7 +9675,7 @@ function analyseRequest(details) {
                         'cli': 'get-connection'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonRDSContext.describeDBInstances") {
                 outputs.push({
@@ -9603,7 +9687,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-instances'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getConnection") {
                 reqParams.boto3['Name'] = action['parameters'][0]['name'];
@@ -9618,7 +9702,7 @@ function analyseRequest(details) {
                         'cli': 'get-connection'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonEC2Context.describeVpcs") {
                 outputs.push({
@@ -9630,7 +9714,7 @@ function analyseRequest(details) {
                         'cli': 'describe-vpcs'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonEC2Context.describeSubnets") {
                 reqParams.boto3['Filters'] = action['parameters'][0]['filters'];
@@ -9645,7 +9729,7 @@ function analyseRequest(details) {
                         'cli': 'describe-subnets'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AmazonEC2Context.describeSecurityGroups") {
                 reqParams.boto3['Filters'] = action['parameters'][0]['filters'];
@@ -9660,7 +9744,7 @@ function analyseRequest(details) {
                         'cli': 'describe-security-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.createConnection") {
                 reqParams.boto3['ConnectionInput'] = jsonRequestBody.actions;
@@ -9677,15 +9761,16 @@ function analyseRequest(details) {
                         'cli': 'create-connection'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('glue', details.requestId),
                     'region': region,
                     'service': 'glue',
                     'type': 'AWS::Glue::Connection',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getClassifiers") {
@@ -9698,7 +9783,7 @@ function analyseRequest(details) {
                         'cli': 'get-classifiers'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.createClassifier") {
                 if ('jsonClassifier' in action['parameters'][0]) {
@@ -9726,15 +9811,16 @@ function analyseRequest(details) {
                         'cli': 'create-classifier'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('glue', details.requestId),
                     'region': region,
                     'service': 'glue',
                     'type': 'AWS::Glue::Classifier',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getDataCatalogEncryptionSettings") {
@@ -9750,7 +9836,7 @@ function analyseRequest(details) {
                         'cli': 'get-data-catalog-encryption-settings'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.putDataCatalogEncryptionSettings") {
                 reqParams.boto3['DataCatalogEncryptionSettings'] = action['parameters'][0]['dataCatalogEncryptionSettings'];
@@ -9767,7 +9853,7 @@ function analyseRequest(details) {
                         'cli': 'put-data-catalog-encryption-settings'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getJobs") {
                 outputs.push({
@@ -9779,7 +9865,7 @@ function analyseRequest(details) {
                         'cli': 'get-jobs'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getTriggers") {
                 outputs.push({
@@ -9791,7 +9877,7 @@ function analyseRequest(details) {
                         'cli': 'get-triggers'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getSecurityConfigurations") {
                 outputs.push({
@@ -9803,7 +9889,7 @@ function analyseRequest(details) {
                         'cli': 'get-security-configurations'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.createSecurityConfiguration") {
                 reqParams.boto3['EncryptionConfiguration'] = action['parameters'][0]['encryptionConfiguration'];
@@ -9820,7 +9906,7 @@ function analyseRequest(details) {
                         'cli': 'create-security-configuration'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.deleteSecurityConfiguration") {
                 reqParams.boto3['Name'] = action['parameters'][0]['name'];
@@ -9835,7 +9921,7 @@ function analyseRequest(details) {
                         'cli': 'delete-security-configuration'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.putDataCatalogEncryptionSettings") {
                 reqParams.boto3['DataCatalogEncryptionSettings'] = action['parameters'][0]['dataCatalogEncryptionSettings'];
@@ -9852,7 +9938,7 @@ function analyseRequest(details) {
                         'cli': 'put-data-catalog-encryption-settings'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.deleteClassifier") {
                 reqParams.boto3['Name'] = action['parameters'][0]['name'];
@@ -9867,7 +9953,7 @@ function analyseRequest(details) {
                         'cli': 'delete-classifier'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.batchDeleteConnection") {
                 reqParams.boto3['ConnectionNameList'] = action['parameters'][0]['connectionNameList'];
@@ -9882,7 +9968,7 @@ function analyseRequest(details) {
                         'cli': 'batch-delete-connection'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.batchDeleteTable") {
                 reqParams.boto3['DatabaseName'] = action['parameters'][0]['databaseName'];
@@ -9899,7 +9985,7 @@ function analyseRequest(details) {
                         'cli': 'batch-delete-table'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             }
         }
@@ -9951,7 +10037,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-security-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.gwt.trent.requestfactory.shared.TrentRequestContext.describeKey") {
                 reqParams.boto3['KeyId'] = action['parameters'][0]['keyId'];
@@ -9966,7 +10052,7 @@ function analyseRequest(details) {
                         'cli': 'describe-key'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "EC2.DescribeSecurityGroupsDefault") {
                 outputs.push({
@@ -9978,7 +10064,7 @@ function analyseRequest(details) {
                         'cli': 'describe-security-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "EC2.DescribeVpcsDefault") {
                 outputs.push({
@@ -9990,7 +10076,7 @@ function analyseRequest(details) {
                         'cli': 'describe-vpcs'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbParamGroupContext.findDbParameterGroups") {
                 outputs.push({
@@ -10002,7 +10088,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-parameter-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbParamGroupContext.listDbClusterParameterGroups") {
                 outputs.push({
@@ -10014,7 +10100,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-cluster-parameter-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DBSubnetGroupContext.list") {
                 outputs.push({
@@ -10026,7 +10112,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-subnet-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "EC2.DescribeSecurityGroupsDefault") {
                 outputs.push({
@@ -10038,7 +10124,7 @@ function analyseRequest(details) {
                         'cli': 'describe-security-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbInstanceContext.create") {
                 reqParams.boto3['AutoMinorVersionUpgrade'] = action['parameters'][0]['autoMinorVersionUpgrade'];
@@ -10139,15 +10225,16 @@ function analyseRequest(details) {
                         'cli': 'create-db-instance'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('rds', details.requestId),
                     'region': region,
                     'service': 'rds',
                     'type': 'AWS::RDS::DBInstance',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.EventContext.findEvents") {
@@ -10169,7 +10256,7 @@ function analyseRequest(details) {
                         'cli': 'describe-events'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DBLogFileContext.list") {
                 reqParams.boto3['DBInstanceIdentifier'] = action['parameters'][0];
@@ -10184,7 +10271,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-log-files'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DBSnapshotContext.findByDbClusterIdentifier") {
                 reqParams.boto3['DBClusterIdentifier'] = action['parameters'][0];
@@ -10199,7 +10286,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-clusters'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.gwt.ec2.requestfactory.shared.Ec2Context.describeSecurityGroups") {
                 reqParams.boto3['GroupIds'] = action['parameters'][0]['groupIds'];
@@ -10214,7 +10301,7 @@ function analyseRequest(details) {
                         'cli': 'describe-security-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.OptionGroupContext.list") {
                 outputs.push({
@@ -10226,7 +10313,7 @@ function analyseRequest(details) {
                         'cli': 'describe-option-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DBSnapshotContext.list") {
                 outputs.push({
@@ -10238,7 +10325,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-snapshots'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DBSnapshotContext.describeDBSnapshotsResult") {
                 outputs.push({
@@ -10250,7 +10337,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-snapshots'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DBSnapshotContext.describeDBClusterSnapshotsResult") {
                 outputs.push({
@@ -10262,7 +10349,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-cluster-snapshots'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.ReservedDBInstanceContext.list") {
                 outputs.push({
@@ -10274,7 +10361,7 @@ function analyseRequest(details) {
                         'cli': 'describe-reserved-db-instances'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DBSubnetGroupContext.list") {
                 outputs.push({
@@ -10286,7 +10373,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-subnet-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "EC2.DescribeAvailabilityZonesDefault") {
                 outputs.push({
@@ -10298,7 +10385,7 @@ function analyseRequest(details) {
                         'cli': 'describe-availability-zones'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DBSubnetGroupContext.create") {
                 reqParams.boto3['DBSubnetGroupDescription'] = action['parameters'][0]['DBSubnetGroupDescription'];
@@ -10321,15 +10408,16 @@ function analyseRequest(details) {
                         'cli': 'create-db-subnet-group'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('rds', details.requestId),
                     'region': region,
                     'service': 'rds',
                     'type': 'AWS::RDS::DBSubnetGroup',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbParamGroupContext.findDbParameterGroups") {
@@ -10342,7 +10430,7 @@ function analyseRequest(details) {
                         'cli': 'describe-db-parameter-groups'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbParamGroupContext.createDbParameterGroup") {
                 reqParams.boto3['DBParameterGroupFamily'] = action['parameters'][0];
@@ -10364,15 +10452,16 @@ function analyseRequest(details) {
                         'cli': 'create-db-parameter-group'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('rds', details.requestId),
                     'region': region,
                     'service': 'rds',
                     'type': 'AWS::RDS::DBParameterGroup',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.OptionGroupContext.create") {
@@ -10398,15 +10487,16 @@ function analyseRequest(details) {
                         'cli': 'create-option-group'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('rds', details.requestId),
                     'region': region,
                     'service': 'rds',
                     'type': 'AWS::RDS::OptionGroup',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.gwt.sns.requestfactory.shared.SnsRequestContext.listTopicArns") {
@@ -10419,7 +10509,7 @@ function analyseRequest(details) {
                         'cli': 'list-topics'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.EventSubscriptionContext.create") {
                 reqParams.boto3['Enabled'] = action['parameters'][0]['enabled'];
@@ -10450,15 +10540,16 @@ function analyseRequest(details) {
                         'cli': 'create-event-subscription'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('rds', details.requestId),
                     'region': region,
                     'service': 'rds',
                     'type': 'AWS::RDS::EventSubscription',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.EventSubscriptionContext.list") {
@@ -10471,7 +10562,7 @@ function analyseRequest(details) {
                         'cli': 'describe-event-subscriptions'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbCContext.stopDBCluster") {
                 reqParams.boto3['DBClusterIdentifier'] = action['parameters'][0];
@@ -10486,7 +10577,7 @@ function analyseRequest(details) {
                         'cli': 'stop-db-cluster'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbParamGroupContext.createDbClusterParameterGroup") {
                 reqParams.boto3['DBParameterGroupFamily'] = action['parameters'][0];
@@ -10508,15 +10599,16 @@ function analyseRequest(details) {
                         'cli': 'create-db-cluster-parameter-group'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('rds', details.requestId),
                     'region': region,
                     'service': 'rds',
                     'type': 'AWS::RDS::DBClusterParameterGroup',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbCContext.startDBCluster") {
@@ -10532,7 +10624,7 @@ function analyseRequest(details) {
                         'cli': 'start-db-cluster'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbInstanceContext.delete") {
                 reqParams.boto3['SkipFinalSnapshot'] = action['parameters'][0]['skipFinalSnapshot'];
@@ -10549,7 +10641,7 @@ function analyseRequest(details) {
                         'cli': 'delete-db-instance'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
             }                     
             
@@ -10570,7 +10662,7 @@ function analyseRequest(details) {
                 'cli': 'list-functions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10588,7 +10680,7 @@ function analyseRequest(details) {
                 'cli': 'list-roles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10606,7 +10698,7 @@ function analyseRequest(details) {
                 'cli': 'list-roles'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10624,7 +10716,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpcs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10644,7 +10736,7 @@ function analyseRequest(details) {
                 'cli': 'get-function-configuration'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10664,7 +10756,7 @@ function analyseRequest(details) {
                 'cli': 'get-function'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10684,7 +10776,7 @@ function analyseRequest(details) {
                 'cli': 'list-tags'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10704,7 +10796,7 @@ function analyseRequest(details) {
                 'cli': 'get-role'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10722,7 +10814,7 @@ function analyseRequest(details) {
                 'cli': 'list-keys'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10753,15 +10845,16 @@ function analyseRequest(details) {
                 'cli': 'create-alias'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('lambda', details.requestId),
             'region': region,
             'service': 'lambda',
             'type': 'AWS::Lambda::Alias',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -10784,7 +10877,7 @@ function analyseRequest(details) {
                 'cli': 'get-alias'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10806,7 +10899,7 @@ function analyseRequest(details) {
                 'cli': 'delete-function'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10831,15 +10924,16 @@ function analyseRequest(details) {
                 'cli': 'publish-version'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('lambda', details.requestId),
             'region': region,
             'service': 'lambda',
             'type': 'AWS::Lambda::Version',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -10892,15 +10986,16 @@ function analyseRequest(details) {
                 'cli': 'create-function'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('lambda', details.requestId),
             'region': region,
             'service': 'lambda',
             'type': 'AWS::Lambda::Function',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -10919,7 +11014,7 @@ function analyseRequest(details) {
                 'cli': 'list-domain-names'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10937,7 +11032,7 @@ function analyseRequest(details) {
                 'cli': 'list-elasticsearch-versions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10955,7 +11050,7 @@ function analyseRequest(details) {
                 'cli': 'list-elasticsearch-instance-types'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10975,7 +11070,7 @@ function analyseRequest(details) {
                 'cli': 'describe-key'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -10993,7 +11088,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpcs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11013,7 +11108,7 @@ function analyseRequest(details) {
                 'cli': 'get-role'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11031,7 +11126,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11049,7 +11144,7 @@ function analyseRequest(details) {
                 'cli': 'describe-security-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11099,15 +11194,16 @@ function analyseRequest(details) {
                 'cli': 'create-elasticsearch-domain'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('es', details.requestId),
             'region': region,
             'service': 'es',
             'type': 'AWS::Elasticsearch::Domain',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -11128,7 +11224,7 @@ function analyseRequest(details) {
                 'cli': 'describe-elasticsearch-domain'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11148,7 +11244,7 @@ function analyseRequest(details) {
                 'cli': 'get-upgrade-status'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11168,7 +11264,7 @@ function analyseRequest(details) {
                 'cli': 'get-compatible-elasticsearch-versions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11188,7 +11284,7 @@ function analyseRequest(details) {
                 'cli': 'get-upgrade-history'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11208,7 +11304,7 @@ function analyseRequest(details) {
                 'cli': 'delete-elasticsearch-domain'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11228,7 +11324,7 @@ function analyseRequest(details) {
                 'cli': 'describe-reserved-elasticsearch-instances'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11248,7 +11344,7 @@ function analyseRequest(details) {
                 'cli': 'describe-elasticsearch-domains'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11266,7 +11362,7 @@ function analyseRequest(details) {
                 'cli': 'list-topics'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11284,7 +11380,7 @@ function analyseRequest(details) {
                 'cli': 'list-subscriptions'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11306,15 +11402,16 @@ function analyseRequest(details) {
                 'cli': 'create-topic'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('sns', details.requestId),
             'region': region,
             'service': 'sns',
             'type': 'AWS::SNS::Topic',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -11335,11 +11432,12 @@ function analyseRequest(details) {
             reqParams.cfn['Topics'] = [jsonRequestBody.topicArn];
 
             tracked_resources.push({
+                'logicalId': getResourceName('sns', details.requestId),
                 'region': region,
                 'service': 'sns',
                 'type': 'AWS::SNS::TopicPolicy',
                 'options': reqParams,
-                'requestId': details.requestId,
+                'requestDetails': details,
                 'was_blocked': blocking
             });
         }
@@ -11353,7 +11451,7 @@ function analyseRequest(details) {
                 'cli': 'set-topic-attributes'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11373,7 +11471,7 @@ function analyseRequest(details) {
                 'cli': 'delete-topic'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11393,7 +11491,7 @@ function analyseRequest(details) {
                 'cli': 'list-platform-applications'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11421,15 +11519,16 @@ function analyseRequest(details) {
                 'cli': 'subscribe'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('sns', details.requestId),
             'region': region,
             'service': 'sns',
             'type': 'AWS::SNS::Subscription',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -11450,7 +11549,7 @@ function analyseRequest(details) {
                 'cli': 'get-topic-attributes'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11468,7 +11567,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpcs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11486,7 +11585,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11520,15 +11619,16 @@ function analyseRequest(details) {
                 'cli': 'create-directory'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ds', details.requestId),
             'region': region,
             'service': 'ds',
             'type': 'AWS::DirectoryService::SimpleAD',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -11549,7 +11649,7 @@ function analyseRequest(details) {
                 'cli': 'describe-directories'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11569,7 +11669,7 @@ function analyseRequest(details) {
                 'cli': 'delete-directory'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11603,15 +11703,16 @@ function analyseRequest(details) {
                 'cli': 'create-microsoft-ad'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ds', details.requestId),
             'region': region,
             'service': 'ds',
             'type': 'AWS::DirectoryService::MicrosoftAD',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -11630,7 +11731,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpc-classic-link-dns-support'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11648,7 +11749,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11666,7 +11767,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpcs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11684,7 +11785,7 @@ function analyseRequest(details) {
                 'cli': 'describe-availability-zones'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11715,15 +11816,16 @@ function analyseRequest(details) {
                 'cli': 'create-subnet'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::Subnet',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -11742,7 +11844,7 @@ function analyseRequest(details) {
                 'cli': 'describe-nat-gateways'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11762,7 +11864,7 @@ function analyseRequest(details) {
                 'cli': 'describe-instances'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11782,7 +11884,7 @@ function analyseRequest(details) {
                 'cli': 'describe-network-interfaces'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11802,7 +11904,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpc-endpoints'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11820,7 +11922,7 @@ function analyseRequest(details) {
                 'cli': 'describe-egress-only-internet-gateways'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11840,7 +11942,7 @@ function analyseRequest(details) {
                 'cli': 'delete-nat-gateway'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11865,15 +11967,16 @@ function analyseRequest(details) {
                 'cli': 'create-vpc'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPC',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -11892,7 +11995,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpcs'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11910,7 +12013,7 @@ function analyseRequest(details) {
                 'cli': 'describe-dhcp-options'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11930,7 +12033,7 @@ function analyseRequest(details) {
                 'cli': 'describe-vpc-attribute'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11948,7 +12051,7 @@ function analyseRequest(details) {
                 'cli': 'describe-route-tables'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -11970,15 +12073,16 @@ function analyseRequest(details) {
                 'cli': 'create-route-table'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::RouteTable',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -11997,7 +12101,7 @@ function analyseRequest(details) {
                 'cli': 'describe-network-acls'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12019,15 +12123,16 @@ function analyseRequest(details) {
                 'cli': 'create-network-acl'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::NetworkAcl',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -12048,7 +12153,7 @@ function analyseRequest(details) {
                 'cli': 'delete-network-acl'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12068,7 +12173,7 @@ function analyseRequest(details) {
                 'cli': 'delete-route-table'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12088,7 +12193,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12106,7 +12211,7 @@ function analyseRequest(details) {
                 'cli': 'describe-subnets'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12201,15 +12306,16 @@ function analyseRequest(details) {
                         'cli': 'create-network-acl-entry'
                     },
                     'options': reqParams,
-                    'requestId': details.requestId
+                    'requestDetails': details
                 });
 
                 tracked_resources.push({
+                    'logicalId': getResourceName('ec2', details.requestId),
                     'region': region,
                     'service': 'ec2',
                     'type': 'AWS::EC2::NetworkAclEntry',
                     'options': reqParams,
-                    'requestId': details.requestId,
+                    'requestDetails': details,
                     'was_blocked': blocking
                 });
             }
@@ -12237,15 +12343,16 @@ function analyseRequest(details) {
                 'cli': 'associate-dhcp-options'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPCDHCPOptionsAssociation',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -12264,7 +12371,7 @@ function analyseRequest(details) {
                 'cli': 'describe-nat-gateways'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12292,15 +12399,16 @@ function analyseRequest(details) {
                 'cli': 'associate-vpc-cidr-block'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPCCidrBlock',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -12319,7 +12427,7 @@ function analyseRequest(details) {
                 'cli': 'describe-load-balancers'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12337,7 +12445,7 @@ function analyseRequest(details) {
                 'cli': 'describe-internet-gateways'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12357,7 +12465,7 @@ function analyseRequest(details) {
                 'cli': 'describe-route-tables'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12377,7 +12485,7 @@ function analyseRequest(details) {
                 'cli': 'list-certificates'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12395,7 +12503,7 @@ function analyseRequest(details) {
                 'cli': 'list-server-certificates'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12413,7 +12521,7 @@ function analyseRequest(details) {
                 'cli': 'describe-ssl-policies'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12431,7 +12539,7 @@ function analyseRequest(details) {
                 'cli': 'describe-account-limits'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12449,7 +12557,7 @@ function analyseRequest(details) {
                 'cli': 'describe-instances'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12467,7 +12575,7 @@ function analyseRequest(details) {
                 'cli': 'describe-security-groups'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12507,15 +12615,16 @@ function analyseRequest(details) {
                 'cli': 'create-load-balancer'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::ElasticLoadBalancingV2::LoadBalancer',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -12571,15 +12680,16 @@ function analyseRequest(details) {
                 'cli': 'create-target-group'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::ElasticLoadBalancingV2::TargetGroup',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -12611,15 +12721,16 @@ function analyseRequest(details) {
                 'cli': 'create-listener'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::ElasticLoadBalancingV2::Listener',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -12638,7 +12749,7 @@ function analyseRequest(details) {
                 'cli': 'describe-load-balancers'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12658,7 +12769,7 @@ function analyseRequest(details) {
                 'cli': 'describe-load-balancer-attributes'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12676,7 +12787,7 @@ function analyseRequest(details) {
                 'cli': 'describe-configuration-recorders'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12696,7 +12807,7 @@ function analyseRequest(details) {
                 'cli': 'get-web-acl-for-resource'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12716,7 +12827,7 @@ function analyseRequest(details) {
                 'cli': 'describe-rules'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12736,7 +12847,7 @@ function analyseRequest(details) {
                 'cli': 'describe-listeners'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12761,15 +12872,16 @@ function analyseRequest(details) {
                 'cli': 'create-rule'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::ElasticLoadBalancingV2::ListenerRule',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -12790,7 +12902,7 @@ function analyseRequest(details) {
                 'cli': 'delete-rule'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12810,7 +12922,7 @@ function analyseRequest(details) {
                 'cli': 'delete-listener'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12830,7 +12942,7 @@ function analyseRequest(details) {
                 'cli': 'delete-load-balancer'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12850,7 +12962,7 @@ function analyseRequest(details) {
                 'cli': 'delete-target-group'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12887,15 +12999,16 @@ function analyseRequest(details) {
                 'cli': 'create-load-balancer'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
             'type': 'AWS::ElasticLoadBalancing::LoadBalancer',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -12918,7 +13031,7 @@ function analyseRequest(details) {
                 'cli': 'configure-health-check'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12953,7 +13066,7 @@ function analyseRequest(details) {
                 'cli': 'modify-load-balancer-attributes'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -12979,15 +13092,16 @@ function analyseRequest(details) {
                     'cli': 'create-log-group'
                 },
                 'options': reqParams,
-                'requestId': details.requestId
+                'requestDetails': details
             });
 
             tracked_resources.push({
+                'logicalId': getResourceName('logs', details.requestId),
                 'region': region,
                 'service': 'logs',
                 'type': 'AWS::Logs::LogGroup',
                 'options': reqParams,
-                'requestId': details.requestId,
+                'requestDetails': details,
                 'was_blocked': blocking
             });
         } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "bDg0Lbt_pKcqOJ8vSNZWGQW7Rfk=") {
@@ -13008,15 +13122,16 @@ function analyseRequest(details) {
                     'cli': 'create-log-stream'
                 },
                 'options': reqParams,
-                'requestId': details.requestId
+                'requestDetails': details
             });
 
             tracked_resources.push({
+                'logicalId': getResourceName('logs', details.requestId),
                 'region': region,
                 'service': 'logs',
                 'type': 'AWS::Logs::LogStream',
                 'options': reqParams,
-                'requestId': details.requestId,
+                'requestDetails': details,
                 'was_blocked': blocking
             });
         } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "w3zy8wcdTk4$qD2iBc81AziNanc=") {
@@ -13042,15 +13157,16 @@ function analyseRequest(details) {
                     'cli': 'put-metric-filter'
                 },
                 'options': reqParams,
-                'requestId': details.requestId
+                'requestDetails': details
             });
 
             tracked_resources.push({
+                'logicalId': getResourceName('logs', details.requestId),
                 'region': region,
                 'service': 'logs',
                 'type': 'AWS::Logs::MetricFilter',
                 'options': reqParams,
-                'requestId': details.requestId,
+                'requestDetails': details,
                 'was_blocked': blocking
             });
         } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "lRd9M18y9YlzeZbi97CtbWseYDE=") {
@@ -13079,15 +13195,16 @@ function analyseRequest(details) {
                     'cli': 'put-subscription-filter'
                 },
                 'options': reqParams,
-                'requestId': details.requestId
+                'requestDetails': details
             });
 
             tracked_resources.push({
+                'logicalId': getResourceName('logs', details.requestId),
                 'region': region,
                 'service': 'logs',
                 'type': 'AWS::Logs::SubscriptionFilter',
                 'options': reqParams,
-                'requestId': details.requestId,
+                'requestDetails': details,
                 'was_blocked': blocking
             });
         }
@@ -13111,15 +13228,16 @@ function analyseRequest(details) {
                 'cli': 'create-queue'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('sqs', details.requestId),
             'region': region,
             'service': 'sqs',
             'type': 'AWS::SQS::Queue',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -13142,7 +13260,7 @@ function analyseRequest(details) {
                 'cli': 'get-queue-attributes'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -13171,15 +13289,16 @@ function analyseRequest(details) {
                 'cli': 'set-queue-attributes'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('sqs', details.requestId),
             'region': region,
             'service': 'sqs',
             'type': 'AWS::SQS::QueuePolicy',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -13200,7 +13319,7 @@ function analyseRequest(details) {
                 'cli': 'delete-queue'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -13218,7 +13337,7 @@ function analyseRequest(details) {
                 'cli': 'get-hosted-zone-count'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -13238,7 +13357,7 @@ function analyseRequest(details) {
                 'cli': 'list-hosted-zones'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -13274,15 +13393,16 @@ function analyseRequest(details) {
                 'cli': 'create-hosted-zone'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('route53', details.requestId),
             'region': region,
             'service': 'route53',
             'type': 'AWS::Route53::HostedZone',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -13316,15 +13436,16 @@ function analyseRequest(details) {
                 'cli': 'create-hosted-zone'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
 
         tracked_resources.push({
+            'logicalId': getResourceName('route53', details.requestId),
             'region': region,
             'service': 'route53',
             'type': 'AWS::Route53::HostedZone',
             'options': reqParams,
-            'requestId': details.requestId,
+            'requestDetails': details,
             'was_blocked': blocking
         });
         
@@ -13344,7 +13465,7 @@ function analyseRequest(details) {
                 'cli': 'list-geo-locations'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -13362,7 +13483,7 @@ function analyseRequest(details) {
                 'cli': 'list-health-checks'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
@@ -13382,11 +13503,886 @@ function analyseRequest(details) {
                 'cli': 'delete-hosted-zone'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
     }
 
-    return false;
+    // autogen:opsworks:ec2.DescribeAvailabilityZones
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/list\-availability\-zones\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeAvailabilityZones',
+                'boto3': 'describe_availability_zones',
+                'cli': 'describe-availability-zones'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/list\-vpcs\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/list\-subnets\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.CreateStack
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/create\-stack\?/g)) {
+        reqParams.boto3['Name'] = jsonRequestBody.Name;
+        reqParams.cli['--name'] = jsonRequestBody.Name;
+        reqParams.boto3['DefaultOs'] = jsonRequestBody.DefaultOs;
+        reqParams.cli['--default-os'] = jsonRequestBody.DefaultOs;
+        reqParams.boto3['DefaultRootDeviceType'] = jsonRequestBody.DefaultRootDeviceType;
+        reqParams.cli['--default-root-device-type'] = jsonRequestBody.DefaultRootDeviceType;
+        reqParams.boto3['HostnameTheme'] = jsonRequestBody.HostnameTheme;
+        reqParams.cli['--hostname-theme'] = jsonRequestBody.HostnameTheme;
+        reqParams.boto3['UseCustomCookbooks'] = jsonRequestBody.UseCustomCookbooks;
+        reqParams.cli['--use-custom-cookbooks'] = jsonRequestBody.UseCustomCookbooks;
+        reqParams.boto3['CustomJson'] = jsonRequestBody.CustomJson;
+        reqParams.cli['--custom-json'] = jsonRequestBody.CustomJson;
+        reqParams.boto3['UseOpsworksSecurityGroups'] = jsonRequestBody.UseOpsworksSecurityGroups;
+        reqParams.cli['--use-opsworks-security-groups'] = jsonRequestBody.UseOpsworksSecurityGroups;
+        reqParams.boto3['ConfigurationManager'] = jsonRequestBody.ConfigurationManager;
+        reqParams.cli['--configuration-manager'] = jsonRequestBody.ConfigurationManager;
+        reqParams.boto3['Name'] = jsonRequestBody.ConfigurationManager.Name;
+        reqParams.cli['--name'] = jsonRequestBody.ConfigurationManager.Name;
+        reqParams.boto3['Attributes'] = jsonRequestBody.Attributes;
+        reqParams.cli['--attributes'] = jsonRequestBody.Attributes;
+        reqParams.boto3['Region'] = jsonRequestBody.Region;
+        reqParams.cli['--region'] = jsonRequestBody.Region;
+        reqParams.boto3['CustomCookbooksSource'] = jsonRequestBody.CustomCookbooksSource;
+        reqParams.cli['--custom-cookbooks-source'] = jsonRequestBody.CustomCookbooksSource;
+        reqParams.boto3['VpcId'] = jsonRequestBody.VpcId;
+        reqParams.cli['--vpc-id'] = jsonRequestBody.VpcId;
+        reqParams.boto3['DefaultSshKeyName'] = jsonRequestBody.DefaultSshKeyName;
+        reqParams.cli['--default-ssh-key-name'] = jsonRequestBody.DefaultSshKeyName;
+        reqParams.boto3['DefaultSubnetId'] = jsonRequestBody.DefaultSubnetId;
+        reqParams.cli['--default-subnet-id'] = jsonRequestBody.DefaultSubnetId;
+        reqParams.boto3['ServiceRoleArn'] = jsonRequestBody.ServiceRoleArn;
+        reqParams.cli['--service-role-arn'] = jsonRequestBody.ServiceRoleArn;
+        reqParams.boto3['DefaultInstanceProfileArn'] = jsonRequestBody.DefaultInstanceProfileArn;
+        reqParams.cli['--default-instance-profile-arn'] = jsonRequestBody.DefaultInstanceProfileArn;
+        reqParams.boto3['AgentVersion'] = jsonRequestBody.AgentVersion;
+        reqParams.cli['--agent-version'] = jsonRequestBody.AgentVersion;
+
+        reqParams.cfn['Name'] = jsonRequestBody.Name;
+        reqParams.cfn['DefaultOs'] = jsonRequestBody.DefaultOs;
+        reqParams.cfn['DefaultRootDeviceType'] = jsonRequestBody.DefaultRootDeviceType;
+        reqParams.cfn['HostnameTheme'] = jsonRequestBody.HostnameTheme;
+        reqParams.cfn['UseCustomCookbooks'] = jsonRequestBody.UseCustomCookbooks;
+        reqParams.cfn['CustomJson'] = jsonRequestBody.CustomJson;
+        reqParams.cfn['UseOpsworksSecurityGroups'] = jsonRequestBody.UseOpsworksSecurityGroups;
+        reqParams.cfn['ConfigurationManager'] = jsonRequestBody.ConfigurationManager;
+        reqParams.cfn['Name'] = jsonRequestBody.ConfigurationManager.Name;
+        reqParams.cfn['Attributes'] = jsonRequestBody.Attributes;
+        reqParams.cfn['CustomCookbooksSource'] = jsonRequestBody.CustomCookbooksSource;
+        reqParams.cfn['VpcId'] = jsonRequestBody.VpcId;
+        reqParams.cfn['DefaultSshKeyName'] = jsonRequestBody.DefaultSshKeyName;
+        reqParams.cfn['DefaultSubnetId'] = jsonRequestBody.DefaultSubnetId;
+        reqParams.cfn['ServiceRoleArn'] = jsonRequestBody.ServiceRoleArn;
+        reqParams.cfn['DefaultInstanceProfileArn'] = jsonRequestBody.DefaultInstanceProfileArn;
+        reqParams.cfn['AgentVersion'] = jsonRequestBody.AgentVersion;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'CreateStack',
+                'boto3': 'create_stack',
+                'cli': 'create-stack'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('opsworks', details.requestId),
+            'region': region,
+            'service': 'opsworks',
+            'type': 'AWS::OpsWorks::Stack',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.CreateApp
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/create\-app\?/g)) {
+        reqParams.boto3['StackId'] = jsonRequestBody.StackId;
+        reqParams.cli['--stack-id'] = jsonRequestBody.StackId;
+        reqParams.boto3['Name'] = jsonRequestBody.Name;
+        reqParams.cli['--name'] = jsonRequestBody.Name;
+        reqParams.boto3['Type'] = jsonRequestBody.Type;
+        reqParams.cli['--type'] = jsonRequestBody.Type;
+        reqParams.boto3['AppSource'] = jsonRequestBody.AppSource;
+        reqParams.cli['--app-source'] = jsonRequestBody.AppSource;
+        reqParams.boto3['EnableSsl'] = jsonRequestBody.EnableSsl;
+        reqParams.cli['--enable-ssl'] = jsonRequestBody.EnableSsl;
+        reqParams.boto3['Attributes'] = jsonRequestBody.Attributes;
+        reqParams.cli['--attributes'] = jsonRequestBody.Attributes;
+        reqParams.boto3['Domains'] = jsonRequestBody.Domains;
+        reqParams.cli['--domains'] = jsonRequestBody.Domains;
+        reqParams.boto3['Environment'] = jsonRequestBody.Environment;
+        reqParams.cli['--environment'] = jsonRequestBody.Environment;
+        reqParams.boto3['DataSources'] = jsonRequestBody.DataSources;
+        reqParams.cli['--data-sources'] = jsonRequestBody.DataSources;
+
+        reqParams.cfn['StackId'] = jsonRequestBody.StackId;
+        reqParams.cfn['Name'] = jsonRequestBody.Name;
+        reqParams.cfn['Type'] = jsonRequestBody.Type;
+        reqParams.cfn['AppSource'] = jsonRequestBody.AppSource;
+        reqParams.cfn['EnableSsl'] = jsonRequestBody.EnableSsl;
+        reqParams.cfn['Attributes'] = jsonRequestBody.Attributes;
+        reqParams.cfn['Domains'] = jsonRequestBody.Domains;
+        reqParams.cfn['Environment'] = jsonRequestBody.Environment;
+        reqParams.cfn['DataSources'] = jsonRequestBody.DataSources;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'CreateApp',
+                'boto3': 'create_app',
+                'cli': 'create-app'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('opsworks', details.requestId),
+            'region': region,
+            'service': 'opsworks',
+            'type': 'AWS::OpsWorks::App',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.CreateLayer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/create\-layer\?/g)) {
+        reqParams.boto3['StackId'] = jsonRequestBody.StackId;
+        reqParams.cli['--stack-id'] = jsonRequestBody.StackId;
+        reqParams.boto3['Type'] = jsonRequestBody.Type;
+        reqParams.cli['--type'] = jsonRequestBody.Type;
+        reqParams.boto3['Name'] = jsonRequestBody.Name;
+        reqParams.cli['--name'] = jsonRequestBody.Name;
+        reqParams.boto3['Shortname'] = jsonRequestBody.Shortname;
+        reqParams.cli['--shortname'] = jsonRequestBody.Shortname;
+        reqParams.boto3['AutoAssignPublicIps'] = jsonRequestBody.AutoAssignPublicIps;
+        reqParams.cli['--auto-assign-public-ips'] = jsonRequestBody.AutoAssignPublicIps;
+        reqParams.boto3['Attributes'] = jsonRequestBody.Attributes;
+        reqParams.cli['--attributes'] = jsonRequestBody.Attributes;
+        reqParams.boto3['UseEbsOptimizedInstances'] = jsonRequestBody.UseEbsOptimizedInstances;
+        reqParams.cli['--use-ebs-optimized-instances'] = jsonRequestBody.UseEbsOptimizedInstances;
+        reqParams.boto3['AutoAssignElasticIps'] = jsonRequestBody.AutoAssignElasticIps;
+        reqParams.cli['--auto-assign-elastic-ips'] = jsonRequestBody.AutoAssignElasticIps;
+        reqParams.boto3['CustomRecipes'] = jsonRequestBody.CustomRecipes;
+        reqParams.cli['--custom-recipes'] = jsonRequestBody.CustomRecipes;
+        reqParams.boto3['EnableAutoHealing'] = jsonRequestBody.EnableAutoHealing;
+        reqParams.cli['--enable-auto-healing'] = jsonRequestBody.EnableAutoHealing;
+
+        reqParams.cfn['StackId'] = jsonRequestBody.StackId;
+        reqParams.cfn['Type'] = jsonRequestBody.Type;
+        reqParams.cfn['Name'] = jsonRequestBody.Name;
+        reqParams.cfn['Shortname'] = jsonRequestBody.Shortname;
+        reqParams.cfn['AutoAssignPublicIps'] = jsonRequestBody.AutoAssignPublicIps;
+        reqParams.cfn['Attributes'] = jsonRequestBody.Attributes;
+        reqParams.cfn['AutoAssignElasticIps'] = jsonRequestBody.AutoAssignElasticIps;
+        reqParams.cfn['CustomRecipes'] = jsonRequestBody.CustomRecipes;
+        reqParams.cfn['EnableAutoHealing'] = jsonRequestBody.EnableAutoHealing;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'CreateLayer',
+                'boto3': 'create_layer',
+                'cli': 'create-layer'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('opsworks', details.requestId),
+            'region': region,
+            'service': 'opsworks',
+            'type': 'AWS::OpsWorks::Layer',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.CreateInstance
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/create\-instance\?/g)) {
+        reqParams.boto3['StackId'] = jsonRequestBody.StackId;
+        reqParams.cli['--stack-id'] = jsonRequestBody.StackId;
+        reqParams.boto3['LayerIds'] = jsonRequestBody.LayerIds;
+        reqParams.cli['--layer-ids'] = jsonRequestBody.LayerIds;
+        reqParams.boto3['Hostname'] = jsonRequestBody.Hostname;
+        reqParams.cli['--hostname'] = jsonRequestBody.Hostname;
+        reqParams.boto3['Os'] = jsonRequestBody.Os;
+        reqParams.cli['--os'] = jsonRequestBody.Os;
+        reqParams.boto3['SshKeyName'] = jsonRequestBody.SshKeyName;
+        reqParams.cli['--ssh-key-name'] = jsonRequestBody.SshKeyName;
+        reqParams.boto3['RootDeviceType'] = jsonRequestBody.RootDeviceType;
+        reqParams.cli['--root-device-type'] = jsonRequestBody.RootDeviceType;
+        reqParams.boto3['Architecture'] = jsonRequestBody.Architecture;
+        reqParams.cli['--architecture'] = jsonRequestBody.Architecture;
+        reqParams.boto3['BlockDeviceMappings'] = jsonRequestBody.BlockDeviceMappings;
+        reqParams.cli['--block-device-mappings'] = jsonRequestBody.BlockDeviceMappings;
+        reqParams.boto3['InstanceType'] = jsonRequestBody.InstanceType;
+        reqParams.cli['--instance-type'] = jsonRequestBody.InstanceType;
+
+        reqParams.cfn['StackId'] = jsonRequestBody.StackId;
+        reqParams.cfn['LayerIds'] = jsonRequestBody.LayerIds;
+        reqParams.cfn['Hostname'] = jsonRequestBody.Hostname;
+        reqParams.cfn['Os'] = jsonRequestBody.Os;
+        reqParams.cfn['SshKeyName'] = jsonRequestBody.SshKeyName;
+        reqParams.cfn['RootDeviceType'] = jsonRequestBody.RootDeviceType;
+        reqParams.cfn['Architecture'] = jsonRequestBody.Architecture;
+        reqParams.cfn['BlockDeviceMappings'] = jsonRequestBody.BlockDeviceMappings;
+        reqParams.cfn['InstanceType'] = jsonRequestBody.InstanceType;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'CreateInstance',
+                'boto3': 'create_instance',
+                'cli': 'create-instance'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('opsworks', details.requestId),
+            'region': region,
+            'service': 'opsworks',
+            'type': 'AWS::OpsWorks::Instance',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.DescribeLayers
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/describe\-layers\?region=ap\-southeast\-2$/g)) {
+        reqParams.boto3['StackId'] = jsonRequestBody.StackId;
+        reqParams.cli['--stack-id'] = jsonRequestBody.StackId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'DescribeLayers',
+                'boto3': 'describe_layers',
+                'cli': 'describe-layers'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.UpdateLayer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/update\-layer\?/g)) {
+        reqParams.boto3['Name'] = jsonRequestBody.Name;
+        reqParams.cli['--name'] = jsonRequestBody.Name;
+        reqParams.boto3['Shortname'] = jsonRequestBody.Shortname;
+        reqParams.cli['--shortname'] = jsonRequestBody.Shortname;
+        reqParams.boto3['AutoAssignPublicIps'] = jsonRequestBody.AutoAssignPublicIps;
+        reqParams.cli['--auto-assign-public-ips'] = jsonRequestBody.AutoAssignPublicIps;
+        reqParams.boto3['Attributes'] = jsonRequestBody.Attributes;
+        reqParams.cli['--attributes'] = jsonRequestBody.Attributes;
+        reqParams.boto3['UseEbsOptimizedInstances'] = jsonRequestBody.UseEbsOptimizedInstances;
+        reqParams.cli['--use-ebs-optimized-instances'] = jsonRequestBody.UseEbsOptimizedInstances;
+        reqParams.boto3['CustomInstanceProfileArn'] = jsonRequestBody.CustomInstanceProfileArn;
+        reqParams.cli['--custom-instance-profile-arn'] = jsonRequestBody.CustomInstanceProfileArn;
+        reqParams.boto3['AutoAssignElasticIps'] = jsonRequestBody.AutoAssignElasticIps;
+        reqParams.cli['--auto-assign-elastic-ips'] = jsonRequestBody.AutoAssignElasticIps;
+        reqParams.boto3['CloudWatchLogsConfiguration'] = jsonRequestBody.CloudWatchLogsConfiguration;
+        reqParams.cli['--cloud-watch-logs-configuration'] = jsonRequestBody.CloudWatchLogsConfiguration;
+        reqParams.boto3['CustomRecipes'] = jsonRequestBody.CustomRecipes;
+        reqParams.cli['--custom-recipes'] = jsonRequestBody.CustomRecipes;
+        reqParams.boto3['CustomSecurityGroupIds'] = jsonRequestBody.CustomSecurityGroupIds;
+        reqParams.cli['--custom-security-group-ids'] = jsonRequestBody.CustomSecurityGroupIds;
+        reqParams.boto3['EnableAutoHealing'] = jsonRequestBody.EnableAutoHealing;
+        reqParams.cli['--enable-auto-healing'] = jsonRequestBody.EnableAutoHealing;
+        reqParams.boto3['LayerId'] = jsonRequestBody.LayerId;
+        reqParams.cli['--layer-id'] = jsonRequestBody.LayerId;
+        reqParams.boto3['LifecycleEventConfiguration'] = jsonRequestBody.LifecycleEventConfiguration;
+        reqParams.cli['--lifecycle-event-configuration'] = jsonRequestBody.LifecycleEventConfiguration;
+        reqParams.boto3['Packages'] = jsonRequestBody.Packages;
+        reqParams.cli['--packages'] = jsonRequestBody.Packages;
+        reqParams.boto3['VolumeConfigurations'] = jsonRequestBody.VolumeConfigurations;
+        reqParams.cli['--volume-configurations'] = jsonRequestBody.VolumeConfigurations;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'UpdateLayer',
+                'boto3': 'update_layer',
+                'cli': 'update-layer'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.RegisterVolume
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/register\-volume\?/g)) {
+        reqParams.boto3['Ec2VolumeId'] = jsonRequestBody.Ec2VolumeId;
+        reqParams.cli['--ec-2-volume-id'] = jsonRequestBody.Ec2VolumeId;
+        reqParams.boto3['StackId'] = jsonRequestBody.StackId;
+        reqParams.cli['--stack-id'] = jsonRequestBody.StackId;
+
+        reqParams.cfn['Ec2VolumeId'] = jsonRequestBody.Ec2VolumeId;
+        reqParams.cfn['StackId'] = jsonRequestBody.StackId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'RegisterVolume',
+                'boto3': 'register_volume',
+                'cli': 'register-volume'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('opsworks', details.requestId),
+            'region': region,
+            'service': 'opsworks',
+            'type': 'AWS::OpsWorks::Volume',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.DescribeVolumes
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/describe\-volumes\?/g)) {
+        reqParams.boto3['StackId'] = jsonRequestBody.StackId;
+        reqParams.cli['--stack-id'] = jsonRequestBody.StackId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'DescribeVolumes',
+                'boto3': 'describe_volumes',
+                'cli': 'describe-volumes'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.CreateUserProfile
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/create\-user\-profile\?/g)) {
+        reqParams.boto3['IamUserArn'] = jsonRequestBody.IamUserArn;
+        reqParams.cli['--iam-user-arn'] = jsonRequestBody.IamUserArn;
+        reqParams.boto3['SshPublicKey'] = jsonRequestBody.SshPublicKey;
+        reqParams.cli['--ssh-public-key'] = jsonRequestBody.SshPublicKey;
+        reqParams.boto3['AllowSelfManagement'] = jsonRequestBody.AllowSelfManagement;
+        reqParams.cli['--allow-self-management'] = jsonRequestBody.AllowSelfManagement;
+
+        reqParams.cfn['IamUserArn'] = jsonRequestBody.IamUserArn;
+        reqParams.cfn['SshPublicKey'] = jsonRequestBody.SshPublicKey;
+        reqParams.cfn['AllowSelfManagement'] = jsonRequestBody.AllowSelfManagement;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'CreateUserProfile',
+                'boto3': 'create_user_profile',
+                'cli': 'create-user-profile'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('opsworks', details.requestId),
+            'region': region,
+            'service': 'opsworks',
+            'type': 'AWS::OpsWorks::UserProfile',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.DescribeElasticLoadBalancers
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/list\-elastic\-load\-balancers\?/g)) {
+        reqParams.boto3['StackId'] = jsonRequestBody.StackId;
+        reqParams.cli['--stack-id'] = jsonRequestBody.StackId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'DescribeElasticLoadBalancers',
+                'boto3': 'describe_elastic_load_balancers',
+                'cli': 'describe-elastic-load-balancers'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.AttachElasticLoadBalancer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/attach\-elastic\-load\-balancer\?/g)) {
+        reqParams.boto3['ElasticLoadBalancerName'] = jsonRequestBody.ElasticLoadBalancerName;
+        reqParams.cli['--elastic-load-balancer-name'] = jsonRequestBody.ElasticLoadBalancerName;
+        reqParams.boto3['LayerId'] = jsonRequestBody.LayerId;
+        reqParams.cli['--layer-id'] = jsonRequestBody.LayerId;
+
+        reqParams.cfn['ElasticLoadBalancerName'] = jsonRequestBody.ElasticLoadBalancerName;
+        reqParams.cfn['LayerId'] = jsonRequestBody.LayerId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'AttachElasticLoadBalancer',
+                'boto3': 'attach_elastic_load_balancer',
+                'cli': 'attach-elastic-load-balancer'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('opsworks', details.requestId),
+            'region': region,
+            'service': 'opsworks',
+            'type': 'AWS::OpsWorks::ElasticLoadBalancerAttachment',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.DeleteInstance
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/delete\-instance\?/g)) {
+        reqParams.boto3['InstanceId'] = jsonRequestBody.InstanceId;
+        reqParams.cli['--instance-id'] = jsonRequestBody.InstanceId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'DeleteInstance',
+                'boto3': 'delete_instance',
+                'cli': 'delete-instance'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elb.DeleteLoadBalancer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=deleteLoadBalancer\?/g)) {
+        reqParams.boto3['LoadBalancerName'] = jsonRequestBody.loadBalancerName;
+        reqParams.cli['--load-balancer-name'] = jsonRequestBody.loadBalancerName;
+
+        outputs.push({
+            'region': region,
+            'service': 'elb',
+            'method': {
+                'api': 'DeleteLoadBalancer',
+                'boto3': 'delete_load_balancer',
+                'cli': 'delete-load-balancer'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.DetachElasticLoadBalancer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/detach\-elastic\-load\-balancer\?/g)) {
+        reqParams.boto3['ElasticLoadBalancerName'] = jsonRequestBody.ElasticLoadBalancerName;
+        reqParams.cli['--elastic-load-balancer-name'] = jsonRequestBody.ElasticLoadBalancerName;
+        reqParams.boto3['LayerId'] = jsonRequestBody.LayerId;
+        reqParams.cli['--layer-id'] = jsonRequestBody.LayerId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'DetachElasticLoadBalancer',
+                'boto3': 'detach_elastic_load_balancer',
+                'cli': 'detach-elastic-load-balancer'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.DeleteLayer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/delete\-layer\?/g)) {
+        reqParams.boto3['LayerId'] = jsonRequestBody.LayerId;
+        reqParams.cli['--layer-id'] = jsonRequestBody.LayerId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'DeleteLayer',
+                'boto3': 'delete_layer',
+                'cli': 'delete-layer'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.DeleteApp
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/delete\-app\?/g)) {
+        reqParams.boto3['AppId'] = jsonRequestBody.AppId;
+        reqParams.cli['--app-id'] = jsonRequestBody.AppId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'DeleteApp',
+                'boto3': 'delete_app',
+                'cli': 'delete-app'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:opsworks:opsworks.DeleteStack
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/s\/delete\-stack\?/g)) {
+        reqParams.boto3['StackId'] = jsonRequestBody.StackId;
+        reqParams.cli['--stack-id'] = jsonRequestBody.StackId;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworks',
+            'method': {
+                'api': 'DeleteStack',
+                'boto3': 'delete_stack',
+                'cli': 'delete-stack'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:redshift:ec2.DescribeSecurityGroups
+    // autogen:redshift:ec2.DescribeAddresses
+    // autogen:redshift:redshift.DescribeClusterParameterGroups
+    // autogen:redshift:redshift.DescribeClusterSubnetGroups
+    // autogen:redshift:ec2.DescribeVpcs
+    // autogen:redshift:sns.ListTopics
+    // autogen:redshift:redshift.CreateCluster
+    // autogen:redshift:redshift.CreateClusterParameterGroup
+    // autogen:redshift:redshift.CreateClusterSubnetGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/redshift\/rpc$/g)) {
+        for (var i in jsonRequestBody.actions) {
+            var action = jsonRequestBody.actions[i];
+            if (action['action'] == "EC2.DescribeSecurityGroupsDefault") {
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeSecurityGroups',
+                        'boto3': 'describe_security_groups',
+                        'cli': 'describe-security-groups'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+            } else if (action['action'] == "EC2.DescribeAddressesDefault") {
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeAddresses',
+                        'boto3': 'describe_addresses',
+                        'cli': 'describe-addresses'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+            } else if (action['action'] == "com.amazonaws.console.cookiemonster.shared.ParamGroupContext.list") {
+                outputs.push({
+                    'region': region,
+                    'service': 'redshift',
+                    'method': {
+                        'api': 'DescribeClusterParameterGroups',
+                        'boto3': 'describe_cluster_parameter_groups',
+                        'cli': 'describe-cluster-parameter-groups'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+            } else if (action['action'] == "com.amazonaws.console.cookiemonster.shared.ClusterSubnetGroupContext.list") {
+                outputs.push({
+                    'region': region,
+                    'service': 'redshift',
+                    'method': {
+                        'api': 'DescribeClusterSubnetGroups',
+                        'boto3': 'describe_cluster_subnet_groups',
+                        'cli': 'describe-cluster-subnet-groups'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+            } else if (action['action'] == "EC2.DescribeVpcsDefault") {
+                outputs.push({
+                    'region': region,
+                    'service': 'ec2',
+                    'method': {
+                        'api': 'DescribeVpcs',
+                        'boto3': 'describe_vpcs',
+                        'cli': 'describe-vpcs'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+            } else if (action['action'] == "com.amazonaws.console.cookiemonster.shared.RedshiftSnsContext.listTopicsWithMaxRecords") {
+                outputs.push({
+                    'region': region,
+                    'service': 'sns',
+                    'method': {
+                        'api': 'ListTopics',
+                        'boto3': 'list_topics',
+                        'cli': 'list-topics'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+            } else if (action['action'] == "com.amazonaws.console.cookiemonster.shared.ClusterContext.create") {
+                reqParams.boto3['AllowVersionUpgrade'] = action['parameters'][0]['allowVersionUpgrade'];
+                reqParams.cli['--allow-version-upgrade'] = action['parameters'][0]['allowVersionUpgrade'];
+                reqParams.boto3['Encrypted'] = action['parameters'][0]['encrypted'];
+                reqParams.cli['--encrypted'] = action['parameters'][0]['encrypted'];
+                reqParams.boto3['EnhancedVpcRouting'] = action['parameters'][0]['enhancedVpcRouting'];
+                reqParams.cli['--enhanced-vpc-routing'] = action['parameters'][0]['enhancedVpcRouting'];
+                reqParams.boto3['PubliclyAccessible'] = action['parameters'][0]['publiclyAccessible'];
+                reqParams.cli['--publicly-accessible'] = action['parameters'][0]['publiclyAccessible'];
+                reqParams.boto3['AutomatedSnapshotRetentionPeriod'] = action['parameters'][0]['automatedSnapshotRetentionPeriod'];
+                reqParams.cli['--automated-snapshot-retention-period'] = action['parameters'][0]['automatedSnapshotRetentionPeriod'];
+                reqParams.boto3['NumberOfNodes'] = action['parameters'][0]['numberOfNodes'];
+                reqParams.cli['--number-of-nodes'] = action['parameters'][0]['numberOfNodes'];
+                reqParams.boto3['Port'] = action['parameters'][0]['port'];
+                reqParams.cli['--port'] = action['parameters'][0]['port'];
+                reqParams.boto3['AvailabilityZone'] = action['parameters'][0]['availabilityZone'];
+                reqParams.cli['--availability-zone'] = action['parameters'][0]['availabilityZone'];
+                reqParams.boto3['ClusterIdentifier'] = action['parameters'][0]['clusterIdentifier'];
+                reqParams.cli['--cluster-identifier'] = action['parameters'][0]['clusterIdentifier'];
+                reqParams.boto3['ClusterType'] = action['parameters'][0]['clusterType'];
+                reqParams.cli['--cluster-type'] = action['parameters'][0]['clusterType'];
+                reqParams.boto3['ClusterVersion'] = action['parameters'][0]['clusterVersion'];
+                reqParams.cli['--cluster-version'] = action['parameters'][0]['clusterVersion'];
+                reqParams.boto3['DBName'] = action['parameters'][0]['DBName'];
+                reqParams.cli['--db-name'] = action['parameters'][0]['DBName'];
+                reqParams.boto3['KmsKeyId'] = action['parameters'][0]['kmsKeyId'];
+                reqParams.cli['--kms-key-id'] = action['parameters'][0]['kmsKeyId'];
+                reqParams.boto3['MaintenanceTrackName'] = action['parameters'][0]['maintenanceTrackName'];
+                reqParams.cli['--maintenance-track-name'] = action['parameters'][0]['maintenanceTrackName'];
+                reqParams.boto3['MasterUserPassword'] = action['parameters'][0]['masterUserPassword'];
+                reqParams.cli['--master-user-password'] = action['parameters'][0]['masterUserPassword'];
+                reqParams.boto3['MasterUsername'] = action['parameters'][0]['masterUsername'];
+                reqParams.cli['--master-username'] = action['parameters'][0]['masterUsername'];
+                reqParams.boto3['NodeType'] = action['parameters'][0]['nodeType'];
+                reqParams.cli['--node-type'] = action['parameters'][0]['nodeType'];
+                reqParams.boto3['IamRoles'] = action['parameters'][0]['iamRoles'];
+                reqParams.cli['--iam-roles'] = action['parameters'][0]['iamRoles'];
+                reqParams.boto3['VpcSecurityGroupIds'] = action['parameters'][0]['vpcSecurityGroupIds'];
+                reqParams.cli['--vpc-security-group-ids'] = action['parameters'][0]['vpcSecurityGroupIds'];
+
+                reqParams.cfn['AllowVersionUpgrade'] = action['parameters'][0]['allowVersionUpgrade'];
+                reqParams.cfn['Encrypted'] = action['parameters'][0]['encrypted'];
+                reqParams.cfn['PubliclyAccessible'] = action['parameters'][0]['publiclyAccessible'];
+                reqParams.cfn['AutomatedSnapshotRetentionPeriod'] = action['parameters'][0]['automatedSnapshotRetentionPeriod'];
+                reqParams.cfn['NumberOfNodes'] = action['parameters'][0]['numberOfNodes'];
+                reqParams.cfn['Port'] = action['parameters'][0]['port'];
+                reqParams.cfn['AvailabilityZone'] = action['parameters'][0]['availabilityZone'];
+                reqParams.cfn['ClusterIdentifier'] = action['parameters'][0]['clusterIdentifier'];
+                reqParams.cfn['ClusterType'] = action['parameters'][0]['clusterType'];
+                reqParams.cfn['ClusterVersion'] = action['parameters'][0]['clusterVersion'];
+                reqParams.cfn['DBName'] = action['parameters'][0]['DBName'];
+                reqParams.cfn['KmsKeyId'] = action['parameters'][0]['kmsKeyId'];
+                reqParams.cfn['MasterUserPassword'] = action['parameters'][0]['masterUserPassword'];
+                reqParams.cfn['MasterUsername'] = action['parameters'][0]['masterUsername'];
+                reqParams.cfn['NodeType'] = action['parameters'][0]['nodeType'];
+                reqParams.cfn['IamRoles'] = action['parameters'][0]['iamRoles'];
+                reqParams.cfn['VpcSecurityGroupIds'] = action['parameters'][0]['vpcSecurityGroupIds'];
+        
+                outputs.push({
+                    'region': region,
+                    'service': 'redshift',
+                    'method': {
+                        'api': 'CreateCluster',
+                        'boto3': 'create_cluster',
+                        'cli': 'create-cluster'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('redshift', details.requestId),
+                    'region': region,
+                    'service': 'redshift',
+                    'type': 'AWS::Redshift::Cluster',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
+                });
+            } else if (action['action'] == "com.amazonaws.console.cookiemonster.shared.ParamGroupContext.createClusterParameterGroup") {
+                reqParams.boto3['Description'] = action['parameters'][0]['description'];
+                reqParams.cli['--description'] = action['parameters'][0]['description'];
+                reqParams.boto3['ParameterGroupFamily'] = action['parameters'][0]['parameterGroupFamily'];
+                reqParams.cli['--parameter-group-family'] = action['parameters'][0]['parameterGroupFamily'];
+                reqParams.boto3['ParameterGroupName'] = action['parameters'][0]['parameterGroupName'];
+                reqParams.cli['--parameter-group-name'] = action['parameters'][0]['parameterGroupName'];
+
+                reqParams.cfn['Description'] = action['parameters'][0]['description'];
+                reqParams.cfn['ParameterGroupFamily'] = action['parameters'][0]['parameterGroupFamily'];
+        
+                outputs.push({
+                    'region': region,
+                    'service': 'redshift',
+                    'method': {
+                        'api': 'CreateClusterParameterGroup',
+                        'boto3': 'create_cluster_parameter_group',
+                        'cli': 'create-cluster-parameter-group'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('redshift', details.requestId),
+                    'region': region,
+                    'service': 'redshift',
+                    'type': 'AWS::Redshift::ClusterParameterGroup',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
+                });
+            } else if (action['action'] == "com.amazonaws.console.cookiemonster.shared.ClusterSubnetGroupContext.create") {
+                reqParams.boto3['ClusterSubnetGroupName'] = action['parameters'][0]['clusterSubnetGroupName'];
+                reqParams.cli['--cluster-subnet-group-name'] = action['parameters'][0]['clusterSubnetGroupName'];
+                reqParams.boto3['Description'] = action['parameters'][0]['description'];
+                reqParams.cli['--description'] = action['parameters'][0]['description'];
+                reqParams.boto3['SubnetIds'] = action['parameters'][0]['subnetIds'];
+                reqParams.cli['--subnet-ids'] = action['parameters'][0]['subnetIds'];
+
+                reqParams.cfn['Description'] = action['parameters'][0]['description'];
+                reqParams.cfn['SubnetIds'] = action['parameters'][0]['subnetIds'];
+        
+                outputs.push({
+                    'region': region,
+                    'service': 'redshift',
+                    'method': {
+                        'api': 'CreateClusterSubnetGroup',
+                        'boto3': 'create_cluster_subnet_group',
+                        'cli': 'create-cluster-subnet-group'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('redshift', details.requestId),
+                    'region': region,
+                    'service': 'redshift',
+                    'type': 'AWS::Redshift::ClusterSubnetGroup',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
+                });
+            }
+        }
+    }
+
+    return false;        
 }

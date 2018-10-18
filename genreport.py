@@ -15,7 +15,9 @@ cfn_occurances = [
     "AWS::CloudFormation::WaitConditionHandle",
     "AWS::SDB::Domain",
     "AWS::EC2::SecurityGroupEgress",
-    "AWS::EC2::SecurityGroupIngress"
+    "AWS::EC2::SecurityGroupIngress",
+    "AWS::Redshift::ClusterSecurityGroup",
+    "AWS::Redshift::ClusterSecurityGroupIngress"
 ]
 
 with open("combined.json", "r") as f:

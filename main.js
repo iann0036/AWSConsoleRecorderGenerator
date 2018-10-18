@@ -186,7 +186,7 @@ ${inputs_string}
                 'cli': '${climethod}'
             },
             'options': reqParams,
-            'requestId': details.requestId
+            'requestDetails': details
         });
         
         return {};
