@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**126/258 (46.0%)** Resources Covered
+**136/258 (50.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -180,9 +180,9 @@
 | *AWS::IAM::ServiceLinkedRole* | 0 |
 | *AWS::IAM::User* | 1 |
 | *AWS::IAM::UserToGroupAddition* | 1 |
-| *AWS::Inspector::AssessmentTarget* | 0 |
-| *AWS::Inspector::AssessmentTemplate* | 0 |
-| *AWS::Inspector::ResourceGroup* | 0 |
+| *AWS::Inspector::AssessmentTarget* | 1 |
+| *AWS::Inspector::AssessmentTemplate* | 1 |
+| *AWS::Inspector::ResourceGroup* | 1 |
 | *AWS::IoT::Certificate* | 0 |
 | *AWS::IoT::Policy* | 0 |
 | *AWS::IoT::PolicyPrincipalAttachment* | 0 |
@@ -254,13 +254,13 @@
 | *AWS::ServiceCatalog::PortfolioShare* | 1 |
 | *AWS::ServiceCatalog::TagOption* | 1 |
 | *AWS::ServiceCatalog::TagOptionAssociation* | 1 |
-| *AWS::WAF::ByteMatchSet* | 0 |
-| *AWS::WAF::IPSet* | 0 |
-| *AWS::WAF::Rule* | 0 |
-| *AWS::WAF::SizeConstraintSet* | 0 |
-| *AWS::WAF::SqlInjectionMatchSet* | 0 |
-| *AWS::WAF::WebACL* | 0 |
-| *AWS::WAF::XssMatchSet* | 0 |
+| *AWS::WAF::ByteMatchSet* | 1 |
+| *AWS::WAF::IPSet* | 1 |
+| *AWS::WAF::Rule* | 1 |
+| *AWS::WAF::SizeConstraintSet* | 1 |
+| *AWS::WAF::SqlInjectionMatchSet* | 1 |
+| *AWS::WAF::WebACL* | 1 |
+| *AWS::WAF::XssMatchSet* | 1 |
 | *AWS::WorkSpaces::Workspace* | 1 |
 
 ## Service Coverage
@@ -291,11 +291,12 @@
 | *elb* | 4/29 (13.0%) |
 | *elbv2* | 15/34 (44.0%) |
 | *es* | 11/21 (52.0%) |
-| *events* | 5/15 (33.0%) |
+| *events* | 8/15 (53.0%) |
 | *firehose* | 1/10 (10.0%) |
 | *glue* | 19/84 (22.0%) |
 | *guardduty* | 21/42 (50.0%) |
 | *iam* | 24/127 (18.0%) |
+| *inspector* | 11/37 (29.0%) |
 | *kinesis* | 1/28 (3.0%) |
 | *kms* | 2/35 (5.0%) |
 | *lambda* | 11/30 (36.0%) |
@@ -313,6 +314,7 @@
 | *sqs* | 6/20 (30.0%) |
 | *ssm* | 2/108 (1.0%) |
 | *stepfunctions* | 1/19 (5.0%) |
+| *waf* | 32/73 (43.0%) |
 | *waf-regional* | 1/77 (1.0%) |
 | *workspaces* | 4/23 (17.0%) |
 
@@ -2184,18 +2186,18 @@
 | *es* | `DescribeReservedElasticsearchInstances` | 1 |
 | *events* | `PutEvents` | 0 |
 | *events* | `EnableRule` | 1 |
-| *events* | `DescribeRule` | 0 |
+| *events* | `DescribeRule` | 1 |
 | *events* | `ListTargetsByRule` | 0 |
 | *events* | `PutPermission` | 0 |
-| *events* | `PutTargets` | 0 |
+| *events* | `PutTargets` | 1 |
 | *events* | `DeleteRule` | 1 |
-| *events* | `ListRuleNamesByTarget` | 0 |
+| *events* | `ListRuleNamesByTarget` | 1 |
 | *events* | `DescribeEventBus` | 0 |
 | *events* | `TestEventPattern` | 0 |
 | *events* | `RemovePermission` | 0 |
 | *events* | `ListRules` | 1 |
 | *events* | `DisableRule` | 1 |
-| *events* | `PutRule` | 1 |
+| *events* | `PutRule` | 2 |
 | *events* | `RemoveTargets` | 0 |
 | *firehose* | `CreateDeliveryStream` | 0 |
 | *firehose* | `DescribeDeliveryStream` | 0 |
@@ -2665,34 +2667,34 @@
 | *inspector* | `GetTelemetryMetadata` | 0 |
 | *inspector* | `DescribeAssessmentRuns` | 0 |
 | *inspector* | `StartAssessmentRun` | 0 |
-| *inspector* | `DescribeCrossAccountAccessRole` | 0 |
-| *inspector* | `DescribeAssessmentTargets` | 0 |
-| *inspector* | `ListRulesPackages` | 0 |
+| *inspector* | `DescribeCrossAccountAccessRole` | 1 |
+| *inspector* | `DescribeAssessmentTargets` | 1 |
+| *inspector* | `ListRulesPackages` | 1 |
 | *inspector* | `StopAssessmentRun` | 0 |
-| *inspector* | `ListAssessmentTemplates` | 0 |
+| *inspector* | `ListAssessmentTemplates` | 1 |
 | *inspector* | `DescribeFindings` | 0 |
 | *inspector* | `DeleteAssessmentTemplate` | 0 |
 | *inspector* | `DescribeResourceGroups` | 0 |
 | *inspector* | `ListFindings` | 0 |
-| *inspector* | `ListEventSubscriptions` | 0 |
-| *inspector* | `ListAssessmentTargets` | 0 |
+| *inspector* | `ListEventSubscriptions` | 1 |
+| *inspector* | `ListAssessmentTargets` | 2 |
 | *inspector* | `DescribeExclusions` | 0 |
 | *inspector* | `ListExclusions` | 0 |
 | *inspector* | `GetExclusionsPreview` | 0 |
 | *inspector* | `SetTagsForResource` | 0 |
 | *inspector* | `DeleteAssessmentRun` | 0 |
-| *inspector* | `CreateAssessmentTarget` | 0 |
+| *inspector* | `CreateAssessmentTarget` | 1 |
 | *inspector* | `UnsubscribeFromEvent` | 0 |
 | *inspector* | `ListAssessmentRuns` | 0 |
 | *inspector* | `CreateExclusionsPreview` | 0 |
-| *inspector* | `RegisterCrossAccountAccessRole` | 0 |
+| *inspector* | `RegisterCrossAccountAccessRole` | 1 |
 | *inspector* | `AddAttributesToFindings` | 0 |
-| *inspector* | `CreateResourceGroup` | 0 |
+| *inspector* | `CreateResourceGroup` | 1 |
 | *inspector* | `DescribeAssessmentTemplates` | 0 |
 | *inspector* | `PreviewAgents` | 0 |
-| *inspector* | `CreateAssessmentTemplate` | 0 |
+| *inspector* | `CreateAssessmentTemplate` | 1 |
 | *inspector* | `SubscribeToEvent` | 0 |
-| *inspector* | `DescribeRulesPackages` | 0 |
+| *inspector* | `DescribeRulesPackages` | 1 |
 | *inspector* | `ListTagsForResource` | 0 |
 | *inspector* | `ListAssessmentRunAgents` | 0 |
 | *inspector* | `GetAssessmentReport` | 0 |
@@ -4620,78 +4622,78 @@
 | *transcribe* | `DeleteVocabulary` | 0 |
 | *transcribe* | `GetTranscriptionJob` | 0 |
 | *translate* | `TranslateText` | 0 |
-| *waf* | `CreateSizeConstraintSet` | 0 |
+| *waf* | `CreateSizeConstraintSet` | 1 |
 | *waf* | `UpdateRegexMatchSet` | 0 |
 | *waf* | `GetPermissionPolicy` | 0 |
-| *waf* | `ListIPSets` | 0 |
+| *waf* | `ListIPSets` | 1 |
 | *waf* | `DeleteRateBasedRule` | 0 |
 | *waf* | `GetRegexPatternSet` | 0 |
 | *waf* | `PutLoggingConfiguration` | 0 |
 | *waf* | `GetRegexMatchSet` | 0 |
 | *waf* | `GetChangeTokenStatus` | 0 |
 | *waf* | `UpdateRegexPatternSet` | 0 |
-| *waf* | `DeleteSqlInjectionMatchSet` | 0 |
-| *waf* | `ListByteMatchSets` | 0 |
-| *waf* | `CreateRule` | 0 |
+| *waf* | `DeleteSqlInjectionMatchSet` | 1 |
+| *waf* | `ListByteMatchSets` | 1 |
+| *waf* | `CreateRule` | 1 |
 | *waf* | `UpdateGeoMatchSet` | 0 |
 | *waf* | `GetRateBasedRuleManagedKeys` | 0 |
-| *waf* | `ListRuleGroups` | 0 |
-| *waf* | `CreateSqlInjectionMatchSet` | 0 |
-| *waf* | `UpdateSqlInjectionMatchSet` | 0 |
-| *waf* | `ListRateBasedRules` | 0 |
-| *waf* | `ListRegexMatchSets` | 0 |
+| *waf* | `ListRuleGroups` | 1 |
+| *waf* | `CreateSqlInjectionMatchSet` | 1 |
+| *waf* | `UpdateSqlInjectionMatchSet` | 1 |
+| *waf* | `ListRateBasedRules` | 1 |
+| *waf* | `ListRegexMatchSets` | 1 |
 | *waf* | `PutPermissionPolicy` | 0 |
-| *waf* | `DeleteByteMatchSet` | 0 |
+| *waf* | `DeleteByteMatchSet` | 1 |
 | *waf* | `DeleteRegexPatternSet` | 0 |
 | *waf* | `CreateRegexPatternSet` | 0 |
 | *waf* | `GetIPSet` | 0 |
-| *waf* | `ListSqlInjectionMatchSets` | 0 |
-| *waf* | `DeleteRule` | 0 |
-| *waf* | `ListSubscribedRuleGroups` | 0 |
-| *waf* | `DeleteXssMatchSet` | 0 |
-| *waf* | `UpdateIPSet` | 0 |
+| *waf* | `ListSqlInjectionMatchSets` | 1 |
+| *waf* | `DeleteRule` | 1 |
+| *waf* | `ListSubscribedRuleGroups` | 1 |
+| *waf* | `DeleteXssMatchSet` | 1 |
+| *waf* | `UpdateIPSet` | 1 |
 | *waf* | `ListWebACLs` | 0 |
 | *waf* | `UpdateRuleGroup` | 0 |
-| *waf* | `UpdateRule` | 0 |
+| *waf* | `UpdateRule` | 1 |
 | *waf* | `GetByteMatchSet` | 0 |
-| *waf* | `CreateXssMatchSet` | 0 |
+| *waf* | `CreateXssMatchSet` | 1 |
 | *waf* | `UpdateRateBasedRule` | 0 |
 | *waf* | `GetLoggingConfiguration` | 0 |
-| *waf* | `CreateByteMatchSet` | 0 |
-| *waf* | `ListXssMatchSets` | 0 |
+| *waf* | `CreateByteMatchSet` | 1 |
+| *waf* | `ListXssMatchSets` | 1 |
 | *waf* | `GetSizeConstraintSet` | 0 |
 | *waf* | `ListLoggingConfigurations` | 0 |
 | *waf* | `GetGeoMatchSet` | 0 |
-| *waf* | `CreateIPSet` | 0 |
+| *waf* | `CreateIPSet` | 1 |
 | *waf* | `DeleteRuleGroup` | 0 |
 | *waf* | `GetXssMatchSet` | 0 |
-| *waf* | `ListGeoMatchSets` | 0 |
+| *waf* | `ListGeoMatchSets` | 1 |
 | *waf* | `DeleteLoggingConfiguration` | 0 |
 | *waf* | `GetRateBasedRule` | 0 |
 | *waf* | `DeleteGeoMatchSet` | 0 |
 | *waf* | `CreateRateBasedRule` | 0 |
 | *waf* | `GetRuleGroup` | 0 |
-| *waf* | `ListRules` | 0 |
+| *waf* | `ListRules` | 1 |
 | *waf* | `GetSampledRequests` | 0 |
-| *waf* | `CreateWebACL` | 0 |
+| *waf* | `CreateWebACL` | 1 |
 | *waf* | `DeleteWebACL` | 0 |
 | *waf* | `CreateRuleGroup` | 0 |
 | *waf* | `GetRule` | 0 |
-| *waf* | `DeleteSizeConstraintSet` | 0 |
-| *waf* | `UpdateSizeConstraintSet` | 0 |
+| *waf* | `DeleteSizeConstraintSet` | 1 |
+| *waf* | `UpdateSizeConstraintSet` | 1 |
 | *waf* | `ListActivatedRulesInRuleGroup` | 0 |
-| *waf* | `UpdateWebACL` | 0 |
-| *waf* | `GetChangeToken` | 0 |
+| *waf* | `UpdateWebACL` | 1 |
+| *waf* | `GetChangeToken` | 1 |
 | *waf* | `DeleteRegexMatchSet` | 0 |
 | *waf* | `GetWebACL` | 0 |
 | *waf* | `DeletePermissionPolicy` | 0 |
-| *waf* | `UpdateByteMatchSet` | 0 |
-| *waf* | `UpdateXssMatchSet` | 0 |
+| *waf* | `UpdateByteMatchSet` | 1 |
+| *waf* | `UpdateXssMatchSet` | 1 |
 | *waf* | `CreateRegexMatchSet` | 0 |
 | *waf* | `GetSqlInjectionMatchSet` | 0 |
 | *waf* | `ListRegexPatternSets` | 0 |
-| *waf* | `ListSizeConstraintSets` | 0 |
-| *waf* | `DeleteIPSet` | 0 |
+| *waf* | `ListSizeConstraintSets` | 1 |
+| *waf* | `DeleteIPSet` | 1 |
 | *waf* | `CreateGeoMatchSet` | 0 |
 | *waf-regional* | `CreateSizeConstraintSet` | 0 |
 | *waf-regional* | `UpdateRegexMatchSet` | 0 |
@@ -4884,4 +4886,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 458 (10.0%)**
+**Total Unique Occurances: 504 (11.0%)**
