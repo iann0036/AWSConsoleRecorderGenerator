@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**136/258 (50.0%)** Resources Covered
+**138/258 (51.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -41,8 +41,8 @@
 | *AWS::Batch::ComputeEnvironment* | 1 |
 | *AWS::Batch::JobDefinition* | 1 |
 | *AWS::Batch::JobQueue* | 1 |
-| *AWS::Budgets::Budget* | 0 |
-| *AWS::CertificateManager::Certificate* | 0 |
+| *AWS::Budgets::Budget* | 1 |
+| *AWS::CertificateManager::Certificate* | 1 |
 | *AWS::CloudFormation::CustomResource* | 1 |
 | *AWS::CloudFormation::Stack* | 0 |
 | *AWS::CloudFormation::WaitCondition* | 1 |
@@ -267,12 +267,14 @@
 
 | Service | Coverage |
 | --- | --- |
-| *acm* | 1/12 (8.0%) |
+| *acm* | 3/12 (25.0%) |
+| *acm-pca* | 1/17 (5.0%) |
 | *apigateway* | 31/120 (25.0%) |
 | *appsync* | 9/27 (33.0%) |
 | *athena* | 1/11 (9.0%) |
 | *autoscaling* | 19/54 (35.0%) |
 | *batch* | 11/16 (68.0%) |
+| *budgets* | 1/13 (7.0%) |
 | *cloud9* | 6/10 (60.0%) |
 | *cloudtrail* | 6/14 (42.0%) |
 | *cloudwatch* | 1/17 (5.0%) |
@@ -329,13 +331,13 @@
 | *acm* | `GetCertificate` | 0 |
 | *acm* | `ListTagsForCertificate` | 0 |
 | *acm* | `RemoveTagsFromCertificate` | 0 |
-| *acm* | `RequestCertificate` | 0 |
+| *acm* | `RequestCertificate` | 1 |
 | *acm* | `ImportCertificate` | 0 |
 | *acm* | `DeleteCertificate` | 0 |
 | *acm* | `ExportCertificate` | 0 |
-| *acm* | `DescribeCertificate` | 0 |
+| *acm* | `DescribeCertificate` | 1 |
 | *acm-pca* | `RestoreCertificateAuthority` | 0 |
-| *acm-pca* | `ListCertificateAuthorities` | 0 |
+| *acm-pca* | `ListCertificateAuthorities` | 1 |
 | *acm-pca* | `ListTags` | 0 |
 | *acm-pca* | `UntagCertificateAuthority` | 0 |
 | *acm-pca* | `UpdateCertificateAuthority` | 0 |
@@ -685,7 +687,7 @@
 | *budgets* | `CreateNotification` | 0 |
 | *budgets* | `UpdateNotification` | 0 |
 | *budgets* | `UpdateBudget` | 0 |
-| *budgets* | `CreateBudget` | 0 |
+| *budgets* | `CreateBudget` | 1 |
 | *budgets* | `DeleteNotification` | 0 |
 | *budgets* | `DescribeSubscribersForNotification` | 0 |
 | *budgets* | `DeleteSubscriber` | 0 |
@@ -4886,4 +4888,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 504 (11.0%)**
+**Total Unique Occurances: 508 (11.0%)**
