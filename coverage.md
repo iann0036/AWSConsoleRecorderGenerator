@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**138/258 (51.0%)** Resources Covered
+**144/258 (53.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -59,13 +59,13 @@
 | *AWS::CodePipeline::CustomActionType* | 0 |
 | *AWS::CodePipeline::Pipeline* | 1 |
 | *AWS::CodePipeline::Webhook* | 0 |
-| *AWS::Cognito::IdentityPool* | 0 |
+| *AWS::Cognito::IdentityPool* | 1 |
 | *AWS::Cognito::IdentityPoolRoleAttachment* | 0 |
-| *AWS::Cognito::UserPool* | 0 |
-| *AWS::Cognito::UserPoolClient* | 0 |
-| *AWS::Cognito::UserPoolGroup* | 0 |
-| *AWS::Cognito::UserPoolUser* | 0 |
-| *AWS::Cognito::UserPoolUserToGroupAttachment* | 0 |
+| *AWS::Cognito::UserPool* | 1 |
+| *AWS::Cognito::UserPoolClient* | 1 |
+| *AWS::Cognito::UserPoolGroup* | 1 |
+| *AWS::Cognito::UserPoolUser* | 1 |
+| *AWS::Cognito::UserPoolUserToGroupAttachment* | 1 |
 | *AWS::Config::AggregationAuthorization* | 0 |
 | *AWS::Config::ConfigRule* | 0 |
 | *AWS::Config::ConfigurationAggregator* | 0 |
@@ -282,7 +282,8 @@
 | *codecommit* | 5/39 (12.0%) |
 | *codedeploy* | 15/40 (37.0%) |
 | *codepipeline* | 8/32 (25.0%) |
-| *cognito-idp* | 1/95 (1.0%) |
+| *cognito-identity* | 1/18 (5.0%) |
+| *cognito-idp* | 10/95 (10.0%) |
 | *config* | 3/43 (6.0%) |
 | *ds* | 4/49 (8.0%) |
 | *dynamodb* | 2/34 (5.0%) |
@@ -306,6 +307,7 @@
 | *medialive* | 4/25 (16.0%) |
 | *mq* | 6/17 (35.0%) |
 | *opsworks* | 16/74 (21.0%) |
+| *pinpoint* | 1/71 (1.0%) |
 | *rds* | 22/96 (22.0%) |
 | *redshift* | 5/69 (7.0%) |
 | *rekognition* | 3/34 (8.0%) |
@@ -326,7 +328,7 @@
 | --- | --- | --- |
 | *acm* | `ResendValidationEmail` | 0 |
 | *acm* | `AddTagsToCertificate` | 0 |
-| *acm* | `ListCertificates` | 2 |
+| *acm* | `ListCertificates` | 3 |
 | *acm* | `UpdateCertificateOptions` | 0 |
 | *acm* | `GetCertificate` | 0 |
 | *acm* | `ListTagsForCertificate` | 0 |
@@ -1115,13 +1117,13 @@
 | *cognito-identity* | `UnlinkDeveloperIdentity` | 0 |
 | *cognito-identity* | `DescribeIdentityPool` | 0 |
 | *cognito-identity* | `GetOpenIdToken` | 0 |
-| *cognito-identity* | `CreateIdentityPool` | 0 |
+| *cognito-identity* | `CreateIdentityPool` | 1 |
 | *cognito-idp* | `VerifyUserAttribute` | 0 |
 | *cognito-idp* | `AdminListDevices` | 0 |
 | *cognito-idp* | `SignUp` | 0 |
 | *cognito-idp* | `ListIdentityProviders` | 0 |
 | *cognito-idp* | `DescribeResourceServer` | 0 |
-| *cognito-idp* | `ListUserPoolClients` | 0 |
+| *cognito-idp* | `ListUserPoolClients` | 1 |
 | *cognito-idp* | `DescribeUserPool` | 0 |
 | *cognito-idp* | `AdminUserGlobalSignOut` | 0 |
 | *cognito-idp* | `DeleteUserPoolDomain` | 0 |
@@ -1148,24 +1150,24 @@
 | *cognito-idp* | `ForgetDevice` | 0 |
 | *cognito-idp* | `ConfirmForgotPassword` | 0 |
 | *cognito-idp* | `AdminDisableProviderForUser` | 0 |
-| *cognito-idp* | `ListUserPools` | 1 |
+| *cognito-idp* | `ListUserPools` | 2 |
 | *cognito-idp* | `AdminGetDevice` | 0 |
 | *cognito-idp* | `UpdateGroup` | 0 |
 | *cognito-idp* | `GetGroup` | 0 |
-| *cognito-idp* | `AdminAddUserToGroup` | 0 |
+| *cognito-idp* | `AdminAddUserToGroup` | 1 |
 | *cognito-idp* | `AssociateSoftwareToken` | 0 |
 | *cognito-idp* | `AdminListGroupsForUser` | 0 |
 | *cognito-idp* | `DescribeUserPoolClient` | 0 |
 | *cognito-idp* | `ListDevices` | 0 |
 | *cognito-idp* | `RespondToAuthChallenge` | 0 |
-| *cognito-idp* | `CreateUserPoolClient` | 0 |
+| *cognito-idp* | `CreateUserPoolClient` | 1 |
 | *cognito-idp* | `DeleteUserAttributes` | 0 |
 | *cognito-idp* | `GlobalSignOut` | 0 |
 | *cognito-idp* | `ConfirmSignUp` | 0 |
 | *cognito-idp* | `ForgotPassword` | 0 |
-| *cognito-idp* | `AdminCreateUser` | 0 |
+| *cognito-idp* | `AdminCreateUser` | 1 |
 | *cognito-idp* | `DeleteIdentityProvider` | 0 |
-| *cognito-idp* | `CreateGroup` | 0 |
+| *cognito-idp* | `CreateGroup` | 1 |
 | *cognito-idp* | `DeleteUserPool` | 0 |
 | *cognito-idp* | `AdminListUserAuthEvents` | 0 |
 | *cognito-idp* | `GetUserPoolMfaConfig` | 0 |
@@ -1182,15 +1184,15 @@
 | *cognito-idp* | `AdminRemoveUserFromGroup` | 0 |
 | *cognito-idp* | `UpdateUserPool` | 0 |
 | *cognito-idp* | `UpdateResourceServer` | 0 |
-| *cognito-idp* | `ListGroups` | 0 |
+| *cognito-idp* | `ListGroups` | 1 |
 | *cognito-idp* | `ListUserImportJobs` | 0 |
-| *cognito-idp* | `ListUsers` | 0 |
+| *cognito-idp* | `ListUsers` | 1 |
 | *cognito-idp* | `DescribeUserImportJob` | 0 |
 | *cognito-idp* | `AdminDeleteUserAttributes` | 0 |
 | *cognito-idp* | `AdminRespondToAuthChallenge` | 0 |
 | *cognito-idp* | `CreateIdentityProvider` | 0 |
 | *cognito-idp* | `GetIdentityProviderByIdentifier` | 0 |
-| *cognito-idp* | `CreateUserPool` | 0 |
+| *cognito-idp* | `CreateUserPool` | 1 |
 | *cognito-idp* | `VerifySoftwareToken` | 0 |
 | *cognito-idp* | `UpdateUserAttributes` | 0 |
 | *cognito-idp* | `DescribeUserPoolDomain` | 0 |
@@ -1204,7 +1206,7 @@
 | *cognito-idp* | `AddCustomAttributes` | 0 |
 | *cognito-idp* | `StartUserImportJob` | 0 |
 | *cognito-idp* | `AdminGetUser` | 0 |
-| *cognito-idp* | `SetUserPoolMfaConfig` | 0 |
+| *cognito-idp* | `SetUserPoolMfaConfig` | 1 |
 | *cognito-idp* | `GetDevice` | 0 |
 | *cognito-idp* | `CreateUserImportJob` | 0 |
 | *cognito-idp* | `SetUserMFAPreference` | 0 |
@@ -2557,7 +2559,7 @@
 | *iam* | `UploadServerCertificate` | 0 |
 | *iam* | `GetContextKeysForPrincipalPolicy` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
-| *iam* | `ListRoles` | 7 |
+| *iam* | `ListRoles` | 8 |
 | *iam* | `DeleteAccessKey` | 0 |
 | *iam* | `AddRoleToInstanceProfile` | 1 |
 | *iam* | `GetContextKeysForCustomPolicy` | 0 |
@@ -3580,7 +3582,7 @@
 | *pinpoint* | `UpdateApnsVoipSandboxChannel` | 0 |
 | *pinpoint* | `UpdateCampaign` | 0 |
 | *pinpoint* | `GetImportJobs` | 0 |
-| *pinpoint* | `GetApps` | 0 |
+| *pinpoint* | `GetApps` | 1 |
 | *pinpoint* | `GetSegmentVersion` | 0 |
 | *pinpoint* | `DeleteApnsSandboxChannel` | 0 |
 | *pinpoint* | `GetSmsChannel` | 0 |
@@ -4888,4 +4890,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 508 (11.0%)**
+**Total Unique Occurances: 519 (11.0%)**
