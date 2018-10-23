@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**144/258 (53.0%)** Resources Covered
+**157/258 (59.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -67,8 +67,8 @@
 | *AWS::Cognito::UserPoolUser* | 1 |
 | *AWS::Cognito::UserPoolUserToGroupAttachment* | 1 |
 | *AWS::Config::AggregationAuthorization* | 0 |
-| *AWS::Config::ConfigRule* | 0 |
-| *AWS::Config::ConfigurationAggregator* | 0 |
+| *AWS::Config::ConfigRule* | 1 |
+| *AWS::Config::ConfigurationAggregator* | 1 |
 | *AWS::Config::ConfigurationRecorder* | 0 |
 | *AWS::Config::DeliveryChannel* | 0 |
 | *AWS::DMS::Certificate* | 0 |
@@ -100,7 +100,7 @@
 | *AWS::EC2::PlacementGroup* | 0 |
 | *AWS::EC2::Route* | 0 |
 | *AWS::EC2::RouteTable* | 2 |
-| *AWS::EC2::SecurityGroup* | 2 |
+| *AWS::EC2::SecurityGroup* | 1 |
 | *AWS::EC2::SecurityGroupEgress* | 1 |
 | *AWS::EC2::SecurityGroupIngress* | 1 |
 | *AWS::EC2::SpotFleet* | 0 |
@@ -153,9 +153,9 @@
 | *AWS::ElasticLoadBalancingV2::TargetGroup* | 1 |
 | *AWS::Elasticsearch::Domain* | 1 |
 | *AWS::Events::Rule* | 1 |
-| *AWS::GameLift::Alias* | 0 |
-| *AWS::GameLift::Build* | 0 |
-| *AWS::GameLift::Fleet* | 0 |
+| *AWS::GameLift::Alias* | 1 |
+| *AWS::GameLift::Build* | 1 |
+| *AWS::GameLift::Fleet* | 1 |
 | *AWS::Glue::Classifier* | 1 |
 | *AWS::Glue::Connection* | 1 |
 | *AWS::Glue::Crawler* | 0 |
@@ -191,8 +191,8 @@
 | *AWS::IoT::TopicRule* | 0 |
 | *AWS::KMS::Alias* | 0 |
 | *AWS::KMS::Key* | 0 |
-| *AWS::Kinesis::Stream* | 0 |
-| *AWS::KinesisFirehose::DeliveryStream* | 0 |
+| *AWS::Kinesis::Stream* | 1 |
+| *AWS::KinesisFirehose::DeliveryStream* | 1 |
 | *AWS::Lambda::Alias* | 1 |
 | *AWS::Lambda::EventSourceMapping* | 0 |
 | *AWS::Lambda::Function* | 1 |
@@ -236,12 +236,12 @@
 | *AWS::SNS::TopicPolicy* | 1 |
 | *AWS::SQS::Queue* | 1 |
 | *AWS::SQS::QueuePolicy* | 1 |
-| *AWS::SSM::Association* | 0 |
-| *AWS::SSM::Document* | 0 |
+| *AWS::SSM::Association* | 1 |
+| *AWS::SSM::Document* | 1 |
 | *AWS::SSM::MaintenanceWindowTask* | 0 |
-| *AWS::SSM::Parameter* | 0 |
-| *AWS::SSM::PatchBaseline* | 0 |
-| *AWS::SSM::ResourceDataSync* | 0 |
+| *AWS::SSM::Parameter* | 1 |
+| *AWS::SSM::PatchBaseline* | 1 |
+| *AWS::SSM::ResourceDataSync* | 1 |
 | *AWS::ServiceCatalog::AcceptedPortfolioShare* | 0 |
 | *AWS::ServiceCatalog::CloudFormationProduct* | 1 |
 | *AWS::ServiceCatalog::CloudFormationProvisionedProduct* | 0 |
@@ -284,7 +284,7 @@
 | *codepipeline* | 8/32 (25.0%) |
 | *cognito-identity* | 1/18 (5.0%) |
 | *cognito-idp* | 10/95 (10.0%) |
-| *config* | 3/43 (6.0%) |
+| *config* | 6/43 (13.0%) |
 | *ds* | 4/49 (8.0%) |
 | *dynamodb* | 2/34 (5.0%) |
 | *ec2* | 77/274 (28.0%) |
@@ -295,12 +295,13 @@
 | *elbv2* | 15/34 (44.0%) |
 | *es* | 11/21 (52.0%) |
 | *events* | 8/15 (53.0%) |
-| *firehose* | 1/10 (10.0%) |
+| *firehose* | 3/10 (30.0%) |
+| *gamelift* | 8/67 (11.0%) |
 | *glue* | 19/84 (22.0%) |
 | *guardduty* | 21/42 (50.0%) |
 | *iam* | 24/127 (18.0%) |
 | *inspector* | 11/37 (29.0%) |
-| *kinesis* | 1/28 (3.0%) |
+| *kinesis* | 6/28 (21.0%) |
 | *kms* | 2/35 (5.0%) |
 | *lambda* | 11/30 (36.0%) |
 | *logs* | 5/33 (15.0%) |
@@ -312,11 +313,11 @@
 | *redshift* | 5/69 (7.0%) |
 | *rekognition* | 3/34 (8.0%) |
 | *route53* | 6/56 (10.0%) |
-| *s3* | 23/78 (29.0%) |
+| *s3* | 24/78 (30.0%) |
 | *servicecatalog* | 10/60 (16.0%) |
 | *sns* | 8/30 (26.0%) |
 | *sqs* | 6/20 (30.0%) |
-| *ssm* | 2/108 (1.0%) |
+| *ssm* | 20/108 (18.0%) |
 | *stepfunctions* | 1/19 (5.0%) |
 | *waf* | 32/73 (43.0%) |
 | *waf-regional* | 1/77 (1.0%) |
@@ -1294,13 +1295,13 @@
 | *config* | `DescribePendingAggregationRequests` | 1 |
 | *config* | `DescribeConfigRules` | 0 |
 | *config* | `DescribeAggregateComplianceByConfigRules` | 0 |
-| *config* | `PutConfigRule` | 0 |
+| *config* | `PutConfigRule` | 1 |
 | *config* | `DeleteEvaluationResults` | 0 |
 | *config* | `DescribeComplianceByConfigRule` | 0 |
-| *config* | `DescribeConfigurationAggregators` | 0 |
+| *config* | `DescribeConfigurationAggregators` | 1 |
 | *config* | `PutDeliveryChannel` | 0 |
 | *config* | `DescribeRetentionConfigurations` | 0 |
-| *config* | `PutConfigurationAggregator` | 0 |
+| *config* | `PutConfigurationAggregator` | 1 |
 | *config* | `DeleteConfigurationRecorder` | 0 |
 | *connect* | `DescribeUserHierarchyStructure` | 0 |
 | *connect* | `GetFederationToken` | 0 |
@@ -1853,7 +1854,7 @@
 | *ec2* | `DeleteVpc` | 1 |
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
 | *ec2* | `DescribePlacementGroups` | 1 |
-| *ec2* | `DescribeRegions` | 1 |
+| *ec2* | `DescribeRegions` | 2 |
 | *ec2* | `DescribeInstances` | 5 |
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
@@ -2203,12 +2204,12 @@
 | *events* | `DisableRule` | 1 |
 | *events* | `PutRule` | 2 |
 | *events* | `RemoveTargets` | 0 |
-| *firehose* | `CreateDeliveryStream` | 0 |
+| *firehose* | `CreateDeliveryStream` | 1 |
 | *firehose* | `DescribeDeliveryStream` | 0 |
 | *firehose* | `UpdateDestination` | 0 |
 | *firehose* | `TagDeliveryStream` | 0 |
-| *firehose* | `DeleteDeliveryStream` | 0 |
-| *firehose* | `ListDeliveryStreams` | 1 |
+| *firehose* | `DeleteDeliveryStream` | 1 |
+| *firehose* | `ListDeliveryStreams` | 2 |
 | *firehose* | `PutRecordBatch` | 0 |
 | *firehose* | `UntagDeliveryStream` | 0 |
 | *firehose* | `PutRecord` | 0 |
@@ -2238,7 +2239,7 @@
 | *gamelift* | `StartMatchmaking` | 0 |
 | *gamelift* | `DescribeMatchmakingRuleSets` | 0 |
 | *gamelift* | `UpdateFleetPortSettings` | 0 |
-| *gamelift* | `ListFleets` | 0 |
+| *gamelift* | `ListFleets` | 1 |
 | *gamelift* | `UpdateGameSession` | 0 |
 | *gamelift* | `CreateGameSession` | 0 |
 | *gamelift* | `DescribeFleetCapacity` | 0 |
@@ -2246,32 +2247,32 @@
 | *gamelift* | `ListAliases` | 0 |
 | *gamelift* | `UpdateBuild` | 0 |
 | *gamelift* | `UpdateMatchmakingConfiguration` | 0 |
-| *gamelift* | `DeleteBuild` | 0 |
-| *gamelift* | `PutScalingPolicy` | 0 |
+| *gamelift* | `DeleteBuild` | 1 |
+| *gamelift* | `PutScalingPolicy` | 1 |
 | *gamelift* | `DescribeVpcPeeringAuthorizations` | 0 |
 | *gamelift* | `DescribeScalingPolicies` | 0 |
 | *gamelift* | `DescribeInstances` | 0 |
-| *gamelift* | `CreateBuild` | 0 |
+| *gamelift* | `CreateBuild` | 1 |
 | *gamelift* | `DeleteGameSessionQueue` | 0 |
 | *gamelift* | `CreatePlayerSession` | 0 |
 | *gamelift* | `StartMatchBackfill` | 0 |
-| *gamelift* | `DeleteAlias` | 0 |
+| *gamelift* | `DeleteAlias` | 1 |
 | *gamelift* | `UpdateGameSessionQueue` | 0 |
 | *gamelift* | `DescribeFleetPortSettings` | 0 |
 | *gamelift* | `ListBuilds` | 0 |
 | *gamelift* | `DescribePlayerSessions` | 0 |
 | *gamelift* | `DeleteScalingPolicy` | 0 |
 | *gamelift* | `DescribeGameSessionQueues` | 0 |
-| *gamelift* | `CreateAlias` | 0 |
+| *gamelift* | `CreateAlias` | 1 |
 | *gamelift* | `UpdateAlias` | 0 |
 | *gamelift* | `DeleteMatchmakingConfiguration` | 0 |
-| *gamelift* | `CreateFleet` | 0 |
+| *gamelift* | `CreateFleet` | 1 |
 | *gamelift* | `DeleteVpcPeeringConnection` | 0 |
 | *gamelift* | `GetInstanceAccess` | 0 |
 | *gamelift* | `CreateVpcPeeringAuthorization` | 0 |
 | *gamelift* | `DeleteVpcPeeringAuthorization` | 0 |
 | *gamelift* | `UpdateFleetAttributes` | 0 |
-| *gamelift* | `DescribeFleetAttributes` | 0 |
+| *gamelift* | `DescribeFleetAttributes` | 1 |
 | *gamelift* | `StopMatchmaking` | 0 |
 | *gamelift* | `ResolveAlias` | 0 |
 | *gamelift* | `DescribeGameSessionDetails` | 0 |
@@ -2923,22 +2924,22 @@
 | *kinesis* | `AddTagsToStream` | 0 |
 | *kinesis* | `DisableEnhancedMonitoring` | 0 |
 | *kinesis* | `DecreaseStreamRetentionPeriod` | 0 |
-| *kinesis* | `DescribeLimits` | 0 |
+| *kinesis* | `DescribeLimits` | 1 |
 | *kinesis* | `ListShards` | 0 |
 | *kinesis* | `SubscribeToShard` | 0 |
-| *kinesis* | `ListStreams` | 1 |
+| *kinesis* | `ListStreams` | 2 |
 | *kinesis* | `DeregisterStreamConsumer` | 0 |
-| *kinesis* | `ListStreamConsumers` | 0 |
+| *kinesis* | `ListStreamConsumers` | 1 |
 | *kinesis* | `UpdateShardCount` | 0 |
-| *kinesis* | `DescribeStreamSummary` | 0 |
+| *kinesis* | `DescribeStreamSummary` | 1 |
 | *kinesis* | `StartStreamEncryption` | 0 |
 | *kinesis* | `DescribeStreamConsumer` | 0 |
 | *kinesis* | `SplitShard` | 0 |
 | *kinesis* | `DescribeStream` | 0 |
-| *kinesis* | `CreateStream` | 0 |
+| *kinesis* | `CreateStream` | 1 |
 | *kinesis* | `RegisterStreamConsumer` | 0 |
 | *kinesis* | `EnableEnhancedMonitoring` | 0 |
-| *kinesis* | `DeleteStream` | 0 |
+| *kinesis* | `DeleteStream` | 1 |
 | *kinesis* | `RemoveTagsFromStream` | 0 |
 | *kinesis* | `GetRecords` | 0 |
 | *kinesis* | `ListTagsForStream` | 0 |
@@ -3161,12 +3162,12 @@
 | *logs* | `DeleteLogGroup` | 0 |
 | *logs* | `DescribeMetricFilters` | 0 |
 | *logs* | `FilterLogEvents` | 0 |
-| *logs* | `CreateLogGroup` | 1 |
+| *logs* | `CreateLogGroup` | 2 |
 | *logs* | `DeleteSubscriptionFilter` | 0 |
 | *logs* | `PutMetricFilter` | 1 |
 | *logs* | `DeleteResourcePolicy` | 0 |
 | *logs* | `PutLogEvents` | 0 |
-| *logs* | `DescribeLogGroups` | 1 |
+| *logs* | `DescribeLogGroups` | 2 |
 | *logs* | `DescribeDestinations` | 0 |
 | *logs* | `AssociateKmsKey` | 0 |
 | *logs* | `PutRetentionPolicy` | 0 |
@@ -3176,7 +3177,7 @@
 | *logs* | `PutSubscriptionFilter` | 1 |
 | *logs* | `DeleteMetricFilter` | 0 |
 | *logs* | `PutDestinationPolicy` | 0 |
-| *logs* | `CreateLogStream` | 1 |
+| *logs* | `CreateLogStream` | 2 |
 | *logs* | `CancelExportTask` | 0 |
 | *logs* | `UntagLogGroup` | 0 |
 | *logs* | `DisassociateKmsKey` | 0 |
@@ -3978,7 +3979,7 @@
 | *s3* | `GetBucketAcl` | 1 |
 | *s3* | `DeleteBucketMetricsConfiguration` | 0 |
 | *s3* | `GetBucketLogging` | 1 |
-| *s3* | `HeadBucket` | 0 |
+| *s3* | `HeadBucket` | 1 |
 | *s3* | `ListBucketMetricsConfigurations` | 0 |
 | *s3* | `ListBuckets` | 3 |
 | *s3* | `DeleteBucketWebsite` | 0 |
@@ -4376,9 +4377,9 @@
 | *ssm* | `DescribeInstancePatchStatesForPatchGroup` | 0 |
 | *ssm* | `GetDefaultPatchBaseline` | 0 |
 | *ssm* | `GetDocument` | 0 |
-| *ssm* | `CreateDocument` | 0 |
-| *ssm* | `DeleteAssociation` | 0 |
-| *ssm* | `CreatePatchBaseline` | 0 |
+| *ssm* | `CreateDocument` | 1 |
+| *ssm* | `DeleteAssociation` | 1 |
+| *ssm* | `CreatePatchBaseline` | 1 |
 | *ssm* | `ListResourceComplianceSummaries` | 0 |
 | *ssm* | `DeregisterTargetFromMaintenanceWindow` | 0 |
 | *ssm* | `TerminateSession` | 0 |
@@ -4389,10 +4390,10 @@
 | *ssm* | `GetConnectionStatus` | 0 |
 | *ssm* | `CreateActivation` | 0 |
 | *ssm* | `UpdateDocument` | 0 |
-| *ssm* | `DescribeDocumentPermission` | 0 |
+| *ssm* | `DescribeDocumentPermission` | 1 |
 | *ssm* | `ListCommandInvocations` | 0 |
 | *ssm* | `UpdateMaintenanceWindowTarget` | 0 |
-| *ssm* | `DeleteDocument` | 0 |
+| *ssm* | `DeleteDocument` | 1 |
 | *ssm* | `DescribeMaintenanceWindowExecutions` | 0 |
 | *ssm* | `ListInventoryEntries` | 0 |
 | *ssm* | `DeregisterPatchBaselineForPatchGroup` | 0 |
@@ -4407,9 +4408,9 @@
 | *ssm* | `GetInventory` | 0 |
 | *ssm* | `RemoveTagsFromResource` | 0 |
 | *ssm* | `DescribeInstanceAssociationsStatus` | 0 |
-| *ssm* | `GetInventorySchema` | 0 |
+| *ssm* | `GetInventorySchema` | 1 |
 | *ssm* | `LabelParameterVersion` | 0 |
-| *ssm* | `DescribeParameters` | 0 |
+| *ssm* | `DescribeParameters` | 1 |
 | *ssm* | `GetMaintenanceWindowExecutionTaskInvocation` | 0 |
 | *ssm* | `DeleteInventory` | 0 |
 | *ssm* | `DescribeAutomationStepExecutions` | 0 |
@@ -4418,7 +4419,7 @@
 | *ssm* | `UpdateDocumentDefaultVersion` | 0 |
 | *ssm* | `ListComplianceItems` | 0 |
 | *ssm* | `ListAssociationVersions` | 0 |
-| *ssm* | `ListDocuments` | 1 |
+| *ssm* | `ListDocuments` | 2 |
 | *ssm* | `DeleteActivation` | 0 |
 | *ssm* | `DescribeAvailablePatches` | 0 |
 | *ssm* | `DescribeInstancePatches` | 0 |
@@ -4438,28 +4439,28 @@
 | *ssm* | `ListDocumentVersions` | 0 |
 | *ssm* | `DescribeMaintenanceWindowExecutionTasks` | 0 |
 | *ssm* | `GetMaintenanceWindow` | 0 |
-| *ssm* | `DeleteParameters` | 0 |
+| *ssm* | `DeleteParameters` | 1 |
 | *ssm* | `DescribeMaintenanceWindowTargets` | 0 |
 | *ssm* | `DescribeInstanceInformation` | 0 |
-| *ssm* | `ListAssociations` | 0 |
-| *ssm* | `DeleteMaintenanceWindow` | 0 |
+| *ssm* | `ListAssociations` | 1 |
+| *ssm* | `DeleteMaintenanceWindow` | 1 |
 | *ssm* | `DescribeDocument` | 0 |
 | *ssm* | `DeletePatchBaseline` | 0 |
 | *ssm* | `RegisterTaskWithMaintenanceWindow` | 0 |
 | *ssm* | `GetParameters` | 0 |
 | *ssm* | `DeregisterManagedInstance` | 0 |
 | *ssm* | `ResumeSession` | 0 |
-| *ssm* | `CreateMaintenanceWindow` | 0 |
-| *ssm* | `ListResourceDataSync` | 0 |
+| *ssm* | `CreateMaintenanceWindow` | 1 |
+| *ssm* | `ListResourceDataSync` | 1 |
 | *ssm* | `UpdateMaintenanceWindow` | 0 |
 | *ssm* | `DescribeEffectivePatchesForPatchBaseline` | 0 |
-| *ssm* | `CreateResourceDataSync` | 0 |
-| *ssm* | `PutParameter` | 0 |
+| *ssm* | `CreateResourceDataSync` | 1 |
+| *ssm* | `PutParameter` | 1 |
 | *ssm* | `GetAutomationExecution` | 0 |
 | *ssm* | `PutInventory` | 0 |
 | *ssm* | `DescribeAutomationExecutions` | 0 |
 | *ssm* | `GetMaintenanceWindowTask` | 0 |
-| *ssm* | `DescribePatchBaselines` | 0 |
+| *ssm* | `DescribePatchBaselines` | 1 |
 | *ssm* | `CreateAssociationBatch` | 0 |
 | *ssm* | `DeleteResourceDataSync` | 0 |
 | *ssm* | `GetMaintenanceWindowExecutionTask` | 0 |
@@ -4468,14 +4469,14 @@
 | *ssm* | `GetParameterHistory` | 0 |
 | *ssm* | `DeregisterTaskFromMaintenanceWindow` | 0 |
 | *ssm* | `RegisterPatchBaselineForPatchGroup` | 0 |
-| *ssm* | `DescribeMaintenanceWindows` | 0 |
+| *ssm* | `DescribeMaintenanceWindows` | 1 |
 | *ssm* | `DescribePatchGroups` | 0 |
-| *ssm* | `CreateAssociation` | 0 |
+| *ssm* | `CreateAssociation` | 1 |
 | *ssm* | `UpdateMaintenanceWindowTask` | 0 |
 | *ssm* | `ListCommands` | 0 |
 | *ssm* | `GetMaintenanceWindowExecution` | 0 |
 | *ssm* | `DeleteParameter` | 0 |
-| *ssm* | `RegisterTargetWithMaintenanceWindow` | 0 |
+| *ssm* | `RegisterTargetWithMaintenanceWindow` | 1 |
 | *ssm* | `DescribeActivations` | 0 |
 | *stepfunctions* | `StartExecution` | 0 |
 | *stepfunctions* | `ListExecutions` | 0 |
@@ -4890,4 +4891,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 519 (11.0%)**
+**Total Unique Occurances: 556 (12.0%)**
