@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**157/258 (59.0%)** Resources Covered
+**163/258 (61.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -112,7 +112,7 @@
 | *AWS::EC2::VPC* | 2 |
 | *AWS::EC2::VPCCidrBlock* | 1 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
-| *AWS::EC2::VPCEndpoint* | 0 |
+| *AWS::EC2::VPCEndpoint* | 1 |
 | *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
 | *AWS::EC2::VPCEndpointService* | 0 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 0 |
@@ -172,11 +172,11 @@
 | *AWS::GuardDuty::Member* | 1 |
 | *AWS::GuardDuty::ThreatIntelSet* | 0 |
 | *AWS::IAM::AccessKey* | 0 |
-| *AWS::IAM::Group* | 0 |
-| *AWS::IAM::InstanceProfile* | 0 |
-| *AWS::IAM::ManagedPolicy* | 0 |
+| *AWS::IAM::Group* | 1 |
+| *AWS::IAM::InstanceProfile* | 1 |
+| *AWS::IAM::ManagedPolicy* | 1 |
 | *AWS::IAM::Policy* | 0 |
-| *AWS::IAM::Role* | 0 |
+| *AWS::IAM::Role* | 1 |
 | *AWS::IAM::ServiceLinkedRole* | 0 |
 | *AWS::IAM::User* | 1 |
 | *AWS::IAM::UserToGroupAddition* | 1 |
@@ -190,7 +190,7 @@
 | *AWS::IoT::ThingPrincipalAttachment* | 0 |
 | *AWS::IoT::TopicRule* | 0 |
 | *AWS::KMS::Alias* | 0 |
-| *AWS::KMS::Key* | 0 |
+| *AWS::KMS::Key* | 1 |
 | *AWS::Kinesis::Stream* | 1 |
 | *AWS::KinesisFirehose::DeliveryStream* | 1 |
 | *AWS::Lambda::Alias* | 1 |
@@ -287,7 +287,7 @@
 | *config* | 6/43 (13.0%) |
 | *ds* | 4/49 (8.0%) |
 | *dynamodb* | 2/34 (5.0%) |
-| *ec2* | 77/274 (28.0%) |
+| *ec2* | 82/274 (29.0%) |
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
 | *elasticache* | 10/42 (23.0%) |
@@ -299,10 +299,10 @@
 | *gamelift* | 8/67 (11.0%) |
 | *glue* | 19/84 (22.0%) |
 | *guardduty* | 21/42 (50.0%) |
-| *iam* | 24/127 (18.0%) |
+| *iam* | 29/127 (22.0%) |
 | *inspector* | 11/37 (29.0%) |
 | *kinesis* | 6/28 (21.0%) |
-| *kms* | 2/35 (5.0%) |
+| *kms* | 6/35 (17.0%) |
 | *lambda* | 11/30 (36.0%) |
 | *logs* | 5/33 (15.0%) |
 | *medialive* | 4/25 (16.0%) |
@@ -1647,7 +1647,7 @@
 | *ec2* | `ResetImageAttribute` | 0 |
 | *ec2* | `CreateRouteTable` | 2 |
 | *ec2* | `ReplaceRouteTableAssociation` | 0 |
-| *ec2* | `CreateVpcEndpoint` | 0 |
+| *ec2* | `CreateVpcEndpoint` | 1 |
 | *ec2* | `RegisterImage` | 0 |
 | *ec2* | `AssociateDhcpOptions` | 1 |
 | *ec2* | `ModifyVpcEndpointServicePermissions` | 0 |
@@ -1715,10 +1715,10 @@
 | *ec2* | `ModifyVpcEndpointConnectionNotification` | 0 |
 | *ec2* | `ModifyInstanceAttribute` | 0 |
 | *ec2* | `CreateVpc` | 2 |
-| *ec2* | `DescribeVpcEndpointServices` | 0 |
+| *ec2* | `DescribeVpcEndpointServices` | 1 |
 | *ec2* | `CancelSpotFleetRequests` | 0 |
 | *ec2* | `UnmonitorInstances` | 0 |
-| *ec2* | `DeleteSubnet` | 0 |
+| *ec2* | `DeleteSubnet` | 1 |
 | *ec2* | `CreatePlacementGroup` | 0 |
 | *ec2* | `CopySnapshot` | 0 |
 | *ec2* | `DisableVpcClassicLinkDnsSupport` | 0 |
@@ -1763,7 +1763,7 @@
 | *ec2* | `DescribeVolumes` | 1 |
 | *ec2* | `DeleteNetworkInterface` | 1 |
 | *ec2* | `DescribeVpnConnections` | 1 |
-| *ec2* | `DeleteVpcEndpoints` | 0 |
+| *ec2* | `DeleteVpcEndpoints` | 1 |
 | *ec2* | `DescribeVolumeAttribute` | 0 |
 | *ec2* | `DeleteKeyPair` | 1 |
 | *ec2* | `DeleteNatGateway` | 2 |
@@ -1795,7 +1795,7 @@
 | *ec2* | `ReportInstanceStatus` | 0 |
 | *ec2* | `CancelReservedInstancesListing` | 0 |
 | *ec2* | `DescribeInstanceStatus` | 0 |
-| *ec2* | `DescribePrefixLists` | 0 |
+| *ec2* | `DescribePrefixLists` | 1 |
 | *ec2* | `DescribeSnapshotAttribute` | 0 |
 | *ec2* | `PurchaseReservedInstancesOffering` | 0 |
 | *ec2* | `ModifySubnetAttribute` | 0 |
@@ -1859,7 +1859,7 @@
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 12 |
+| *ec2* | `DescribeSecurityGroups` | 13 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -2548,7 +2548,7 @@
 | *iam* | `ListGroupPolicies` | 0 |
 | *iam* | `CreateAccessKey` | 0 |
 | *iam* | `UpdateLoginProfile` | 0 |
-| *iam* | `ListGroups` | 1 |
+| *iam* | `ListGroups` | 2 |
 | *iam* | `UpdateRoleDescription` | 0 |
 | *iam* | `UpdateSAMLProvider` | 0 |
 | *iam* | `ResetServiceSpecificCredential` | 0 |
@@ -2560,8 +2560,8 @@
 | *iam* | `UploadServerCertificate` | 0 |
 | *iam* | `GetContextKeysForPrincipalPolicy` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
-| *iam* | `ListRoles` | 8 |
-| *iam* | `DeleteAccessKey` | 0 |
+| *iam* | `ListRoles` | 9 |
+| *iam* | `DeleteAccessKey` | 1 |
 | *iam* | `AddRoleToInstanceProfile` | 1 |
 | *iam* | `GetContextKeysForCustomPolicy` | 0 |
 | *iam* | `GetGroupPolicy` | 0 |
@@ -2594,15 +2594,15 @@
 | *iam* | `ListServerCertificates` | 1 |
 | *iam* | `DeleteGroup` | 0 |
 | *iam* | `UpdateOpenIDConnectProviderThumbprint` | 0 |
-| *iam* | `CreateGroup` | 0 |
-| *iam* | `DeletePolicy` | 0 |
+| *iam* | `CreateGroup` | 1 |
+| *iam* | `DeletePolicy` | 1 |
 | *iam* | `DeleteUserPolicy` | 0 |
 | *iam* | `UpdateServerCertificate` | 0 |
 | *iam* | `AddClientIDToOpenIDConnectProvider` | 0 |
 | *iam* | `DeleteVirtualMFADevice` | 0 |
 | *iam* | `PutRolePermissionsBoundary` | 0 |
 | *iam* | `SimulatePrincipalPolicy` | 0 |
-| *iam* | `ListAccessKeys` | 1 |
+| *iam* | `ListAccessKeys` | 2 |
 | *iam* | `GetSSHPublicKey` | 0 |
 | *iam* | `ListSSHPublicKeys` | 0 |
 | *iam* | `DeleteSigningCertificate` | 0 |
@@ -2618,12 +2618,12 @@
 | *iam* | `GetInstanceProfile` | 0 |
 | *iam* | `DeleteUser` | 1 |
 | *iam* | `GetOpenIDConnectProvider` | 0 |
-| *iam* | `ListUsers` | 1 |
+| *iam* | `ListUsers` | 2 |
 | *iam* | `DeleteLoginProfile` | 0 |
 | *iam* | `ListPolicyVersions` | 1 |
 | *iam* | `AttachGroupPolicy` | 0 |
 | *iam* | `DeleteServiceSpecificCredential` | 0 |
-| *iam* | `CreatePolicy` | 0 |
+| *iam* | `CreatePolicy` | 1 |
 | *iam* | `CreateOpenIDConnectProvider` | 0 |
 | *iam* | `DetachUserPolicy` | 0 |
 | *iam* | `ListGroupsForUser` | 1 |
@@ -2631,7 +2631,7 @@
 | *iam* | `CreateAccountAlias` | 0 |
 | *iam* | `GetAccountAuthorizationDetails` | 0 |
 | *iam* | `GetSAMLProvider` | 0 |
-| *iam* | `CreateRole` | 0 |
+| *iam* | `CreateRole` | 1 |
 | *iam* | `ListAttachedRolePolicies` | 1 |
 | *iam* | `EnableMFADevice` | 0 |
 | *iam* | `DeleteSAMLProvider` | 0 |
@@ -2647,7 +2647,7 @@
 | *iam* | `GetLoginProfile` | 1 |
 | *iam* | `CreateVirtualMFADevice` | 0 |
 | *iam* | `GetServerCertificate` | 0 |
-| *iam* | `AttachRolePolicy` | 1 |
+| *iam* | `AttachRolePolicy` | 2 |
 | *iam* | `RemoveClientIDFromOpenIDConnectProvider` | 0 |
 | *iam* | `UpdateAccountPasswordPolicy` | 0 |
 | *iam* | `GetRole` | 2 |
@@ -2657,7 +2657,7 @@
 | *iam* | `ResyncMFADevice` | 0 |
 | *iam* | `DeleteServerCertificate` | 0 |
 | *iam* | `GetAccountPasswordPolicy` | 0 |
-| *iam* | `CreateInstanceProfile` | 1 |
+| *iam* | `CreateInstanceProfile` | 2 |
 | *iam* | `DeleteOpenIDConnectProvider` | 0 |
 | *iam* | `DeleteGroupPolicy` | 0 |
 | *importexport* | `ListJobs` | 0 |
@@ -2985,7 +2985,7 @@
 | *kms* | `DisableKey` | 0 |
 | *kms* | `GenerateDataKeyWithoutPlaintext` | 0 |
 | *kms* | `GenerateDataKey` | 0 |
-| *kms* | `ListResourceTags` | 0 |
+| *kms* | `ListResourceTags` | 1 |
 | *kms* | `ListAliases` | 0 |
 | *kms* | `CancelKeyDeletion` | 0 |
 | *kms* | `GetKeyRotationStatus` | 0 |
@@ -2994,16 +2994,16 @@
 | *kms* | `RetireGrant` | 0 |
 | *kms* | `TagResource` | 0 |
 | *kms* | `DescribeKey` | 3 |
-| *kms* | `ListKeys` | 4 |
+| *kms* | `ListKeys` | 5 |
 | *kms* | `GenerateRandom` | 0 |
-| *kms* | `GetKeyPolicy` | 0 |
+| *kms* | `GetKeyPolicy` | 1 |
 | *kms* | `CreateGrant` | 0 |
-| *kms* | `CreateKey` | 0 |
+| *kms* | `CreateKey` | 1 |
 | *kms* | `ReEncrypt` | 0 |
 | *kms* | `GetParametersForImport` | 0 |
 | *kms* | `DisableKeyRotation` | 0 |
 | *kms* | `ListRetirableGrants` | 0 |
-| *kms* | `ScheduleKeyDeletion` | 0 |
+| *kms* | `ScheduleKeyDeletion` | 1 |
 | *kms* | `CreateAlias` | 0 |
 | *kms* | `EnableKeyRotation` | 0 |
 | *kms* | `UntagResource` | 0 |
@@ -4891,4 +4891,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 556 (12.0%)**
+**Total Unique Occurances: 570 (12.0%)**
