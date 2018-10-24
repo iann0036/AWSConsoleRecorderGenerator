@@ -287,7 +287,7 @@ chrome.runtime.sendMessage(null, {
                 jsonRequestBody = {
                     '__RAW__': request_body
                 };
-                selectable_json += "<b><i>not-json</i></b> " + request_body;
+                selectable_json += "<b><i>not-json&nbsp;</i></b> " + request_body;
 
                 if (request_body) {
                     if ((request_body.match(/\|/g) || []).length > 6) {
