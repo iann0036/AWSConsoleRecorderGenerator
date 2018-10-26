@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**163/258 (61.0%)** Resources Covered
+**169/258 (63.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -71,12 +71,12 @@
 | *AWS::Config::ConfigurationAggregator* | 1 |
 | *AWS::Config::ConfigurationRecorder* | 0 |
 | *AWS::Config::DeliveryChannel* | 0 |
-| *AWS::DMS::Certificate* | 0 |
-| *AWS::DMS::Endpoint* | 0 |
-| *AWS::DMS::EventSubscription* | 0 |
-| *AWS::DMS::ReplicationInstance* | 0 |
-| *AWS::DMS::ReplicationSubnetGroup* | 0 |
-| *AWS::DMS::ReplicationTask* | 0 |
+| *AWS::DMS::Certificate* | 1 |
+| *AWS::DMS::Endpoint* | 1 |
+| *AWS::DMS::EventSubscription* | 1 |
+| *AWS::DMS::ReplicationInstance* | 1 |
+| *AWS::DMS::ReplicationSubnetGroup* | 1 |
+| *AWS::DMS::ReplicationTask* | 1 |
 | *AWS::DataPipeline::Pipeline* | 0 |
 | *AWS::DirectoryService::MicrosoftAD* | 1 |
 | *AWS::DirectoryService::SimpleAD* | 1 |

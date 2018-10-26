@@ -18202,6 +18202,10 @@ function analyseRequest(details) {
                 reqParams.boto3['SubnetIds'] = action['parameters'][0]['subnetIds'];
                 reqParams.cli['--subnet-ids'] = action['parameters'][0]['subnetIds'];
 
+                reqParams.cfn['ReplicationSubnetGroupDescription'] = action['parameters'][0]['replicationSubnetGroupDescription'];
+                reqParams.cfn['ReplicationSubnetGroupIdentifier'] = action['parameters'][0]['replicationSubnetGroupIdentifier'];
+                reqParams.cfn['SubnetIds'] = action['parameters'][0]['subnetIds'];
+
                 outputs.push({
                     'region': region,
                     'service': 'dms',
@@ -18212,6 +18216,16 @@ function analyseRequest(details) {
                     },
                     'options': reqParams,
                     'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('dms', details.requestId),
+                    'region': region,
+                    'service': 'dms',
+                    'type': 'AWS::DMS::ReplicationSubnetGroup',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.deleteReplicationSubnetGroup") {
                 reqParams.boto3['ReplicationSubnetGroupIdentifier'] = action['parameters'][0]['replicationSubnetGroupIdentifier'];
@@ -18326,6 +18340,18 @@ function analyseRequest(details) {
                 reqParams.cli['--tags'] = action['parameters'][0]['tags'];
                 reqParams.boto3['VpcSecurityGroupIds'] = action['parameters'][0]['vpcSecurityGroupIds'];
                 reqParams.cli['--vpc-security-group-ids'] = action['parameters'][0]['vpcSecurityGroupIds'];
+
+                reqParams.cfn['AutoMinorVersionUpgrade'] = action['parameters'][0]['autoMinorVersionUpgrade'];
+                reqParams.cfn['PubliclyAccessible'] = action['parameters'][0]['publiclyAccessible'];
+                reqParams.cfn['AllocatedStorage'] = action['parameters'][0]['allocatedStorage'];
+                reqParams.cfn['AvailabilityZone'] = action['parameters'][0]['availabilityZone'];
+                reqParams.cfn['EngineVersion'] = action['parameters'][0]['engineVersion'];
+                reqParams.cfn['PreferredMaintenanceWindow'] = action['parameters'][0]['preferredMaintenanceWindow'];
+                reqParams.cfn['ReplicationInstanceClass'] = action['parameters'][0]['replicationInstanceClass'];
+                reqParams.cfn['ReplicationInstanceIdentifier'] = action['parameters'][0]['replicationInstanceIdentifier'];
+                reqParams.cfn['ReplicationSubnetGroupIdentifier'] = action['parameters'][0]['replicationSubnetGroupIdentifier'];
+                reqParams.cfn['Tags'] = action['parameters'][0]['tags'];
+                reqParams.cfn['VpcSecurityGroupIds'] = action['parameters'][0]['vpcSecurityGroupIds'];
         
                 outputs.push({
                     'region': region,
@@ -18337,6 +18363,16 @@ function analyseRequest(details) {
                     },
                     'options': reqParams,
                     'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('dms', details.requestId),
+                    'region': region,
+                    'service': 'dms',
+                    'type': 'AWS::DMS::ReplicationInstance',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeReplicationInstanceTaskLogs") {
                 reqParams.boto3['MaxRecords'] = action['parameters'][0]['maxRecords'];
@@ -18387,6 +18423,9 @@ function analyseRequest(details) {
                 reqParams.cli['--certificate-identifier'] = action['parameters'][0]['certificateIdentifier'];
                 reqParams.boto3['CertificatePem'] = action['parameters'][0]['certificatePem'];
                 reqParams.cli['--certificate-pem'] = action['parameters'][0]['certificatePem'];
+
+                reqParams.cfn['CertificateIdentifier'] = action['parameters'][0]['certificateIdentifier'];
+                reqParams.cfn['CertificatePem'] = action['parameters'][0]['certificatePem'];
         
                 outputs.push({
                     'region': region,
@@ -18398,6 +18437,16 @@ function analyseRequest(details) {
                     },
                     'options': reqParams,
                     'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('dms', details.requestId),
+                    'region': region,
+                    'service': 'dms',
+                    'type': 'AWS::DMS::Certificate',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeEndpoints") {
                 outputs.push({
@@ -18469,6 +18518,16 @@ function analyseRequest(details) {
                 reqParams.cli['--ssl-mode'] = action['parameters'][0]['sslMode'];
                 reqParams.boto3['Username'] = action['parameters'][0]['username'];
                 reqParams.cli['--username'] = action['parameters'][0]['username'];
+
+                reqParams.cfn['Port'] = action['parameters'][0]['port'];
+                reqParams.cfn['EndpointIdentifier'] = action['parameters'][0]['endpointIdentifier'];
+                reqParams.cfn['EndpointType'] = action['parameters'][0]['endpointType'];
+                reqParams.cfn['EngineName'] = action['parameters'][0]['engineName'];
+                reqParams.cfn['KmsKeyId'] = action['parameters'][0]['kmsKeyId'];
+                reqParams.cfn['Password'] = action['parameters'][0]['password'];
+                reqParams.cfn['ServerName'] = action['parameters'][0]['serverName'];
+                reqParams.cfn['SslMode'] = action['parameters'][0]['sslMode'];
+                reqParams.cfn['Username'] = action['parameters'][0]['username'];
         
                 outputs.push({
                     'region': region,
@@ -18480,6 +18539,16 @@ function analyseRequest(details) {
                     },
                     'options': reqParams,
                     'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('dms', details.requestId),
+                    'region': region,
+                    'service': 'dms',
+                    'type': 'AWS::DMS::Endpoint',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeSchemas") {
                 reqParams.boto3['EndpointArn'] = action['parameters'][0]['endpointArn'];
@@ -18576,6 +18645,12 @@ function analyseRequest(details) {
                 reqParams.cli['--subscription-name'] = action['parameters'][0]['subscriptionName'];
                 reqParams.boto3['EventCategories'] = action['parameters'][0]['eventCategories'];
                 reqParams.cli['--event-categories'] = action['parameters'][0]['eventCategories'];
+
+                reqParams.cfn['Enabled'] = action['parameters'][0]['enabled'];
+                reqParams.cfn['SnsTopicArn'] = action['parameters'][0]['snsTopicArn'];
+                reqParams.cfn['SourceType'] = action['parameters'][0]['sourceType'];
+                reqParams.cfn['SubscriptionName'] = action['parameters'][0]['subscriptionName'];
+                reqParams.cfn['EventCategories'] = action['parameters'][0]['eventCategories'];
         
                 outputs.push({
                     'region': region,
@@ -18587,6 +18662,16 @@ function analyseRequest(details) {
                     },
                     'options': reqParams,
                     'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('dms', details.requestId),
+                    'region': region,
+                    'service': 'dms',
+                    'type': 'AWS::DMS::EventSubscription',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.deleteEventSubscription") {
                 reqParams.boto3['SubscriptionName'] = action['parameters'][0]['subscriptionName'];
@@ -18635,6 +18720,14 @@ function analyseRequest(details) {
                 reqParams.cli['--table-mappings'] = action['parameters'][0]['tableMappings'];
                 reqParams.boto3['TargetEndpointArn'] = action['parameters'][0]['targetEndpointArn'];
                 reqParams.cli['--target-endpoint-arn'] = action['parameters'][0]['targetEndpointArn'];
+
+                reqParams.cfn['MigrationType'] = action['parameters'][0]['migrationType'];
+                reqParams.cfn['ReplicationInstanceArn'] = action['parameters'][0]['replicationInstanceArn'];
+                reqParams.cfn['ReplicationTaskIdentifier'] = action['parameters'][0]['replicationTaskIdentifier'];
+                reqParams.cfn['ReplicationTaskSettings'] = action['parameters'][0]['replicationTaskSettings'];
+                reqParams.cfn['SourceEndpointArn'] = action['parameters'][0]['sourceEndpointArn'];
+                reqParams.cfn['TableMappings'] = action['parameters'][0]['tableMappings'];
+                reqParams.cfn['TargetEndpointArn'] = action['parameters'][0]['targetEndpointArn'];
         
                 outputs.push({
                     'region': region,
@@ -18646,6 +18739,16 @@ function analyseRequest(details) {
                     },
                     'options': reqParams,
                     'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('dms', details.requestId),
+                    'region': region,
+                    'service': 'dms',
+                    'type': 'AWS::DMS::ReplicationTask',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
                 });
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeTableStatistics") {
                 reqParams.boto3['MaxRecords'] = action['parameters'][0]['maxRecords'];
