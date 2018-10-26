@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**169/258 (63.0%)** Resources Covered
+**173/258 (65.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -141,10 +141,10 @@
 | *AWS::ElastiCache::SecurityGroup* | 0 |
 | *AWS::ElastiCache::SecurityGroupIngress* | 0 |
 | *AWS::ElastiCache::SubnetGroup* | 1 |
-| *AWS::ElasticBeanstalk::Application* | 0 |
-| *AWS::ElasticBeanstalk::ApplicationVersion* | 0 |
-| *AWS::ElasticBeanstalk::ConfigurationTemplate* | 0 |
-| *AWS::ElasticBeanstalk::Environment* | 0 |
+| *AWS::ElasticBeanstalk::Application* | 1 |
+| *AWS::ElasticBeanstalk::ApplicationVersion* | 1 |
+| *AWS::ElasticBeanstalk::ConfigurationTemplate* | 1 |
+| *AWS::ElasticBeanstalk::Environment* | 1 |
 | *AWS::ElasticLoadBalancing::LoadBalancer* | 1 |
 | *AWS::ElasticLoadBalancingV2::Listener* | 1 |
 | *AWS::ElasticLoadBalancingV2::ListenerCertificate* | 0 |
@@ -292,6 +292,7 @@
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
 | *elasticache* | 10/42 (23.0%) |
+| *elasticbeanstalk* | 8/44 (18.0%) |
 | *elb* | 4/29 (13.0%) |
 | *elbv2* | 15/34 (44.0%) |
 | *es* | 11/21 (52.0%) |
@@ -2019,7 +2020,7 @@
 | *elasticache* | `ListTagsForResource` | 0 |
 | *elasticache* | `CreateSnapshot` | 0 |
 | *elasticbeanstalk* | `UpdateTagsForResource` | 0 |
-| *elasticbeanstalk* | `DescribeApplicationVersions` | 0 |
+| *elasticbeanstalk* | `DescribeApplicationVersions` | 1 |
 | *elasticbeanstalk* | `RequestEnvironmentInfo` | 0 |
 | *elasticbeanstalk* | `DescribeEnvironmentResources` | 0 |
 | *elasticbeanstalk* | `DescribeEvents` | 0 |
@@ -2036,19 +2037,19 @@
 | *elasticbeanstalk* | `ListAvailableSolutionStacks` | 0 |
 | *elasticbeanstalk* | `ComposeEnvironments` | 0 |
 | *elasticbeanstalk* | `DescribeConfigurationSettings` | 0 |
-| *elasticbeanstalk* | `CreateApplication` | 0 |
+| *elasticbeanstalk* | `CreateApplication` | 1 |
 | *elasticbeanstalk* | `UpdateConfigurationTemplate` | 0 |
-| *elasticbeanstalk* | `DeleteApplicationVersion` | 0 |
+| *elasticbeanstalk* | `DeleteApplicationVersion` | 1 |
 | *elasticbeanstalk* | `RetrieveEnvironmentInfo` | 0 |
 | *elasticbeanstalk* | `UpdateApplication` | 0 |
 | *elasticbeanstalk* | `UpdateEnvironment` | 0 |
 | *elasticbeanstalk* | `DescribeEnvironments` | 0 |
-| *elasticbeanstalk* | `ListPlatformVersions` | 0 |
+| *elasticbeanstalk* | `ListPlatformVersions` | 1 |
 | *elasticbeanstalk* | `DescribeEnvironmentManagedActions` | 0 |
 | *elasticbeanstalk* | `AbortEnvironmentUpdate` | 0 |
 | *elasticbeanstalk* | `RestartAppServer` | 0 |
-| *elasticbeanstalk* | `DeleteEnvironmentConfiguration` | 0 |
-| *elasticbeanstalk* | `CreateEnvironment` | 0 |
+| *elasticbeanstalk* | `DeleteEnvironmentConfiguration` | 1 |
+| *elasticbeanstalk* | `CreateEnvironment` | 1 |
 | *elasticbeanstalk* | `SwapEnvironmentCNAMEs` | 0 |
 | *elasticbeanstalk* | `DeletePlatformVersion` | 0 |
 | *elasticbeanstalk* | `CreateStorageLocation` | 0 |
@@ -2059,8 +2060,8 @@
 | *elasticbeanstalk* | `DescribePlatformVersion` | 0 |
 | *elasticbeanstalk* | `DescribeAccountAttributes` | 0 |
 | *elasticbeanstalk* | `DescribeInstancesHealth` | 0 |
-| *elasticbeanstalk* | `CreateApplicationVersion` | 0 |
-| *elasticbeanstalk* | `CreateConfigurationTemplate` | 0 |
+| *elasticbeanstalk* | `CreateApplicationVersion` | 1 |
+| *elasticbeanstalk* | `CreateConfigurationTemplate` | 1 |
 | *elasticbeanstalk* | `CheckDNSAvailability` | 0 |
 | *elastictranscoder* | `ReadPreset` | 0 |
 | *elastictranscoder* | `CreateJob` | 0 |
@@ -4892,4 +4893,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 597 (13.0%)**
+**Total Unique Occurances: 605 (13.0%)**
