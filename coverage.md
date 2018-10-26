@@ -285,6 +285,7 @@
 | *cognito-identity* | 1/18 (5.0%) |
 | *cognito-idp* | 10/95 (10.0%) |
 | *config* | 6/43 (13.0%) |
+| *dms* | 27/44 (61.0%) |
 | *ds* | 4/49 (8.0%) |
 | *dynamodb* | 2/34 (5.0%) |
 | *ec2* | 82/274 (29.0%) |
@@ -1501,48 +1502,48 @@
 | *dlm* | `CreateLifecyclePolicy` | 0 |
 | *dlm* | `GetLifecyclePolicy` | 0 |
 | *dlm* | `UpdateLifecyclePolicy` | 0 |
-| *dms* | `RefreshSchemas` | 0 |
-| *dms* | `DescribeCertificates` | 0 |
-| *dms* | `DescribeReplicationInstances` | 0 |
-| *dms* | `CreateReplicationSubnetGroup` | 0 |
+| *dms* | `RefreshSchemas` | 1 |
+| *dms* | `DescribeCertificates` | 1 |
+| *dms* | `DescribeReplicationInstances` | 1 |
+| *dms* | `CreateReplicationSubnetGroup` | 1 |
 | *dms* | `DescribeEvents` | 0 |
-| *dms* | `DescribeEventSubscriptions` | 0 |
-| *dms* | `CreateReplicationTask` | 0 |
-| *dms* | `DeleteReplicationInstance` | 0 |
+| *dms* | `DescribeEventSubscriptions` | 1 |
+| *dms* | `CreateReplicationTask` | 1 |
+| *dms* | `DeleteReplicationInstance` | 1 |
 | *dms* | `ModifyReplicationInstance` | 0 |
-| *dms* | `DescribeTableStatistics` | 0 |
+| *dms* | `DescribeTableStatistics` | 1 |
 | *dms* | `RebootReplicationInstance` | 0 |
-| *dms* | `DescribeEventCategories` | 0 |
+| *dms* | `DescribeEventCategories` | 1 |
 | *dms* | `StartReplicationTask` | 0 |
-| *dms* | `DeleteReplicationSubnetGroup` | 0 |
+| *dms* | `DeleteReplicationSubnetGroup` | 1 |
 | *dms* | `AddTagsToResource` | 0 |
-| *dms* | `DescribeAccountAttributes` | 0 |
+| *dms* | `DescribeAccountAttributes` | 1 |
 | *dms* | `DeleteCertificate` | 0 |
 | *dms* | `TestConnection` | 0 |
-| *dms* | `DescribeEndpoints` | 0 |
+| *dms* | `DescribeEndpoints` | 1 |
 | *dms* | `RemoveTagsFromResource` | 0 |
-| *dms* | `CreateEndpoint` | 0 |
-| *dms* | `DeleteReplicationTask` | 0 |
-| *dms* | `DescribeReplicationTaskAssessmentResults` | 0 |
-| *dms* | `DescribeRefreshSchemasStatus` | 0 |
+| *dms* | `CreateEndpoint` | 1 |
+| *dms* | `DeleteReplicationTask` | 1 |
+| *dms* | `DescribeReplicationTaskAssessmentResults` | 1 |
+| *dms* | `DescribeRefreshSchemasStatus` | 1 |
 | *dms* | `ModifyEndpoint` | 0 |
 | *dms* | `ReloadTables` | 0 |
 | *dms* | `ModifyReplicationSubnetGroup` | 0 |
-| *dms* | `DescribeSchemas` | 0 |
-| *dms* | `DeleteEventSubscription` | 0 |
+| *dms* | `DescribeSchemas` | 1 |
+| *dms* | `DeleteEventSubscription` | 1 |
 | *dms* | `StartReplicationTaskAssessment` | 0 |
 | *dms* | `ModifyEventSubscription` | 0 |
-| *dms* | `DescribeConnections` | 0 |
-| *dms* | `CreateReplicationInstance` | 0 |
-| *dms* | `DescribeReplicationInstanceTaskLogs` | 0 |
-| *dms* | `ImportCertificate` | 0 |
-| *dms* | `DescribeReplicationSubnetGroups` | 0 |
+| *dms* | `DescribeConnections` | 1 |
+| *dms* | `CreateReplicationInstance` | 1 |
+| *dms* | `DescribeReplicationInstanceTaskLogs` | 1 |
+| *dms* | `ImportCertificate` | 1 |
+| *dms* | `DescribeReplicationSubnetGroups` | 1 |
 | *dms* | `StopReplicationTask` | 0 |
-| *dms* | `DescribeEndpointTypes` | 0 |
+| *dms* | `DescribeEndpointTypes` | 1 |
 | *dms* | `DescribeReplicationTasks` | 0 |
-| *dms* | `CreateEventSubscription` | 0 |
-| *dms* | `DeleteEndpoint` | 0 |
-| *dms* | `DescribeOrderableReplicationInstances` | 0 |
+| *dms* | `CreateEventSubscription` | 1 |
+| *dms* | `DeleteEndpoint` | 1 |
+| *dms* | `DescribeOrderableReplicationInstances` | 1 |
 | *dms* | `ModifyReplicationTask` | 0 |
 | *dms* | `ListTagsForResource` | 0 |
 | *ds* | `RemoveTagsFromResource` | 0 |
@@ -1652,7 +1653,7 @@
 | *ec2* | `AssociateDhcpOptions` | 1 |
 | *ec2* | `ModifyVpcEndpointServicePermissions` | 0 |
 | *ec2* | `ImportKeyPair` | 1 |
-| *ec2* | `DescribeAvailabilityZones` | 6 |
+| *ec2* | `DescribeAvailabilityZones` | 7 |
 | *ec2* | `RequestSpotInstances` | 0 |
 | *ec2* | `DescribeSnapshots` | 1 |
 | *ec2* | `AcceptVpcPeeringConnection` | 0 |
@@ -1708,7 +1709,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 14 |
+| *ec2* | `DescribeVpcs` | 15 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1859,7 +1860,7 @@
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 13 |
+| *ec2* | `DescribeSecurityGroups` | 14 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -1872,7 +1873,7 @@
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 1 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 13 |
+| *ec2* | `DescribeSubnets` | 14 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -2650,7 +2651,7 @@
 | *iam* | `AttachRolePolicy` | 2 |
 | *iam* | `RemoveClientIDFromOpenIDConnectProvider` | 0 |
 | *iam* | `UpdateAccountPasswordPolicy` | 0 |
-| *iam* | `GetRole` | 2 |
+| *iam* | `GetRole` | 3 |
 | *iam* | `DeletePolicyVersion` | 0 |
 | *iam* | `ListPolicies` | 1 |
 | *iam* | `PutUserPolicy` | 0 |
@@ -2993,7 +2994,7 @@
 | *kms* | `DeleteAlias` | 0 |
 | *kms* | `RetireGrant` | 0 |
 | *kms* | `TagResource` | 0 |
-| *kms* | `DescribeKey` | 3 |
+| *kms* | `DescribeKey` | 4 |
 | *kms* | `ListKeys` | 5 |
 | *kms* | `GenerateRandom` | 0 |
 | *kms* | `GetKeyPolicy` | 1 |
@@ -3718,7 +3719,7 @@
 | *rds* | `ModifyDBClusterParameterGroup` | 0 |
 | *rds* | `FailoverDBCluster` | 0 |
 | *rds* | `ApplyPendingMaintenanceAction` | 0 |
-| *rds* | `DescribeDBInstances` | 1 |
+| *rds* | `DescribeDBInstances` | 2 |
 | *rds* | `PurchaseReservedDBInstancesOffering` | 0 |
 | *rds* | `DescribeOrderableDBInstanceOptions` | 0 |
 | *rds* | `RestoreDBInstanceFromS3` | 0 |
@@ -4349,7 +4350,7 @@
 | *sns* | `Subscribe` | 1 |
 | *sns* | `DeleteTopic` | 1 |
 | *sns* | `OptInPhoneNumber` | 0 |
-| *sns* | `ListTopics` | 7 |
+| *sns* | `ListTopics` | 8 |
 | *sqs* | `CreateQueue` | 1 |
 | *sqs* | `GetQueueAttributes` | 1 |
 | *sqs* | `SetQueueAttributes` | 1 |
@@ -4891,4 +4892,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 570 (12.0%)**
+**Total Unique Occurances: 597 (13.0%)**
