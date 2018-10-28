@@ -187,6 +187,8 @@ function getPipeSplitField(str, index) {
 
 function getResourceName(service, reqId) {;}
 
+function interpretGwtWireRequest(str) {;}
+
 /******/
 
 var outputs = [];
@@ -203,6 +205,42 @@ function analyseRequest(details) {
     var requestBody = "";
     var jsonRequestBody = {};
     var region = 'us-east-1';
+    var gwtRequest = {};
+
+    // Firefox
+    if (intercept && navigator.userAgent.search("Firefox") > -1) {
+        let filter = browser.webRequest.filterResponseData(details.requestId);
+        let decoder = new TextDecoder("utf-8");
+        let encoder = new TextEncoder();
+        var responseBody = "";
+
+        filter.ondata = event => {
+            filter.write(event.data);
+           
+            responseBody += decoder.decode(event.data, {stream: true});
+        }
+
+        filter.onstop = event => {
+            filter.disconnect();
+
+            console.log(responseBody);
+
+            for (var i=tracked_resources.length-1; i>=0; i--) {
+                if (details.requestId == tracked_resources[i].requestDetails.requestId) {
+                    tracked_resources[i]["response"] = {
+                        'timestamp': null,
+                        'properties': null,
+                        'body': responseBody
+                    };
+                    setOutputsForTrackedResource(i);
+                }
+            }
+
+            for (var i=0; i<outputs.length; i++) { // TODO
+                ;
+            }
+        }
+    }
 
     var region_check = /.+\/\/([a-zA-Z0-9-]+)\.console\.aws\.amazon\.com/g.exec(details.url);
     if (region_check && region_check[1]) {
@@ -226,7 +264,9 @@ function analyseRequest(details) {
     
         try {
             jsonRequestBody = JSON.parse(requestBody);
-        } catch(e) {;}
+        } catch(e) {
+            gwtRequest = interpretGwtWireRequest(requestBody);
+        }
 
         // check for string objects
         for (var prop in jsonRequestBody) {
@@ -868,6 +908,11 @@ function analyseRequest(details) {
             'was_blocked': blocking
         });
 
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
+
         return {};
     }
     
@@ -889,6 +934,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
 
         return {};
     }
@@ -912,6 +962,11 @@ function analyseRequest(details) {
             'requestDetails': details
         });
 
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
+
         return {};
     }
     
@@ -933,6 +988,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
 
         return {};
     }
@@ -956,6 +1016,11 @@ function analyseRequest(details) {
             'requestDetails': details
         });
 
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
+
         return {};
     }
     
@@ -978,6 +1043,11 @@ function analyseRequest(details) {
             'requestDetails': details
         });
 
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
+
         return {};
     }
     
@@ -998,6 +1068,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
 
         return {};
     }
@@ -1383,8 +1458,6 @@ function analyseRequest(details) {
         return {};
     }
 
-    /* Start Auto */
-
     // autogen:cloud9:cloud9.DescribeEnvironmentMemberships
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloud9\/api\/cloud9$/g) && jsonRequestBody.operation == "describeEnvironmentMemberships" && jsonRequestBody.method == "POST") {
         reqParams.boto3['Permissions'] = jsonRequestBody.contentString.permissions;
@@ -1467,6 +1540,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -1533,6 +1611,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -1553,6 +1636,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -1609,6 +1697,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -1699,6 +1792,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -1799,6 +1897,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -1837,6 +1940,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -1901,6 +2009,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -1921,6 +2034,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -1941,6 +2059,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2092,6 +2215,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2260,6 +2388,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2280,6 +2413,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2348,6 +2486,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2512,6 +2655,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2534,6 +2682,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2642,6 +2795,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2710,6 +2868,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2732,6 +2895,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2754,6 +2922,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2818,6 +2991,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2842,6 +3020,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2883,6 +3066,11 @@ function analyseRequest(details) {
             'requestDetails': details
             });
         }
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -2905,6 +3093,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3069,6 +3262,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3107,6 +3305,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3336,6 +3539,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3376,6 +3584,11 @@ function analyseRequest(details) {
             'requestDetails': details
             });
         }
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3396,6 +3609,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3416,6 +3634,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3438,6 +3661,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3476,6 +3704,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3514,6 +3747,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3564,6 +3802,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3644,6 +3887,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3664,6 +3912,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3684,6 +3937,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -3746,12 +4004,17 @@ function analyseRequest(details) {
                 'was_blocked': blocking
             });
         }
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DescribeRegions
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService" && getPipeSplitField(requestBody, 8) == "getRegions") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService" && gwtRequest['method'] == "getRegions") {
 
         outputs.push({
             'region': region,
@@ -3787,7 +4050,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeDhcpOptions
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getDHCPOptions" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getDHCPOptions" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
 
         outputs.push({
             'region': region,
@@ -3805,7 +4068,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeVpcAttribute
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService" && getPipeSplitField(requestBody, 8) == "getVpcAttributes") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService" && gwtRequest['method'] == "getVpcAttributes") {
         reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
 
@@ -3845,7 +4108,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeSubnets
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2ux\.elasticconsole\.generated\.ElasticConsoleBackendGenerated\.MergedDescribeSubnets\?/g) && getPipeSplitField(requestBody, 8) == "getVpcs") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2ux\.elasticconsole\.generated\.ElasticConsoleBackendGenerated\.MergedDescribeSubnets\?/g) && gwtRequest['method'] == "getVpcs") {
 
         outputs.push({
             'region': region,
@@ -3863,7 +4126,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeRouteTables
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService" && getPipeSplitField(requestBody, 8) == "getRouteTables") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService" && gwtRequest['method'] == "getRouteTables") {
 
         outputs.push({
             'region': region,
@@ -3917,7 +4180,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeDhcpOptions
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getDHCPOptions" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getDHCPOptions" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
 
         outputs.push({
             'region': region,
@@ -4047,7 +4310,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeNetworkAcls
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getNetworkACLs" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getNetworkACLs" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
 
         outputs.push({
             'region': region,
@@ -4141,7 +4404,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.CreateVpc
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createVpc" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "createVpc" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
         reqParams.boto3['CidrBlock'] = getPipeSplitField(requestBody, 18);
         reqParams.cli['--cidr-block'] = getPipeSplitField(requestBody, 18);
         reqParams.boto3['InstanceTenancy'] = getPipeSplitField(requestBody, 19);
@@ -4171,6 +4434,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4258,6 +4526,11 @@ function analyseRequest(details) {
                 'was_blocked': blocking
             });
         }
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4278,6 +4551,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4298,12 +4576,17 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DescribeInstances
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "modifyDHCPOptions" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService" && getPipeSplitField(requestBody, 8) == "getInstancesForVPC" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "modifyDHCPOptions" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService" && gwtRequest['method'] == "getInstancesForVPC" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
 
         outputs.push({
             'region': region,
@@ -4321,7 +4604,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DeleteVpc
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "deleteVpc" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "deleteVpc" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
         reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 18);
         reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 18);
 
@@ -4336,12 +4619,17 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.CreateRouteTable
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createRouteTable" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "createRouteTable" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
         reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
 
@@ -4368,12 +4656,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DescribeRouteTables
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getRouteTables" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getRouteTables" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
 
         outputs.push({
             'region': region,
@@ -4406,6 +4699,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4438,6 +4736,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4458,6 +4761,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4480,6 +4788,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4508,12 +4821,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DeleteRouteTable
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "deleteRouteTable" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "deleteRouteTable" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
         reqParams.boto3['RouteTableId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--route-table-id'] = getPipeSplitField(requestBody, 17);
 
@@ -4528,6 +4846,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4548,6 +4871,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4583,6 +4911,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4603,12 +4936,17 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.CreateNetworkAcl
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createNetworkACL" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "createNetworkACL" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
         reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
 
@@ -4635,12 +4973,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DeleteNetworkAcl
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "deleteNetworkACL" && getPipeSplitField(requestBody, 7) == "amazonaws.console.vpc.client.VpcConsoleService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "deleteNetworkACL" && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService") {
         reqParams.boto3['NetworkAclId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--network-acl-id'] = getPipeSplitField(requestBody, 17);
 
@@ -4655,6 +4998,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4690,6 +5038,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4710,6 +5063,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4742,6 +5100,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4762,12 +5125,17 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:sqs:sqs.ListQueues
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && getPipeSplitField(requestBody, 7) == "com.amazonaws.console.sqs.shared.services.AmazonSQSService" && getPipeSplitField(requestBody, 8) == "listQueues") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && gwtRequest['service'] == "com.amazonaws.console.sqs.shared.services.AmazonSQSService" && gwtRequest['method'] == "listQueues") {
 
         outputs.push({
             'region': region,
@@ -4785,7 +5153,7 @@ function analyseRequest(details) {
     }
 
     // autogen:sqs:kms.ListKeys
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonKMS$/g) && getPipeSplitField(requestBody, 8) == "listKeys" && getPipeSplitField(requestBody, 7) == "com.amazonaws.console.sqs.shared.services.AmazonKMSService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonKMS$/g) && gwtRequest['method'] == "listKeys" && gwtRequest['service'] == "com.amazonaws.console.sqs.shared.services.AmazonKMSService") {
 
         outputs.push({
             'region': region,
@@ -4803,7 +5171,7 @@ function analyseRequest(details) {
     }
 
     // autogen:sqs:sqs.DeleteQueue
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && getPipeSplitField(requestBody, 8) == "createQueue" && getPipeSplitField(requestBody, 7) == "com.amazonaws.console.sqs.shared.services.AmazonSQSService" && getPipeSplitField(requestBody, 8) == "deleteQueue" && getPipeSplitField(requestBody, 7) == "com.amazonaws.console.sqs.shared.services.AmazonSQSService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && gwtRequest['method'] == "createQueue" && gwtRequest['service'] == "com.amazonaws.console.sqs.shared.services.AmazonSQSService" && gwtRequest['method'] == "deleteQueue" && gwtRequest['service'] == "com.amazonaws.console.sqs.shared.services.AmazonSQSService") {
         reqParams.boto3['QueueUrl'] = getPipeSplitField(requestBody, 10);
         reqParams.cli['--queue-url'] = getPipeSplitField(requestBody, 10);
 
@@ -4818,6 +5186,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4907,6 +5280,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4929,6 +5307,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -4964,6 +5347,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5048,6 +5436,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5106,6 +5499,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5338,6 +5736,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5366,6 +5769,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5412,6 +5820,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5440,6 +5853,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5478,6 +5896,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5500,6 +5923,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5524,6 +5952,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5597,6 +6030,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5641,6 +6079,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5682,6 +6125,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5704,6 +6152,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5775,6 +6228,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5864,6 +6322,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5884,6 +6347,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -5928,6 +6396,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6004,6 +6477,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6024,6 +6502,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6072,6 +6555,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6372,6 +6860,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6414,6 +6907,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6434,6 +6932,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6454,12 +6957,17 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:workspaces:ds.DescribeDirectories
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && getPipeSplitField(requestBody, 8) == "describeDirectories") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && gwtRequest['method'] == "describeDirectories") {
 
         outputs.push({
             'region': region,
@@ -6477,7 +6985,7 @@ function analyseRequest(details) {
     }
 
     // autogen:workspaces:workspaces.DescribeWorkspaceBundles
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && getPipeSplitField(requestBody, 8) == "describeWorkspaceBundles") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && gwtRequest['method'] == "describeWorkspaceBundles") {
 
         outputs.push({
             'region': region,
@@ -6495,7 +7003,7 @@ function analyseRequest(details) {
     }
 
     // autogen:workspaces:kms.ListKeys
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && getPipeSplitField(requestBody, 8) == "listKeys") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && gwtRequest['method'] == "listKeys") {
 
         outputs.push({
             'region': region,
@@ -6513,7 +7021,7 @@ function analyseRequest(details) {
     }
 
     // autogen:workspaces:workspaces.DescribeWorkspaces
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && getPipeSplitField(requestBody, 8) == "describeWorkspaceImages") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && gwtRequest['method'] == "describeWorkspaceImages") {
 
         outputs.push({
             'region': region,
@@ -6531,7 +7039,7 @@ function analyseRequest(details) {
     }
 
     // autogen:workspaces:workspaces.CreateWorkspaces
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && getPipeSplitField(requestBody, 8) == "createRegistration") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && gwtRequest['method'] == "createRegistration") {
  
         // TODO: create directory here
         // getPipeSplitField(requestBody, 15) // email
@@ -6582,12 +7090,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:workspaces:workspaces.TerminateWorkspaces
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && getPipeSplitField(requestBody, 8) == "terminateWorkspaces") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/workspaces\/workspaces\/SkyLightService$/g) && gwtRequest['method'] == "terminateWorkspaces") {
         reqParams.boto3['TerminateWorkspaceRequests'] = {
             'WorkspaceId': getPipeSplitField(requestBody, 12)
         };
@@ -6606,6 +7119,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6647,6 +7165,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6682,6 +7205,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6717,6 +7245,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6761,6 +7294,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6816,6 +7354,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6880,6 +7423,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6927,6 +7475,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6975,6 +7528,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -6995,6 +7553,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7099,6 +7662,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7195,6 +7763,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7238,6 +7811,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7262,6 +7840,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7404,6 +7987,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7426,6 +8014,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7472,6 +8065,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7494,6 +8092,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7541,6 +8144,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7563,6 +8171,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7733,6 +8346,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7753,6 +8371,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7775,6 +8398,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7819,6 +8447,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7880,6 +8513,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7921,6 +8559,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7947,6 +8590,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -7991,6 +8639,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8011,6 +8664,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8033,6 +8691,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8053,6 +8716,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8088,6 +8756,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8229,6 +8902,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8341,6 +9019,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8363,6 +9046,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8420,6 +9108,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8460,6 +9153,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8603,6 +9301,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8661,6 +9364,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8743,6 +9451,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8763,6 +9476,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8798,6 +9516,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8884,6 +9607,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -8949,6 +9677,11 @@ function analyseRequest(details) {
                 'was_blocked': blocking
             });
         }
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -9012,6 +9745,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -9050,6 +9788,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -9085,6 +9828,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -9140,6 +9888,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -9195,6 +9948,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -9233,6 +9991,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -9384,6 +10147,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "amazon.acs.acsconsole.shared.CacheClusterContext.create") {
                 reqParams.boto3['NumCacheNodes'] = action['parameters'][0]['numCacheNodes'];
                 reqParams.cli['--num-cache-nodes'] = action['parameters'][0]['numCacheNodes'];
@@ -9444,6 +10212,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "amazon.acs.acsconsole.shared.ReservedCacheNodeRequestContext.findAll") {
                 outputs.push({
                     'region': region,
@@ -9512,6 +10285,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "EC2.DescribeAvailabilityZonesDefault") {
                 outputs.push({
                     'region': region,
@@ -9613,6 +10391,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getCatalogImportStatus") {
                 outputs.push({
                     'region': region,
@@ -9763,6 +10546,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getClassifiers") {
                 outputs.push({
                     'region': region,
@@ -9813,6 +10601,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getDataCatalogEncryptionSettings") {
                 reqParams.boto3['CatalogId'] = action['parameters'][0]['catalogId'];
                 reqParams.cli['--catalog-id'] = action['parameters'][0]['catalogId'];
@@ -9845,6 +10638,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.getJobs") {
                 outputs.push({
                     'region': region,
@@ -9898,6 +10696,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.deleteSecurityConfiguration") {
                 reqParams.boto3['Name'] = action['parameters'][0]['name'];
                 reqParams.cli['--name'] = action['parameters'][0]['name'];
@@ -9913,6 +10716,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.putDataCatalogEncryptionSettings") {
                 reqParams.boto3['DataCatalogEncryptionSettings'] = action['parameters'][0]['dataCatalogEncryptionSettings'];
                 reqParams.cli['--data-catalog-encryption-settings'] = action['parameters'][0]['dataCatalogEncryptionSettings'];
@@ -9930,6 +10738,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.deleteClassifier") {
                 reqParams.boto3['Name'] = action['parameters'][0]['name'];
                 reqParams.cli['--name'] = action['parameters'][0]['name'];
@@ -9945,6 +10758,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.batchDeleteConnection") {
                 reqParams.boto3['ConnectionNameList'] = action['parameters'][0]['connectionNameList'];
                 reqParams.cli['--connection-name-list'] = action['parameters'][0]['connectionNameList'];
@@ -9960,6 +10778,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.glue.awssdk.shared.context.AWSGlueContext.batchDeleteTable") {
                 reqParams.boto3['DatabaseName'] = action['parameters'][0]['databaseName'];
                 reqParams.cli['--database-name'] = action['parameters'][0]['databaseName'];
@@ -9977,6 +10800,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             }
         }
 
@@ -10227,6 +11055,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.rds.shared.EventContext.findEvents") {
                 reqParams.boto3['Duration'] = action['parameters'][0]['duration'];
                 reqParams.cli['--duration'] = action['parameters'][0]['duration'];
@@ -10410,6 +11243,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbParamGroupContext.findDbParameterGroups") {
                 outputs.push({
                     'region': region,
@@ -10454,6 +11292,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.rds.shared.OptionGroupContext.create") {
                 reqParams.boto3['EngineName'] = action['parameters'][0]['engineName'];
                 reqParams.cli['--engine-name'] = action['parameters'][0]['engineName'];
@@ -10489,6 +11332,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.gwt.sns.requestfactory.shared.SnsRequestContext.listTopicArns") {
                 outputs.push({
                     'region': region,
@@ -10542,6 +11390,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.rds.shared.EventSubscriptionContext.list") {
                 outputs.push({
                     'region': region,
@@ -10569,6 +11422,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbParamGroupContext.createDbClusterParameterGroup") {
                 reqParams.boto3['DBParameterGroupFamily'] = action['parameters'][0];
                 reqParams.cli['--db-parameter-group-family'] = action['parameters'][0];
@@ -10601,6 +11459,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbCContext.startDBCluster") {
                 reqParams.boto3['DBClusterIdentifier'] = action['parameters'][0];
                 reqParams.cli['--db-cluster-identifier'] = action['parameters'][0];
@@ -10616,6 +11479,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.rds.shared.DbInstanceContext.delete") {
                 reqParams.boto3['SkipFinalSnapshot'] = action['parameters'][0]['skipFinalSnapshot'];
                 reqParams.cli['--skip-final-snapshot'] = action['parameters'][0]['skipFinalSnapshot'];
@@ -10633,6 +11501,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             }                     
             
         }
@@ -10847,6 +11720,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -10891,6 +11769,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -10926,6 +11809,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -10988,6 +11876,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11196,6 +12089,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11296,6 +12194,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11404,6 +12307,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11443,6 +12351,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11463,6 +12376,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11521,6 +12439,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11621,6 +12544,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11661,6 +12589,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11705,6 +12638,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11818,6 +12756,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -11934,12 +12877,17 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.CreateVpc
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createVpc") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "createVpc") {
         reqParams.boto3['CidrBlock'] = getPipeSplitField(requestBody, 18);
         reqParams.cli['--cidr-block'] = getPipeSplitField(requestBody, 18);
         reqParams.boto3['InstanceTenancy'] = getPipeSplitField(requestBody, 19);
@@ -11969,12 +12917,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DescribeVpcs
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getVpcs") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getVpcs") {
 
         outputs.push({
             'region': region,
@@ -11992,7 +12945,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeDhcpOptions
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getDHCPOptions") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getDHCPOptions") {
 
         outputs.push({
             'region': region,
@@ -12010,7 +12963,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeVpcAttribute
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getVpcAttributes") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getVpcAttributes") {
         reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
 
@@ -12030,7 +12983,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeRouteTables
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getRouteTables") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getRouteTables") {
 
         outputs.push({
             'region': region,
@@ -12048,7 +13001,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.CreateRouteTable
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createRouteTable") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "createRouteTable") {
         reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
 
@@ -12075,12 +13028,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DescribeNetworkAcls
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createDHCPOption" && getPipeSplitField(requestBody, 8) == "getNetworkACLs") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "createDHCPOption" && gwtRequest['method'] == "getNetworkACLs") {
 
         outputs.push({
             'region': region,
@@ -12098,7 +13056,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.CreateNetworkAcl
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "createNetworkACL") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "createNetworkACL") {
         reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
 
@@ -12125,12 +13083,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DeleteNetworkAcl
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "modifyIngressRulesForNetworkACL" && getPipeSplitField(requestBody, 8) == "deleteNetworkACL") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "modifyIngressRulesForNetworkACL" && gwtRequest['method'] == "deleteNetworkACL") {
         reqParams.boto3['NetworkAclId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--network-acl-id'] = getPipeSplitField(requestBody, 17);
 
@@ -12145,12 +13108,17 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DeleteRouteTable
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "deleteRouteTable") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "deleteRouteTable") {
         reqParams.boto3['RouteTableId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--route-table-id'] = getPipeSplitField(requestBody, 17);
 
@@ -12165,6 +13133,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -12190,7 +13163,7 @@ function analyseRequest(details) {
     }
 
     // autogen:ec2:ec2.DescribeSubnets
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getSubnets") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getSubnets") {
 
         outputs.push({
             'region': region,
@@ -12208,13 +13181,8 @@ function analyseRequest(details) {
     }
 
     // manual:ec2:ec2.CreateNetworkAclEntry
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && (getPipeSplitField(requestBody, 8) == "modifyIngressRulesForNetworkACL" || getPipeSplitField(requestBody, 8) == "modifyEgressRulesForNetworkACL")) {
-        var headerCount = getPipeSplitField(requestBody, 2);
-        var offset = headerCount + 32;
-
-        console.log(requestBody.split("|"));
-        
-        while (getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2) && getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2).includes("FirewallRule")) {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && (gwtRequest['method'] == "modifyIngressRulesForNetworkACL" || gwtRequest['method'] == "modifyEgressRulesForNetworkACL")) {
+        for (var i=0; i<gwtRequest.args[2].value.value.length; i++) {
             var reqParams = {
                 'boto3': {},
                 'go': {},
@@ -12222,7 +13190,7 @@ function analyseRequest(details) {
                 'cli': {}
             };
             
-            if (getPipeSplitField(requestBody, 8) == "modifyIngressRulesForNetworkACL") {
+            if (gwtRequest['method'] == "modifyIngressRulesForNetworkACL") {
                 reqParams.boto3['Egress'] = false;
                 reqParams.cli['--ingress'] = null;
                 reqParams.cfn['Egress'] = false;
@@ -12232,59 +13200,40 @@ function analyseRequest(details) {
                 reqParams.cfn['Egress'] = true;
             }
             
-            reqParams.boto3['NetworkAclId'] = getPipeSplitField(requestBody, 18);
-            reqParams.cli['--network-acl-id'] = getPipeSplitField(requestBody, 18);
-            reqParams.cfn['NetworkAclId'] = getPipeSplitField(requestBody, 18);
-            offset += 1;
-            reqParams.boto3['RuleNumber'] = getPipeSplitField(requestBody, offset);
-            reqParams.cli['--rule-number'] = getPipeSplitField(requestBody, offset);
-            reqParams.cfn['RuleNumber'] = getPipeSplitField(requestBody, offset);
-            offset += 1;
-            reqParams.boto3['Protocol'] = getPipeSplitField(requestBody, offset);
-            reqParams.cli['--protocol'] = getPipeSplitField(requestBody, offset);
-            reqParams.cfn['Protocol'] = getPipeSplitField(requestBody, offset);
-            offset += 1;
-            if (getPipeSplitField(requestBody, offset) > 0) { // don't set ICMP PortRange
+            reqParams.boto3['NetworkAclId'] = gwtRequest.args[1].value;
+            reqParams.cli['--network-acl-id'] = gwtRequest.args[1].value;
+            reqParams.cfn['NetworkAclId'] = gwtRequest.args[1].value;
+            
+            reqParams.boto3['RuleNumber'] = gwtRequest.args[2].value.value[i].ruleId;
+            reqParams.cli['--rule-number'] = gwtRequest.args[2].value.value[i].ruleId;
+            reqParams.cfn['RuleNumber'] = gwtRequest.args[2].value.value[i].ruleId;
+            
+            reqParams.boto3['Protocol'] = gwtRequest.args[2].value.value[i].protocol;
+            reqParams.cli['--protocol'] = gwtRequest.args[2].value.value[i].protocol;
+            reqParams.cfn['Protocol'] = gwtRequest.args[2].value.value[i].protocol;
+            
+            if (gwtRequest.args[2].value.value[i].portStart > 0) { // don't set ICMP PortRange
                 reqParams.boto3['PortRange'] = {
-                    'From': getPipeSplitField(requestBody, offset),
-                    'To': getPipeSplitField(requestBody, (offset + 1))
+                    'From': gwtRequest.args[2].value.value[i].portStart,
+                    'To': gwtRequest.args[2].value.value[i].portEnd
                 };
                 reqParams.cli['--port-range'] = {
-                    'From': getPipeSplitField(requestBody, offset),
-                    'To': getPipeSplitField(requestBody, (offset + 1))
+                    'From': gwtRequest.args[2].value.value[i].portStart,
+                    'To': gwtRequest.args[2].value.value[i].portEnd
                 };
                 reqParams.cfn['PortRange'] = {
-                    'From': getPipeSplitField(requestBody, offset),
-                    'To': getPipeSplitField(requestBody, (offset + 1))
+                    'From': gwtRequest.args[2].value.value[i].portStart,
+                    'To': gwtRequest.args[2].value.value[i].portEnd
                 };
             }
-            offset += 4;
-            if (getPipeSplitField(requestBody, offset) > 0) {
-                offset += 1;
-                reqParams.boto3['CidrBlock'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
-                reqParams.cli['--cidr-block'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
-                reqParams.cfn['CidrBlock'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
-            } else {
-                reqParams.boto3['CidrBlock'] = '???'; // TODO - Fix this
-                reqParams.cli['--cidr-block'] = '???';
-                reqParams.cfn['CidrBlock'] = '???';
-            }
-            offset += 1;
-            if (getPipeSplitField(requestBody, offset) == 0) {
-                offset += 1;
-            } else if (getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2).includes("ArrayList")) {
-                offset += getPipeSplitField(requestBody, (offset + 1)) + 2;
-            }
-            if (getPipeSplitField(requestBody, offset) == 0) {
-                offset += 1;
-            } else if (getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2).includes("ArrayList")) {
-                offset += getPipeSplitField(requestBody, (offset + 1)) + 2;
-            }
-            reqParams.boto3['RuleAction'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
-            reqParams.cli['--rule-action'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
-            reqParams.cfn['RuleAction'] = getPipeSplitField(requestBody, getPipeSplitField(requestBody, offset) + 2);
+            
+            reqParams.boto3['CidrBlock'] = gwtRequest.args[2].value.value[i].cidr.value[0].value;
+            reqParams.cli['--cidr-block'] = gwtRequest.args[2].value.value[i].cidr.value[0].value;
+            reqParams.cfn['CidrBlock'] = gwtRequest.args[2].value.value[i].cidr.value[0].value;
 
-            offset += 2;
+            reqParams.boto3['RuleAction'] = gwtRequest.args[2].value.value[i].action;
+            reqParams.cli['--rule-action'] = gwtRequest.args[2].value.value[i].action;
+            reqParams.cfn['RuleAction'] = gwtRequest.args[2].value.value[i].action;
 
             if (reqParams.boto3['RuleNumber'] != 32767) { // ignore default rule
                 outputs.push({
@@ -12310,12 +13259,17 @@ function analyseRequest(details) {
                 });
             }
         }
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.AssociateDhcpOptions
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "modifyDHCPOptions") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "modifyDHCPOptions") {
         reqParams.boto3['VpcId'] = getPipeSplitField(requestBody, 17);
         reqParams.cli['--vpc-id'] = getPipeSplitField(requestBody, 17);
         reqParams.boto3['DhcpOptionsId'] = getPipeSplitField(requestBody, 18);
@@ -12345,12 +13299,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:ec2:ec2.DescribeNatGateways
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && getPipeSplitField(requestBody, 8) == "getNatGateways") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['method'] == "getNatGateways") {
 
         outputs.push({
             'region': region,
@@ -12401,6 +13360,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -12617,6 +13581,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -12682,6 +13651,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -12723,6 +13697,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -12874,6 +13853,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -12894,6 +13878,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -12914,6 +13903,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -12934,6 +13928,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -12954,6 +13953,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13001,6 +14005,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13023,6 +14032,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13058,6 +14072,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13094,6 +14113,11 @@ function analyseRequest(details) {
                 'requestDetails': details,
                 'was_blocked': blocking
             });
+
+            if (blocking) {
+                notifyBlocked();
+                return {cancel: true};
+            }
         } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "bDg0Lbt_pKcqOJ8vSNZWGQW7Rfk=") {
             reqParams.boto3['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
             reqParams.cli['--log-group-name'] = jsonRequestBody.I[0]["P"][0];
@@ -13124,6 +14148,11 @@ function analyseRequest(details) {
                 'requestDetails': details,
                 'was_blocked': blocking
             });
+
+            if (blocking) {
+                notifyBlocked();
+                return {cancel: true};
+            }
         } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "w3zy8wcdTk4$qD2iBc81AziNanc=") {
             reqParams.boto3['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
             reqParams.cli['--log-group-name'] = jsonRequestBody.I[0]["P"][0];
@@ -13159,6 +14188,11 @@ function analyseRequest(details) {
                 'requestDetails': details,
                 'was_blocked': blocking
             });
+
+            if (blocking) {
+                notifyBlocked();
+                return {cancel: true};
+            }
         } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "lRd9M18y9YlzeZbi97CtbWseYDE=") {
             reqParams.boto3['DestinationArn'] = jsonRequestBody.O[0]["P"]["destinationArn"];
             reqParams.cli['--destination-arn'] = jsonRequestBody.O[0]["P"]["destinationArn"];
@@ -13197,17 +14231,22 @@ function analyseRequest(details) {
                 'requestDetails': details,
                 'was_blocked': blocking
             });
+
+            if (blocking) {
+                notifyBlocked();
+                return {cancel: true};
+            }
         }
         
         return {};
     }
 
     // autogen:sqs:sqs.CreateQueue
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && getPipeSplitField(requestBody, 8) == "createQueue") {
-        reqParams.boto3['QueueName'] = getPipeSplitField(requestBody, 12);
-        reqParams.cli['--queue-name'] = getPipeSplitField(requestBody, 12);
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && gwtRequest['method'] == "createQueue") {
+        reqParams.boto3['QueueName'] = gwtRequest.args[0].value;
+        reqParams.cli['--queue-name'] = gwtRequest.args[0].value;
 
-        reqParams.cfn['QueueName'] = getPipeSplitField(requestBody, 12);
+        reqParams.cfn['QueueName'] = gwtRequest.args[0].value;
 
         outputs.push({
             'region': region,
@@ -13230,12 +14269,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:sqs:sqs.GetQueueAttributes
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && getPipeSplitField(requestBody, 8) == "getQueueAttributes") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && gwtRequest['method'] == "getQueueAttributes") {
         reqParams.boto3['QueueUrl'] = getPipeSplitField(requestBody, 11);
         reqParams.cli['--queue-url'] = getPipeSplitField(requestBody, 11);
         reqParams.boto3['AttributeNames'] = getPipeSplitField(requestBody, 14);
@@ -13257,7 +14301,7 @@ function analyseRequest(details) {
     }
 
     // autogen:sqs:sqs.SetQueueAttributes
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && getPipeSplitField(requestBody, 8) == "setQueueAttributes" && getPipeSplitField(requestBody, 13) == "Policy") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && gwtRequest['method'] == "setQueueAttributes" && getPipeSplitField(requestBody, 13) == "Policy") {
         reqParams.boto3['QueueUrl'] = getPipeSplitField(requestBody, 11);
         reqParams.cli['--queue-url'] = getPipeSplitField(requestBody, 11);
         reqParams.boto3['Attributes'] = {
@@ -13291,6 +14335,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13311,12 +14360,17 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:route53:route53.GetHostedZoneCount
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && getPipeSplitField(requestBody, 8) == "getHostedZoneCount") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && gwtRequest['method'] == "getHostedZoneCount") {
 
         outputs.push({
             'region': region,
@@ -13334,7 +14388,7 @@ function analyseRequest(details) {
     }
 
     // autogen:route53:route53.ListHostedZones
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && getPipeSplitField(requestBody, 8) == "listHostedZones") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && gwtRequest['method'] == "listHostedZones") {
         reqParams.boto3['MaxItems'] = getPipeSplitField(requestBody, 10);
         reqParams.cli['--max-items'] = getPipeSplitField(requestBody, 10);
 
@@ -13354,7 +14408,7 @@ function analyseRequest(details) {
     }
 
     // autogen:route53:route53.CreateHostedZone
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && getPipeSplitField(requestBody, 8) == "createPrivateHostedZone") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && gwtRequest['method'] == "createPrivateHostedZone") {
         reqParams.boto3['Name'] = getPipeSplitField(requestBody, 11);
         reqParams.cli['--name'] = getPipeSplitField(requestBody, 11);
         reqParams.boto3['HostedZoneConfig'] = {
@@ -13395,12 +14449,17 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
     // autogen:route53:route53.CreateHostedZone
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && getPipeSplitField(requestBody, 8) == "createPublicHostedZone") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && gwtRequest['method'] == "createPublicHostedZone") {
         reqParams.boto3['Name'] = getPipeSplitField(requestBody, 10);
         reqParams.cli['--name'] = getPipeSplitField(requestBody, 10);
         reqParams.boto3['HostedZoneConfig'] = {
@@ -13438,13 +14497,18 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
 
 
     // autogen:route53:route53.ListGeoLocations
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && getPipeSplitField(requestBody, 8) == "listGeoLocationDetails") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && gwtRequest['method'] == "listGeoLocationDetails") {
 
         outputs.push({
             'region': region,
@@ -13462,7 +14526,7 @@ function analyseRequest(details) {
     }
 
     // autogen:route53:route53.ListHealthChecks
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && getPipeSplitField(requestBody, 8) == "listHealthChecks") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && gwtRequest['method'] == "listHealthChecks") {
 
         outputs.push({
             'region': region,
@@ -13480,7 +14544,7 @@ function analyseRequest(details) {
     }
 
     // autogen:route53:route53.DeleteHostedZone
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && getPipeSplitField(requestBody, 8) == "deleteHostedZone") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && gwtRequest['method'] == "deleteHostedZone") {
         reqParams.boto3['Id'] = getPipeSplitField(requestBody, 10);
         reqParams.cli['--id'] = getPipeSplitField(requestBody, 10);
 
@@ -13495,6 +14559,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13631,6 +14700,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13687,6 +14761,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13745,6 +14824,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13801,6 +14885,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13869,6 +14958,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13904,6 +14998,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -13962,6 +15061,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14017,6 +15121,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14037,6 +15146,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14057,6 +15171,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14099,6 +15218,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14119,6 +15243,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14139,6 +15268,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14306,6 +15440,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.cookiemonster.shared.ParamGroupContext.createClusterParameterGroup") {
                 reqParams.boto3['Description'] = action['parameters'][0]['description'];
                 reqParams.cli['--description'] = action['parameters'][0]['description'];
@@ -14338,6 +15477,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.cookiemonster.shared.ClusterSubnetGroupContext.create") {
                 reqParams.boto3['ClusterSubnetGroupName'] = action['parameters'][0]['clusterSubnetGroupName'];
                 reqParams.cli['--cluster-subnet-group-name'] = action['parameters'][0]['clusterSubnetGroupName'];
@@ -14370,6 +15514,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             }
         }
     }
@@ -14564,6 +15713,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14588,6 +15742,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14622,6 +15781,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14646,6 +15810,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14680,6 +15849,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14704,6 +15878,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14816,6 +15995,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14840,6 +16024,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14877,6 +16066,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14901,6 +16095,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14941,6 +16140,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14967,6 +16171,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -14989,6 +16198,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15011,6 +16225,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15033,6 +16252,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15055,6 +16279,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15077,6 +16306,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15111,6 +16345,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15135,6 +16374,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15157,6 +16401,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15255,6 +16504,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15287,6 +16541,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15348,6 +16607,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15414,6 +16678,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15436,6 +16705,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15530,6 +16804,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15565,6 +16844,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15621,6 +16905,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -15902,6 +17191,11 @@ function analyseRequest(details) {
 
                 // TODO
             }
+
+            if (blocking) {
+                notifyBlocked();
+                return {cancel: true};
+            }
         }
         
         return {};
@@ -15945,6 +17239,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16103,6 +17402,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16148,6 +17452,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16186,6 +17495,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16249,6 +17563,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16293,6 +17612,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16349,6 +17673,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16400,6 +17729,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16461,6 +17795,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16503,6 +17842,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16564,6 +17908,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16584,6 +17933,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16651,6 +18005,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16715,6 +18074,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16735,6 +18099,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16785,6 +18154,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16861,6 +18235,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16928,6 +18307,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -16968,6 +18352,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17000,6 +18389,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17070,6 +18464,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17104,6 +18503,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17168,6 +18572,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17188,6 +18597,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17208,6 +18622,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17261,6 +18680,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17341,6 +18765,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17419,6 +18848,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17441,6 +18875,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17479,6 +18918,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17499,6 +18943,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17521,6 +18970,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17632,6 +19086,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17652,6 +19111,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17747,6 +19211,11 @@ function analyseRequest(details) {
             'was_blocked': blocking
         });
 
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
+
         /* -- TODO
         if (Array.isArray(jsonRequestBody.keyAlias)) {
             reqParams.boto3['AliasName'] = jsonRequestBody.keyAlias[0];
@@ -17831,6 +19300,11 @@ function analyseRequest(details) {
                 'requestDetails': details
             });
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17894,6 +19368,11 @@ function analyseRequest(details) {
                 });
             });
         }
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17949,6 +19428,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -17981,6 +19465,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -18001,6 +19490,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -18039,6 +19533,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -18059,6 +19558,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -18081,6 +19585,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -18227,6 +19736,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.deleteReplicationSubnetGroup") {
                 reqParams.boto3['ReplicationSubnetGroupIdentifier'] = action['parameters'][0]['replicationSubnetGroupIdentifier'];
                 reqParams.cli['--replication-subnet-group-identifier'] = action['parameters'][0]['replicationSubnetGroupIdentifier'];
@@ -18242,6 +19756,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeReplicationInstances") {
                 outputs.push({
                     'region': region,
@@ -18374,6 +19893,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeReplicationInstanceTaskLogs") {
                 reqParams.boto3['MaxRecords'] = action['parameters'][0]['maxRecords'];
                 reqParams.cli['--max-records'] = action['parameters'][0]['maxRecords'];
@@ -18406,6 +19930,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeCertificates") {
                 outputs.push({
                     'region': region,
@@ -18448,6 +19977,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeEndpoints") {
                 outputs.push({
                     'region': region,
@@ -18550,6 +20084,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeSchemas") {
                 reqParams.boto3['EndpointArn'] = action['parameters'][0]['endpointArn'];
                 reqParams.cli['--endpoint-arn'] = action['parameters'][0]['endpointArn'];
@@ -18595,6 +20134,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeEventSubscriptions") {
                 outputs.push({
                     'region': region,
@@ -18673,6 +20217,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.deleteEventSubscription") {
                 reqParams.boto3['SubscriptionName'] = action['parameters'][0]['subscriptionName'];
                 reqParams.cli['--subscription-name'] = action['parameters'][0]['subscriptionName'];
@@ -18688,6 +20237,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.refreshSchemas") {
                 reqParams.boto3['EndpointArn'] = action['parameters'][0]['endpointArn'];
                 reqParams.cli['--endpoint-arn'] = action['parameters'][0]['endpointArn'];
@@ -18705,6 +20259,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.createReplicationTask") {
                 reqParams.boto3['MigrationType'] = action['parameters'][0]['migrationType'];
                 reqParams.cli['--migration-type'] = action['parameters'][0]['migrationType'];
@@ -18750,6 +20309,11 @@ function analyseRequest(details) {
                     'requestDetails': details,
                     'was_blocked': blocking
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             } else if (action['action'] == "com.amazonaws.console.dms.awssdk.shared.context.AWSDatabaseMigrationServiceContext.describeTableStatistics") {
                 reqParams.boto3['MaxRecords'] = action['parameters'][0]['maxRecords'];
                 reqParams.cli['--max-records'] = action['parameters'][0]['maxRecords'];
@@ -18799,6 +20363,11 @@ function analyseRequest(details) {
                     'options': reqParams,
                     'requestDetails': details
                 });
+
+                if (blocking) {
+                    notifyBlocked();
+                    return {cancel: true};
+                }
             }
         }
     }
@@ -18869,6 +20438,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -18921,6 +20495,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -18961,6 +20540,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -19005,6 +20589,11 @@ function analyseRequest(details) {
             'requestDetails': details,
             'was_blocked': blocking
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -19029,6 +20618,11 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
         
         return {};
     }
@@ -19045,6 +20639,356 @@ function analyseRequest(details) {
                 'api': 'DeleteEnvironmentConfiguration',
                 'boto3': 'delete_environment_configuration',
                 'cli': 'delete-environment-configuration'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
+        
+        return {};
+    }
+
+    // autogen:iot:iot.ListThings
+    if (details.method == "GET" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/thing\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'iot',
+            'method': {
+                'api': 'ListThings',
+                'boto3': 'list_things',
+                'cli': 'list-things'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:iot:iot.CreateThingType
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/thingType$/g)) {
+        reqParams.boto3['ThingTypeName'] = jsonRequestBody.thingTypeName;
+        reqParams.cli['--thing-type-name'] = jsonRequestBody.thingTypeName;
+        reqParams.boto3['ThingTypeProperties'] = jsonRequestBody.thingTypeProperties;
+        reqParams.cli['--thing-type-properties'] = jsonRequestBody.thingTypeProperties;
+
+        outputs.push({
+            'region': region,
+            'service': 'iot',
+            'method': {
+                'api': 'CreateThingType',
+                'boto3': 'create_thing_type',
+                'cli': 'create-thing-type'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
+        
+        return {};
+    }
+
+    // autogen:iot:iot.CreateThing
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/provision\/thing$/g)) {
+        reqParams.boto3['AttributePayload'] = jsonRequestBody.templateBody.Resources.Thing.Properties.AttributePayload;
+        reqParams.cli['--attribute-payload'] = jsonRequestBody.templateBody.Resources.Thing.Properties.AttributePayload;
+        reqParams.boto3['ThingTypeName'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingTypeName;
+        reqParams.cli['--thing-type-name'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingTypeName;
+        reqParams.boto3['ThingName'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingName;
+        reqParams.cli['--thing-name'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingName;
+
+        reqParams.cfn['AttributePayload'] = jsonRequestBody.templateBody.Resources.Thing.Properties.AttributePayload;
+        reqParams.cfn['ThingName'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingName;
+
+        outputs.push({
+            'region': region,
+            'service': 'iot',
+            'method': {
+                'api': 'CreateThing',
+                'boto3': 'create_thing',
+                'cli': 'create-thing'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('iot', details.requestId),
+            'region': region,
+            'service': 'iot',
+            'type': 'AWS::IoT::Thing',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
+        }
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.CreateVolume
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.CreateVolume\?/g)) {
+        reqParams.boto3['VolumeType'] = jsonRequestBody.VolumeType;
+        reqParams.cli['--volume-type'] = jsonRequestBody.VolumeType;
+        reqParams.boto3['Size'] = jsonRequestBody.Size;
+        reqParams.cli['--size'] = jsonRequestBody.Size;
+        reqParams.boto3['AvailabilityZone'] = jsonRequestBody.AvailabilityZone;
+        reqParams.cli['--availability-zone'] = jsonRequestBody.AvailabilityZone;
+        reqParams.boto3['SnapshotId'] = jsonRequestBody.SnapshotId;
+        reqParams.cli['--snapshot-id'] = jsonRequestBody.SnapshotId;
+        reqParams.boto3['Encrypted'] = jsonRequestBody.Encrypted;
+        reqParams.cli['--encrypted'] = jsonRequestBody.Encrypted;
+        reqParams.boto3['TagSpecifications'] = jsonRequestBody.TagSpecification;
+        reqParams.cli['--tag-specifications'] = jsonRequestBody.TagSpecification;
+
+        reqParams.cfn['VolumeType'] = jsonRequestBody.VolumeType;
+        reqParams.cfn['Size'] = jsonRequestBody.Size;
+        reqParams.cfn['AvailabilityZone'] = jsonRequestBody.AvailabilityZone;
+        reqParams.cfn['SnapshotId'] = jsonRequestBody.SnapshotId;
+        reqParams.cfn['Encrypted'] = jsonRequestBody.Encrypted;
+        reqParams.cfn['Tags'] = jsonRequestBody.TagSpecification; // TODO, check
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'CreateVolume',
+                'boto3': 'create_volume',
+                'cli': 'create-volume'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::EC2::Volume',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeSnapshots
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.DescribeSnapshots\?/g)) {
+        reqParams.boto3['MaxResults'] = jsonRequestBody.MaxResults;
+        reqParams.cli['--max-items'] = jsonRequestBody.MaxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSnapshots',
+                'boto3': 'describe_snapshots',
+                'cli': 'describe-snapshots'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeInstances
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=getInstanceList\?/g)) {
+        reqParams.boto3['Filters'] = jsonRequestBody.filters;
+        reqParams.cli['--filters'] = jsonRequestBody.filters;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeInstances',
+                'boto3': 'describe_instances',
+                'cli': 'describe-instances'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.AttachVolume
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call=attachVolume\?/g)) {
+        reqParams.boto3['VolumeId'] = jsonRequestBody.volumeId;
+        reqParams.cli['--volume-id'] = jsonRequestBody.volumeId;
+        reqParams.boto3['InstanceId'] = jsonRequestBody.instanceId;
+        reqParams.cli['--instance-id'] = jsonRequestBody.instanceId;
+        reqParams.boto3['Device'] = jsonRequestBody.device;
+        reqParams.cli['--device'] = jsonRequestBody.device;
+
+        reqParams.cfn['VolumeId'] = jsonRequestBody.volumeId;
+        reqParams.cfn['InstanceId'] = jsonRequestBody.instanceId;
+        reqParams.cfn['Device'] = jsonRequestBody.device;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'AttachVolume',
+                'boto3': 'attach_volume',
+                'cli': 'attach-volume'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::EC2::VolumeAttachment',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:elbv2.DescribeLoadBalancers
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazon\.elb\.version_2015_12_01\.ElasticLoadBalancing_v10\.DescribeLoadBalancers\?/g)) {
+
+        outputs.push({
+            'region': region,
+            'service': 'elbv2',
+            'method': {
+                'api': 'DescribeLoadBalancers',
+                'boto3': 'describe_load_balancers',
+                'cli': 'describe-load-balancers'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.CreateVpcEndpointServiceConfiguration
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.CreateVpcEndpointServiceConfiguration\?/g)) {
+        reqParams.boto3['NetworkLoadBalancerArns'] = jsonRequestBody.NetworkLoadBalancerArns;
+        reqParams.cli['--network-load-balancer-arns'] = jsonRequestBody.NetworkLoadBalancerArns;
+        reqParams.boto3['AcceptanceRequired'] = jsonRequestBody.AcceptanceRequired;
+        reqParams.cli['--acceptance-required'] = jsonRequestBody.AcceptanceRequired;
+
+        reqParams.cfn['NetworkLoadBalancerArns'] = jsonRequestBody.NetworkLoadBalancerArns;
+        reqParams.cfn['AcceptanceRequired'] = jsonRequestBody.AcceptanceRequired;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'CreateVpcEndpointServiceConfiguration',
+                'boto3': 'create_vpc_endpoint_service_configuration',
+                'cli': 'create-vpc-endpoint-service-configuration'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
+            'region': region,
+            'service': 'ec2',
+            'type': 'AWS::EC2::VPCEndpointService',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.DescribeVpcEndpointServicePermissions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.DescribeVpcEndpointServicePermissions\?/g)) {
+        reqParams.boto3['ServiceId'] = jsonRequestBody.ServiceId;
+        reqParams.cli['--service-id'] = jsonRequestBody.ServiceId;
+        reqParams.boto3['MaxResults'] = jsonRequestBody.MaxResults;
+        reqParams.cli['--max-items'] = jsonRequestBody.MaxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcEndpointServicePermissions',
+                'boto3': 'describe_vpc_endpoint_service_permissions',
+                'cli': 'describe-vpc-endpoint-service-permissions'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.ModifyVpcEndpointServicePermissions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vcb\/elastic\/\?call=com\.amazonaws\.ec2\.AmazonEC2\.ModifyVpcEndpointServicePermissions\?/g)) {
+        reqParams.boto3['ServiceId'] = jsonRequestBody.ServiceId;
+        reqParams.cli['--service-id'] = jsonRequestBody.ServiceId;
+        reqParams.boto3['RemoveAllowedPrincipals'] = jsonRequestBody.RemoveAllowedPrincipals;
+        reqParams.cli['--remove-allowed-principals'] = jsonRequestBody.RemoveAllowedPrincipals;
+        reqParams.boto3['AddAllowedPrincipals'] = jsonRequestBody.AddAllowedPrincipals;
+        reqParams.cli['--add-allowed-principals'] = jsonRequestBody.AddAllowedPrincipals;
+
+        if (jsonRequestBody.AddAllowedPrincipals) {
+            reqParams.cfn['ServiceId'] = jsonRequestBody.ServiceId;
+            reqParams.cfn['AllowedPrincipals'] = jsonRequestBody.AddAllowedPrincipals;
+            
+            tracked_resources.push({
+                'logicalId': getResourceName('ec2', details.requestId),
+                'region': region,
+                'service': 'ec2',
+                'type': 'AWS::EC2::VPCEndpointServicePermissions',
+                'options': reqParams,
+                'requestDetails': details,
+                'was_blocked': blocking
+            });
+        }
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'ModifyVpcEndpointServicePermissions',
+                'boto3': 'modify_vpc_endpoint_service_permissions',
+                'cli': 'modify-vpc-endpoint-service-permissions'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ec2:ec2.CreateRouteTable
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/vpc\/vpc\/VpcConsoleService$/g) && gwtRequest['service'] == "amazonaws.console.vpc.client.VpcConsoleService" && gwtRequest['method'] == "updateRoutesForARouteTable") {
+        // TODO console.log(gwtRequest);
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'CreateRouteTable',
+                'boto3': 'create_route_table',
+                'cli': 'create-route-table'
             },
             'options': reqParams,
             'requestDetails': details

@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**173/258 (65.0%)** Resources Covered
+**178/258 (67.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -114,16 +114,16 @@
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
 | *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
-| *AWS::EC2::VPCEndpointService* | 0 |
-| *AWS::EC2::VPCEndpointServicePermissions* | 0 |
+| *AWS::EC2::VPCEndpointService* | 1 |
+| *AWS::EC2::VPCEndpointServicePermissions* | 1 |
 | *AWS::EC2::VPCGatewayAttachment* | 0 |
 | *AWS::EC2::VPCPeeringConnection* | 0 |
 | *AWS::EC2::VPNConnection* | 0 |
 | *AWS::EC2::VPNConnectionRoute* | 0 |
 | *AWS::EC2::VPNGateway* | 1 |
 | *AWS::EC2::VPNGatewayRoutePropagation* | 0 |
-| *AWS::EC2::Volume* | 0 |
-| *AWS::EC2::VolumeAttachment* | 0 |
+| *AWS::EC2::Volume* | 1 |
+| *AWS::EC2::VolumeAttachment* | 1 |
 | *AWS::ECR::Repository* | 0 |
 | *AWS::ECS::Cluster* | 0 |
 | *AWS::ECS::Service* | 0 |
@@ -186,7 +186,7 @@
 | *AWS::IoT::Certificate* | 0 |
 | *AWS::IoT::Policy* | 0 |
 | *AWS::IoT::PolicyPrincipalAttachment* | 0 |
-| *AWS::IoT::Thing* | 0 |
+| *AWS::IoT::Thing* | 1 |
 | *AWS::IoT::ThingPrincipalAttachment* | 0 |
 | *AWS::IoT::TopicRule* | 0 |
 | *AWS::KMS::Alias* | 0 |
@@ -288,7 +288,7 @@
 | *dms* | 27/44 (61.0%) |
 | *ds* | 4/49 (8.0%) |
 | *dynamodb* | 2/34 (5.0%) |
-| *ec2* | 82/274 (29.0%) |
+| *ec2* | 87/274 (31.0%) |
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
 | *elasticache* | 10/42 (23.0%) |
@@ -303,6 +303,7 @@
 | *guardduty* | 21/42 (50.0%) |
 | *iam* | 29/127 (22.0%) |
 | *inspector* | 11/37 (29.0%) |
+| *iot* | 3/151 (1.0%) |
 | *kinesis* | 6/28 (21.0%) |
 | *kms* | 6/35 (17.0%) |
 | *lambda* | 11/30 (36.0%) |
@@ -1647,16 +1648,16 @@
 | *ec2* | `CreateVpcEndpointConnectionNotification` | 0 |
 | *ec2* | `DescribeRouteTables` | 4 |
 | *ec2* | `ResetImageAttribute` | 0 |
-| *ec2* | `CreateRouteTable` | 2 |
+| *ec2* | `CreateRouteTable` | 3 |
 | *ec2* | `ReplaceRouteTableAssociation` | 0 |
 | *ec2* | `CreateVpcEndpoint` | 1 |
 | *ec2* | `RegisterImage` | 0 |
 | *ec2* | `AssociateDhcpOptions` | 1 |
-| *ec2* | `ModifyVpcEndpointServicePermissions` | 0 |
+| *ec2* | `ModifyVpcEndpointServicePermissions` | 1 |
 | *ec2* | `ImportKeyPair` | 1 |
 | *ec2* | `DescribeAvailabilityZones` | 7 |
 | *ec2* | `RequestSpotInstances` | 0 |
-| *ec2* | `DescribeSnapshots` | 1 |
+| *ec2* | `DescribeSnapshots` | 2 |
 | *ec2* | `AcceptVpcPeeringConnection` | 0 |
 | *ec2* | `DescribeReservedInstancesModifications` | 0 |
 | *ec2* | `GetPasswordData` | 0 |
@@ -1752,7 +1753,7 @@
 | *ec2* | `ModifyReservedInstances` | 0 |
 | *ec2* | `DetachNetworkInterface` | 0 |
 | *ec2* | `DescribeImportImageTasks` | 0 |
-| *ec2* | `DescribeVpcEndpointServicePermissions` | 0 |
+| *ec2* | `DescribeVpcEndpointServicePermissions` | 1 |
 | *ec2* | `DescribeSpotFleetInstances` | 0 |
 | *ec2* | `EnableVpcClassicLink` | 0 |
 | *ec2* | `CreateFlowLogs` | 1 |
@@ -1774,7 +1775,7 @@
 | *ec2* | `ReplaceNetworkAclEntry` | 0 |
 | *ec2* | `CreateEgressOnlyInternetGateway` | 1 |
 | *ec2* | `DeleteInternetGateway` | 1 |
-| *ec2* | `CreateVolume` | 0 |
+| *ec2* | `CreateVolume` | 1 |
 | *ec2* | `RunInstances` | 1 |
 | *ec2* | `DescribeScheduledInstances` | 0 |
 | *ec2* | `DeleteRoute` | 0 |
@@ -1814,7 +1815,7 @@
 | *ec2* | `CreateSecurityGroup` | 1 |
 | *ec2* | `DescribeInternetGateways` | 2 |
 | *ec2* | `ModifyNetworkInterfaceAttribute` | 0 |
-| *ec2* | `AttachVolume` | 0 |
+| *ec2* | `AttachVolume` | 1 |
 | *ec2* | `DescribeFleetHistory` | 0 |
 | *ec2* | `TerminateInstances` | 1 |
 | *ec2* | `AcceptReservedInstancesExchangeQuote` | 0 |
@@ -1857,7 +1858,7 @@
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
 | *ec2* | `DescribePlacementGroups` | 1 |
 | *ec2* | `DescribeRegions` | 2 |
-| *ec2* | `DescribeInstances` | 5 |
+| *ec2* | `DescribeInstances` | 6 |
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
@@ -1890,7 +1891,7 @@
 | *ec2* | `EnableVgwRoutePropagation` | 0 |
 | *ec2* | `RejectVpcEndpointConnections` | 0 |
 | *ec2* | `ModifyVpcEndpoint` | 0 |
-| *ec2* | `CreateVpcEndpointServiceConfiguration` | 0 |
+| *ec2* | `CreateVpcEndpointServiceConfiguration` | 1 |
 | *ec2* | `ModifyVpcAttribute` | 0 |
 | *ec2* | `EnableVolumeIO` | 0 |
 | *ec2* | `CreateTags` | 2 |
@@ -2126,7 +2127,7 @@
 | *elbv2* | `DeleteRule` | 1 |
 | *elbv2* | `DeleteTargetGroup` | 1 |
 | *elbv2* | `DescribeTargetGroupAttributes` | 0 |
-| *elbv2* | `DescribeLoadBalancers` | 3 |
+| *elbv2* | `DescribeLoadBalancers` | 4 |
 | *elbv2* | `DescribeListeners` | 1 |
 | *elbv2* | `RemoveTags` | 0 |
 | *elbv2* | `CreateListener` | 1 |
@@ -2789,7 +2790,7 @@
 | *iot* | `CreateKeysAndCertificate` | 0 |
 | *iot* | `DeleteSecurityProfile` | 0 |
 | *iot* | `ValidateSecurityProfileBehaviors` | 0 |
-| *iot* | `ListThings` | 0 |
+| *iot* | `ListThings` | 1 |
 | *iot* | `CreateScheduledAudit` | 0 |
 | *iot* | `ListRoleAliases` | 0 |
 | *iot* | `CreateSecurityProfile` | 0 |
@@ -2828,7 +2829,7 @@
 | *iot* | `DeleteCACertificate` | 0 |
 | *iot* | `AttachPrincipalPolicy` | 0 |
 | *iot* | `UpdateSecurityProfile` | 0 |
-| *iot* | `CreateThingType` | 0 |
+| *iot* | `CreateThingType` | 1 |
 | *iot* | `DeleteAccountAuditConfiguration` | 0 |
 | *iot* | `UpdateStream` | 0 |
 | *iot* | `CreateJob` | 0 |
@@ -2849,7 +2850,7 @@
 | *iot* | `DetachThingPrincipal` | 0 |
 | *iot* | `ListTargetsForPolicy` | 0 |
 | *iot* | `ListPolicies` | 0 |
-| *iot* | `CreateThing` | 0 |
+| *iot* | `CreateThing` | 1 |
 | *iot* | `ListThingGroupsForThing` | 0 |
 | *iot* | `UpdateScheduledAudit` | 0 |
 | *iot* | `DetachPrincipalPolicy` | 0 |
@@ -4893,4 +4894,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 605 (13.0%)**
+**Total Unique Occurances: 613 (13.0%)**
