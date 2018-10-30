@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**196/309 (63.0%)** Resources Covered
+**200/309 (64.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -51,7 +51,7 @@
 | *AWS::Batch::JobQueue* | 1 |
 | *AWS::Budgets::Budget* | 1 |
 | *AWS::CertificateManager::Certificate* | 1 |
-| *AWS::Cloud9::EnvironmentEC2* | 0 |
+| *AWS::Cloud9::EnvironmentEC2* | 1 |
 | *AWS::CloudFormation::CustomResource* | 1 |
 | *AWS::CloudFormation::Stack* | 0 |
 | *AWS::CloudFormation::WaitCondition* | 1 |
@@ -142,7 +142,7 @@
 | *AWS::ECS::TaskDefinition* | 0 |
 | *AWS::EFS::FileSystem* | 1 |
 | *AWS::EFS::MountTarget* | 1 |
-| *AWS::EKS::Cluster* | 0 |
+| *AWS::EKS::Cluster* | 1 |
 | *AWS::EMR::Cluster* | 0 |
 | *AWS::EMR::InstanceFleetConfig* | 0 |
 | *AWS::EMR::InstanceGroupConfig* | 0 |
@@ -198,7 +198,7 @@
 | *AWS::Inspector::AssessmentTemplate* | 1 |
 | *AWS::Inspector::ResourceGroup* | 1 |
 | *AWS::IoT1Click::Device* | 0 |
-| *AWS::IoT1Click::Placement* | 0 |
+| *AWS::IoT1Click::Placement* | 1 |
 | *AWS::IoT::Certificate* | 0 |
 | *AWS::IoT::Policy* | 0 |
 | *AWS::IoT::PolicyPrincipalAttachment* | 0 |
@@ -344,6 +344,7 @@
 | *ecr* | 1/22 (4.0%) |
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
+| *eks* | 1/4 (25.0%) |
 | *elasticache* | 10/42 (23.0%) |
 | *elasticbeanstalk* | 8/44 (18.0%) |
 | *elb* | 4/29 (13.0%) |
@@ -357,6 +358,7 @@
 | *iam* | 29/127 (22.0%) |
 | *inspector* | 11/37 (29.0%) |
 | *iot* | 3/151 (1.0%) |
+| *iot1click-projects* | 3/13 (23.0%) |
 | *kinesis* | 6/28 (21.0%) |
 | *kms* | 6/35 (17.0%) |
 | *lambda* | 11/30 (36.0%) |
@@ -2030,7 +2032,7 @@
 | *eks* | `DescribeCluster` | 0 |
 | *eks* | `DeleteCluster` | 0 |
 | *eks* | `ListClusters` | 0 |
-| *eks* | `CreateCluster` | 0 |
+| *eks* | `CreateCluster` | 1 |
 | *elasticache* | `DescribeCacheEngineVersions` | 1 |
 | *elasticache* | `DeleteCacheSubnetGroup` | 0 |
 | *elasticache* | `ResetCacheParameterGroup` | 0 |
@@ -2932,14 +2934,14 @@
 | *iot1click-projects* | `UpdatePlacement` | 0 |
 | *iot1click-projects* | `DeletePlacement` | 0 |
 | *iot1click-projects* | `ListPlacements` | 0 |
-| *iot1click-projects* | `CreateProject` | 0 |
-| *iot1click-projects* | `ListProjects` | 0 |
+| *iot1click-projects* | `CreateProject` | 1 |
+| *iot1click-projects* | `ListProjects` | 1 |
 | *iot1click-projects* | `UpdateProject` | 0 |
 | *iot1click-projects* | `GetDevicesInPlacement` | 0 |
 | *iot1click-projects* | `DescribePlacement` | 0 |
 | *iot1click-projects* | `DescribeProject` | 0 |
 | *iot1click-projects* | `AssociateDeviceWithPlacement` | 0 |
-| *iot1click-projects* | `CreatePlacement` | 0 |
+| *iot1click-projects* | `CreatePlacement` | 1 |
 | *iot1click-projects* | `DeleteProject` | 0 |
 | *iotanalytics* | `DeleteChannel` | 0 |
 | *iotanalytics* | `UpdateChannel` | 0 |
@@ -4947,4 +4949,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 671 (14.0%)**
+**Total Unique Occurances: 675 (14.0%)**
