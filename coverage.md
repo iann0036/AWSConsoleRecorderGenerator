@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**178/258 (67.0%)** Resources Covered
+**182/258 (68.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -95,9 +95,9 @@
 | *AWS::EC2::NetworkAcl* | 2 |
 | *AWS::EC2::NetworkAclEntry* | 1 |
 | *AWS::EC2::NetworkInterface* | 1 |
-| *AWS::EC2::NetworkInterfaceAttachment* | 0 |
+| *AWS::EC2::NetworkInterfaceAttachment* | 1 |
 | *AWS::EC2::NetworkInterfacePermission* | 0 |
-| *AWS::EC2::PlacementGroup* | 0 |
+| *AWS::EC2::PlacementGroup* | 1 |
 | *AWS::EC2::Route* | 0 |
 | *AWS::EC2::RouteTable* | 2 |
 | *AWS::EC2::SecurityGroup* | 1 |
@@ -106,8 +106,8 @@
 | *AWS::EC2::SpotFleet* | 0 |
 | *AWS::EC2::Subnet* | 1 |
 | *AWS::EC2::SubnetCidrBlock* | 0 |
-| *AWS::EC2::SubnetNetworkAclAssociation* | 0 |
-| *AWS::EC2::SubnetRouteTableAssociation* | 0 |
+| *AWS::EC2::SubnetNetworkAclAssociation* | 1 |
+| *AWS::EC2::SubnetRouteTableAssociation* | 1 |
 | *AWS::EC2::TrunkInterfaceAssociation* | 0 |
 | *AWS::EC2::VPC* | 2 |
 | *AWS::EC2::VPCCidrBlock* | 1 |
@@ -288,7 +288,7 @@
 | *dms* | 27/44 (61.0%) |
 | *ds* | 4/49 (8.0%) |
 | *dynamodb* | 2/34 (5.0%) |
-| *ec2* | 87/274 (31.0%) |
+| *ec2* | 95/274 (34.0%) |
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
 | *elasticache* | 10/42 (23.0%) |
@@ -1640,7 +1640,7 @@
 | *ec2* | `DescribeCustomerGateways` | 1 |
 | *ec2* | `ReplaceIamInstanceProfileAssociation` | 0 |
 | *ec2* | `EnableVpcClassicLinkDnsSupport` | 0 |
-| *ec2* | `DescribeNetworkAcls` | 2 |
+| *ec2* | `DescribeNetworkAcls` | 3 |
 | *ec2* | `DescribeImageAttribute` | 0 |
 | *ec2* | `CancelConversionTask` | 0 |
 | *ec2* | `CancelImportTask` | 0 |
@@ -1722,7 +1722,7 @@
 | *ec2* | `CancelSpotFleetRequests` | 0 |
 | *ec2* | `UnmonitorInstances` | 0 |
 | *ec2* | `DeleteSubnet` | 1 |
-| *ec2* | `CreatePlacementGroup` | 0 |
+| *ec2* | `CreatePlacementGroup` | 1 |
 | *ec2* | `CopySnapshot` | 0 |
 | *ec2* | `DisableVpcClassicLinkDnsSupport` | 0 |
 | *ec2* | `DescribeHostReservationOfferings` | 0 |
@@ -1751,7 +1751,7 @@
 | *ec2* | `DeleteDhcpOptions` | 1 |
 | *ec2* | `ResetNetworkInterfaceAttribute` | 0 |
 | *ec2* | `ModifyReservedInstances` | 0 |
-| *ec2* | `DetachNetworkInterface` | 0 |
+| *ec2* | `DetachNetworkInterface` | 1 |
 | *ec2* | `DescribeImportImageTasks` | 0 |
 | *ec2* | `DescribeVpcEndpointServicePermissions` | 1 |
 | *ec2* | `DescribeSpotFleetInstances` | 0 |
@@ -1781,13 +1781,13 @@
 | *ec2* | `DeleteRoute` | 0 |
 | *ec2* | `CreateDefaultVpc` | 0 |
 | *ec2* | `DisableVpcClassicLink` | 0 |
-| *ec2* | `AttachNetworkInterface` | 0 |
+| *ec2* | `AttachNetworkInterface` | 1 |
 | *ec2* | `CreateNatGateway` | 1 |
 | *ec2* | `DeleteVpnConnectionRoute` | 0 |
 | *ec2* | `CancelSpotInstanceRequests` | 0 |
 | *ec2* | `CreateKeyPair` | 1 |
 | *ec2* | `DescribeNetworkInterfaceAttribute` | 0 |
-| *ec2* | `DescribeIdFormat` | 0 |
+| *ec2* | `DescribeIdFormat` | 1 |
 | *ec2* | `ModifyLaunchTemplate` | 0 |
 | *ec2* | `DeleteSnapshot` | 0 |
 | *ec2* | `DescribeMovingAddresses` | 0 |
@@ -1820,10 +1820,10 @@
 | *ec2* | `TerminateInstances` | 1 |
 | *ec2* | `AcceptReservedInstancesExchangeQuote` | 0 |
 | *ec2* | `DeleteSpotDatafeedSubscription` | 0 |
-| *ec2* | `DeletePlacementGroup` | 0 |
+| *ec2* | `DeletePlacementGroup` | 1 |
 | *ec2* | `DeleteRouteTable` | 2 |
 | *ec2* | `DescribeFleetInstances` | 0 |
-| *ec2* | `DescribeInstanceCreditSpecifications` | 0 |
+| *ec2* | `DescribeInstanceCreditSpecifications` | 1 |
 | *ec2* | `DescribeKeyPairs` | 2 |
 | *ec2* | `GetLaunchTemplateData` | 0 |
 | *ec2* | `DescribeStaleSecurityGroups` | 1 |
@@ -1840,7 +1840,7 @@
 | *ec2* | `ImportInstance` | 0 |
 | *ec2* | `DeleteFpgaImage` | 0 |
 | *ec2* | `DescribeFpgaImageAttribute` | 0 |
-| *ec2* | `ReplaceNetworkAclAssociation` | 0 |
+| *ec2* | `ReplaceNetworkAclAssociation` | 1 |
 | *ec2* | `ModifyVpcEndpointServiceConfiguration` | 0 |
 | *ec2* | `ReleaseAddress` | 1 |
 | *ec2* | `DescribeFpgaImages` | 0 |
@@ -1853,7 +1853,7 @@
 | *ec2* | `ModifyVpcTenancy` | 0 |
 | *ec2* | `DescribePrincipalIdFormat` | 0 |
 | *ec2* | `ReplaceRoute` | 0 |
-| *ec2* | `AssociateRouteTable` | 0 |
+| *ec2* | `AssociateRouteTable` | 1 |
 | *ec2* | `DeleteVpc` | 1 |
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
 | *ec2* | `DescribePlacementGroups` | 1 |
@@ -4894,4 +4894,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 613 (13.0%)**
+**Total Unique Occurances: 621 (13.0%)**
