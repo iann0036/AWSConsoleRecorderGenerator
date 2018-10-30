@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**182/258 (68.0%)** Resources Covered
+**187/258 (70.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -19,11 +19,11 @@
 | *AWS::ApiGateway::Method* | 1 |
 | *AWS::ApiGateway::Model* | 1 |
 | *AWS::ApiGateway::RequestValidator* | 0 |
-| *AWS::ApiGateway::Resource* | 0 |
-| *AWS::ApiGateway::RestApi* | 0 |
+| *AWS::ApiGateway::Resource* | 2 |
+| *AWS::ApiGateway::RestApi* | 1 |
 | *AWS::ApiGateway::Stage* | 0 |
 | *AWS::ApiGateway::UsagePlan* | 1 |
-| *AWS::ApiGateway::UsagePlanKey* | 0 |
+| *AWS::ApiGateway::UsagePlanKey* | 1 |
 | *AWS::ApiGateway::VpcLink* | 0 |
 | *AWS::AppSync::ApiKey* | 1 |
 | *AWS::AppSync::DataSource* | 1 |
@@ -124,7 +124,7 @@
 | *AWS::EC2::VPNGatewayRoutePropagation* | 0 |
 | *AWS::EC2::Volume* | 1 |
 | *AWS::EC2::VolumeAttachment* | 1 |
-| *AWS::ECR::Repository* | 0 |
+| *AWS::ECR::Repository* | 1 |
 | *AWS::ECS::Cluster* | 0 |
 | *AWS::ECS::Service* | 0 |
 | *AWS::ECS::TaskDefinition* | 0 |
@@ -269,7 +269,7 @@
 | --- | --- |
 | *acm* | 3/12 (25.0%) |
 | *acm-pca* | 1/17 (5.0%) |
-| *apigateway* | 31/120 (25.0%) |
+| *apigateway* | 35/120 (29.0%) |
 | *appsync* | 9/27 (33.0%) |
 | *athena* | 1/11 (9.0%) |
 | *autoscaling* | 19/54 (35.0%) |
@@ -289,6 +289,7 @@
 | *ds* | 4/49 (8.0%) |
 | *dynamodb* | 2/34 (5.0%) |
 | *ec2* | 95/274 (34.0%) |
+| *ecr* | 1/22 (4.0%) |
 | *ecs* | 1/31 (3.0%) |
 | *efs* | 11/12 (91.0%) |
 | *elasticache* | 10/42 (23.0%) |
@@ -427,7 +428,7 @@
 | *apigateway* | `UpdateDocumentationVersion` | 0 |
 | *apigateway* | `CreateModel` | 1 |
 | *apigateway* | `FlushStageCache` | 0 |
-| *apigateway* | `CreateUsagePlanKey` | 0 |
+| *apigateway* | `CreateUsagePlanKey` | 1 |
 | *apigateway* | `GetUsagePlanKey` | 0 |
 | *apigateway* | `DeleteIntegration` | 0 |
 | *apigateway* | `GetMethodResponse` | 0 |
@@ -468,7 +469,7 @@
 | *apigateway* | `FlushStageAuthorizersCache` | 0 |
 | *apigateway* | `GetIntegrationResponse` | 0 |
 | *apigateway* | `GetDeployments` | 0 |
-| *apigateway* | `CreateResource` | 0 |
+| *apigateway* | `CreateResource` | 1 |
 | *apigateway* | `GetApiKeys` | 0 |
 | *apigateway* | `DeleteApiKey` | 0 |
 | *apigateway* | `CreateApiKey` | 1 |
@@ -497,14 +498,14 @@
 | *apigateway* | `PutRestApi` | 0 |
 | *apigateway* | `GetUsage` | 0 |
 | *apigateway* | `GetDeployment` | 1 |
-| *apigateway* | `CreateRestApi` | 0 |
+| *apigateway* | `CreateRestApi` | 1 |
 | *apigateway* | `GetTags` | 0 |
 | *apigateway* | `UpdateVpcLink` | 0 |
 | *apigateway* | `GetAuthorizers` | 1 |
 | *apigateway* | `GetClientCertificates` | 0 |
 | *apigateway* | `DeleteDocumentationPart` | 1 |
 | *apigateway* | `DeleteResource` | 0 |
-| *apigateway* | `CreateStage` | 0 |
+| *apigateway* | `CreateStage` | 1 |
 | *apigateway* | `UpdateBasePathMapping` | 0 |
 | *apigateway* | `UpdateMethodResponse` | 0 |
 | *apigateway* | `UpdateUsage` | 0 |
@@ -1923,7 +1924,7 @@
 | *ecr* | `ListImages` | 0 |
 | *ecr* | `CompleteLayerUpload` | 0 |
 | *ecr* | `InitiateLayerUpload` | 0 |
-| *ecr* | `CreateRepository` | 0 |
+| *ecr* | `CreateRepository` | 1 |
 | *ecr* | `BatchCheckLayerAvailability` | 0 |
 | *ecr* | `GetLifecyclePolicyPreview` | 0 |
 | *ecr* | `BatchDeleteImage` | 0 |
@@ -4894,4 +4895,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 621 (13.0%)**
+**Total Unique Occurances: 626 (13.0%)**
