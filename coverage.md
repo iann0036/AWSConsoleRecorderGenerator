@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**182/258 (70.0%)** Resources Covered
+**196/309 (63.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -25,6 +25,13 @@
 | *AWS::ApiGateway::UsagePlan* | 1 |
 | *AWS::ApiGateway::UsagePlanKey* | 1 |
 | *AWS::ApiGateway::VpcLink* | 0 |
+| *AWS::AppStream::DirectoryConfig* | 1 |
+| *AWS::AppStream::Fleet* | 1 |
+| *AWS::AppStream::ImageBuilder* | 1 |
+| *AWS::AppStream::Stack* | 1 |
+| *AWS::AppStream::StackFleetAssociation* | 1 |
+| *AWS::AppStream::StackUserAssociation* | 1 |
+| *AWS::AppStream::User* | 1 |
 | *AWS::AppSync::ApiKey* | 1 |
 | *AWS::AppSync::DataSource* | 1 |
 | *AWS::AppSync::GraphQLApi* | 1 |
@@ -38,11 +45,13 @@
 | *AWS::AutoScaling::LifecycleHook* | 1 |
 | *AWS::AutoScaling::ScalingPolicy* | 1 |
 | *AWS::AutoScaling::ScheduledAction* | 1 |
+| *AWS::AutoScalingPlans::ScalingPlan* | 0 |
 | *AWS::Batch::ComputeEnvironment* | 1 |
 | *AWS::Batch::JobDefinition* | 1 |
 | *AWS::Batch::JobQueue* | 1 |
 | *AWS::Budgets::Budget* | 1 |
 | *AWS::CertificateManager::Certificate* | 1 |
+| *AWS::Cloud9::EnvironmentEC2* | 0 |
 | *AWS::CloudFormation::CustomResource* | 1 |
 | *AWS::CloudFormation::Stack* | 0 |
 | *AWS::CloudFormation::WaitCondition* | 1 |
@@ -53,6 +62,8 @@
 | *AWS::CloudTrail::Trail* | 1 |
 | *AWS::CloudWatch::Alarm* | 0 |
 | *AWS::CloudWatch::Dashboard* | 0 |
+| *AWS::CodeBuild::Project* | 1 |
+| *AWS::CodeCommit::Repository* | 1 |
 | *AWS::CodeDeploy::Application* | 1 |
 | *AWS::CodeDeploy::DeploymentConfig* | 1 |
 | *AWS::CodeDeploy::DeploymentGroup* | 1 |
@@ -71,6 +82,9 @@
 | *AWS::Config::ConfigurationAggregator* | 1 |
 | *AWS::Config::ConfigurationRecorder* | 0 |
 | *AWS::Config::DeliveryChannel* | 0 |
+| *AWS::DAX::Cluster* | 0 |
+| *AWS::DAX::ParameterGroup* | 0 |
+| *AWS::DAX::SubnetGroup* | 0 |
 | *AWS::DMS::Certificate* | 1 |
 | *AWS::DMS::Endpoint* | 1 |
 | *AWS::DMS::EventSubscription* | 1 |
@@ -113,8 +127,6 @@
 | *AWS::EC2::VPCCidrBlock* | 1 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
-| *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
-| *AWS::EC2::VPCEndpointService* | 1 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 1 |
 | *AWS::EC2::VPCGatewayAttachment* | 0 |
 | *AWS::EC2::VPCPeeringConnection* | 0 |
@@ -130,6 +142,7 @@
 | *AWS::ECS::TaskDefinition* | 0 |
 | *AWS::EFS::FileSystem* | 1 |
 | *AWS::EFS::MountTarget* | 1 |
+| *AWS::EKS::Cluster* | 0 |
 | *AWS::EMR::Cluster* | 0 |
 | *AWS::EMR::InstanceFleetConfig* | 0 |
 | *AWS::EMR::InstanceGroupConfig* | 0 |
@@ -152,6 +165,7 @@
 | *AWS::ElasticLoadBalancingV2::LoadBalancer* | 1 |
 | *AWS::ElasticLoadBalancingV2::TargetGroup* | 1 |
 | *AWS::Elasticsearch::Domain* | 1 |
+| *AWS::Events::EventBusPolicy* | 0 |
 | *AWS::Events::Rule* | 1 |
 | *AWS::GameLift::Alias* | 1 |
 | *AWS::GameLift::Build* | 1 |
@@ -183,6 +197,8 @@
 | *AWS::Inspector::AssessmentTarget* | 1 |
 | *AWS::Inspector::AssessmentTemplate* | 1 |
 | *AWS::Inspector::ResourceGroup* | 1 |
+| *AWS::IoT1Click::Device* | 0 |
+| *AWS::IoT1Click::Placement* | 0 |
 | *AWS::IoT::Certificate* | 0 |
 | *AWS::IoT::Policy* | 0 |
 | *AWS::IoT::PolicyPrincipalAttachment* | 0 |
@@ -192,6 +208,9 @@
 | *AWS::KMS::Alias* | 0 |
 | *AWS::KMS::Key* | 1 |
 | *AWS::Kinesis::Stream* | 1 |
+| *AWS::KinesisAnalytics::Application* | 0 |
+| *AWS::KinesisAnalytics::ApplicationOutput* | 0 |
+| *AWS::KinesisAnalytics::ApplicationReferenceDataSource* | 0 |
 | *AWS::KinesisFirehose::DeliveryStream* | 1 |
 | *AWS::Lambda::Alias* | 1 |
 | *AWS::Lambda::EventSourceMapping* | 0 |
@@ -203,6 +222,11 @@
 | *AWS::Logs::LogStream* | 1 |
 | *AWS::Logs::MetricFilter* | 1 |
 | *AWS::Logs::SubscriptionFilter* | 1 |
+| *AWS::Neptune::DBCluster* | 0 |
+| *AWS::Neptune::DBClusterParameterGroup* | 0 |
+| *AWS::Neptune::DBInstance* | 0 |
+| *AWS::Neptune::DBParameterGroup* | 0 |
+| *AWS::Neptune::DBSubnetGroup* | 0 |
 | *AWS::OpsWorks::App* | 1 |
 | *AWS::OpsWorks::ElasticLoadBalancerAttachment* | 1 |
 | *AWS::OpsWorks::Instance* | 1 |
@@ -231,6 +255,12 @@
 | *AWS::S3::Bucket* | 1 |
 | *AWS::S3::BucketPolicy* | 0 |
 | *AWS::SDB::Domain* | 1 |
+| *AWS::SES::ConfigurationSet* | 0 |
+| *AWS::SES::ConfigurationSetEventDestination* | 0 |
+| *AWS::SES::ReceiptFilter* | 0 |
+| *AWS::SES::ReceiptRule* | 0 |
+| *AWS::SES::ReceiptRuleSet* | 0 |
+| *AWS::SES::Template* | 0 |
 | *AWS::SNS::Subscription* | 1 |
 | *AWS::SNS::Topic* | 1 |
 | *AWS::SNS::TopicPolicy* | 1 |
@@ -238,10 +268,17 @@
 | *AWS::SQS::QueuePolicy* | 1 |
 | *AWS::SSM::Association* | 1 |
 | *AWS::SSM::Document* | 1 |
+| *AWS::SSM::MaintenanceWindow* | 1 |
+| *AWS::SSM::MaintenanceWindowTarget* | 1 |
 | *AWS::SSM::MaintenanceWindowTask* | 0 |
 | *AWS::SSM::Parameter* | 1 |
 | *AWS::SSM::PatchBaseline* | 1 |
 | *AWS::SSM::ResourceDataSync* | 1 |
+| *AWS::SageMaker::Endpoint* | 0 |
+| *AWS::SageMaker::EndpointConfig* | 0 |
+| *AWS::SageMaker::Model* | 0 |
+| *AWS::SageMaker::NotebookInstance* | 0 |
+| *AWS::SageMaker::NotebookInstanceLifecycleConfig* | 0 |
 | *AWS::ServiceCatalog::AcceptedPortfolioShare* | 0 |
 | *AWS::ServiceCatalog::CloudFormationProduct* | 1 |
 | *AWS::ServiceCatalog::CloudFormationProvisionedProduct* | 0 |
@@ -254,6 +291,12 @@
 | *AWS::ServiceCatalog::PortfolioShare* | 1 |
 | *AWS::ServiceCatalog::TagOption* | 1 |
 | *AWS::ServiceCatalog::TagOptionAssociation* | 1 |
+| *AWS::ServiceDiscovery::Instance* | 0 |
+| *AWS::ServiceDiscovery::PrivateDnsNamespace* | 0 |
+| *AWS::ServiceDiscovery::PublicDnsNamespace* | 0 |
+| *AWS::ServiceDiscovery::Service* | 0 |
+| *AWS::StepFunctions::Activity* | 0 |
+| *AWS::StepFunctions::StateMachine* | 0 |
 | *AWS::WAF::ByteMatchSet* | 1 |
 | *AWS::WAF::IPSet* | 1 |
 | *AWS::WAF::Rule* | 1 |
@@ -261,6 +304,14 @@
 | *AWS::WAF::SqlInjectionMatchSet* | 1 |
 | *AWS::WAF::WebACL* | 1 |
 | *AWS::WAF::XssMatchSet* | 1 |
+| *AWS::WAFRegional::ByteMatchSet* | 1 |
+| *AWS::WAFRegional::IPSet* | 1 |
+| *AWS::WAFRegional::Rule* | 1 |
+| *AWS::WAFRegional::SizeConstraintSet* | 1 |
+| *AWS::WAFRegional::SqlInjectionMatchSet* | 1 |
+| *AWS::WAFRegional::WebACL* | 1 |
+| *AWS::WAFRegional::WebACLAssociation* | 0 |
+| *AWS::WAFRegional::XssMatchSet* | 1 |
 | *AWS::WorkSpaces::Workspace* | 1 |
 
 ## Service Coverage
@@ -270,6 +321,7 @@
 | *acm* | 3/12 (25.0%) |
 | *acm-pca* | 1/17 (5.0%) |
 | *apigateway* | 35/120 (29.0%) |
+| *appstream* | 13/36 (36.0%) |
 | *appsync* | 9/27 (33.0%) |
 | *athena* | 1/11 (9.0%) |
 | *autoscaling* | 19/54 (35.0%) |
@@ -324,7 +376,7 @@
 | *ssm* | 20/108 (18.0%) |
 | *stepfunctions* | 1/19 (5.0%) |
 | *waf* | 32/73 (43.0%) |
-| *waf-regional* | 1/77 (1.0%) |
+| *waf-regional* | 33/77 (42.0%) |
 | *workspaces* | 4/23 (17.0%) |
 
 ## Operation Coverage
@@ -540,16 +592,16 @@
 | *application-autoscaling* | `DescribeScalableTargets` | 0 |
 | *application-autoscaling* | `DescribeScheduledActions` | 0 |
 | *appstream* | `StopImageBuilder` | 0 |
-| *appstream* | `DeleteFleet` | 0 |
+| *appstream* | `DeleteFleet` | 1 |
 | *appstream* | `ListAssociatedStacks` | 0 |
-| *appstream* | `AssociateFleet` | 0 |
-| *appstream* | `CreateImageBuilder` | 0 |
-| *appstream* | `DeleteImageBuilder` | 0 |
-| *appstream* | `DescribeImages` | 0 |
+| *appstream* | `AssociateFleet` | 1 |
+| *appstream* | `CreateImageBuilder` | 1 |
+| *appstream* | `DeleteImageBuilder` | 1 |
+| *appstream* | `DescribeImages` | 1 |
 | *appstream* | `StartImageBuilder` | 0 |
-| *appstream* | `CreateDirectoryConfig` | 0 |
+| *appstream* | `CreateDirectoryConfig` | 1 |
 | *appstream* | `UpdateImagePermissions` | 0 |
-| *appstream* | `CreateStack` | 0 |
+| *appstream* | `CreateStack` | 1 |
 | *appstream* | `DescribeDirectoryConfigs` | 0 |
 | *appstream* | `ExpireSession` | 0 |
 | *appstream* | `CopyImage` | 0 |
@@ -557,23 +609,23 @@
 | *appstream* | `CreateImageBuilderStreamingURL` | 0 |
 | *appstream* | `UpdateDirectoryConfig` | 0 |
 | *appstream* | `DisassociateFleet` | 0 |
-| *appstream* | `CreateFleet` | 0 |
+| *appstream* | `CreateFleet` | 1 |
 | *appstream* | `DescribeSessions` | 0 |
 | *appstream* | `DescribeImagePermissions` | 0 |
 | *appstream* | `StopFleet` | 0 |
 | *appstream* | `UpdateFleet` | 0 |
-| *appstream* | `DescribeFleets` | 0 |
-| *appstream* | `DescribeImageBuilders` | 0 |
+| *appstream* | `DescribeFleets` | 1 |
+| *appstream* | `DescribeImageBuilders` | 1 |
 | *appstream* | `ListAssociatedFleets` | 0 |
 | *appstream* | `StartFleet` | 0 |
-| *appstream* | `DescribeStacks` | 0 |
+| *appstream* | `DescribeStacks` | 1 |
 | *appstream* | `UpdateStack` | 0 |
 | *appstream* | `ListTagsForResource` | 0 |
 | *appstream* | `CreateStreamingURL` | 0 |
 | *appstream* | `UntagResource` | 0 |
 | *appstream* | `DeleteImagePermissions` | 0 |
-| *appstream* | `DeleteStack` | 0 |
-| *appstream* | `DeleteDirectoryConfig` | 0 |
+| *appstream* | `DeleteStack` | 1 |
+| *appstream* | `DeleteDirectoryConfig` | 1 |
 | *appstream* | `DeleteImage` | 0 |
 | *appsync* | `UpdateResolver` | 0 |
 | *appsync* | `GetGraphqlApi` | 0 |
@@ -4704,82 +4756,82 @@
 | *waf* | `ListSizeConstraintSets` | 1 |
 | *waf* | `DeleteIPSet` | 1 |
 | *waf* | `CreateGeoMatchSet` | 0 |
-| *waf-regional* | `CreateSizeConstraintSet` | 0 |
+| *waf-regional* | `CreateSizeConstraintSet` | 1 |
 | *waf-regional* | `UpdateRegexMatchSet` | 0 |
 | *waf-regional* | `GetPermissionPolicy` | 0 |
-| *waf-regional* | `UpdateXssMatchSet` | 0 |
-| *waf-regional* | `ListIPSets` | 0 |
+| *waf-regional* | `UpdateXssMatchSet` | 1 |
+| *waf-regional* | `ListIPSets` | 1 |
 | *waf-regional* | `DeleteRateBasedRule` | 0 |
 | *waf-regional* | `GetRegexPatternSet` | 0 |
 | *waf-regional* | `PutLoggingConfiguration` | 0 |
 | *waf-regional* | `GetRegexMatchSet` | 0 |
 | *waf-regional* | `GetChangeTokenStatus` | 0 |
 | *waf-regional* | `UpdateRegexPatternSet` | 0 |
-| *waf-regional* | `DeleteSqlInjectionMatchSet` | 0 |
-| *waf-regional* | `ListByteMatchSets` | 0 |
-| *waf-regional* | `CreateRule` | 0 |
+| *waf-regional* | `DeleteSqlInjectionMatchSet` | 1 |
+| *waf-regional* | `ListByteMatchSets` | 1 |
+| *waf-regional* | `CreateRule` | 1 |
 | *waf-regional* | `UpdateGeoMatchSet` | 0 |
 | *waf-regional* | `GetRateBasedRuleManagedKeys` | 0 |
-| *waf-regional* | `UpdateWebACL` | 0 |
-| *waf-regional* | `ListRuleGroups` | 0 |
-| *waf-regional* | `CreateSqlInjectionMatchSet` | 0 |
-| *waf-regional* | `UpdateSqlInjectionMatchSet` | 0 |
-| *waf-regional* | `ListRateBasedRules` | 0 |
-| *waf-regional* | `ListRegexMatchSets` | 0 |
+| *waf-regional* | `UpdateWebACL` | 1 |
+| *waf-regional* | `ListRuleGroups` | 1 |
+| *waf-regional* | `CreateSqlInjectionMatchSet` | 1 |
+| *waf-regional* | `UpdateSqlInjectionMatchSet` | 1 |
+| *waf-regional* | `ListRateBasedRules` | 1 |
+| *waf-regional* | `ListRegexMatchSets` | 1 |
 | *waf-regional* | `PutPermissionPolicy` | 0 |
-| *waf-regional* | `DeleteByteMatchSet` | 0 |
+| *waf-regional* | `DeleteByteMatchSet` | 1 |
 | *waf-regional* | `DeleteRegexPatternSet` | 0 |
 | *waf-regional* | `CreateRegexPatternSet` | 0 |
 | *waf-regional* | `GetIPSet` | 0 |
-| *waf-regional* | `ListSqlInjectionMatchSets` | 0 |
-| *waf-regional* | `DeleteRule` | 0 |
-| *waf-regional* | `ListSubscribedRuleGroups` | 0 |
-| *waf-regional* | `DeleteXssMatchSet` | 0 |
-| *waf-regional* | `UpdateIPSet` | 0 |
+| *waf-regional* | `ListSqlInjectionMatchSets` | 1 |
+| *waf-regional* | `DeleteRule` | 1 |
+| *waf-regional* | `ListSubscribedRuleGroups` | 1 |
+| *waf-regional* | `DeleteXssMatchSet` | 1 |
+| *waf-regional* | `UpdateIPSet` | 1 |
 | *waf-regional* | `ListWebACLs` | 0 |
 | *waf-regional* | `UpdateRuleGroup` | 0 |
-| *waf-regional* | `UpdateRule` | 0 |
+| *waf-regional* | `UpdateRule` | 1 |
 | *waf-regional* | `GetByteMatchSet` | 0 |
-| *waf-regional* | `CreateXssMatchSet` | 0 |
+| *waf-regional* | `CreateXssMatchSet` | 1 |
 | *waf-regional* | `UpdateRateBasedRule` | 0 |
 | *waf-regional* | `GetLoggingConfiguration` | 0 |
-| *waf-regional* | `CreateByteMatchSet` | 0 |
-| *waf-regional* | `ListXssMatchSets` | 0 |
+| *waf-regional* | `CreateByteMatchSet` | 1 |
+| *waf-regional* | `ListXssMatchSets` | 1 |
 | *waf-regional* | `AssociateWebACL` | 0 |
 | *waf-regional* | `GetSizeConstraintSet` | 0 |
 | *waf-regional* | `ListLoggingConfigurations` | 0 |
 | *waf-regional* | `GetGeoMatchSet` | 0 |
-| *waf-regional* | `CreateIPSet` | 0 |
+| *waf-regional* | `CreateIPSet` | 1 |
 | *waf-regional* | `DeleteRuleGroup` | 0 |
 | *waf-regional* | `GetXssMatchSet` | 0 |
-| *waf-regional* | `ListGeoMatchSets` | 0 |
+| *waf-regional* | `ListGeoMatchSets` | 1 |
 | *waf-regional* | `DeleteLoggingConfiguration` | 0 |
 | *waf-regional* | `GetRateBasedRule` | 0 |
 | *waf-regional* | `DeleteGeoMatchSet` | 0 |
 | *waf-regional* | `CreateRateBasedRule` | 0 |
 | *waf-regional* | `GetRuleGroup` | 0 |
-| *waf-regional* | `ListRules` | 0 |
+| *waf-regional* | `ListRules` | 1 |
 | *waf-regional* | `GetSampledRequests` | 0 |
-| *waf-regional* | `CreateWebACL` | 0 |
+| *waf-regional* | `CreateWebACL` | 1 |
 | *waf-regional* | `DeleteWebACL` | 0 |
 | *waf-regional* | `CreateRuleGroup` | 0 |
 | *waf-regional* | `GetRule` | 0 |
-| *waf-regional* | `DeleteSizeConstraintSet` | 0 |
+| *waf-regional* | `DeleteSizeConstraintSet` | 1 |
 | *waf-regional* | `GetWebACLForResource` | 1 |
-| *waf-regional* | `UpdateSizeConstraintSet` | 0 |
+| *waf-regional* | `UpdateSizeConstraintSet` | 1 |
 | *waf-regional* | `ListActivatedRulesInRuleGroup` | 0 |
 | *waf-regional* | `ListResourcesForWebACL` | 0 |
-| *waf-regional* | `GetChangeToken` | 0 |
+| *waf-regional* | `GetChangeToken` | 1 |
 | *waf-regional* | `DeleteRegexMatchSet` | 0 |
 | *waf-regional* | `GetWebACL` | 0 |
 | *waf-regional* | `DeletePermissionPolicy` | 0 |
-| *waf-regional* | `UpdateByteMatchSet` | 0 |
+| *waf-regional* | `UpdateByteMatchSet` | 1 |
 | *waf-regional* | `DisassociateWebACL` | 0 |
 | *waf-regional* | `CreateRegexMatchSet` | 0 |
 | *waf-regional* | `GetSqlInjectionMatchSet` | 0 |
 | *waf-regional* | `ListRegexPatternSets` | 0 |
-| *waf-regional* | `ListSizeConstraintSets` | 0 |
-| *waf-regional* | `DeleteIPSet` | 0 |
+| *waf-regional* | `ListSizeConstraintSets` | 1 |
+| *waf-regional* | `DeleteIPSet` | 1 |
 | *waf-regional* | `CreateGeoMatchSet` | 0 |
 | *workdocs* | `DeactivateUser` | 0 |
 | *workdocs* | `DescribeRootFolders` | 0 |
@@ -4895,4 +4947,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 626 (13.0%)**
+**Total Unique Occurances: 671 (14.0%)**
