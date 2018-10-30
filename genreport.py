@@ -50,7 +50,7 @@ total_unique_occurances = 0
 with open("coverage.md", "w") as f:
     f.write("## CloudFormation Resource Coverage\n\n")
     f.write("**%s/%s (%s%%)** Resources Covered\n" % (
-        len(cfn_occurances),
+        len(set(cfn_occurances)),
         len(cfn_types),
         math.floor(len(set(cfn_occurances)) * 100 / len(cfn_types))
     ))
