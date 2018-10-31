@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**200/309 (64.0%)** Resources Covered
+**205/309 (66.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -207,9 +207,9 @@
 | *AWS::IoT::TopicRule* | 0 |
 | *AWS::KMS::Alias* | 0 |
 | *AWS::KMS::Key* | 1 |
-| *AWS::Kinesis::Stream* | 1 |
-| *AWS::KinesisAnalytics::Application* | 0 |
-| *AWS::KinesisAnalytics::ApplicationOutput* | 0 |
+| *AWS::Kinesis::Stream* | 2 |
+| *AWS::KinesisAnalytics::Application* | 1 |
+| *AWS::KinesisAnalytics::ApplicationOutput* | 1 |
 | *AWS::KinesisAnalytics::ApplicationReferenceDataSource* | 0 |
 | *AWS::KinesisFirehose::DeliveryStream* | 1 |
 | *AWS::Lambda::Alias* | 1 |
@@ -276,9 +276,9 @@
 | *AWS::SSM::ResourceDataSync* | 1 |
 | *AWS::SageMaker::Endpoint* | 0 |
 | *AWS::SageMaker::EndpointConfig* | 0 |
-| *AWS::SageMaker::Model* | 0 |
-| *AWS::SageMaker::NotebookInstance* | 0 |
-| *AWS::SageMaker::NotebookInstanceLifecycleConfig* | 0 |
+| *AWS::SageMaker::Model* | 1 |
+| *AWS::SageMaker::NotebookInstance* | 1 |
+| *AWS::SageMaker::NotebookInstanceLifecycleConfig* | 1 |
 | *AWS::ServiceCatalog::AcceptedPortfolioShare* | 0 |
 | *AWS::ServiceCatalog::CloudFormationProduct* | 1 |
 | *AWS::ServiceCatalog::CloudFormationProvisionedProduct* | 0 |
@@ -359,7 +359,8 @@
 | *inspector* | 11/37 (29.0%) |
 | *iot* | 3/151 (1.0%) |
 | *iot1click-projects* | 3/13 (23.0%) |
-| *kinesis* | 6/28 (21.0%) |
+| *kinesis* | 9/28 (32.0%) |
+| *kinesisanalytics* | 9/17 (52.0%) |
 | *kms* | 6/35 (17.0%) |
 | *lambda* | 11/30 (36.0%) |
 | *logs* | 5/33 (15.0%) |
@@ -372,6 +373,7 @@
 | *rekognition* | 3/34 (8.0%) |
 | *route53* | 6/56 (10.0%) |
 | *s3* | 24/78 (30.0%) |
+| *sagemaker* | 11/43 (25.0%) |
 | *servicecatalog* | 10/60 (16.0%) |
 | *sns* | 8/30 (26.0%) |
 | *sqs* | 6/20 (30.0%) |
@@ -1766,7 +1768,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 15 |
+| *ec2* | `DescribeVpcs` | 16 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1917,7 +1919,7 @@
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 14 |
+| *ec2* | `DescribeSecurityGroups` | 15 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -1930,7 +1932,7 @@
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 1 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 14 |
+| *ec2* | `DescribeSubnets` | 15 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -2267,7 +2269,7 @@
 | *firehose* | `UpdateDestination` | 0 |
 | *firehose* | `TagDeliveryStream` | 0 |
 | *firehose* | `DeleteDeliveryStream` | 1 |
-| *firehose* | `ListDeliveryStreams` | 2 |
+| *firehose* | `ListDeliveryStreams` | 3 |
 | *firehose* | `PutRecordBatch` | 0 |
 | *firehose* | `UntagDeliveryStream` | 0 |
 | *firehose* | `PutRecord` | 0 |
@@ -2983,9 +2985,9 @@
 | *kinesis* | `DisableEnhancedMonitoring` | 0 |
 | *kinesis* | `DecreaseStreamRetentionPeriod` | 0 |
 | *kinesis* | `DescribeLimits` | 1 |
-| *kinesis* | `ListShards` | 0 |
+| *kinesis* | `ListShards` | 1 |
 | *kinesis* | `SubscribeToShard` | 0 |
-| *kinesis* | `ListStreams` | 2 |
+| *kinesis* | `ListStreams` | 3 |
 | *kinesis* | `DeregisterStreamConsumer` | 0 |
 | *kinesis* | `ListStreamConsumers` | 1 |
 | *kinesis* | `UpdateShardCount` | 0 |
@@ -2993,15 +2995,15 @@
 | *kinesis* | `StartStreamEncryption` | 0 |
 | *kinesis* | `DescribeStreamConsumer` | 0 |
 | *kinesis* | `SplitShard` | 0 |
-| *kinesis* | `DescribeStream` | 0 |
-| *kinesis* | `CreateStream` | 1 |
+| *kinesis* | `DescribeStream` | 1 |
+| *kinesis* | `CreateStream` | 2 |
 | *kinesis* | `RegisterStreamConsumer` | 0 |
 | *kinesis* | `EnableEnhancedMonitoring` | 0 |
 | *kinesis* | `DeleteStream` | 1 |
 | *kinesis* | `RemoveTagsFromStream` | 0 |
 | *kinesis* | `GetRecords` | 0 |
 | *kinesis* | `ListTagsForStream` | 0 |
-| *kinesis* | `PutRecords` | 0 |
+| *kinesis* | `PutRecords` | 1 |
 | *kinesis* | `PutRecord` | 0 |
 | *kinesis* | `MergeShards` | 0 |
 | *kinesis* | `StopStreamEncryption` | 0 |
@@ -3009,23 +3011,23 @@
 | *kinesis-video-archived-media* | `ListFragments` | 0 |
 | *kinesis-video-archived-media* | `GetHLSStreamingSessionURL` | 0 |
 | *kinesis-video-media* | `GetMedia` | 0 |
-| *kinesisanalytics* | `DiscoverInputSchema` | 0 |
+| *kinesisanalytics* | `DiscoverInputSchema` | 1 |
 | *kinesisanalytics* | `DeleteApplicationInputProcessingConfiguration` | 0 |
 | *kinesisanalytics* | `AddApplicationReferenceDataSource` | 0 |
 | *kinesisanalytics* | `ListApplications` | 0 |
-| *kinesisanalytics* | `UpdateApplication` | 0 |
-| *kinesisanalytics* | `StopApplication` | 0 |
-| *kinesisanalytics* | `AddApplicationOutput` | 0 |
-| *kinesisanalytics* | `DeleteApplication` | 0 |
+| *kinesisanalytics* | `UpdateApplication` | 1 |
+| *kinesisanalytics* | `StopApplication` | 1 |
+| *kinesisanalytics* | `AddApplicationOutput` | 1 |
+| *kinesisanalytics* | `DeleteApplication` | 1 |
 | *kinesisanalytics* | `AddApplicationCloudWatchLoggingOption` | 0 |
 | *kinesisanalytics* | `DeleteApplicationOutput` | 0 |
 | *kinesisanalytics* | `DeleteApplicationCloudWatchLoggingOption` | 0 |
-| *kinesisanalytics* | `AddApplicationInput` | 0 |
-| *kinesisanalytics* | `DescribeApplication` | 0 |
+| *kinesisanalytics* | `AddApplicationInput` | 1 |
+| *kinesisanalytics* | `DescribeApplication` | 1 |
 | *kinesisanalytics* | `AddApplicationInputProcessingConfiguration` | 0 |
 | *kinesisanalytics* | `DeleteApplicationReferenceDataSource` | 0 |
-| *kinesisanalytics* | `StartApplication` | 0 |
-| *kinesisanalytics* | `CreateApplication` | 0 |
+| *kinesisanalytics* | `StartApplication` | 1 |
+| *kinesisanalytics* | `CreateApplication` | 1 |
 | *kinesisvideo* | `GetDataEndpoint` | 0 |
 | *kinesisvideo* | `UpdateDataRetention` | 0 |
 | *kinesisvideo* | `DeleteStream` | 0 |
@@ -3075,7 +3077,7 @@
 | *lambda* | `DeleteFunction` | 1 |
 | *lambda* | `UpdateEventSourceMapping` | 0 |
 | *lambda* | `UpdateAlias` | 0 |
-| *lambda* | `ListFunctions` | 4 |
+| *lambda* | `ListFunctions` | 5 |
 | *lambda* | `CreateEventSourceMapping` | 0 |
 | *lambda* | `GetFunctionConfiguration` | 1 |
 | *lambda* | `DeleteFunctionConcurrency` | 0 |
@@ -4099,34 +4101,34 @@
 | *sagemaker* | `DeleteEndpointConfig` | 0 |
 | *sagemaker* | `ListHyperParameterTuningJobs` | 0 |
 | *sagemaker* | `CreateTransformJob` | 0 |
-| *sagemaker* | `DeleteNotebookInstanceLifecycleConfig` | 0 |
+| *sagemaker* | `DeleteNotebookInstanceLifecycleConfig` | 1 |
 | *sagemaker* | `CreateEndpointConfig` | 0 |
 | *sagemaker* | `ListTrainingJobs` | 0 |
 | *sagemaker* | `StartNotebookInstance` | 0 |
-| *sagemaker* | `DeleteNotebookInstance` | 0 |
-| *sagemaker* | `CreateNotebookInstanceLifecycleConfig` | 0 |
+| *sagemaker* | `DeleteNotebookInstance` | 1 |
+| *sagemaker* | `CreateNotebookInstanceLifecycleConfig` | 1 |
 | *sagemaker* | `ListTrainingJobsForHyperParameterTuningJob` | 0 |
 | *sagemaker* | `UpdateNotebookInstanceLifecycleConfig` | 0 |
 | *sagemaker* | `CreatePresignedNotebookInstanceUrl` | 0 |
-| *sagemaker* | `ListNotebookInstances` | 0 |
+| *sagemaker* | `ListNotebookInstances` | 1 |
 | *sagemaker* | `CreateEndpoint` | 0 |
 | *sagemaker* | `DescribeEndpoint` | 0 |
-| *sagemaker* | `ListNotebookInstanceLifecycleConfigs` | 0 |
+| *sagemaker* | `ListNotebookInstanceLifecycleConfigs` | 1 |
 | *sagemaker* | `DescribeTrainingJob` | 0 |
-| *sagemaker* | `StopNotebookInstance` | 0 |
+| *sagemaker* | `StopNotebookInstance` | 1 |
 | *sagemaker* | `DescribeHyperParameterTuningJob` | 0 |
 | *sagemaker* | `DescribeTransformJob` | 0 |
-| *sagemaker* | `ListModels` | 0 |
-| *sagemaker* | `CreateNotebookInstance` | 0 |
+| *sagemaker* | `ListModels` | 1 |
+| *sagemaker* | `CreateNotebookInstance` | 1 |
 | *sagemaker* | `DeleteEndpoint` | 0 |
 | *sagemaker* | `ListTags` | 0 |
 | *sagemaker* | `DescribeEndpointConfig` | 0 |
-| *sagemaker* | `CreateModel` | 0 |
+| *sagemaker* | `CreateModel` | 1 |
 | *sagemaker* | `CreateHyperParameterTuningJob` | 0 |
 | *sagemaker* | `AddTags` | 0 |
 | *sagemaker* | `DescribeNotebookInstanceLifecycleConfig` | 0 |
-| *sagemaker* | `ListEndpoints` | 0 |
-| *sagemaker* | `ListEndpointConfigs` | 0 |
+| *sagemaker* | `ListEndpoints` | 1 |
+| *sagemaker* | `ListEndpointConfigs` | 1 |
 | *sagemaker* | `DescribeNotebookInstance` | 0 |
 | *sagemaker* | `StopHyperParameterTuningJob` | 0 |
 | *sagemaker* | `UpdateEndpoint` | 0 |
@@ -4949,4 +4951,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 675 (14.0%)**
+**Total Unique Occurances: 698 (15.0%)**
