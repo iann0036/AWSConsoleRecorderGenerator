@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**205/309 (66.0%)** Resources Covered
+**210/309 (67.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -53,7 +53,7 @@
 | *AWS::CertificateManager::Certificate* | 1 |
 | *AWS::Cloud9::EnvironmentEC2* | 1 |
 | *AWS::CloudFormation::CustomResource* | 1 |
-| *AWS::CloudFormation::Stack* | 0 |
+| *AWS::CloudFormation::Stack* | 1 |
 | *AWS::CloudFormation::WaitCondition* | 1 |
 | *AWS::CloudFormation::WaitConditionHandle* | 1 |
 | *AWS::CloudFront::CloudFrontOriginAccessIdentity* | 0 |
@@ -223,10 +223,10 @@
 | *AWS::Logs::MetricFilter* | 1 |
 | *AWS::Logs::SubscriptionFilter* | 1 |
 | *AWS::Neptune::DBCluster* | 0 |
-| *AWS::Neptune::DBClusterParameterGroup* | 0 |
-| *AWS::Neptune::DBInstance* | 0 |
-| *AWS::Neptune::DBParameterGroup* | 0 |
-| *AWS::Neptune::DBSubnetGroup* | 0 |
+| *AWS::Neptune::DBClusterParameterGroup* | 1 |
+| *AWS::Neptune::DBInstance* | 1 |
+| *AWS::Neptune::DBParameterGroup* | 1 |
+| *AWS::Neptune::DBSubnetGroup* | 1 |
 | *AWS::OpsWorks::App* | 1 |
 | *AWS::OpsWorks::ElasticLoadBalancerAttachment* | 1 |
 | *AWS::OpsWorks::Instance* | 1 |
@@ -328,6 +328,7 @@
 | *batch* | 11/16 (68.0%) |
 | *budgets* | 1/13 (7.0%) |
 | *cloud9* | 6/10 (60.0%) |
+| *cloudformation* | 2/41 (4.0%) |
 | *cloudtrail* | 6/14 (42.0%) |
 | *cloudwatch* | 1/17 (5.0%) |
 | *codebuild* | 4/16 (25.0%) |
@@ -366,6 +367,7 @@
 | *logs* | 5/33 (15.0%) |
 | *medialive* | 4/25 (16.0%) |
 | *mq* | 6/17 (35.0%) |
+| *neptune* | 11/57 (19.0%) |
 | *opsworks* | 16/74 (21.0%) |
 | *pinpoint* | 1/71 (1.0%) |
 | *rds* | 22/96 (22.0%) |
@@ -848,7 +850,7 @@
 | *cloudformation* | `DescribeStackResources` | 0 |
 | *cloudformation* | `ListStackSetOperations` | 0 |
 | *cloudformation* | `ListChangeSets` | 0 |
-| *cloudformation* | `CreateStack` | 0 |
+| *cloudformation* | `CreateStack` | 1 |
 | *cloudformation* | `GetTemplateSummary` | 0 |
 | *cloudformation* | `CancelUpdateStack` | 0 |
 | *cloudformation* | `UpdateStackInstances` | 0 |
@@ -874,7 +876,7 @@
 | *cloudformation* | `ListStackInstances` | 0 |
 | *cloudformation* | `DeleteStackInstances` | 0 |
 | *cloudformation* | `ExecuteChangeSet` | 0 |
-| *cloudformation* | `DeleteStack` | 0 |
+| *cloudformation* | `DeleteStack` | 1 |
 | *cloudformation* | `ListStackSetOperationResults` | 0 |
 | *cloudformation* | `SetStackPolicy` | 0 |
 | *cloudformation* | `ListStacks` | 0 |
@@ -1712,7 +1714,7 @@
 | *ec2* | `AssociateDhcpOptions` | 1 |
 | *ec2* | `ModifyVpcEndpointServicePermissions` | 1 |
 | *ec2* | `ImportKeyPair` | 1 |
-| *ec2* | `DescribeAvailabilityZones` | 7 |
+| *ec2* | `DescribeAvailabilityZones` | 8 |
 | *ec2* | `RequestSpotInstances` | 0 |
 | *ec2* | `DescribeSnapshots` | 2 |
 | *ec2* | `AcceptVpcPeeringConnection` | 0 |
@@ -1768,7 +1770,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 16 |
+| *ec2* | `DescribeVpcs` | 17 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1919,7 +1921,7 @@
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `CreateRoute` | 0 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
-| *ec2* | `DescribeSecurityGroups` | 15 |
+| *ec2* | `DescribeSecurityGroups` | 17 |
 | *ec2* | `CreateDhcpOptions` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -2620,7 +2622,7 @@
 | *iam* | `UploadServerCertificate` | 0 |
 | *iam* | `GetContextKeysForPrincipalPolicy` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
-| *iam* | `ListRoles` | 9 |
+| *iam* | `ListRoles` | 10 |
 | *iam* | `DeleteAccessKey` | 1 |
 | *iam* | `AddRoleToInstanceProfile` | 1 |
 | *iam* | `GetContextKeysForCustomPolicy` | 0 |
@@ -3053,7 +3055,7 @@
 | *kms* | `DeleteAlias` | 0 |
 | *kms* | `RetireGrant` | 0 |
 | *kms* | `TagResource` | 0 |
-| *kms* | `DescribeKey` | 4 |
+| *kms* | `DescribeKey` | 5 |
 | *kms* | `ListKeys` | 5 |
 | *kms* | `GenerateRandom` | 0 |
 | *kms* | `GetKeyPolicy` | 1 |
@@ -3446,14 +3448,14 @@
 | *mturk* | `GetAssignment` | 0 |
 | *mturk* | `GetHIT` | 0 |
 | *mturk* | `CreateAdditionalAssignmentsForHIT` | 0 |
-| *neptune* | `DeleteDBSubnetGroup` | 0 |
+| *neptune* | `DeleteDBSubnetGroup` | 1 |
 | *neptune* | `DescribeValidDBInstanceModifications` | 0 |
 | *neptune* | `DescribeDBClusterParameters` | 0 |
-| *neptune* | `DescribeDBSubnetGroups` | 0 |
+| *neptune* | `DescribeDBSubnetGroups` | 2 |
 | *neptune* | `RestoreDBClusterToPointInTime` | 0 |
 | *neptune* | `RemoveRoleFromDBCluster` | 0 |
 | *neptune* | `DeleteDBInstance` | 0 |
-| *neptune* | `CreateDBClusterParameterGroup` | 0 |
+| *neptune* | `CreateDBClusterParameterGroup` | 1 |
 | *neptune* | `CreateEventSubscription` | 0 |
 | *neptune* | `CopyDBParameterGroup` | 0 |
 | *neptune* | `DeleteDBClusterSnapshot` | 0 |
@@ -3461,25 +3463,25 @@
 | *neptune* | `DescribePendingMaintenanceActions` | 0 |
 | *neptune* | `RebootDBInstance` | 0 |
 | *neptune* | `RemoveSourceIdentifierFromSubscription` | 0 |
-| *neptune* | `CreateDBParameterGroup` | 0 |
-| *neptune* | `DeleteDBParameterGroup` | 0 |
-| *neptune* | `CreateDBSubnetGroup` | 0 |
+| *neptune* | `CreateDBParameterGroup` | 1 |
+| *neptune* | `DeleteDBParameterGroup` | 1 |
+| *neptune* | `CreateDBSubnetGroup` | 1 |
 | *neptune* | `DescribeEventCategories` | 0 |
 | *neptune* | `AddRoleToDBCluster` | 0 |
 | *neptune* | `ModifyDBCluster` | 0 |
 | *neptune* | `DescribeDBParameters` | 0 |
-| *neptune* | `DescribeDBParameterGroups` | 0 |
+| *neptune* | `DescribeDBParameterGroups` | 1 |
 | *neptune* | `AddTagsToResource` | 0 |
 | *neptune* | `ModifyDBClusterParameterGroup` | 0 |
-| *neptune* | `DescribeDBEngineVersions` | 0 |
+| *neptune* | `DescribeDBEngineVersions` | 1 |
 | *neptune* | `FailoverDBCluster` | 0 |
 | *neptune* | `DescribeDBClusterSnapshots` | 0 |
 | *neptune* | `ApplyPendingMaintenanceAction` | 0 |
-| *neptune* | `DescribeDBInstances` | 0 |
+| *neptune* | `DescribeDBInstances` | 1 |
 | *neptune* | `RemoveTagsFromResource` | 0 |
 | *neptune* | `ResetDBParameterGroup` | 0 |
 | *neptune* | `DescribeOrderableDBInstanceOptions` | 0 |
-| *neptune* | `CreateDBInstance` | 0 |
+| *neptune* | `CreateDBInstance` | 1 |
 | *neptune* | `DescribeDBClusters` | 0 |
 | *neptune* | `DeleteEventSubscription` | 0 |
 | *neptune* | `ModifyEventSubscription` | 0 |
@@ -3495,7 +3497,7 @@
 | *neptune* | `DeleteDBClusterParameterGroup` | 0 |
 | *neptune* | `DescribeDBClusterSnapshotAttributes` | 0 |
 | *neptune* | `CreateDBCluster` | 0 |
-| *neptune* | `DescribeDBClusterParameterGroups` | 0 |
+| *neptune* | `DescribeDBClusterParameterGroups` | 1 |
 | *neptune* | `DescribeEngineDefaultParameters` | 0 |
 | *neptune* | `CopyDBClusterSnapshot` | 0 |
 | *neptune* | `ModifyDBInstance` | 0 |
@@ -4951,4 +4953,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 698 (15.0%)**
+**Total Unique Occurances: 711 (15.0%)**
