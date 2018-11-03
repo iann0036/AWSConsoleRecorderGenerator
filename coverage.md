@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**223/309 (72.0%)** Resources Covered
+**230/309 (74.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -253,7 +253,7 @@
 | *AWS::Route53::RecordSet* | 0 |
 | *AWS::Route53::RecordSetGroup* | 0 |
 | *AWS::S3::Bucket* | 1 |
-| *AWS::S3::BucketPolicy* | 0 |
+| *AWS::S3::BucketPolicy* | 1 |
 | *AWS::SDB::Domain* | 1 |
 | *AWS::SES::ConfigurationSet* | 0 |
 | *AWS::SES::ConfigurationSetEventDestination* | 0 |
@@ -291,12 +291,12 @@
 | *AWS::ServiceCatalog::PortfolioShare* | 1 |
 | *AWS::ServiceCatalog::TagOption* | 1 |
 | *AWS::ServiceCatalog::TagOptionAssociation* | 1 |
-| *AWS::ServiceDiscovery::Instance* | 0 |
-| *AWS::ServiceDiscovery::PrivateDnsNamespace* | 0 |
-| *AWS::ServiceDiscovery::PublicDnsNamespace* | 0 |
-| *AWS::ServiceDiscovery::Service* | 0 |
-| *AWS::StepFunctions::Activity* | 0 |
-| *AWS::StepFunctions::StateMachine* | 0 |
+| *AWS::ServiceDiscovery::Instance* | 1 |
+| *AWS::ServiceDiscovery::PrivateDnsNamespace* | 1 |
+| *AWS::ServiceDiscovery::PublicDnsNamespace* | 1 |
+| *AWS::ServiceDiscovery::Service* | 1 |
+| *AWS::StepFunctions::Activity* | 1 |
+| *AWS::StepFunctions::StateMachine* | 1 |
 | *AWS::WAF::ByteMatchSet* | 1 |
 | *AWS::WAF::IPSet* | 1 |
 | *AWS::WAF::Rule* | 1 |
@@ -376,14 +376,14 @@
 | *redshift* | 5/69 (7.0%) |
 | *rekognition* | 3/34 (8.0%) |
 | *route53* | 6/56 (10.0%) |
-| *s3* | 24/78 (30.0%) |
+| *s3* | 25/78 (32.0%) |
 | *sagemaker* | 11/43 (25.0%) |
 | *servicecatalog* | 10/60 (16.0%) |
 | *servicediscovery* | 1/18 (5.0%) |
 | *sns* | 8/30 (26.0%) |
 | *sqs* | 6/20 (30.0%) |
 | *ssm* | 20/108 (18.0%) |
-| *stepfunctions* | 1/19 (5.0%) |
+| *stepfunctions* | 7/19 (36.0%) |
 | *waf* | 32/73 (43.0%) |
 | *waf-regional* | 33/77 (42.0%) |
 | *workspaces* | 4/23 (17.0%) |
@@ -4022,7 +4022,7 @@
 | *route53domains* | `ListOperations` | 0 |
 | *route53domains* | `EnableDomainTransferLock` | 0 |
 | *s3* | `ListObjectVersions` | 0 |
-| *s3* | `PutBucketPolicy` | 0 |
+| *s3* | `PutBucketPolicy` | 1 |
 | *s3* | `ListBucketInventoryConfigurations` | 0 |
 | *s3* | `DeleteBucketPolicy` | 0 |
 | *s3* | `PutBucketLifecycleConfiguration` | 0 |
@@ -4547,19 +4547,19 @@
 | *stepfunctions* | `ListExecutions` | 0 |
 | *stepfunctions* | `DescribeStateMachineForExecution` | 0 |
 | *stepfunctions* | `StopExecution` | 0 |
-| *stepfunctions* | `DeleteActivity` | 0 |
+| *stepfunctions* | `DeleteActivity` | 1 |
 | *stepfunctions* | `SendTaskHeartbeat` | 0 |
 | *stepfunctions* | `DescribeExecution` | 0 |
-| *stepfunctions* | `ListStateMachines` | 1 |
+| *stepfunctions* | `ListStateMachines` | 2 |
 | *stepfunctions* | `GetExecutionHistory` | 0 |
 | *stepfunctions* | `GetActivityTask` | 0 |
-| *stepfunctions* | `ListActivities` | 0 |
-| *stepfunctions* | `CreateStateMachine` | 0 |
-| *stepfunctions* | `DescribeStateMachine` | 0 |
+| *stepfunctions* | `ListActivities` | 1 |
+| *stepfunctions* | `CreateStateMachine` | 1 |
+| *stepfunctions* | `DescribeStateMachine` | 1 |
 | *stepfunctions* | `DescribeActivity` | 0 |
-| *stepfunctions* | `DeleteStateMachine` | 0 |
+| *stepfunctions* | `DeleteStateMachine` | 1 |
 | *stepfunctions* | `UpdateStateMachine` | 0 |
-| *stepfunctions* | `CreateActivity` | 0 |
+| *stepfunctions* | `CreateActivity` | 1 |
 | *stepfunctions* | `SendTaskFailure` | 0 |
 | *stepfunctions* | `SendTaskSuccess` | 0 |
 | *storagegateway* | `UpdateSMBFileShare` | 0 |
@@ -4956,4 +4956,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 734 (16.0%)**
+**Total Unique Occurances: 741 (16.0%)**

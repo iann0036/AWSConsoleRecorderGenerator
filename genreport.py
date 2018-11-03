@@ -17,7 +17,11 @@ cfn_occurances = [
     "AWS::EC2::SecurityGroupEgress",
     "AWS::EC2::SecurityGroupIngress",
     "AWS::Redshift::ClusterSecurityGroup",
-    "AWS::Redshift::ClusterSecurityGroupIngress"
+    "AWS::Redshift::ClusterSecurityGroupIngress",
+    "AWS::ServiceDiscovery::PrivateDnsNamespace",
+    "AWS::ServiceDiscovery::PublicDnsNamespace",
+    "AWS::ServiceDiscovery::Service",
+    "AWS::ServiceDiscovery::Instance"
 ]
 
 with open("combined.json", "r") as f:
