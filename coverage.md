@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**210/309 (67.0%)** Resources Covered
+**223/309 (72.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -10,21 +10,21 @@
 | *AWS::ApiGateway::ApiKey* | 1 |
 | *AWS::ApiGateway::Authorizer* | 1 |
 | *AWS::ApiGateway::BasePathMapping* | 0 |
-| *AWS::ApiGateway::ClientCertificate* | 0 |
-| *AWS::ApiGateway::Deployment* | 0 |
+| *AWS::ApiGateway::ClientCertificate* | 1 |
+| *AWS::ApiGateway::Deployment* | 1 |
 | *AWS::ApiGateway::DocumentationPart* | 1 |
 | *AWS::ApiGateway::DocumentationVersion* | 0 |
 | *AWS::ApiGateway::DomainName* | 1 |
 | *AWS::ApiGateway::GatewayResponse* | 1 |
 | *AWS::ApiGateway::Method* | 1 |
 | *AWS::ApiGateway::Model* | 1 |
-| *AWS::ApiGateway::RequestValidator* | 0 |
+| *AWS::ApiGateway::RequestValidator* | 1 |
 | *AWS::ApiGateway::Resource* | 2 |
 | *AWS::ApiGateway::RestApi* | 1 |
-| *AWS::ApiGateway::Stage* | 0 |
+| *AWS::ApiGateway::Stage* | 1 |
 | *AWS::ApiGateway::UsagePlan* | 1 |
 | *AWS::ApiGateway::UsagePlanKey* | 1 |
-| *AWS::ApiGateway::VpcLink* | 0 |
+| *AWS::ApiGateway::VpcLink* | 1 |
 | *AWS::AppStream::DirectoryConfig* | 1 |
 | *AWS::AppStream::Fleet* | 1 |
 | *AWS::AppStream::ImageBuilder* | 1 |
@@ -37,8 +37,8 @@
 | *AWS::AppSync::GraphQLApi* | 1 |
 | *AWS::AppSync::GraphQLSchema* | 1 |
 | *AWS::AppSync::Resolver* | 1 |
-| *AWS::ApplicationAutoScaling::ScalableTarget* | 0 |
-| *AWS::ApplicationAutoScaling::ScalingPolicy* | 0 |
+| *AWS::ApplicationAutoScaling::ScalableTarget* | 1 |
+| *AWS::ApplicationAutoScaling::ScalingPolicy* | 1 |
 | *AWS::Athena::NamedQuery* | 1 |
 | *AWS::AutoScaling::AutoScalingGroup* | 1 |
 | *AWS::AutoScaling::LaunchConfiguration* | 1 |
@@ -82,9 +82,9 @@
 | *AWS::Config::ConfigurationAggregator* | 1 |
 | *AWS::Config::ConfigurationRecorder* | 0 |
 | *AWS::Config::DeliveryChannel* | 0 |
-| *AWS::DAX::Cluster* | 0 |
-| *AWS::DAX::ParameterGroup* | 0 |
-| *AWS::DAX::SubnetGroup* | 0 |
+| *AWS::DAX::Cluster* | 1 |
+| *AWS::DAX::ParameterGroup* | 1 |
+| *AWS::DAX::SubnetGroup* | 1 |
 | *AWS::DMS::Certificate* | 1 |
 | *AWS::DMS::Endpoint* | 1 |
 | *AWS::DMS::EventSubscription* | 1 |
@@ -114,7 +114,7 @@
 | *AWS::EC2::PlacementGroup* | 1 |
 | *AWS::EC2::Route* | 0 |
 | *AWS::EC2::RouteTable* | 2 |
-| *AWS::EC2::SecurityGroup* | 1 |
+| *AWS::EC2::SecurityGroup* | 2 |
 | *AWS::EC2::SecurityGroupEgress* | 1 |
 | *AWS::EC2::SecurityGroupIngress* | 1 |
 | *AWS::EC2::SpotFleet* | 0 |
@@ -137,9 +137,9 @@
 | *AWS::EC2::Volume* | 1 |
 | *AWS::EC2::VolumeAttachment* | 1 |
 | *AWS::ECR::Repository* | 1 |
-| *AWS::ECS::Cluster* | 0 |
-| *AWS::ECS::Service* | 0 |
-| *AWS::ECS::TaskDefinition* | 0 |
+| *AWS::ECS::Cluster* | 1 |
+| *AWS::ECS::Service* | 1 |
+| *AWS::ECS::TaskDefinition* | 1 |
 | *AWS::EFS::FileSystem* | 1 |
 | *AWS::EFS::MountTarget* | 1 |
 | *AWS::EKS::Cluster* | 1 |
@@ -320,7 +320,8 @@
 | --- | --- |
 | *acm* | 3/12 (25.0%) |
 | *acm-pca* | 1/17 (5.0%) |
-| *apigateway* | 35/120 (29.0%) |
+| *apigateway* | 40/120 (33.0%) |
+| *application-autoscaling* | 2/10 (20.0%) |
 | *appstream* | 13/36 (36.0%) |
 | *appsync* | 9/27 (33.0%) |
 | *athena* | 1/11 (9.0%) |
@@ -338,12 +339,13 @@
 | *cognito-identity* | 1/18 (5.0%) |
 | *cognito-idp* | 10/95 (10.0%) |
 | *config* | 6/43 (13.0%) |
+| *dax* | 10/21 (47.0%) |
 | *dms* | 27/44 (61.0%) |
 | *ds* | 4/49 (8.0%) |
-| *dynamodb* | 2/34 (5.0%) |
+| *dynamodb* | 3/34 (8.0%) |
 | *ec2* | 95/274 (34.0%) |
 | *ecr* | 1/22 (4.0%) |
-| *ecs* | 1/31 (3.0%) |
+| *ecs* | 5/31 (16.0%) |
 | *efs* | 11/12 (91.0%) |
 | *eks* | 1/4 (25.0%) |
 | *elasticache* | 10/42 (23.0%) |
@@ -377,6 +379,7 @@
 | *s3* | 24/78 (30.0%) |
 | *sagemaker* | 11/43 (25.0%) |
 | *servicecatalog* | 10/60 (16.0%) |
+| *servicediscovery* | 1/18 (5.0%) |
 | *sns* | 8/30 (26.0%) |
 | *sqs* | 6/20 (30.0%) |
 | *ssm* | 20/108 (18.0%) |
@@ -471,14 +474,14 @@
 | *apigateway* | `ImportDocumentationParts` | 0 |
 | *apigateway* | `DeleteAuthorizer` | 0 |
 | *apigateway* | `UpdateModel` | 0 |
-| *apigateway* | `CreateDeployment` | 0 |
+| *apigateway* | `CreateDeployment` | 1 |
 | *apigateway* | `GetRestApi` | 1 |
 | *apigateway* | `UpdateRequestValidator` | 0 |
 | *apigateway* | `GetGatewayResponse` | 0 |
 | *apigateway* | `DeleteClientCertificate` | 1 |
 | *apigateway* | `GetAuthorizer` | 0 |
 | *apigateway* | `GetModels` | 0 |
-| *apigateway* | `GenerateClientCertificate` | 0 |
+| *apigateway* | `GenerateClientCertificate` | 1 |
 | *apigateway* | `PutGatewayResponse` | 1 |
 | *apigateway* | `DeleteRestApi` | 0 |
 | *apigateway* | `GetMethod` | 0 |
@@ -500,11 +503,11 @@
 | *apigateway* | `GetDomainNames` | 1 |
 | *apigateway* | `UpdateDocumentationPart` | 0 |
 | *apigateway* | `TestInvokeMethod` | 0 |
-| *apigateway* | `CreateVpcLink` | 0 |
+| *apigateway* | `CreateVpcLink` | 1 |
 | *apigateway* | `DeleteVpcLink` | 0 |
 | *apigateway* | `UpdateStage` | 0 |
 | *apigateway* | `DeleteBasePathMapping` | 0 |
-| *apigateway* | `CreateRequestValidator` | 0 |
+| *apigateway* | `CreateRequestValidator` | 1 |
 | *apigateway* | `TestInvokeAuthorizer` | 0 |
 | *apigateway* | `GetDocumentationVersion` | 0 |
 | *apigateway* | `UpdateMethod` | 0 |
@@ -550,7 +553,7 @@
 | *apigateway* | `CreateDomainName` | 1 |
 | *apigateway* | `DeleteDomainName` | 0 |
 | *apigateway* | `PutMethod` | 1 |
-| *apigateway* | `DeleteStage` | 0 |
+| *apigateway* | `DeleteStage` | 1 |
 | *apigateway* | `GetDocumentationPart` | 0 |
 | *apigateway* | `UpdateAccount` | 1 |
 | *apigateway* | `PutRestApi` | 0 |
@@ -563,7 +566,7 @@
 | *apigateway* | `GetClientCertificates` | 0 |
 | *apigateway* | `DeleteDocumentationPart` | 1 |
 | *apigateway* | `DeleteResource` | 0 |
-| *apigateway* | `CreateStage` | 1 |
+| *apigateway* | `CreateStage` | 2 |
 | *apigateway* | `UpdateBasePathMapping` | 0 |
 | *apigateway* | `UpdateMethodResponse` | 0 |
 | *apigateway* | `UpdateUsage` | 0 |
@@ -590,8 +593,8 @@
 | *application-autoscaling* | `DescribeScalingActivities` | 0 |
 | *application-autoscaling* | `DescribeScalingPolicies` | 0 |
 | *application-autoscaling* | `DeleteScheduledAction` | 0 |
-| *application-autoscaling* | `PutScalingPolicy` | 0 |
-| *application-autoscaling* | `RegisterScalableTarget` | 0 |
+| *application-autoscaling* | `PutScalingPolicy` | 1 |
+| *application-autoscaling* | `RegisterScalableTarget` | 1 |
 | *application-autoscaling* | `DeregisterScalableTarget` | 0 |
 | *application-autoscaling* | `PutScheduledAction` | 0 |
 | *application-autoscaling* | `DeleteScalingPolicy` | 0 |
@@ -1407,27 +1410,27 @@
 | *datapipeline* | `ReportTaskProgress` | 0 |
 | *datapipeline* | `ReportTaskRunnerHeartbeat` | 0 |
 | *datapipeline* | `DescribePipelines` | 0 |
-| *dax* | `CreateParameterGroup` | 0 |
-| *dax* | `DeleteParameterGroup` | 0 |
+| *dax* | `CreateParameterGroup` | 1 |
+| *dax* | `DeleteParameterGroup` | 1 |
 | *dax* | `UpdateCluster` | 0 |
 | *dax* | `UntagResource` | 0 |
-| *dax* | `CreateCluster` | 0 |
-| *dax* | `DescribeSubnetGroups` | 0 |
+| *dax* | `CreateCluster` | 1 |
+| *dax* | `DescribeSubnetGroups` | 1 |
 | *dax* | `IncreaseReplicationFactor` | 0 |
 | *dax* | `TagResource` | 0 |
 | *dax* | `UpdateSubnetGroup` | 0 |
 | *dax* | `DescribeParameters` | 0 |
 | *dax* | `DecreaseReplicationFactor` | 0 |
 | *dax* | `RebootNode` | 0 |
-| *dax* | `CreateSubnetGroup` | 0 |
-| *dax* | `UpdateParameterGroup` | 0 |
+| *dax* | `CreateSubnetGroup` | 1 |
+| *dax* | `UpdateParameterGroup` | 1 |
 | *dax* | `ListTags` | 0 |
 | *dax* | `DescribeEvents` | 0 |
-| *dax* | `DeleteSubnetGroup` | 0 |
+| *dax* | `DeleteSubnetGroup` | 1 |
 | *dax* | `DescribeDefaultParameters` | 0 |
-| *dax* | `DescribeClusters` | 0 |
-| *dax* | `DescribeParameterGroups` | 0 |
-| *dax* | `DeleteCluster` | 0 |
+| *dax* | `DescribeClusters` | 1 |
+| *dax* | `DescribeParameterGroups` | 1 |
+| *dax* | `DeleteCluster` | 1 |
 | *devicefarm* | `ListSamples` | 0 |
 | *devicefarm* | `PurchaseOffering` | 0 |
 | *devicefarm* | `GetUpload` | 0 |
@@ -1678,8 +1681,8 @@
 | *dynamodb* | `UpdateItem` | 0 |
 | *dynamodb* | `BatchGetItem` | 0 |
 | *dynamodb* | `DescribeGlobalTableSettings` | 0 |
-| *dynamodb* | `DescribeTable` | 1 |
-| *dynamodb* | `ListTables` | 0 |
+| *dynamodb* | `DescribeTable` | 2 |
+| *dynamodb* | `ListTables` | 1 |
 | *dynamodb* | `Query` | 0 |
 | *dynamodb* | `DeleteTable` | 0 |
 | *dynamodb* | `UntagResource` | 0 |
@@ -1714,7 +1717,7 @@
 | *ec2* | `AssociateDhcpOptions` | 1 |
 | *ec2* | `ModifyVpcEndpointServicePermissions` | 1 |
 | *ec2* | `ImportKeyPair` | 1 |
-| *ec2* | `DescribeAvailabilityZones` | 8 |
+| *ec2* | `DescribeAvailabilityZones` | 9 |
 | *ec2* | `RequestSpotInstances` | 0 |
 | *ec2* | `DescribeSnapshots` | 2 |
 | *ec2* | `AcceptVpcPeeringConnection` | 0 |
@@ -1770,7 +1773,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
-| *ec2* | `DescribeVpcs` | 17 |
+| *ec2* | `DescribeVpcs` | 19 |
 | *ec2* | `DisassociateAddress` | 1 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `MoveAddressToVpc` | 0 |
@@ -1871,7 +1874,7 @@
 | *ec2* | `CreateCustomerGateway` | 1 |
 | *ec2* | `StopInstances` | 0 |
 | *ec2* | `ResetInstanceAttribute` | 0 |
-| *ec2* | `CreateSecurityGroup` | 1 |
+| *ec2* | `CreateSecurityGroup` | 2 |
 | *ec2* | `DescribeInternetGateways` | 2 |
 | *ec2* | `ModifyNetworkInterfaceAttribute` | 0 |
 | *ec2* | `AttachVolume` | 1 |
@@ -1934,7 +1937,7 @@
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 1 |
 | *ec2* | `CopyImage` | 0 |
-| *ec2* | `DescribeSubnets` | 15 |
+| *ec2* | `DescribeSubnets` | 16 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
 | *ec2* | `ModifyVpcPeeringConnectionOptions` | 0 |
@@ -1990,10 +1993,10 @@
 | *ecr* | `GetRepositoryPolicy` | 0 |
 | *ecr* | `DeleteRepositoryPolicy` | 0 |
 | *ecr* | `BatchGetImage` | 0 |
-| *ecs* | `CreateService` | 0 |
+| *ecs* | `CreateService` | 1 |
 | *ecs* | `SubmitContainerStateChange` | 0 |
 | *ecs* | `ListAttributes` | 0 |
-| *ecs* | `CreateCluster` | 0 |
+| *ecs* | `CreateCluster` | 1 |
 | *ecs* | `SubmitTaskStateChange` | 0 |
 | *ecs* | `ListTaskDefinitionFamilies` | 1 |
 | *ecs* | `DeleteService` | 0 |
@@ -2001,9 +2004,9 @@
 | *ecs* | `DescribeServices` | 0 |
 | *ecs* | `DeleteCluster` | 0 |
 | *ecs* | `UpdateService` | 0 |
-| *ecs* | `ListClusters` | 0 |
+| *ecs* | `ListClusters` | 1 |
 | *ecs* | `DeregisterTaskDefinition` | 0 |
-| *ecs* | `RegisterTaskDefinition` | 0 |
+| *ecs* | `RegisterTaskDefinition` | 1 |
 | *ecs* | `StopTask` | 0 |
 | *ecs* | `ListTaskDefinitions` | 0 |
 | *ecs* | `DescribeClusters` | 0 |
@@ -3229,7 +3232,7 @@
 | *logs* | `PutMetricFilter` | 1 |
 | *logs* | `DeleteResourcePolicy` | 0 |
 | *logs* | `PutLogEvents` | 0 |
-| *logs* | `DescribeLogGroups` | 2 |
+| *logs* | `DescribeLogGroups` | 3 |
 | *logs* | `DescribeDestinations` | 0 |
 | *logs* | `AssociateKmsKey` | 0 |
 | *logs* | `PutRetentionPolicy` | 0 |
@@ -4243,7 +4246,7 @@
 | *servicediscovery* | `ListServices` | 0 |
 | *servicediscovery* | `GetInstance` | 0 |
 | *servicediscovery* | `CreatePublicDnsNamespace` | 0 |
-| *servicediscovery* | `ListNamespaces` | 0 |
+| *servicediscovery* | `ListNamespaces` | 1 |
 | *servicediscovery* | `GetOperation` | 0 |
 | *servicediscovery* | `GetNamespace` | 0 |
 | *servicediscovery* | `GetService` | 0 |
@@ -4953,4 +4956,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 711 (15.0%)**
+**Total Unique Occurances: 734 (16.0%)**
