@@ -680,11 +680,7 @@ function analyseRequest(details) {
         reqParams.cli['--instance-initiated-shutdown-behavior'] = jsonRequestBody.InstanceInitiatedShutdownBehavior;
         reqParams.cli['--credit-specification'] = jsonRequestBody.CreditSpecification;
         reqParams.cli['--tag-specifications'] = jsonRequestBody.TagSpecifications;
-
-        if (jsonRequestBody.EbsOptimized === true)
-            reqParams.cli['--ebs-optimized'] = null;
-        else if (jsonRequestBody.EbsOptimized === false)
-            reqParams.cli['--no-ebs-optimized'] = null;
+        reqParams.cli['--ebs-optimized'] = jsonRequestBody.EbsOptimized;
         reqParams.cli['--block-device-mappings'] = jsonRequestBody.BlockDeviceMappings;
 
         outputs.push({
@@ -2445,7 +2441,7 @@ function analyseRequest(details) {
     }
 
     // autogen:guardduty:guardduty.ListDetectors
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "ListDetectors" && jsonRequestBody.method == "GET") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && (jsonRequestBody.operation == "ListDetectors" || jsonRequestBody.operation == "listDetectors") && jsonRequestBody.method == "GET") {
 
         outputs.push({
             'region': region,
@@ -2481,7 +2477,7 @@ function analyseRequest(details) {
     }
 
     // autogen:guardduty:guardduty.CreateDetector
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "CreateDetector" && jsonRequestBody.method == "POST") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && (jsonRequestBody.operation == "CreateDetector" || jsonRequestBody.operation == "createDetector") && jsonRequestBody.method == "POST") {
         reqParams.boto3['Enable'] = jsonRequestBody.contentString.enable;
         reqParams.cli['--enable'] = jsonRequestBody.contentString.enable;
 
@@ -25267,6 +25263,99 @@ function analyseRequest(details) {
             'region': region,
             'service': 's3',
             'type': 'AWS::S3::BucketPolicy',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:guardduty:guardduty.CreateThreatIntelSet
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "createThreatIntelSet") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['Location'] = jsonRequestBody.contentString.location;
+        reqParams.cli['--location'] = jsonRequestBody.contentString.location;
+        reqParams.boto3['Format'] = jsonRequestBody.contentString.format;
+        reqParams.cli['--format'] = jsonRequestBody.contentString.format;
+        reqParams.boto3['Activate'] = jsonRequestBody.contentString.activate;
+        reqParams.cli['--activate'] = jsonRequestBody.contentString.activate;
+        reqParams.boto3['ClientToken'] = jsonRequestBody.contentString.clientToken;
+        reqParams.cli['--client-token'] = jsonRequestBody.contentString.clientToken;
+        reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
+
+        reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cfn['Location'] = jsonRequestBody.contentString.location;
+        reqParams.cfn['Format'] = jsonRequestBody.contentString.format;
+        reqParams.cfn['Activate'] = jsonRequestBody.contentString.activate;
+        reqParams.cfn['DetectorId'] = jsonRequestBody.path.split("/")[2];
+
+        outputs.push({
+            'region': region,
+            'service': 'guardduty',
+            'method': {
+                'api': 'CreateThreatIntelSet',
+                'boto3': 'create_threat_intel_set',
+                'cli': 'create-threat-intel-set'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('guardduty', details.requestId),
+            'region': region,
+            'service': 'guardduty',
+            'type': 'AWS::GuardDuty::ThreatIntelSet',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:guardduty:guardduty.CreateFilter
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/guardduty\/api\/guardduty$/g) && jsonRequestBody.operation == "CreateFilter") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.cli['--description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['FindingCriteria'] = jsonRequestBody.contentString.findingCriteria;
+        reqParams.cli['--finding-criteria'] = jsonRequestBody.contentString.findingCriteria;
+        reqParams.boto3['Action'] = jsonRequestBody.contentString.action;
+        reqParams.cli['--action'] = jsonRequestBody.contentString.action;
+        reqParams.boto3['Rank'] = jsonRequestBody.contentString.rank;
+        reqParams.cli['--rank'] = jsonRequestBody.contentString.rank;
+        reqParams.boto3['DetectorId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.cli['--detector-id'] = jsonRequestBody.path.split("/")[2];
+
+        reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
+        reqParams.cfn['Description'] = jsonRequestBody.contentString.description;
+        reqParams.cfn['FindingCriteria'] = jsonRequestBody.contentString.findingCriteria;
+        reqParams.cfn['Action'] = jsonRequestBody.contentString.action;
+        reqParams.cfn['Rank'] = jsonRequestBody.contentString.rank;
+        reqParams.cfn['DetectorId'] = jsonRequestBody.path.split("/")[2];
+
+        outputs.push({
+            'region': region,
+            'service': 'guardduty',
+            'method': {
+                'api': 'CreateFilter',
+                'boto3': 'create_filter',
+                'cli': 'create-filter'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('guardduty', details.requestId),
+            'region': region,
+            'service': 'guardduty',
+            'type': 'AWS::GuardDuty::Filter',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking

@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**230/309 (74.0%)** Resources Covered
+**232/309 (75.0%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -180,11 +180,11 @@
 | *AWS::Glue::Table* | 1 |
 | *AWS::Glue::Trigger* | 0 |
 | *AWS::GuardDuty::Detector* | 1 |
-| *AWS::GuardDuty::Filter* | 0 |
+| *AWS::GuardDuty::Filter* | 1 |
 | *AWS::GuardDuty::IPSet* | 1 |
 | *AWS::GuardDuty::Master* | 0 |
 | *AWS::GuardDuty::Member* | 1 |
-| *AWS::GuardDuty::ThreatIntelSet* | 0 |
+| *AWS::GuardDuty::ThreatIntelSet* | 1 |
 | *AWS::IAM::AccessKey* | 0 |
 | *AWS::IAM::Group* | 1 |
 | *AWS::IAM::InstanceProfile* | 1 |
@@ -357,7 +357,7 @@
 | *firehose* | 3/10 (30.0%) |
 | *gamelift* | 8/67 (11.0%) |
 | *glue* | 19/84 (22.0%) |
-| *guardduty* | 21/42 (50.0%) |
+| *guardduty* | 23/42 (54.0%) |
 | *iam* | 29/127 (22.0%) |
 | *inspector* | 11/37 (29.0%) |
 | *iot* | 3/151 (1.0%) |
@@ -2568,7 +2568,7 @@
 | *guardduty* | `GetMembers` | 0 |
 | *guardduty* | `ListFindings` | 1 |
 | *guardduty* | `StartMonitoringMembers` | 0 |
-| *guardduty* | `CreateFilter` | 0 |
+| *guardduty* | `CreateFilter` | 1 |
 | *guardduty* | `CreateDetector` | 1 |
 | *guardduty* | `ListMembers` | 1 |
 | *guardduty* | `DeleteMembers` | 1 |
@@ -2586,7 +2586,7 @@
 | *guardduty* | `GetFindingsStatistics` | 1 |
 | *guardduty* | `InviteMembers` | 0 |
 | *guardduty* | `DeleteInvitations` | 0 |
-| *guardduty* | `CreateThreatIntelSet` | 0 |
+| *guardduty* | `CreateThreatIntelSet` | 1 |
 | *guardduty* | `UpdateIPSet` | 1 |
 | *guardduty* | `StopMonitoringMembers` | 0 |
 | *guardduty* | `DeleteFilter` | 0 |
@@ -4956,4 +4956,4 @@
 
 **Total Operations: 4558**
 
-**Total Unique Occurances: 741 (16.0%)**
+**Total Unique Occurances: 743 (16.0%)**
