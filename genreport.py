@@ -21,7 +21,9 @@ cfn_occurances = [
     "AWS::ServiceDiscovery::PrivateDnsNamespace",
     "AWS::ServiceDiscovery::PublicDnsNamespace",
     "AWS::ServiceDiscovery::Service",
-    "AWS::ServiceDiscovery::Instance"
+    "AWS::ServiceDiscovery::Instance",
+    "AWS::SecretsManager::SecretTargetAttachment",
+    "AWS::SecretsManager::ResourcePolicy"
 ]
 
 with open("combined.json", "r") as f:
@@ -30,7 +32,7 @@ with open("combined.json", "r") as f:
 with open("cfnspec.json", "r") as f:
     cfn_spec = json.loads(f.read())['ResourceTypes']
 
-for cfntype, _ in cfn_spec.iteritems():
+for cfntype, _ in cfn_spec.items():
     cfn_types.append(cfntype)
 
 with open("bg.js", "r") as f:

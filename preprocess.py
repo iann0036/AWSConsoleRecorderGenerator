@@ -24,16 +24,16 @@ for service in services:
     operations = []
 
     service_content = getServiceContent(service)
-    for _, operation_params in service_content['operations'].iteritems():
+    for _, operation_params in service_content['operations'].items():
         operation_inputs = []
         operation_outputs = []
         if 'input' in operation_params:
             input_shape_name = operation_params['input']['shape']
-            for member, _ in service_content['shapes'][input_shape_name]['members'].iteritems():
+            for member, _ in service_content['shapes'][input_shape_name]['members'].items():
                 operation_inputs.append(member)
         if 'output' in operation_params:
             output_shape_name = operation_params['output']['shape']
-            for member, _ in service_content['shapes'][output_shape_name]['members'].iteritems():
+            for member, _ in service_content['shapes'][output_shape_name]['members'].items():
                 operation_outputs.append(member)
         operations.append({
             'name': operation_params['name'],
