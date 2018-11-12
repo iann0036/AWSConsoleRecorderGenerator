@@ -5189,7 +5189,7 @@ function analyseRequest(details) {
     }
 
     // autogen:sqs:sqs.DeleteQueue
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && gwtRequest['method'] == "createQueue" && gwtRequest['service'] == "com.amazonaws.console.sqs.shared.services.AmazonSQSService" && gwtRequest['method'] == "deleteQueue" && gwtRequest['service'] == "com.amazonaws.console.sqs.shared.services.AmazonSQSService") {
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/sqs\/sqsconsole\/AmazonSQS$/g) && gwtRequest['service'] == "com.amazonaws.console.sqs.shared.services.AmazonSQSService" && gwtRequest['method'] == "deleteQueue") {
         reqParams.boto3['QueueUrl'] = getPipeSplitField(requestBody, 10);
         reqParams.cli['--queue-url'] = getPipeSplitField(requestBody, 10);
 
@@ -26254,6 +26254,241 @@ function analyseRequest(details) {
         
         return {};
     }
+
+    // manual:ses:ses.GetSendStatistics
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.SESService" && gwtRequest['method'] == "getSendStatistics") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ses',
+            'method': {
+                'api': 'GetSendStatistics',
+                'boto3': 'get_send_statistics',
+                'cli': 'get-send-statistics'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // manual:ses:ses.GetSendQuota
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.SESService" && gwtRequest['method'] == "getSendQuota") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ses',
+            'method': {
+                'api': 'GetSendQuota',
+                'boto3': 'get_send_quota',
+                'cli': 'get-send-quota'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // manual:ses:ses.ListConfigurationSets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.SESService" && gwtRequest['method'] == "listConfigurationSets") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ses',
+            'method': {
+                'api': 'ListConfigurationSets',
+                'boto3': 'list_configuration_sets',
+                'cli': 'list-configuration-sets'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // manual:ses:ses.CreateConfigurationSet
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.SESService" && gwtRequest['method'] == "createConfigurationSet") {
+        reqParams.boto3['ConfigurationSetName'] = gwtRequest['args'][0].value.value;
+        reqParams.cli['--configuration-set-name'] = gwtRequest['args'][0].value.value;
+
+        reqParams.cfn['Name'] = gwtRequest['args'][0].value.value;
+
+        outputs.push({
+            'region': region,
+            'service': 'ses',
+            'method': {
+                'api': 'CreateConfigurationSet',
+                'boto3': 'create_configuration_set',
+                'cli': 'create-configuration-set'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('ses', details.requestId),
+            'region': region,
+            'service': 'ses',
+            'type': 'AWS::SES::ConfigurationSet',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // manual:ses:ses.DescribeConfigurationSet
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.SESService" && gwtRequest['method'] == "describeConfigurationSet") {
+        reqParams.boto3['ConfigurationSetName'] = gwtRequest['args'][0].value.value;
+        reqParams.cli['--configuration-set-name'] = gwtRequest['args'][0].value.value;
+
+        outputs.push({
+            'region': region,
+            'service': 'ses',
+            'method': {
+                'api': 'DescribeConfigurationSet',
+                'boto3': 'describe_configuration_set',
+                'cli': 'describe-configuration-set'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // manual:ses:sns.ListTopics
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.SNSService" && gwtRequest['method'] == "listTopics") {
+
+        outputs.push({
+            'region': region,
+            'service': 'sns',
+            'method': {
+                'api': 'ListTopics',
+                'boto3': 'list_topics',
+                'cli': 'list-topics'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // manual:ses:firehose.ListTopics
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.KinesisFirehoseService" && gwtRequest['method'] == "listStreams") {
+
+        outputs.push({
+            'region': region,
+            'service': 'firehose',
+            'method': {
+                'api': 'ListStreams',
+                'boto3': 'list_streams',
+                'cli': 'list-streams'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // manual:ses:ses.DeleteConfigurationSet
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.SESService" && gwtRequest['method'] == "deleteConfigurationSet") {
+        reqParams.boto3['ConfigurationSetName'] = gwtRequest['args'][0].value.value;
+        reqParams.cli['--configuration-set-name'] = gwtRequest['args'][0].value.value;
+
+        outputs.push({
+            'region': region,
+            'service': 'ses',
+            'method': {
+                'api': 'DeleteConfigurationSet',
+                'boto3': 'delete_configuration_set',
+                'cli': 'delete-configuration-set'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // manual:ses:ses.CreateReceiptRuleSet
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.SESService" && gwtRequest['method'] == "createReceiptRuleSet") {
+        reqParams.boto3['RuleSetName'] = gwtRequest['args'][0].value.value;
+        reqParams.cli['--rule-set-name'] = gwtRequest['args'][0].value.value;
+
+        reqParams.cfn['RuleSetName'] = gwtRequest['args'][0].value.value;
+
+        outputs.push({
+            'region': region,
+            'service': 'ses',
+            'method': {
+                'api': 'CreateReceiptRuleSet',
+                'boto3': 'create_receipt_rule_set',
+                'cli': 'create-receipt-rule-set'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('ses', details.requestId),
+            'region': region,
+            'service': 'ses',
+            'type': 'AWS::SES::ReceiptRuleSet',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    /*
+    // manual:ses:ses.CreateReceiptRule
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ses\/sesconsole\/AmazonSES$/g) && gwtRequest['service'] == "com.amazon.bacon.console.shared.services.SESService" && gwtRequest['method'] == "saveConfigurationSetEventDestination") {
+        reqParams.boto3['configurationSetName'] = gwtRequest['args'][0].value.value;
+        reqParams.cli['--configuration-set-name'] = gwtRequest['args'][0].value.value;
+        
+        reqParams.boto3['RuleSetName'] = gwtRequest['args'][1].value.value[0]['setname'];
+        reqParams.cli['--rule-set-name'] = gwtRequest['args'][1].value.value[0]['setname'];
+
+        reqParams.boto3['Rule'] = {
+            'Enabled': (gwtRequest['args'][1].value.value[0]['eventdestinationstatus']['status'] == 1),
+            'Name': '',
+            'Actions': [{
+                'SNSAction': {
+                    'TopicArn': gwtRequest['args'][1].value.value[0]['destination']['arn']
+                }
+            }]
+        };
+
+        var eventtypes = [];
+        for (var i=0; i<gwtRequest['args'][1].value.value[0]['eventtypes'].value.length; i++) {
+            eventtypes.push(reqParams.boto3['eventtypes'] = gwtRequest['args'][1].value.value[0]['eventtypes'].value[i]['eventtype']);
+        }
+        reqParams.boto3['eventtypes'] = eventtypes;
+
+        outputs.push({
+            'region': region,
+            'service': 'ses',
+            'method': {
+                'api': 'CreateReceiptRule',
+                'boto3': 'create_receipt_rule',
+                'cli': 'create-receipt-rule'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+    */
 
     return false;
 }

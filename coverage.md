@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**237/314 (75%)** Resources Covered
+**241/314 (76%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -239,8 +239,8 @@
 | *AWS::RDS::DBClusterParameterGroup* | 1 |
 | *AWS::RDS::DBInstance* | 1 |
 | *AWS::RDS::DBParameterGroup* | 1 |
-| *AWS::RDS::DBSecurityGroup* | 0 |
-| *AWS::RDS::DBSecurityGroupIngress* | 0 |
+| *AWS::RDS::DBSecurityGroup* | 1 |
+| *AWS::RDS::DBSecurityGroupIngress* | 1 |
 | *AWS::RDS::DBSubnetGroup* | 1 |
 | *AWS::RDS::EventSubscription* | 1 |
 | *AWS::RDS::OptionGroup* | 1 |
@@ -256,11 +256,11 @@
 | *AWS::S3::Bucket* | 1 |
 | *AWS::S3::BucketPolicy* | 1 |
 | *AWS::SDB::Domain* | 1 |
-| *AWS::SES::ConfigurationSet* | 0 |
+| *AWS::SES::ConfigurationSet* | 1 |
 | *AWS::SES::ConfigurationSetEventDestination* | 0 |
 | *AWS::SES::ReceiptFilter* | 0 |
 | *AWS::SES::ReceiptRule* | 0 |
-| *AWS::SES::ReceiptRuleSet* | 0 |
+| *AWS::SES::ReceiptRuleSet* | 1 |
 | *AWS::SES::Template* | 0 |
 | *AWS::SNS::Subscription* | 1 |
 | *AWS::SNS::Topic* | 1 |
@@ -389,6 +389,7 @@
 | *serverlessrepo* | 1/12 (8%) |
 | *servicecatalog* | 10/77 (12%) |
 | *servicediscovery* | 1/18 (5%) |
+| *ses* | 8/70 (11%) |
 | *sns* | 8/30 (26%) |
 | *sqs* | 6/20 (30%) |
 | *ssm* | 20/111 (18%) |
@@ -4409,15 +4410,15 @@
 | *servicediscovery* | `UpdateInstanceCustomHealthStatus` | 0 |
 | *servicediscovery* | `UpdateService` | 0 |
 | *ses* | `CloneReceiptRuleSet` | 0 |
-| *ses* | `CreateConfigurationSet` | 0 |
+| *ses* | `CreateConfigurationSet` | 1 |
 | *ses* | `CreateConfigurationSetEventDestination` | 0 |
 | *ses* | `CreateConfigurationSetTrackingOptions` | 0 |
 | *ses* | `CreateCustomVerificationEmailTemplate` | 0 |
 | *ses* | `CreateReceiptFilter` | 0 |
-| *ses* | `CreateReceiptRule` | 0 |
-| *ses* | `CreateReceiptRuleSet` | 0 |
+| *ses* | `CreateReceiptRule` | 1 |
+| *ses* | `CreateReceiptRuleSet` | 1 |
 | *ses* | `CreateTemplate` | 0 |
-| *ses* | `DeleteConfigurationSet` | 0 |
+| *ses* | `DeleteConfigurationSet` | 1 |
 | *ses* | `DeleteConfigurationSetEventDestination` | 0 |
 | *ses* | `DeleteConfigurationSetTrackingOptions` | 0 |
 | *ses* | `DeleteCustomVerificationEmailTemplate` | 0 |
@@ -4429,7 +4430,7 @@
 | *ses* | `DeleteTemplate` | 0 |
 | *ses* | `DeleteVerifiedEmailAddress` | 0 |
 | *ses* | `DescribeActiveReceiptRuleSet` | 0 |
-| *ses* | `DescribeConfigurationSet` | 0 |
+| *ses* | `DescribeConfigurationSet` | 1 |
 | *ses* | `DescribeReceiptRule` | 0 |
 | *ses* | `DescribeReceiptRuleSet` | 0 |
 | *ses* | `GetAccountSendingEnabled` | 0 |
@@ -4439,10 +4440,10 @@
 | *ses* | `GetIdentityNotificationAttributes` | 0 |
 | *ses* | `GetIdentityPolicies` | 0 |
 | *ses* | `GetIdentityVerificationAttributes` | 0 |
-| *ses* | `GetSendQuota` | 0 |
-| *ses* | `GetSendStatistics` | 0 |
+| *ses* | `GetSendQuota` | 1 |
+| *ses* | `GetSendStatistics` | 1 |
 | *ses* | `GetTemplate` | 0 |
-| *ses* | `ListConfigurationSets` | 0 |
+| *ses* | `ListConfigurationSets` | 1 |
 | *ses* | `ListCustomVerificationEmailTemplates` | 0 |
 | *ses* | `ListIdentities` | 0 |
 | *ses* | `ListIdentityPolicies` | 0 |
@@ -4553,7 +4554,7 @@
 | *sns* | `ListPlatformApplications` | 1 |
 | *sns* | `ListSubscriptions` | 1 |
 | *sns* | `ListSubscriptionsByTopic` | 0 |
-| *sns* | `ListTopics` | 8 |
+| *sns* | `ListTopics` | 9 |
 | *sns* | `OptInPhoneNumber` | 0 |
 | *sns* | `Publish` | 0 |
 | *sns* | `RemovePermission` | 0 |
@@ -5109,4 +5110,4 @@
 
 **Total Operations: 4700**
 
-**Total Unique Occurances: 781 (16%)**
+**Total Unique Occurances: 789 (16%)**
