@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**241/314 (76%)** Resources Covered
+**247/314 (78%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -173,9 +173,9 @@
 | *AWS::GameLift::Fleet* | 1 |
 | *AWS::Glue::Classifier* | 1 |
 | *AWS::Glue::Connection* | 1 |
-| *AWS::Glue::Crawler* | 0 |
+| *AWS::Glue::Crawler* | 1 |
 | *AWS::Glue::Database* | 0 |
-| *AWS::Glue::DevEndpoint* | 0 |
+| *AWS::Glue::DevEndpoint* | 1 |
 | *AWS::Glue::Job* | 0 |
 | *AWS::Glue::Partition* | 0 |
 | *AWS::Glue::Table* | 1 |
@@ -284,12 +284,12 @@
 | *AWS::SecretsManager::RotationSchedule* | 1 |
 | *AWS::SecretsManager::Secret* | 1 |
 | *AWS::SecretsManager::SecretTargetAttachment* | 1 |
-| *AWS::ServiceCatalog::AcceptedPortfolioShare* | 0 |
+| *AWS::ServiceCatalog::AcceptedPortfolioShare* | 1 |
 | *AWS::ServiceCatalog::CloudFormationProduct* | 1 |
 | *AWS::ServiceCatalog::CloudFormationProvisionedProduct* | 0 |
-| *AWS::ServiceCatalog::LaunchNotificationConstraint* | 0 |
-| *AWS::ServiceCatalog::LaunchRoleConstraint* | 0 |
-| *AWS::ServiceCatalog::LaunchTemplateConstraint* | 0 |
+| *AWS::ServiceCatalog::LaunchNotificationConstraint* | 1 |
+| *AWS::ServiceCatalog::LaunchRoleConstraint* | 1 |
+| *AWS::ServiceCatalog::LaunchTemplateConstraint* | 1 |
 | *AWS::ServiceCatalog::Portfolio* | 1 |
 | *AWS::ServiceCatalog::PortfolioPrincipalAssociation* | 1 |
 | *AWS::ServiceCatalog::PortfolioProductAssociation* | 1 |
@@ -362,7 +362,7 @@
 | *events* | 8/15 (53%) |
 | *firehose* | 3/10 (30%) |
 | *gamelift* | 8/67 (11%) |
-| *glue* | 19/87 (21%) |
+| *glue* | 21/87 (24%) |
 | *guardduty* | 23/42 (54%) |
 | *iam* | 29/127 (22%) |
 | *inspector* | 11/37 (29%) |
@@ -387,7 +387,7 @@
 | *sagemaker* | 11/43 (25%) |
 | *secretsmanager* | 5/18 (27%) |
 | *serverlessrepo* | 1/12 (8%) |
-| *servicecatalog* | 10/77 (12%) |
+| *servicecatalog* | 13/77 (16%) |
 | *servicediscovery* | 1/18 (5%) |
 | *ses* | 8/70 (11%) |
 | *sns* | 8/30 (26%) |
@@ -2472,9 +2472,9 @@
 | *glue* | `BatchStopJobRun` | 0 |
 | *glue* | `CreateClassifier` | 1 |
 | *glue* | `CreateConnection` | 1 |
-| *glue* | `CreateCrawler` | 0 |
+| *glue* | `CreateCrawler` | 1 |
 | *glue* | `CreateDatabase` | 0 |
-| *glue* | `CreateDevEndpoint` | 0 |
+| *glue* | `CreateDevEndpoint` | 1 |
 | *glue* | `CreateJob` | 0 |
 | *glue* | `CreatePartition` | 0 |
 | *glue* | `CreateScript` | 0 |
@@ -4314,7 +4314,7 @@
 | *serverlessrepo* | `ListApplications` | 0 |
 | *serverlessrepo* | `PutApplicationPolicy` | 0 |
 | *serverlessrepo* | `UpdateApplication` | 0 |
-| *servicecatalog* | `AcceptPortfolioShare` | 0 |
+| *servicecatalog* | `AcceptPortfolioShare` | 1 |
 | *servicecatalog* | `AssociatePrincipalWithPortfolio` | 1 |
 | *servicecatalog* | `AssociateProductWithPortfolio` | 1 |
 | *servicecatalog* | `AssociateServiceActionWithProvisioningArtifact` | 0 |
@@ -4322,7 +4322,7 @@
 | *servicecatalog* | `BatchAssociateServiceActionWithProvisioningArtifact` | 0 |
 | *servicecatalog* | `BatchDisassociateServiceActionFromProvisioningArtifact` | 0 |
 | *servicecatalog* | `CopyProduct` | 0 |
-| *servicecatalog* | `CreateConstraint` | 0 |
+| *servicecatalog* | `CreateConstraint` | 1 |
 | *servicecatalog* | `CreatePortfolio` | 1 |
 | *servicecatalog* | `CreatePortfolioShare` | 1 |
 | *servicecatalog* | `CreateProduct` | 1 |
@@ -4330,7 +4330,7 @@
 | *servicecatalog* | `CreateProvisioningArtifact` | 0 |
 | *servicecatalog* | `CreateServiceAction` | 0 |
 | *servicecatalog* | `CreateTagOption` | 1 |
-| *servicecatalog* | `DeleteConstraint` | 0 |
+| *servicecatalog* | `DeleteConstraint` | 1 |
 | *servicecatalog* | `DeletePortfolio` | 0 |
 | *servicecatalog* | `DeletePortfolioShare` | 0 |
 | *servicecatalog* | `DeleteProduct` | 0 |
@@ -5110,4 +5110,4 @@
 
 **Total Operations: 4700**
 
-**Total Unique Occurances: 789 (16%)**
+**Total Unique Occurances: 794 (16%)**
