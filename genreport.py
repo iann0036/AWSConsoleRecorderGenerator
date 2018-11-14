@@ -8,6 +8,7 @@ services = None
 cfn_spec = None
 occurances = []
 skipped_ops = []
+tf_resources = []
 cfn_types = []
 cfn_occurances = [
     "AWS::CloudFormation::CustomResource",
@@ -29,12 +30,18 @@ cfn_occurances = [
     "AWS::ElastiCache::SecurityGroup",
     "AWS::ElastiCache::SecurityGroupIngress"
 ]
+tf_occurances = []
 
 with open("combined.json", "r") as f:
     services = json.loads(f.read())
 
 with open("cfnspec.json", "r") as f:
     cfn_spec = json.loads(f.read())['ResourceTypes']
+
+with open("tf_resources.txt", "r") as f:
+    lines = f.read().splitlines()
+    for line in lines:
+        tf_resources.append(line)
 
 for cfntype, _ in cfn_spec.items():
     cfn_types.append(cfntype)
@@ -43,6 +50,7 @@ with open("bg.js", "r") as f:
     text = f.read()
     lines = text.splitlines()
     cfn_occurances += re.compile('(AWS\:\:[a-zA-Z0-9]+\:\:[a-zA-Z0-9]+)').findall(text)
+    tf_occurances += re.compile('terraformType\'\:\ \'(aws(?:\_[a-zA-Z0-9]+)+)\'').findall(text)
     for line in lines:
         line = line.strip()
         if line.startswith("// autogen:") or line.startswith("// manual:"):
@@ -64,11 +72,25 @@ with open("coverage.md", "w") as f:
         len(cfn_types),
         math.floor(len(set(cfn_occurances)) * 100 / len(cfn_types))
     ))
+
     f.write("\n| Type | Coverage |\n")
     f.write("| --- | --- |\n")
 
     for cfntype in sorted(cfn_types):
         f.write("| *%s* | %s |\n" % (cfntype, cfn_occurances.count(cfntype)))
+
+    f.write("\n## Terraform Coverage\n\n")
+    f.write("**%s/%s (%s%%)** Resources Covered\n" % (
+        len(set(tf_occurances)),
+        len(tf_resources),
+        math.floor(len(set(tf_occurances)) * 100 / len(tf_resources))
+    ))
+    
+    f.write("| Type | Coverage |\n")
+    f.write("| --- | --- |\n")
+
+    for tf_resource in sorted(tf_resources):
+        f.write("| *%s* | %s |\n" % (tf_resource, tf_occurances.count(tf_resource)))
 
     f.write("\n## Service Coverage\n\n")
     f.write("| Service | Coverage |\n")

@@ -206,7 +206,8 @@ function analyseRequest(details) {
         'boto3': {},
         'go': {},
         'cfn': {},
-        'cli': {}
+        'cli': {},
+        'tf': {}
     };
     var requestBody = "";
     var jsonRequestBody = {};
@@ -525,13 +526,16 @@ function analyseRequest(details) {
         reqParams.boto3['GroupName'] = jsonRequestBody.groupName;
         reqParams.cli['--description'] = jsonRequestBody.groupDescription;
         reqParams.cli['--group-name'] = jsonRequestBody.groupName;
+        reqParams.boto3['VpcId'] = jsonRequestBody.vpcId;
+        reqParams.cli['--vpc-id'] = jsonRequestBody.vpcId;
+
         reqParams.cfn['GroupDescription'] = jsonRequestBody.groupDescription;
         reqParams.cfn['GroupName'] = jsonRequestBody.groupName;
-        if ('vpcId' in jsonRequestBody) {
-            reqParams.boto3['VpcId'] = jsonRequestBody.vpcId;
-            reqParams.cli['--vpc-id'] = jsonRequestBody.vpcId;
-            reqParams.cfn['VpcId'] = jsonRequestBody.vpcId;
-        }
+        reqParams.cfn['VpcId'] = jsonRequestBody.vpcId;
+
+        reqParams.tf['description'] = jsonRequestBody.groupDescription;
+        reqParams.tf['name'] = jsonRequestBody.groupName;
+        reqParams.tf['vpc_id'] = jsonRequestBody.vpcId;
 
         outputs.push({
             'region': region,
@@ -551,6 +555,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::SecurityGroup',
+            'terraformType': 'aws_security_group',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -683,6 +688,55 @@ function analyseRequest(details) {
         reqParams.cli['--ebs-optimized'] = jsonRequestBody.EbsOptimized;
         reqParams.cli['--block-device-mappings'] = jsonRequestBody.BlockDeviceMappings;
 
+        reqParams.tf['ami'] = jsonRequestBody.ImageId;
+        reqParams.tf['key_name'] = jsonRequestBody.KeyName;
+        reqParams.tf['vpc_security_group_ids'] = jsonRequestBody.SecurityGroupIds;
+        reqParams.tf['instance_type'] = jsonRequestBody.InstanceType;
+        if (jsonRequestBody.Placement && jsonRequestBody.Placement.Tenancy) {
+            reqParams.tf['tenancy'] = jsonRequestBody.Placement.Tenancy;
+        }
+        reqParams.tf['monitoring'] = jsonRequestBody.Monitoring.Enabled;
+        reqParams.tf['disable_api_termination'] = jsonRequestBody.DisableApiTermination;
+        reqParams.tf['instance_initiated_shutdown_behavior'] = jsonRequestBody.InstanceInitiatedShutdownBehavior;
+        if (jsonRequestBody.CreditSpecification) {
+            reqParams.tf['credit_specification'] = {
+                'cpu_credits': jsonRequestBody.CreditSpecification.CpuCredits
+            }
+        }
+
+        if (jsonRequestBody.TagSpecifications.length) {
+            reqParams.tf['tags'] = {};
+            for (var i=0; i<jsonRequestBody.TagSpecifications.length; i++) {
+                if (jsonRequestBody.TagSpecifications[i].ResourceType == "instance") {
+                    for (var j=0; j<jsonRequestBody.TagSpecifications[i].Tag.length; j++) {
+                        reqParams.tf['tags'][jsonRequestBody.TagSpecifications[i].Tag[j].Key] = jsonRequestBody.TagSpecifications[i].Tag[j].Value;
+                    }
+                }
+            }
+        }
+        reqParams.tf['ebs_optimized'] = jsonRequestBody.EbsOptimized;
+
+        for (var i=0; i<jsonRequestBody.BlockDeviceMappings.length; i++) {
+            if (jsonRequestBody.BlockDeviceMappings[i].DeviceName == "/dev/sda1" || jsonRequestBody.BlockDeviceMappings[i].DeviceName == "/dev/xvda") {
+                if (jsonRequestBody.BlockDeviceMappings[i].Ebs) {
+                    reqParams.tf['root_block_device'] = {
+                        'volume_type': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeType,
+                        'volume_size': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeSize,
+                        'delete_on_termination': jsonRequestBody.BlockDeviceMappings[i].Ebs.DeleteOnTermination
+                    };
+                }
+            } else if (jsonRequestBody.BlockDeviceMappings[i].Ebs) {
+                reqParams.tf['ebs_block_device'] = {
+                    'device_name': jsonRequestBody.BlockDeviceMappings[i].DeviceName,
+                    'volume_type': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeType,
+                    'volume_size': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeSize,
+                    'delete_on_termination': jsonRequestBody.BlockDeviceMappings[i].Ebs.DeleteOnTermination,
+                    'iops': jsonRequestBody.BlockDeviceMappings[i].Ebs.Iops,
+                    'snapshot_id': jsonRequestBody.BlockDeviceMappings[i].Ebs.SnapshotId
+                };
+            }
+        }
+
         outputs.push({
             'region': region,
             'service': 'ec2',
@@ -701,6 +755,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::Instance',
+            'terraformType': 'aws_instance',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -13679,7 +13734,8 @@ function analyseRequest(details) {
                 'boto3': {},
                 'go': {},
                 'cfn': {},
-                'cli': {}
+                'cli': {},
+                'tf': {}
             };
             
             if (gwtRequest['method'] == "modifyIngressRulesForNetworkACL") {
@@ -17678,7 +17734,8 @@ function analyseRequest(details) {
                     'boto3': {},
                     'go': {},
                     'cfn': {},
-                    'cli': {}
+                    'cli': {},
+                    'tf': {}
                 };
 
                 // TODO
@@ -19839,7 +19896,8 @@ function analyseRequest(details) {
                     'boto3': {},
                     'go': {},
                     'cfn': {},
-                    'cli': {}
+                    'cli': {},
+                    'tf': {}
                 };
 
                 reqParams.boto3['GroupName'] = jsonRequestBody.groupName[0];
