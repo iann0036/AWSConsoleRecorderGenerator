@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**247/314 (78%)** Resources Covered
+**252/314 (80%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -152,8 +152,8 @@
 | *AWS::ElastiCache::CacheCluster* | 1 |
 | *AWS::ElastiCache::ParameterGroup* | 1 |
 | *AWS::ElastiCache::ReplicationGroup* | 0 |
-| *AWS::ElastiCache::SecurityGroup* | 0 |
-| *AWS::ElastiCache::SecurityGroupIngress* | 0 |
+| *AWS::ElastiCache::SecurityGroup* | 1 |
+| *AWS::ElastiCache::SecurityGroupIngress* | 1 |
 | *AWS::ElastiCache::SubnetGroup* | 1 |
 | *AWS::ElasticBeanstalk::Application* | 1 |
 | *AWS::ElasticBeanstalk::ApplicationVersion* | 1 |
@@ -174,12 +174,12 @@
 | *AWS::Glue::Classifier* | 1 |
 | *AWS::Glue::Connection* | 1 |
 | *AWS::Glue::Crawler* | 1 |
-| *AWS::Glue::Database* | 0 |
+| *AWS::Glue::Database* | 1 |
 | *AWS::Glue::DevEndpoint* | 1 |
-| *AWS::Glue::Job* | 0 |
+| *AWS::Glue::Job* | 1 |
 | *AWS::Glue::Partition* | 0 |
 | *AWS::Glue::Table* | 1 |
-| *AWS::Glue::Trigger* | 0 |
+| *AWS::Glue::Trigger* | 1 |
 | *AWS::GuardDuty::Detector* | 1 |
 | *AWS::GuardDuty::Filter* | 1 |
 | *AWS::GuardDuty::IPSet* | 1 |
@@ -253,7 +253,7 @@
 | *AWS::Route53::HostedZone* | 2 |
 | *AWS::Route53::RecordSet* | 0 |
 | *AWS::Route53::RecordSetGroup* | 0 |
-| *AWS::S3::Bucket* | 1 |
+| *AWS::S3::Bucket* | 2 |
 | *AWS::S3::BucketPolicy* | 1 |
 | *AWS::SDB::Domain* | 1 |
 | *AWS::SES::ConfigurationSet* | 1 |
@@ -362,7 +362,7 @@
 | *events* | 8/15 (53%) |
 | *firehose* | 3/10 (30%) |
 | *gamelift* | 8/67 (11%) |
-| *glue* | 21/87 (24%) |
+| *glue* | 35/87 (40%) |
 | *guardduty* | 23/42 (54%) |
 | *iam* | 29/127 (22%) |
 | *inspector* | 11/37 (29%) |
@@ -2473,27 +2473,27 @@
 | *glue* | `CreateClassifier` | 1 |
 | *glue* | `CreateConnection` | 1 |
 | *glue* | `CreateCrawler` | 1 |
-| *glue* | `CreateDatabase` | 0 |
+| *glue* | `CreateDatabase` | 1 |
 | *glue* | `CreateDevEndpoint` | 1 |
-| *glue* | `CreateJob` | 0 |
+| *glue* | `CreateJob` | 1 |
 | *glue* | `CreatePartition` | 0 |
 | *glue* | `CreateScript` | 0 |
 | *glue* | `CreateSecurityConfiguration` | 1 |
 | *glue* | `CreateTable` | 1 |
-| *glue* | `CreateTrigger` | 0 |
+| *glue* | `CreateTrigger` | 1 |
 | *glue* | `CreateUserDefinedFunction` | 0 |
 | *glue* | `DeleteClassifier` | 1 |
 | *glue* | `DeleteConnection` | 0 |
 | *glue* | `DeleteCrawler` | 0 |
-| *glue* | `DeleteDatabase` | 0 |
+| *glue* | `DeleteDatabase` | 1 |
 | *glue* | `DeleteDevEndpoint` | 0 |
-| *glue* | `DeleteJob` | 0 |
+| *glue* | `DeleteJob` | 1 |
 | *glue* | `DeletePartition` | 0 |
 | *glue* | `DeleteResourcePolicy` | 0 |
 | *glue* | `DeleteSecurityConfiguration` | 1 |
 | *glue* | `DeleteTable` | 0 |
 | *glue* | `DeleteTableVersion` | 0 |
-| *glue* | `DeleteTrigger` | 0 |
+| *glue* | `DeleteTrigger` | 1 |
 | *glue* | `DeleteUserDefinedFunction` | 0 |
 | *glue* | `GetCatalogImportStatus` | 1 |
 | *glue* | `GetClassifier` | 0 |
@@ -2506,25 +2506,25 @@
 | *glue* | `GetDataCatalogEncryptionSettings` | 1 |
 | *glue* | `GetDatabase` | 0 |
 | *glue* | `GetDatabases` | 1 |
-| *glue* | `GetDataflowGraph` | 0 |
+| *glue* | `GetDataflowGraph` | 1 |
 | *glue* | `GetDevEndpoint` | 0 |
-| *glue* | `GetDevEndpoints` | 0 |
-| *glue* | `GetJob` | 0 |
+| *glue* | `GetDevEndpoints` | 1 |
+| *glue* | `GetJob` | 1 |
 | *glue* | `GetJobRun` | 0 |
-| *glue* | `GetJobRuns` | 0 |
+| *glue* | `GetJobRuns` | 1 |
 | *glue* | `GetJobs` | 1 |
-| *glue* | `GetMapping` | 0 |
+| *glue* | `GetMapping` | 1 |
 | *glue* | `GetPartition` | 0 |
 | *glue* | `GetPartitions` | 0 |
-| *glue* | `GetPlan` | 0 |
+| *glue* | `GetPlan` | 1 |
 | *glue* | `GetResourcePolicy` | 0 |
 | *glue* | `GetSecurityConfiguration` | 0 |
 | *glue* | `GetSecurityConfigurations` | 1 |
-| *glue* | `GetTable` | 0 |
+| *glue* | `GetTable` | 1 |
 | *glue* | `GetTableVersion` | 0 |
 | *glue* | `GetTableVersions` | 0 |
 | *glue* | `GetTables` | 1 |
-| *glue* | `GetTrigger` | 0 |
+| *glue* | `GetTrigger` | 1 |
 | *glue* | `GetTriggers` | 1 |
 | *glue* | `GetUserDefinedFunction` | 0 |
 | *glue* | `GetUserDefinedFunctions` | 0 |
@@ -4155,7 +4155,7 @@
 | *s3* | `AbortMultipartUpload` | 0 |
 | *s3* | `CompleteMultipartUpload` | 0 |
 | *s3* | `CopyObject` | 0 |
-| *s3* | `CreateBucket` | 2 |
+| *s3* | `CreateBucket` | 3 |
 | *s3* | `CreateMultipartUpload` | 0 |
 | *s3* | `DeleteBucket` | 1 |
 | *s3* | `DeleteBucketAnalyticsConfiguration` | 0 |
@@ -5110,4 +5110,4 @@
 
 **Total Operations: 4700**
 
-**Total Unique Occurances: 794 (16%)**
+**Total Unique Occurances: 808 (17%)**

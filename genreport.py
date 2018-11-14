@@ -25,7 +25,9 @@ cfn_occurances = [
     "AWS::SecretsManager::SecretTargetAttachment",
     "AWS::SecretsManager::ResourcePolicy",
     "AWS::RDS::DBSecurityGroup",
-    "AWS::RDS::DBSecurityGroupIngress"
+    "AWS::RDS::DBSecurityGroupIngress",
+    "AWS::ElastiCache::SecurityGroup",
+    "AWS::ElastiCache::SecurityGroupIngress"
 ]
 
 with open("combined.json", "r") as f:
