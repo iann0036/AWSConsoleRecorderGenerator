@@ -86,7 +86,7 @@ with open("coverage.md", "w") as f:
         math.floor(len(set(tf_occurances)) * 100 / len(tf_resources))
     ))
     
-    f.write("| Type | Coverage |\n")
+    f.write("\n| Type | Coverage |\n")
     f.write("| --- | --- |\n")
 
     for tf_resource in sorted(tf_resources):
