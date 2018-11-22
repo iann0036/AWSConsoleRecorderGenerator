@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**252/314 (80%)** Resources Covered
+**258/322 (80%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -34,6 +34,7 @@
 | *AWS::AppStream::User* | 1 |
 | *AWS::AppSync::ApiKey* | 1 |
 | *AWS::AppSync::DataSource* | 1 |
+| *AWS::AppSync::FunctionConfiguration* | 1 |
 | *AWS::AppSync::GraphQLApi* | 1 |
 | *AWS::AppSync::GraphQLSchema* | 1 |
 | *AWS::AppSync::Resolver* | 1 |
@@ -53,6 +54,7 @@
 | *AWS::CertificateManager::Certificate* | 1 |
 | *AWS::Cloud9::EnvironmentEC2* | 1 |
 | *AWS::CloudFormation::CustomResource* | 1 |
+| *AWS::CloudFormation::Macro* | 0 |
 | *AWS::CloudFormation::Stack* | 1 |
 | *AWS::CloudFormation::WaitCondition* | 1 |
 | *AWS::CloudFormation::WaitConditionHandle* | 1 |
@@ -98,6 +100,7 @@
 | *AWS::DynamoDB::Table* | 1 |
 | *AWS::EC2::CustomerGateway* | 1 |
 | *AWS::EC2::DHCPOptions* | 0 |
+| *AWS::EC2::EC2Fleet* | 1 |
 | *AWS::EC2::EIP* | 1 |
 | *AWS::EC2::EIPAssociation* | 1 |
 | *AWS::EC2::EgressOnlyInternetGateway* | 1 |
@@ -128,6 +131,7 @@
 | *AWS::EC2::VPCCidrBlock* | 1 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
+| *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 1 |
 | *AWS::EC2::VPCGatewayAttachment* | 0 |
 | *AWS::EC2::VPCPeeringConnection* | 0 |
@@ -200,6 +204,7 @@
 | *AWS::Inspector::ResourceGroup* | 1 |
 | *AWS::IoT1Click::Device* | 0 |
 | *AWS::IoT1Click::Placement* | 1 |
+| *AWS::IoT1Click::Project* | 1 |
 | *AWS::IoT::Certificate* | 0 |
 | *AWS::IoT::Policy* | 0 |
 | *AWS::IoT::PolicyPrincipalAttachment* | 0 |
@@ -209,6 +214,7 @@
 | *AWS::KMS::Alias* | 0 |
 | *AWS::KMS::Key* | 1 |
 | *AWS::Kinesis::Stream* | 2 |
+| *AWS::Kinesis::StreamConsumer* | 1 |
 | *AWS::KinesisAnalytics::Application* | 1 |
 | *AWS::KinesisAnalytics::ApplicationOutput* | 1 |
 | *AWS::KinesisAnalytics::ApplicationReferenceDataSource* | 0 |
@@ -253,6 +259,8 @@
 | *AWS::Route53::HostedZone* | 2 |
 | *AWS::Route53::RecordSet* | 0 |
 | *AWS::Route53::RecordSetGroup* | 0 |
+| *AWS::Route53Resolver::ResolverEndpoint* | 1 |
+| *AWS::Route53Resolver::ResolverRule* | 1 |
 | *AWS::S3::Bucket* | 2 |
 | *AWS::S3::BucketPolicy* | 1 |
 | *AWS::SDB::Domain* | 1 |
@@ -270,7 +278,6 @@
 | *AWS::SSM::Association* | 1 |
 | *AWS::SSM::Document* | 1 |
 | *AWS::SSM::MaintenanceWindow* | 1 |
-| *AWS::SSM::MaintenanceWindowTarget* | 1 |
 | *AWS::SSM::MaintenanceWindowTask* | 0 |
 | *AWS::SSM::Parameter* | 1 |
 | *AWS::SSM::PatchBaseline* | 1 |
@@ -318,10 +325,11 @@
 | *AWS::WAFRegional::WebACLAssociation* | 0 |
 | *AWS::WAFRegional::XssMatchSet* | 1 |
 | *AWS::WorkSpaces::Workspace* | 1 |
+| *Alexa::ASK::Skill* | 1 |
 
 ## Terraform Coverage
 
-**75/430 (17%)** Resources Covered
+**79/430 (18%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -491,7 +499,7 @@
 | *aws_elasticache_replication_group* | 0 |
 | *aws_elasticache_security_group* | 0 |
 | *aws_elasticache_subnet_group* | 0 |
-| *aws_elasticsearch_domain* | 0 |
+| *aws_elasticsearch_domain* | 1 |
 | *aws_elasticsearch_domain_policy* | 0 |
 | *aws_elastictranscoder_pipeline* | 0 |
 | *aws_elastictranscoder_preset* | 0 |
@@ -554,7 +562,7 @@
 | *aws_iot_topic_rule* | 0 |
 | *aws_key_pair* | 0 |
 | *aws_kinesis_analytics_application* | 0 |
-| *aws_kinesis_firehose_delivery_stream* | 0 |
+| *aws_kinesis_firehose_delivery_stream* | 1 |
 | *aws_kinesis_stream* | 2 |
 | *aws_kms_alias* | 0 |
 | *aws_kms_grant* | 0 |
@@ -695,8 +703,8 @@
 | *aws_ssm_activation* | 0 |
 | *aws_ssm_association* | 0 |
 | *aws_ssm_document* | 1 |
-| *aws_ssm_maintenance_window* | 0 |
-| *aws_ssm_maintenance_window_target* | 0 |
+| *aws_ssm_maintenance_window* | 1 |
+| *aws_ssm_maintenance_window_target* | 1 |
 | *aws_ssm_maintenance_window_task* | 0 |
 | *aws_ssm_parameter* | 1 |
 | *aws_ssm_patch_baseline* | 0 |
@@ -765,13 +773,13 @@
 | *apigateway* | 40/120 (33%) |
 | *application-autoscaling* | 2/10 (20%) |
 | *appstream* | 15/44 (34%) |
-| *appsync* | 9/27 (33%) |
+| *appsync* | 17/33 (51%) |
 | *athena* | 1/11 (9%) |
 | *autoscaling* | 19/54 (35%) |
 | *batch* | 11/16 (68%) |
-| *budgets* | 1/13 (7%) |
+| *budgets* | 1/14 (7%) |
 | *cloud9* | 6/10 (60%) |
-| *cloudformation* | 2/41 (4%) |
+| *cloudformation* | 2/45 (4%) |
 | *cloudtrail* | 6/14 (42%) |
 | *cloudwatch* | 1/17 (5%) |
 | *codebuild* | 4/16 (25%) |
@@ -780,7 +788,7 @@
 | *codepipeline* | 8/32 (25%) |
 | *cognito-identity* | 1/18 (5%) |
 | *cognito-idp* | 10/95 (10%) |
-| *config* | 6/43 (13%) |
+| *config* | 6/47 (12%) |
 | *dax* | 10/21 (47%) |
 | *dlm* | 4/5 (80%) |
 | *dms* | 27/44 (61%) |
@@ -788,7 +796,7 @@
 | *dynamodb* | 3/34 (8%) |
 | *ec2* | 95/285 (33%) |
 | *ecr* | 1/22 (4%) |
-| *ecs* | 5/31 (16%) |
+| *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
 | *eks* | 1/4 (25%) |
 | *elasticache* | 10/42 (23%) |
@@ -797,13 +805,13 @@
 | *elbv2* | 15/34 (44%) |
 | *es* | 11/23 (47%) |
 | *events* | 8/15 (53%) |
-| *firehose* | 3/10 (30%) |
+| *firehose* | 3/12 (25%) |
 | *gamelift* | 8/67 (11%) |
 | *glue* | 35/87 (40%) |
 | *guardduty* | 23/42 (54%) |
-| *iam* | 29/127 (22%) |
+| *iam* | 29/133 (21%) |
 | *inspector* | 11/37 (29%) |
-| *iot* | 3/151 (1%) |
+| *iot* | 3/166 (1%) |
 | *iot1click-projects* | 3/13 (23%) |
 | *kinesis* | 9/28 (32%) |
 | *kinesisanalytics* | 9/17 (52%) |
@@ -815,12 +823,13 @@
 | *neptune* | 11/57 (19%) |
 | *opsworks* | 16/74 (21%) |
 | *organizations* | 14/42 (33%) |
-| *pinpoint* | 1/71 (1%) |
-| *rds* | 22/96 (22%) |
-| *redshift* | 5/69 (7%) |
+| *pinpoint* | 1/74 (1%) |
+| *rds* | 22/102 (21%) |
+| *redshift* | 5/81 (6%) |
 | *rekognition* | 3/34 (8%) |
 | *route53* | 6/56 (10%) |
-| *s3* | 25/78 (32%) |
+| *route53resolver* | 10/22 (45%) |
+| *s3* | 25/82 (30%) |
 | *sagemaker* | 11/43 (25%) |
 | *secretsmanager* | 5/18 (27%) |
 | *serverlessrepo* | 1/12 (8%) |
@@ -834,8 +843,8 @@
 | *support* | 5/14 (35%) |
 | *waf* | 32/73 (43%) |
 | *waf-regional* | 33/77 (42%) |
-| *workspaces* | 4/23 (17%) |
-| *xray* | 7/14 (50%) |
+| *workspaces* | 4/32 (12%) |
+| *xray* | 7/19 (36%) |
 
 ## Operation Coverage
 
@@ -1115,28 +1124,34 @@
 | *appstream* | `UpdateStack` | 0 |
 | *appsync* | `CreateApiKey` | 1 |
 | *appsync* | `CreateDataSource` | 1 |
+| *appsync* | `CreateFunction` | 1 |
 | *appsync* | `CreateGraphqlApi` | 1 |
 | *appsync* | `CreateResolver` | 1 |
 | *appsync* | `CreateType` | 0 |
 | *appsync* | `DeleteApiKey` | 0 |
 | *appsync* | `DeleteDataSource` | 0 |
+| *appsync* | `DeleteFunction` | 1 |
 | *appsync* | `DeleteGraphqlApi` | 1 |
 | *appsync* | `DeleteResolver` | 0 |
 | *appsync* | `DeleteType` | 0 |
 | *appsync* | `GetDataSource` | 0 |
-| *appsync* | `GetGraphqlApi` | 0 |
+| *appsync* | `GetFunction` | 0 |
+| *appsync* | `GetGraphqlApi` | 1 |
 | *appsync* | `GetIntrospectionSchema` | 0 |
 | *appsync* | `GetResolver` | 0 |
 | *appsync* | `GetSchemaCreationStatus` | 1 |
 | *appsync* | `GetType` | 0 |
-| *appsync* | `ListApiKeys` | 0 |
-| *appsync* | `ListDataSources` | 0 |
-| *appsync* | `ListGraphqlApis` | 0 |
+| *appsync* | `ListApiKeys` | 1 |
+| *appsync* | `ListDataSources` | 1 |
+| *appsync* | `ListFunctions` | 1 |
+| *appsync* | `ListGraphqlApis` | 1 |
 | *appsync* | `ListResolvers` | 1 |
-| *appsync* | `ListTypes` | 0 |
+| *appsync* | `ListResolversByFunction` | 0 |
+| *appsync* | `ListTypes` | 1 |
 | *appsync* | `StartSchemaCreation` | 1 |
 | *appsync* | `UpdateApiKey` | 0 |
 | *appsync* | `UpdateDataSource` | 0 |
+| *appsync* | `UpdateFunction` | 0 |
 | *appsync* | `UpdateGraphqlApi` | 1 |
 | *appsync* | `UpdateResolver` | 0 |
 | *appsync* | `UpdateType` | 0 |
@@ -1209,6 +1224,7 @@
 | *autoscaling-plans* | `DeleteScalingPlan` | 0 |
 | *autoscaling-plans* | `DescribeScalingPlanResources` | 0 |
 | *autoscaling-plans* | `DescribeScalingPlans` | 0 |
+| *autoscaling-plans* | `GetScalingPlanResourceForecastData` | 0 |
 | *autoscaling-plans* | `UpdateScalingPlan` | 0 |
 | *batch* | `CancelJob` | 1 |
 | *batch* | `CreateComputeEnvironment` | 1 |
@@ -1233,6 +1249,7 @@
 | *budgets* | `DeleteNotification` | 0 |
 | *budgets* | `DeleteSubscriber` | 0 |
 | *budgets* | `DescribeBudget` | 0 |
+| *budgets* | `DescribeBudgetPerformanceHistory` | 0 |
 | *budgets* | `DescribeBudgets` | 0 |
 | *budgets* | `DescribeNotificationsForBudget` | 0 |
 | *budgets* | `DescribeSubscribersForNotification` | 0 |
@@ -1240,6 +1257,7 @@
 | *budgets* | `UpdateNotification` | 0 |
 | *budgets* | `UpdateSubscriber` | 0 |
 | *ce* | `GetCostAndUsage` | 0 |
+| *ce* | `GetCostForecast` | 0 |
 | *ce* | `GetDimensionValues` | 0 |
 | *ce* | `GetReservationCoverage` | 0 |
 | *ce* | `GetReservationPurchaseRecommendation` | 0 |
@@ -1349,13 +1367,17 @@
 | *cloudformation* | `DeleteStackSet` | 0 |
 | *cloudformation* | `DescribeAccountLimits` | 0 |
 | *cloudformation* | `DescribeChangeSet` | 0 |
+| *cloudformation* | `DescribeStackDriftDetectionStatus` | 0 |
 | *cloudformation* | `DescribeStackEvents` | 0 |
 | *cloudformation* | `DescribeStackInstance` | 0 |
 | *cloudformation* | `DescribeStackResource` | 0 |
+| *cloudformation* | `DescribeStackResourceDrifts` | 0 |
 | *cloudformation* | `DescribeStackResources` | 0 |
 | *cloudformation* | `DescribeStackSet` | 0 |
 | *cloudformation* | `DescribeStackSetOperation` | 0 |
 | *cloudformation* | `DescribeStacks` | 0 |
+| *cloudformation* | `DetectStackDrift` | 0 |
+| *cloudformation* | `DetectStackResourceDrift` | 0 |
 | *cloudformation* | `EstimateTemplateCost` | 0 |
 | *cloudformation* | `ExecuteChangeSet` | 0 |
 | *cloudformation* | `GetStackPolicy` | 0 |
@@ -1378,51 +1400,51 @@
 | *cloudformation* | `UpdateStackSet` | 0 |
 | *cloudformation* | `UpdateTerminationProtection` | 0 |
 | *cloudformation* | `ValidateTemplate` | 0 |
-| *cloudfront* | `CreateCloudFrontOriginAccessIdentity2018_06_18` | 0 |
-| *cloudfront* | `CreateDistribution2018_06_18` | 0 |
-| *cloudfront* | `CreateDistributionWithTags2018_06_18` | 0 |
-| *cloudfront* | `CreateFieldLevelEncryptionConfig2018_06_18` | 0 |
-| *cloudfront* | `CreateFieldLevelEncryptionProfile2018_06_18` | 0 |
-| *cloudfront* | `CreateInvalidation2018_06_18` | 0 |
-| *cloudfront* | `CreatePublicKey2018_06_18` | 0 |
-| *cloudfront* | `CreateStreamingDistribution2018_06_18` | 0 |
-| *cloudfront* | `CreateStreamingDistributionWithTags2018_06_18` | 0 |
-| *cloudfront* | `DeleteCloudFrontOriginAccessIdentity2018_06_18` | 0 |
-| *cloudfront* | `DeleteDistribution2018_06_18` | 0 |
-| *cloudfront* | `DeleteFieldLevelEncryptionConfig2018_06_18` | 0 |
-| *cloudfront* | `DeleteFieldLevelEncryptionProfile2018_06_18` | 0 |
-| *cloudfront* | `DeletePublicKey2018_06_18` | 0 |
-| *cloudfront* | `DeleteStreamingDistribution2018_06_18` | 0 |
-| *cloudfront* | `GetCloudFrontOriginAccessIdentity2018_06_18` | 0 |
-| *cloudfront* | `GetCloudFrontOriginAccessIdentityConfig2018_06_18` | 0 |
-| *cloudfront* | `GetDistribution2018_06_18` | 0 |
-| *cloudfront* | `GetDistributionConfig2018_06_18` | 0 |
-| *cloudfront* | `GetFieldLevelEncryption2018_06_18` | 0 |
-| *cloudfront* | `GetFieldLevelEncryptionConfig2018_06_18` | 0 |
-| *cloudfront* | `GetFieldLevelEncryptionProfile2018_06_18` | 0 |
-| *cloudfront* | `GetFieldLevelEncryptionProfileConfig2018_06_18` | 0 |
-| *cloudfront* | `GetInvalidation2018_06_18` | 0 |
-| *cloudfront* | `GetPublicKey2018_06_18` | 0 |
-| *cloudfront* | `GetPublicKeyConfig2018_06_18` | 0 |
-| *cloudfront* | `GetStreamingDistribution2018_06_18` | 0 |
-| *cloudfront* | `GetStreamingDistributionConfig2018_06_18` | 0 |
-| *cloudfront* | `ListCloudFrontOriginAccessIdentities2018_06_18` | 0 |
-| *cloudfront* | `ListDistributions2018_06_18` | 0 |
-| *cloudfront* | `ListDistributionsByWebACLId2018_06_18` | 0 |
-| *cloudfront* | `ListFieldLevelEncryptionConfigs2018_06_18` | 0 |
-| *cloudfront* | `ListFieldLevelEncryptionProfiles2018_06_18` | 0 |
-| *cloudfront* | `ListInvalidations2018_06_18` | 0 |
-| *cloudfront* | `ListPublicKeys2018_06_18` | 0 |
-| *cloudfront* | `ListStreamingDistributions2018_06_18` | 0 |
-| *cloudfront* | `ListTagsForResource2018_06_18` | 0 |
-| *cloudfront* | `TagResource2018_06_18` | 0 |
-| *cloudfront* | `UntagResource2018_06_18` | 0 |
-| *cloudfront* | `UpdateCloudFrontOriginAccessIdentity2018_06_18` | 0 |
-| *cloudfront* | `UpdateDistribution2018_06_18` | 0 |
-| *cloudfront* | `UpdateFieldLevelEncryptionConfig2018_06_18` | 0 |
-| *cloudfront* | `UpdateFieldLevelEncryptionProfile2018_06_18` | 0 |
-| *cloudfront* | `UpdatePublicKey2018_06_18` | 0 |
-| *cloudfront* | `UpdateStreamingDistribution2018_06_18` | 0 |
+| *cloudfront* | `CreateCloudFrontOriginAccessIdentity2018_11_05` | 0 |
+| *cloudfront* | `CreateDistribution2018_11_05` | 0 |
+| *cloudfront* | `CreateDistributionWithTags2018_11_05` | 0 |
+| *cloudfront* | `CreateFieldLevelEncryptionConfig2018_11_05` | 0 |
+| *cloudfront* | `CreateFieldLevelEncryptionProfile2018_11_05` | 0 |
+| *cloudfront* | `CreateInvalidation2018_11_05` | 0 |
+| *cloudfront* | `CreatePublicKey2018_11_05` | 0 |
+| *cloudfront* | `CreateStreamingDistribution2018_11_05` | 0 |
+| *cloudfront* | `CreateStreamingDistributionWithTags2018_11_05` | 0 |
+| *cloudfront* | `DeleteCloudFrontOriginAccessIdentity2018_11_05` | 0 |
+| *cloudfront* | `DeleteDistribution2018_11_05` | 0 |
+| *cloudfront* | `DeleteFieldLevelEncryptionConfig2018_11_05` | 0 |
+| *cloudfront* | `DeleteFieldLevelEncryptionProfile2018_11_05` | 0 |
+| *cloudfront* | `DeletePublicKey2018_11_05` | 0 |
+| *cloudfront* | `DeleteStreamingDistribution2018_11_05` | 0 |
+| *cloudfront* | `GetCloudFrontOriginAccessIdentity2018_11_05` | 0 |
+| *cloudfront* | `GetCloudFrontOriginAccessIdentityConfig2018_11_05` | 0 |
+| *cloudfront* | `GetDistribution2018_11_05` | 0 |
+| *cloudfront* | `GetDistributionConfig2018_11_05` | 0 |
+| *cloudfront* | `GetFieldLevelEncryption2018_11_05` | 0 |
+| *cloudfront* | `GetFieldLevelEncryptionConfig2018_11_05` | 0 |
+| *cloudfront* | `GetFieldLevelEncryptionProfile2018_11_05` | 0 |
+| *cloudfront* | `GetFieldLevelEncryptionProfileConfig2018_11_05` | 0 |
+| *cloudfront* | `GetInvalidation2018_11_05` | 0 |
+| *cloudfront* | `GetPublicKey2018_11_05` | 0 |
+| *cloudfront* | `GetPublicKeyConfig2018_11_05` | 0 |
+| *cloudfront* | `GetStreamingDistribution2018_11_05` | 0 |
+| *cloudfront* | `GetStreamingDistributionConfig2018_11_05` | 0 |
+| *cloudfront* | `ListCloudFrontOriginAccessIdentities2018_11_05` | 0 |
+| *cloudfront* | `ListDistributions2018_11_05` | 0 |
+| *cloudfront* | `ListDistributionsByWebACLId2018_11_05` | 0 |
+| *cloudfront* | `ListFieldLevelEncryptionConfigs2018_11_05` | 0 |
+| *cloudfront* | `ListFieldLevelEncryptionProfiles2018_11_05` | 0 |
+| *cloudfront* | `ListInvalidations2018_11_05` | 0 |
+| *cloudfront* | `ListPublicKeys2018_11_05` | 0 |
+| *cloudfront* | `ListStreamingDistributions2018_11_05` | 0 |
+| *cloudfront* | `ListTagsForResource2018_11_05` | 0 |
+| *cloudfront* | `TagResource2018_11_05` | 0 |
+| *cloudfront* | `UntagResource2018_11_05` | 0 |
+| *cloudfront* | `UpdateCloudFrontOriginAccessIdentity2018_11_05` | 0 |
+| *cloudfront* | `UpdateDistribution2018_11_05` | 0 |
+| *cloudfront* | `UpdateFieldLevelEncryptionConfig2018_11_05` | 0 |
+| *cloudfront* | `UpdateFieldLevelEncryptionProfile2018_11_05` | 0 |
+| *cloudfront* | `UpdatePublicKey2018_11_05` | 0 |
+| *cloudfront* | `UpdateStreamingDistribution2018_11_05` | 0 |
 | *cloudhsm* | `AddTagsToResource` | 0 |
 | *cloudhsm* | `CreateHapg` | 0 |
 | *cloudhsm* | `CreateHsm` | 0 |
@@ -1794,8 +1816,15 @@
 | *comprehend* | `BatchDetectKeyPhrases` | 0 |
 | *comprehend* | `BatchDetectSentiment` | 0 |
 | *comprehend* | `BatchDetectSyntax` | 0 |
+| *comprehend* | `CreateDocumentClassifier` | 0 |
+| *comprehend* | `CreateEntityRecognizer` | 0 |
+| *comprehend* | `DeleteDocumentClassifier` | 0 |
+| *comprehend* | `DeleteEntityRecognizer` | 0 |
+| *comprehend* | `DescribeDocumentClassificationJob` | 0 |
+| *comprehend* | `DescribeDocumentClassifier` | 0 |
 | *comprehend* | `DescribeDominantLanguageDetectionJob` | 0 |
 | *comprehend* | `DescribeEntitiesDetectionJob` | 0 |
+| *comprehend* | `DescribeEntityRecognizer` | 0 |
 | *comprehend* | `DescribeKeyPhrasesDetectionJob` | 0 |
 | *comprehend* | `DescribeSentimentDetectionJob` | 0 |
 | *comprehend* | `DescribeTopicsDetectionJob` | 0 |
@@ -1804,11 +1833,15 @@
 | *comprehend* | `DetectKeyPhrases` | 0 |
 | *comprehend* | `DetectSentiment` | 0 |
 | *comprehend* | `DetectSyntax` | 0 |
+| *comprehend* | `ListDocumentClassificationJobs` | 0 |
+| *comprehend* | `ListDocumentClassifiers` | 0 |
 | *comprehend* | `ListDominantLanguageDetectionJobs` | 0 |
 | *comprehend* | `ListEntitiesDetectionJobs` | 0 |
+| *comprehend* | `ListEntityRecognizers` | 0 |
 | *comprehend* | `ListKeyPhrasesDetectionJobs` | 0 |
 | *comprehend* | `ListSentimentDetectionJobs` | 0 |
 | *comprehend* | `ListTopicsDetectionJobs` | 0 |
+| *comprehend* | `StartDocumentClassificationJob` | 0 |
 | *comprehend* | `StartDominantLanguageDetectionJob` | 0 |
 | *comprehend* | `StartEntitiesDetectionJob` | 0 |
 | *comprehend* | `StartKeyPhrasesDetectionJob` | 0 |
@@ -1818,6 +1851,7 @@
 | *comprehend* | `StopEntitiesDetectionJob` | 0 |
 | *comprehend* | `StopKeyPhrasesDetectionJob` | 0 |
 | *comprehend* | `StopSentimentDetectionJob` | 0 |
+| *config* | `BatchGetAggregateResourceConfig` | 0 |
 | *config* | `BatchGetResourceConfig` | 0 |
 | *config* | `DeleteAggregationAuthorization` | 0 |
 | *config* | `DeleteConfigRule` | 0 |
@@ -1844,12 +1878,15 @@
 | *config* | `DescribeRetentionConfigurations` | 0 |
 | *config* | `GetAggregateComplianceDetailsByConfigRule` | 0 |
 | *config* | `GetAggregateConfigRuleComplianceSummary` | 0 |
+| *config* | `GetAggregateDiscoveredResourceCounts` | 0 |
+| *config* | `GetAggregateResourceConfig` | 0 |
 | *config* | `GetComplianceDetailsByConfigRule` | 0 |
 | *config* | `GetComplianceDetailsByResource` | 0 |
 | *config* | `GetComplianceSummaryByConfigRule` | 0 |
 | *config* | `GetComplianceSummaryByResourceType` | 0 |
 | *config* | `GetDiscoveredResourceCounts` | 0 |
 | *config* | `GetResourceConfigHistory` | 0 |
+| *config* | `ListAggregateDiscoveredResources` | 0 |
 | *config* | `ListDiscoveredResources` | 0 |
 | *config* | `PutAggregationAuthorization` | 0 |
 | *config* | `PutConfigRule` | 1 |
@@ -2301,7 +2338,7 @@
 | *ec2* | `DescribeAccountAttributes` | 2 |
 | *ec2* | `DescribeAddresses` | 3 |
 | *ec2* | `DescribeAggregateIdFormat` | 0 |
-| *ec2* | `DescribeAvailabilityZones` | 9 |
+| *ec2* | `DescribeAvailabilityZones` | 10 |
 | *ec2* | `DescribeBundleTasks` | 0 |
 | *ec2* | `DescribeByoipCidrs` | 0 |
 | *ec2* | `DescribeCapacityReservations` | 0 |
@@ -2355,7 +2392,7 @@
 | *ec2* | `DescribeScheduledInstanceAvailability` | 0 |
 | *ec2* | `DescribeScheduledInstances` | 0 |
 | *ec2* | `DescribeSecurityGroupReferences` | 0 |
-| *ec2* | `DescribeSecurityGroups` | 17 |
+| *ec2* | `DescribeSecurityGroups` | 18 |
 | *ec2* | `DescribeSnapshotAttribute` | 0 |
 | *ec2* | `DescribeSnapshots` | 2 |
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
@@ -2365,7 +2402,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DescribeSpotPriceHistory` | 1 |
 | *ec2* | `DescribeStaleSecurityGroups` | 1 |
-| *ec2* | `DescribeSubnets` | 16 |
+| *ec2* | `DescribeSubnets` | 17 |
 | *ec2* | `DescribeTags` | 2 |
 | *ec2* | `DescribeVolumeAttribute` | 0 |
 | *ec2* | `DescribeVolumeStatus` | 0 |
@@ -2381,7 +2418,7 @@
 | *ec2* | `DescribeVpcEndpointServices` | 1 |
 | *ec2* | `DescribeVpcEndpoints` | 2 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 19 |
+| *ec2* | `DescribeVpcs` | 20 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 1 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -2501,6 +2538,7 @@
 | *ecr* | `UploadLayerPart` | 0 |
 | *ecs* | `CreateCluster` | 1 |
 | *ecs* | `CreateService` | 1 |
+| *ecs* | `DeleteAccountSetting` | 0 |
 | *ecs* | `DeleteAttributes` | 0 |
 | *ecs* | `DeleteCluster` | 0 |
 | *ecs* | `DeleteService` | 0 |
@@ -2512,13 +2550,16 @@
 | *ecs* | `DescribeTaskDefinition` | 0 |
 | *ecs* | `DescribeTasks` | 0 |
 | *ecs* | `DiscoverPollEndpoint` | 0 |
+| *ecs* | `ListAccountSettings` | 0 |
 | *ecs* | `ListAttributes` | 0 |
 | *ecs* | `ListClusters` | 1 |
 | *ecs* | `ListContainerInstances` | 0 |
 | *ecs* | `ListServices` | 0 |
+| *ecs* | `ListTagsForResource` | 0 |
 | *ecs* | `ListTaskDefinitionFamilies` | 1 |
 | *ecs* | `ListTaskDefinitions` | 0 |
 | *ecs* | `ListTasks` | 0 |
+| *ecs* | `PutAccountSetting` | 0 |
 | *ecs* | `PutAttributes` | 0 |
 | *ecs* | `RegisterContainerInstance` | 0 |
 | *ecs* | `RegisterTaskDefinition` | 1 |
@@ -2527,6 +2568,8 @@
 | *ecs* | `StopTask` | 0 |
 | *ecs* | `SubmitContainerStateChange` | 0 |
 | *ecs* | `SubmitTaskStateChange` | 0 |
+| *ecs* | `TagResource` | 0 |
+| *ecs* | `UntagResource` | 0 |
 | *ecs* | `UpdateContainerAgent` | 0 |
 | *ecs* | `UpdateContainerInstancesState` | 0 |
 | *ecs* | `UpdateService` | 0 |
@@ -2784,6 +2827,8 @@
 | *firehose* | `ListTagsForDeliveryStream` | 0 |
 | *firehose* | `PutRecord` | 0 |
 | *firehose* | `PutRecordBatch` | 0 |
+| *firehose* | `StartDeliveryStreamEncryption` | 0 |
+| *firehose* | `StopDeliveryStreamEncryption` | 0 |
 | *firehose* | `TagDeliveryStream` | 0 |
 | *firehose* | `UntagDeliveryStream` | 0 |
 | *firehose* | `UpdateDestination` | 0 |
@@ -3202,6 +3247,7 @@
 | *iam* | `ListPolicies` | 1 |
 | *iam* | `ListPolicyVersions` | 1 |
 | *iam* | `ListRolePolicies` | 0 |
+| *iam* | `ListRoleTags` | 0 |
 | *iam* | `ListRoles` | 11 |
 | *iam* | `ListSAMLProviders` | 0 |
 | *iam* | `ListSSHPublicKeys` | 0 |
@@ -3209,6 +3255,7 @@
 | *iam* | `ListServiceSpecificCredentials` | 0 |
 | *iam* | `ListSigningCertificates` | 0 |
 | *iam* | `ListUserPolicies` | 0 |
+| *iam* | `ListUserTags` | 0 |
 | *iam* | `ListUsers` | 2 |
 | *iam* | `ListVirtualMFADevices` | 0 |
 | *iam* | `PutGroupPolicy` | 0 |
@@ -3224,6 +3271,10 @@
 | *iam* | `SetDefaultPolicyVersion` | 0 |
 | *iam* | `SimulateCustomPolicy` | 0 |
 | *iam* | `SimulatePrincipalPolicy` | 0 |
+| *iam* | `TagRole` | 0 |
+| *iam* | `TagUser` | 0 |
+| *iam* | `UntagRole` | 0 |
+| *iam* | `UntagUser` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
 | *iam* | `UpdateAccountPasswordPolicy` | 0 |
 | *iam* | `UpdateAssumeRolePolicy` | 0 |
@@ -3285,6 +3336,7 @@
 | *inspector* | `UnsubscribeFromEvent` | 0 |
 | *inspector* | `UpdateAssessmentTarget` | 0 |
 | *iot* | `AcceptCertificateTransfer` | 0 |
+| *iot* | `AddThingToBillingGroup` | 0 |
 | *iot* | `AddThingToThingGroup` | 0 |
 | *iot* | `AssociateTargetsWithJob` | 0 |
 | *iot* | `AttachPolicy` | 0 |
@@ -3297,7 +3349,9 @@
 | *iot* | `CancelJobExecution` | 0 |
 | *iot* | `ClearDefaultAuthorizer` | 0 |
 | *iot* | `CreateAuthorizer` | 0 |
+| *iot* | `CreateBillingGroup` | 0 |
 | *iot* | `CreateCertificateFromCsr` | 0 |
+| *iot* | `CreateDynamicThingGroup` | 0 |
 | *iot* | `CreateJob` | 0 |
 | *iot* | `CreateKeysAndCertificate` | 0 |
 | *iot* | `CreateOTAUpdate` | 0 |
@@ -3313,8 +3367,10 @@
 | *iot* | `CreateTopicRule` | 0 |
 | *iot* | `DeleteAccountAuditConfiguration` | 0 |
 | *iot* | `DeleteAuthorizer` | 0 |
+| *iot* | `DeleteBillingGroup` | 0 |
 | *iot* | `DeleteCACertificate` | 0 |
 | *iot* | `DeleteCertificate` | 0 |
+| *iot* | `DeleteDynamicThingGroup` | 0 |
 | *iot* | `DeleteJob` | 0 |
 | *iot* | `DeleteJobExecution` | 0 |
 | *iot* | `DeleteOTAUpdate` | 0 |
@@ -3334,6 +3390,7 @@
 | *iot* | `DescribeAccountAuditConfiguration` | 0 |
 | *iot* | `DescribeAuditTask` | 0 |
 | *iot* | `DescribeAuthorizer` | 0 |
+| *iot* | `DescribeBillingGroup` | 0 |
 | *iot* | `DescribeCACertificate` | 0 |
 | *iot* | `DescribeCertificate` | 0 |
 | *iot* | `DescribeDefaultAuthorizer` | 0 |
@@ -3371,6 +3428,7 @@
 | *iot* | `ListAuditFindings` | 0 |
 | *iot* | `ListAuditTasks` | 0 |
 | *iot* | `ListAuthorizers` | 0 |
+| *iot* | `ListBillingGroups` | 0 |
 | *iot* | `ListCACertificates` | 0 |
 | *iot* | `ListCertificates` | 0 |
 | *iot* | `ListCertificatesByCA` | 0 |
@@ -3390,6 +3448,7 @@
 | *iot* | `ListSecurityProfiles` | 0 |
 | *iot* | `ListSecurityProfilesForTarget` | 0 |
 | *iot* | `ListStreams` | 0 |
+| *iot* | `ListTagsForResource` | 0 |
 | *iot* | `ListTargetsForPolicy` | 0 |
 | *iot* | `ListTargetsForSecurityProfile` | 0 |
 | *iot* | `ListThingGroups` | 0 |
@@ -3399,6 +3458,7 @@
 | *iot* | `ListThingRegistrationTasks` | 0 |
 | *iot* | `ListThingTypes` | 0 |
 | *iot* | `ListThings` | 1 |
+| *iot* | `ListThingsInBillingGroup` | 0 |
 | *iot* | `ListThingsInThingGroup` | 0 |
 | *iot* | `ListTopicRules` | 0 |
 | *iot* | `ListV2LoggingLevels` | 0 |
@@ -3407,6 +3467,7 @@
 | *iot* | `RegisterCertificate` | 0 |
 | *iot* | `RegisterThing` | 0 |
 | *iot* | `RejectCertificateTransfer` | 0 |
+| *iot* | `RemoveThingFromBillingGroup` | 0 |
 | *iot* | `RemoveThingFromThingGroup` | 0 |
 | *iot* | `ReplaceTopicRule` | 0 |
 | *iot* | `SearchIndex` | 0 |
@@ -3418,15 +3479,20 @@
 | *iot* | `StartOnDemandAuditTask` | 0 |
 | *iot* | `StartThingRegistrationTask` | 0 |
 | *iot* | `StopThingRegistrationTask` | 0 |
+| *iot* | `TagResource` | 0 |
 | *iot* | `TestAuthorization` | 0 |
 | *iot* | `TestInvokeAuthorizer` | 0 |
 | *iot* | `TransferCertificate` | 0 |
+| *iot* | `UntagResource` | 0 |
 | *iot* | `UpdateAccountAuditConfiguration` | 0 |
 | *iot* | `UpdateAuthorizer` | 0 |
+| *iot* | `UpdateBillingGroup` | 0 |
 | *iot* | `UpdateCACertificate` | 0 |
 | *iot* | `UpdateCertificate` | 0 |
+| *iot* | `UpdateDynamicThingGroup` | 0 |
 | *iot* | `UpdateEventConfigurations` | 0 |
 | *iot* | `UpdateIndexingConfiguration` | 0 |
+| *iot* | `UpdateJob` | 0 |
 | *iot* | `UpdateRoleAlias` | 0 |
 | *iot* | `UpdateScheduledAudit` | 0 |
 | *iot* | `UpdateSecurityProfile` | 0 |
@@ -3826,6 +3892,7 @@
 | *marketplace-entitlement* | `GetEntitlements` | 0 |
 | *marketplacecommerceanalytics* | `GenerateDataSet` | 0 |
 | *marketplacecommerceanalytics* | `StartSupportDataExport` | 0 |
+| *mediaconvert* | `AssociateCertificate` | 0 |
 | *mediaconvert* | `CancelJob` | 0 |
 | *mediaconvert* | `CreateJob` | 0 |
 | *mediaconvert* | `CreateJobTemplate` | 0 |
@@ -3835,6 +3902,7 @@
 | *mediaconvert* | `DeletePreset` | 0 |
 | *mediaconvert* | `DeleteQueue` | 0 |
 | *mediaconvert* | `DescribeEndpoints` | 0 |
+| *mediaconvert* | `DisassociateCertificate` | 0 |
 | *mediaconvert* | `GetJob` | 0 |
 | *mediaconvert* | `GetJobTemplate` | 0 |
 | *mediaconvert* | `GetPreset` | 0 |
@@ -4200,6 +4268,7 @@
 | *pinpoint* | `DeleteSegment` | 0 |
 | *pinpoint* | `DeleteSmsChannel` | 0 |
 | *pinpoint* | `DeleteUserEndpoints` | 0 |
+| *pinpoint* | `DeleteVoiceChannel` | 0 |
 | *pinpoint* | `GetAdmChannel` | 0 |
 | *pinpoint* | `GetApnsChannel` | 0 |
 | *pinpoint* | `GetApnsSandboxChannel` | 0 |
@@ -4231,6 +4300,7 @@
 | *pinpoint* | `GetSegments` | 0 |
 | *pinpoint* | `GetSmsChannel` | 0 |
 | *pinpoint* | `GetUserEndpoints` | 0 |
+| *pinpoint* | `GetVoiceChannel` | 0 |
 | *pinpoint* | `PhoneNumberValidate` | 0 |
 | *pinpoint* | `PutEventStream` | 0 |
 | *pinpoint* | `PutEvents` | 0 |
@@ -4251,6 +4321,7 @@
 | *pinpoint* | `UpdateGcmChannel` | 0 |
 | *pinpoint* | `UpdateSegment` | 0 |
 | *pinpoint* | `UpdateSmsChannel` | 0 |
+| *pinpoint* | `UpdateVoiceChannel` | 0 |
 | *pinpoint-email* | `CreateConfigurationSet` | 0 |
 | *pinpoint-email* | `CreateConfigurationSetEventDestination` | 0 |
 | *pinpoint-email* | `CreateDedicatedIpPool` | 0 |
@@ -4293,6 +4364,37 @@
 | *pricing* | `DescribeServices` | 0 |
 | *pricing* | `GetAttributeValues` | 0 |
 | *pricing* | `GetProducts` | 0 |
+| *quicksight* | `CreateGroup` | 0 |
+| *quicksight* | `CreateGroupMembership` | 0 |
+| *quicksight* | `DeleteGroup` | 0 |
+| *quicksight* | `DeleteGroupMembership` | 0 |
+| *quicksight* | `DeleteUser` | 0 |
+| *quicksight* | `DescribeGroup` | 0 |
+| *quicksight* | `DescribeUser` | 0 |
+| *quicksight* | `GetDashboardEmbedUrl` | 0 |
+| *quicksight* | `ListGroupMemberships` | 0 |
+| *quicksight* | `ListGroups` | 0 |
+| *quicksight* | `ListUserGroups` | 0 |
+| *quicksight* | `ListUsers` | 0 |
+| *quicksight* | `RegisterUser` | 0 |
+| *quicksight* | `UpdateGroup` | 0 |
+| *quicksight* | `UpdateUser` | 0 |
+| *ram* | `AcceptResourceShareInvitation` | 0 |
+| *ram* | `AssociateResourceShare` | 0 |
+| *ram* | `CreateResourceShare` | 0 |
+| *ram* | `DeleteResourceShare` | 0 |
+| *ram* | `DisassociateResourceShare` | 0 |
+| *ram* | `EnableSharingWithAwsOrganization` | 0 |
+| *ram* | `GetResourcePolicies` | 0 |
+| *ram* | `GetResourceShareAssociations` | 0 |
+| *ram* | `GetResourceShareInvitations` | 0 |
+| *ram* | `GetResourceShares` | 0 |
+| *ram* | `ListPrincipals` | 0 |
+| *ram* | `ListResources` | 0 |
+| *ram* | `RejectResourceShareInvitation` | 0 |
+| *ram* | `TagResource` | 0 |
+| *ram* | `UntagResource` | 0 |
+| *ram* | `UpdateResourceShare` | 0 |
 | *rds* | `AddRoleToDBCluster` | 0 |
 | *rds* | `AddSourceIdentifierToSubscription` | 0 |
 | *rds* | `AddTagsToResource` | 0 |
@@ -4305,6 +4407,7 @@
 | *rds* | `CopyDBSnapshot` | 0 |
 | *rds* | `CopyOptionGroup` | 0 |
 | *rds* | `CreateDBCluster` | 0 |
+| *rds* | `CreateDBClusterEndpoint` | 0 |
 | *rds* | `CreateDBClusterParameterGroup` | 1 |
 | *rds* | `CreateDBClusterSnapshot` | 0 |
 | *rds* | `CreateDBInstance` | 1 |
@@ -4316,9 +4419,11 @@
 | *rds* | `CreateEventSubscription` | 1 |
 | *rds* | `CreateOptionGroup` | 1 |
 | *rds* | `DeleteDBCluster` | 0 |
+| *rds* | `DeleteDBClusterEndpoint` | 0 |
 | *rds* | `DeleteDBClusterParameterGroup` | 0 |
 | *rds* | `DeleteDBClusterSnapshot` | 0 |
 | *rds* | `DeleteDBInstance` | 1 |
+| *rds* | `DeleteDBInstanceAutomatedBackup` | 0 |
 | *rds* | `DeleteDBParameterGroup` | 0 |
 | *rds* | `DeleteDBSecurityGroup` | 0 |
 | *rds* | `DeleteDBSnapshot` | 0 |
@@ -4328,12 +4433,14 @@
 | *rds* | `DescribeAccountAttributes` | 0 |
 | *rds* | `DescribeCertificates` | 0 |
 | *rds* | `DescribeDBClusterBacktracks` | 0 |
+| *rds* | `DescribeDBClusterEndpoints` | 0 |
 | *rds* | `DescribeDBClusterParameterGroups` | 1 |
 | *rds* | `DescribeDBClusterParameters` | 0 |
 | *rds* | `DescribeDBClusterSnapshotAttributes` | 0 |
 | *rds* | `DescribeDBClusterSnapshots` | 1 |
 | *rds* | `DescribeDBClusters` | 2 |
 | *rds* | `DescribeDBEngineVersions` | 0 |
+| *rds* | `DescribeDBInstanceAutomatedBackups` | 0 |
 | *rds* | `DescribeDBInstances` | 3 |
 | *rds* | `DescribeDBLogFiles` | 1 |
 | *rds* | `DescribeDBParameterGroups` | 2 |
@@ -4360,6 +4467,7 @@
 | *rds* | `ListTagsForResource` | 0 |
 | *rds* | `ModifyCurrentDBClusterCapacity` | 0 |
 | *rds* | `ModifyDBCluster` | 0 |
+| *rds* | `ModifyDBClusterEndpoint` | 0 |
 | *rds* | `ModifyDBClusterParameterGroup` | 0 |
 | *rds* | `ModifyDBClusterSnapshotAttribute` | 0 |
 | *rds* | `ModifyDBInstance` | 0 |
@@ -4389,9 +4497,13 @@
 | *rds* | `StartDBInstance` | 0 |
 | *rds* | `StopDBCluster` | 1 |
 | *rds* | `StopDBInstance` | 0 |
+| *rds-data* | `ExecuteSql` | 0 |
 | *redshift* | `AcceptReservedNodeExchange` | 0 |
 | *redshift* | `AuthorizeClusterSecurityGroupIngress` | 0 |
 | *redshift* | `AuthorizeSnapshotAccess` | 0 |
+| *redshift* | `BatchDeleteClusterSnapshots` | 0 |
+| *redshift* | `BatchModifyClusterSnapshots` | 0 |
+| *redshift* | `CancelResize` | 0 |
 | *redshift* | `CopyClusterSnapshot` | 0 |
 | *redshift* | `CreateCluster` | 1 |
 | *redshift* | `CreateClusterParameterGroup` | 1 |
@@ -4402,6 +4514,7 @@
 | *redshift* | `CreateHsmClientCertificate` | 0 |
 | *redshift* | `CreateHsmConfiguration` | 0 |
 | *redshift* | `CreateSnapshotCopyGrant` | 0 |
+| *redshift* | `CreateSnapshotSchedule` | 0 |
 | *redshift* | `CreateTags` | 0 |
 | *redshift* | `DeleteCluster` | 0 |
 | *redshift* | `DeleteClusterParameterGroup` | 0 |
@@ -4412,7 +4525,9 @@
 | *redshift* | `DeleteHsmClientCertificate` | 0 |
 | *redshift* | `DeleteHsmConfiguration` | 0 |
 | *redshift* | `DeleteSnapshotCopyGrant` | 0 |
+| *redshift* | `DeleteSnapshotSchedule` | 0 |
 | *redshift* | `DeleteTags` | 0 |
+| *redshift* | `DescribeAccountAttributes` | 0 |
 | *redshift* | `DescribeClusterDbRevisions` | 0 |
 | *redshift* | `DescribeClusterParameterGroups` | 1 |
 | *redshift* | `DescribeClusterParameters` | 0 |
@@ -4434,6 +4549,8 @@
 | *redshift* | `DescribeReservedNodes` | 0 |
 | *redshift* | `DescribeResize` | 0 |
 | *redshift* | `DescribeSnapshotCopyGrants` | 0 |
+| *redshift* | `DescribeSnapshotSchedules` | 0 |
+| *redshift* | `DescribeStorage` | 0 |
 | *redshift* | `DescribeTableRestoreStatus` | 0 |
 | *redshift* | `DescribeTags` | 0 |
 | *redshift* | `DisableLogging` | 0 |
@@ -4445,10 +4562,14 @@
 | *redshift* | `ModifyCluster` | 0 |
 | *redshift* | `ModifyClusterDbRevision` | 0 |
 | *redshift* | `ModifyClusterIamRoles` | 0 |
+| *redshift* | `ModifyClusterMaintenance` | 0 |
 | *redshift* | `ModifyClusterParameterGroup` | 0 |
+| *redshift* | `ModifyClusterSnapshot` | 0 |
+| *redshift* | `ModifyClusterSnapshotSchedule` | 0 |
 | *redshift* | `ModifyClusterSubnetGroup` | 0 |
 | *redshift* | `ModifyEventSubscription` | 0 |
 | *redshift* | `ModifySnapshotCopyRetentionPeriod` | 0 |
+| *redshift* | `ModifySnapshotSchedule` | 0 |
 | *redshift* | `PurchaseReservedNodeOffering` | 0 |
 | *redshift* | `RebootCluster` | 0 |
 | *redshift* | `ResetClusterParameterGroup` | 0 |
@@ -4589,6 +4710,28 @@
 | *route53domains* | `UpdateDomainNameservers` | 0 |
 | *route53domains* | `UpdateTagsForDomain` | 0 |
 | *route53domains* | `ViewBilling` | 0 |
+| *route53resolver* | `AssociateResolverEndpointIpAddress` | 0 |
+| *route53resolver* | `AssociateResolverRule` | 1 |
+| *route53resolver* | `CreateResolverEndpoint` | 1 |
+| *route53resolver* | `CreateResolverRule` | 1 |
+| *route53resolver* | `DeleteResolverEndpoint` | 1 |
+| *route53resolver* | `DeleteResolverRule` | 1 |
+| *route53resolver* | `DisassociateResolverEndpointIpAddress` | 0 |
+| *route53resolver* | `DisassociateResolverRule` | 0 |
+| *route53resolver* | `GetResolverEndpoint` | 0 |
+| *route53resolver* | `GetResolverRule` | 0 |
+| *route53resolver* | `GetResolverRuleAssociation` | 0 |
+| *route53resolver* | `GetResolverRulePolicy` | 0 |
+| *route53resolver* | `ListResolverEndpointIpAddresses` | 0 |
+| *route53resolver* | `ListResolverEndpoints` | 1 |
+| *route53resolver* | `ListResolverRuleAssociations` | 1 |
+| *route53resolver* | `ListResolverRules` | 2 |
+| *route53resolver* | `ListTagsForResource` | 1 |
+| *route53resolver* | `PutResolverRulePolicy` | 0 |
+| *route53resolver* | `TagResource` | 0 |
+| *route53resolver* | `UntagResource` | 0 |
+| *route53resolver* | `UpdateResolverEndpoint` | 0 |
+| *route53resolver* | `UpdateResolverRule` | 1 |
 | *s3* | `AbortMultipartUpload` | 0 |
 | *s3* | `CompleteMultipartUpload` | 0 |
 | *s3* | `CopyObject` | 0 |
@@ -4608,6 +4751,7 @@
 | *s3* | `DeleteObject` | 0 |
 | *s3* | `DeleteObjectTagging` | 0 |
 | *s3* | `DeleteObjects` | 0 |
+| *s3* | `DeletePublicAccessBlock` | 0 |
 | *s3* | `GetBucketAccelerateConfiguration` | 1 |
 | *s3* | `GetBucketAcl` | 1 |
 | *s3* | `GetBucketAnalyticsConfiguration` | 1 |
@@ -4622,6 +4766,7 @@
 | *s3* | `GetBucketNotification` | 0 |
 | *s3* | `GetBucketNotificationConfiguration` | 1 |
 | *s3* | `GetBucketPolicy` | 1 |
+| *s3* | `GetBucketPolicyStatus` | 0 |
 | *s3* | `GetBucketReplication` | 1 |
 | *s3* | `GetBucketRequestPayment` | 1 |
 | *s3* | `GetBucketTagging` | 1 |
@@ -4631,6 +4776,7 @@
 | *s3* | `GetObjectAcl` | 0 |
 | *s3* | `GetObjectTagging` | 0 |
 | *s3* | `GetObjectTorrent` | 0 |
+| *s3* | `GetPublicAccessBlock` | 0 |
 | *s3* | `HeadBucket` | 1 |
 | *s3* | `HeadObject` | 0 |
 | *s3* | `ListBucketAnalyticsConfigurations` | 0 |
@@ -4663,10 +4809,14 @@
 | *s3* | `PutObject` | 0 |
 | *s3* | `PutObjectAcl` | 0 |
 | *s3* | `PutObjectTagging` | 0 |
+| *s3* | `PutPublicAccessBlock` | 0 |
 | *s3* | `RestoreObject` | 0 |
 | *s3* | `SelectObjectContent` | 0 |
 | *s3* | `UploadPart` | 0 |
 | *s3* | `UploadPartCopy` | 0 |
+| *s3control* | `DeletePublicAccessBlock` | 0 |
+| *s3control* | `GetPublicAccessBlock` | 0 |
+| *s3control* | `PutPublicAccessBlock` | 0 |
 | *sagemaker* | `AddTags` | 0 |
 | *sagemaker* | `CreateEndpoint` | 0 |
 | *sagemaker* | `CreateEndpointConfig` | 0 |
@@ -4954,6 +5104,13 @@
 | *sms* | `ImportServerCatalog` | 0 |
 | *sms* | `StartOnDemandReplicationRun` | 0 |
 | *sms* | `UpdateReplicationJob` | 0 |
+| *sms-voice* | `CreateConfigurationSet` | 0 |
+| *sms-voice* | `CreateConfigurationSetEventDestination` | 0 |
+| *sms-voice* | `DeleteConfigurationSet` | 0 |
+| *sms-voice* | `DeleteConfigurationSetEventDestination` | 0 |
+| *sms-voice* | `GetConfigurationSetEventDestinations` | 0 |
+| *sms-voice* | `SendVoiceMessage` | 0 |
+| *sms-voice* | `UpdateConfigurationSetEventDestination` | 0 |
 | *snowball* | `CancelCluster` | 0 |
 | *snowball* | `CancelJob` | 0 |
 | *snowball* | `CreateAddress` | 0 |
@@ -5466,6 +5623,7 @@
 | *workdocs* | `GetDocumentVersion` | 0 |
 | *workdocs* | `GetFolder` | 0 |
 | *workdocs* | `GetFolderPath` | 0 |
+| *workdocs* | `GetResources` | 0 |
 | *workdocs* | `InitiateDocumentVersionUpload` | 0 |
 | *workdocs* | `RemoveAllResourcePermissions` | 0 |
 | *workdocs* | `RemoveResourcePermission` | 0 |
@@ -5511,13 +5669,22 @@
 | *workspaces* | `CreateWorkspaces` | 1 |
 | *workspaces* | `DeleteIpGroup` | 0 |
 | *workspaces* | `DeleteTags` | 0 |
+| *workspaces* | `DeleteWorkspaceImage` | 0 |
+| *workspaces* | `DescribeAccount` | 0 |
+| *workspaces* | `DescribeAccountModifications` | 0 |
+| *workspaces* | `DescribeClientProperties` | 0 |
 | *workspaces* | `DescribeIpGroups` | 0 |
 | *workspaces* | `DescribeTags` | 0 |
 | *workspaces* | `DescribeWorkspaceBundles` | 1 |
 | *workspaces* | `DescribeWorkspaceDirectories` | 0 |
+| *workspaces* | `DescribeWorkspaceImages` | 0 |
 | *workspaces* | `DescribeWorkspaces` | 1 |
 | *workspaces* | `DescribeWorkspacesConnectionStatus` | 0 |
 | *workspaces* | `DisassociateIpGroups` | 0 |
+| *workspaces* | `ImportWorkspaceImage` | 0 |
+| *workspaces* | `ListAvailableManagementCidrRanges` | 0 |
+| *workspaces* | `ModifyAccount` | 0 |
+| *workspaces* | `ModifyClientProperties` | 0 |
 | *workspaces* | `ModifyWorkspaceProperties` | 0 |
 | *workspaces* | `ModifyWorkspaceState` | 0 |
 | *workspaces* | `RebootWorkspaces` | 0 |
@@ -5528,9 +5695,13 @@
 | *workspaces* | `TerminateWorkspaces` | 1 |
 | *workspaces* | `UpdateRulesOfIpGroup` | 0 |
 | *xray* | `BatchGetTraces` | 0 |
+| *xray* | `CreateGroup` | 0 |
 | *xray* | `CreateSamplingRule` | 1 |
+| *xray* | `DeleteGroup` | 0 |
 | *xray* | `DeleteSamplingRule` | 1 |
 | *xray* | `GetEncryptionConfig` | 1 |
+| *xray* | `GetGroup` | 0 |
+| *xray* | `GetGroups` | 0 |
 | *xray* | `GetSamplingRules` | 1 |
 | *xray* | `GetSamplingStatisticSummaries` | 1 |
 | *xray* | `GetSamplingTargets` | 0 |
@@ -5540,11 +5711,12 @@
 | *xray* | `PutEncryptionConfig` | 0 |
 | *xray* | `PutTelemetryRecords` | 0 |
 | *xray* | `PutTraceSegments` | 0 |
+| *xray* | `UpdateGroup` | 0 |
 | *xray* | `UpdateSamplingRule` | 0 |
 
 
-**Total Services: 147**
+**Total Services: 153**
 
-**Total Operations: 4700**
+**Total Operations: 4863**
 
-**Total Unique Occurances: 808 (17%)**
+**Total Unique Occurances: 826 (16%)**

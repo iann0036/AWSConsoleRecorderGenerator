@@ -28,7 +28,10 @@ cfn_occurances = [
     "AWS::RDS::DBSecurityGroup",
     "AWS::RDS::DBSecurityGroupIngress",
     "AWS::ElastiCache::SecurityGroup",
-    "AWS::ElastiCache::SecurityGroupIngress"
+    "AWS::ElastiCache::SecurityGroupIngress",
+    "Alexa::ASK::Skill",
+    "AWS::EC2::EC2Fleet",
+    "AWS::Kinesis::StreamConsumer"
 ]
 tf_occurances = []
 
