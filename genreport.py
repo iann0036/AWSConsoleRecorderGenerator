@@ -31,7 +31,11 @@ cfn_occurances = [
     "AWS::ElastiCache::SecurityGroupIngress",
     "Alexa::ASK::Skill",
     "AWS::EC2::EC2Fleet",
-    "AWS::Kinesis::StreamConsumer"
+    "AWS::Kinesis::StreamConsumer",
+    "AWS::CloudFormation::Macro",
+    "AWS::CodePipeline::CustomActionType",
+    "AWS::EC2::NetworkInterfacePermission",
+    "AWS::EC2::TrunkInterfaceAssociation"
 ]
 tf_occurances = []
 

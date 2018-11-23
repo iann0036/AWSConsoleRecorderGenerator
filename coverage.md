@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**258/322 (80%)** Resources Covered
+**267/322 (82%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -54,7 +54,7 @@
 | *AWS::CertificateManager::Certificate* | 1 |
 | *AWS::Cloud9::EnvironmentEC2* | 1 |
 | *AWS::CloudFormation::CustomResource* | 1 |
-| *AWS::CloudFormation::Macro* | 0 |
+| *AWS::CloudFormation::Macro* | 1 |
 | *AWS::CloudFormation::Stack* | 1 |
 | *AWS::CloudFormation::WaitCondition* | 1 |
 | *AWS::CloudFormation::WaitConditionHandle* | 1 |
@@ -69,9 +69,9 @@
 | *AWS::CodeDeploy::Application* | 1 |
 | *AWS::CodeDeploy::DeploymentConfig* | 1 |
 | *AWS::CodeDeploy::DeploymentGroup* | 1 |
-| *AWS::CodePipeline::CustomActionType* | 0 |
+| *AWS::CodePipeline::CustomActionType* | 1 |
 | *AWS::CodePipeline::Pipeline* | 1 |
-| *AWS::CodePipeline::Webhook* | 0 |
+| *AWS::CodePipeline::Webhook* | 1 |
 | *AWS::Cognito::IdentityPool* | 1 |
 | *AWS::Cognito::IdentityPoolRoleAttachment* | 0 |
 | *AWS::Cognito::UserPool* | 1 |
@@ -99,7 +99,7 @@
 | *AWS::DirectoryService::SimpleAD* | 1 |
 | *AWS::DynamoDB::Table* | 1 |
 | *AWS::EC2::CustomerGateway* | 1 |
-| *AWS::EC2::DHCPOptions* | 0 |
+| *AWS::EC2::DHCPOptions* | 1 |
 | *AWS::EC2::EC2Fleet* | 1 |
 | *AWS::EC2::EIP* | 1 |
 | *AWS::EC2::EIPAssociation* | 1 |
@@ -114,7 +114,7 @@
 | *AWS::EC2::NetworkAclEntry* | 1 |
 | *AWS::EC2::NetworkInterface* | 1 |
 | *AWS::EC2::NetworkInterfaceAttachment* | 1 |
-| *AWS::EC2::NetworkInterfacePermission* | 0 |
+| *AWS::EC2::NetworkInterfacePermission* | 1 |
 | *AWS::EC2::PlacementGroup* | 1 |
 | *AWS::EC2::Route* | 0 |
 | *AWS::EC2::RouteTable* | 2 |
@@ -123,10 +123,10 @@
 | *AWS::EC2::SecurityGroupIngress* | 1 |
 | *AWS::EC2::SpotFleet* | 0 |
 | *AWS::EC2::Subnet* | 1 |
-| *AWS::EC2::SubnetCidrBlock* | 0 |
+| *AWS::EC2::SubnetCidrBlock* | 1 |
 | *AWS::EC2::SubnetNetworkAclAssociation* | 1 |
 | *AWS::EC2::SubnetRouteTableAssociation* | 1 |
-| *AWS::EC2::TrunkInterfaceAssociation* | 0 |
+| *AWS::EC2::TrunkInterfaceAssociation* | 1 |
 | *AWS::EC2::VPC* | 2 |
 | *AWS::EC2::VPCCidrBlock* | 1 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
@@ -190,7 +190,7 @@
 | *AWS::GuardDuty::Master* | 0 |
 | *AWS::GuardDuty::Member* | 1 |
 | *AWS::GuardDuty::ThreatIntelSet* | 1 |
-| *AWS::IAM::AccessKey* | 0 |
+| *AWS::IAM::AccessKey* | 1 |
 | *AWS::IAM::Group* | 1 |
 | *AWS::IAM::InstanceProfile* | 1 |
 | *AWS::IAM::ManagedPolicy* | 1 |
@@ -202,7 +202,7 @@
 | *AWS::Inspector::AssessmentTarget* | 1 |
 | *AWS::Inspector::AssessmentTemplate* | 1 |
 | *AWS::Inspector::ResourceGroup* | 1 |
-| *AWS::IoT1Click::Device* | 0 |
+| *AWS::IoT1Click::Device* | 1 |
 | *AWS::IoT1Click::Placement* | 1 |
 | *AWS::IoT1Click::Project* | 1 |
 | *AWS::IoT::Certificate* | 0 |
@@ -780,12 +780,12 @@
 | *budgets* | 1/14 (7%) |
 | *cloud9* | 6/10 (60%) |
 | *cloudformation* | 2/45 (4%) |
-| *cloudtrail* | 6/14 (42%) |
+| *cloudtrail* | 8/14 (57%) |
 | *cloudwatch* | 1/17 (5%) |
 | *codebuild* | 4/16 (25%) |
 | *codecommit* | 5/39 (12%) |
 | *codedeploy* | 15/40 (37%) |
-| *codepipeline* | 8/32 (25%) |
+| *codepipeline* | 11/32 (34%) |
 | *cognito-identity* | 1/18 (5%) |
 | *cognito-idp* | 10/95 (10%) |
 | *config* | 6/47 (12%) |
@@ -794,8 +794,8 @@
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/34 (8%) |
-| *ec2* | 95/285 (33%) |
-| *ecr* | 1/22 (4%) |
+| *ec2* | 97/285 (34%) |
+| *ecr* | 2/22 (9%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
 | *eks* | 1/4 (25%) |
@@ -804,14 +804,15 @@
 | *elb* | 4/29 (13%) |
 | *elbv2* | 15/34 (44%) |
 | *es* | 11/23 (47%) |
-| *events* | 8/15 (53%) |
+| *events* | 10/15 (66%) |
 | *firehose* | 3/12 (25%) |
 | *gamelift* | 8/67 (11%) |
 | *glue* | 35/87 (40%) |
 | *guardduty* | 23/42 (54%) |
-| *iam* | 29/133 (21%) |
+| *iam* | 30/133 (22%) |
 | *inspector* | 11/37 (29%) |
 | *iot* | 3/166 (1%) |
+| *iot1click-devices* | 3/10 (30%) |
 | *iot1click-projects* | 3/13 (23%) |
 | *kinesis* | 9/28 (32%) |
 | *kinesisanalytics* | 9/17 (52%) |
@@ -1508,15 +1509,15 @@
 | *cloudtrail* | `AddTags` | 0 |
 | *cloudtrail* | `CreateTrail` | 1 |
 | *cloudtrail* | `DeleteTrail` | 0 |
-| *cloudtrail* | `DescribeTrails` | 3 |
-| *cloudtrail* | `GetEventSelectors` | 1 |
+| *cloudtrail* | `DescribeTrails` | 4 |
+| *cloudtrail* | `GetEventSelectors` | 3 |
 | *cloudtrail* | `GetTrailStatus` | 1 |
 | *cloudtrail* | `ListPublicKeys` | 0 |
 | *cloudtrail* | `ListTags` | 1 |
 | *cloudtrail* | `LookupEvents` | 1 |
-| *cloudtrail* | `PutEventSelectors` | 0 |
+| *cloudtrail* | `PutEventSelectors` | 2 |
 | *cloudtrail* | `RemoveTags` | 0 |
-| *cloudtrail* | `StartLogging` | 0 |
+| *cloudtrail* | `StartLogging` | 1 |
 | *cloudtrail* | `StopLogging` | 0 |
 | *cloudtrail* | `UpdateTrail` | 0 |
 | *cloudwatch* | `DeleteAlarms` | 0 |
@@ -1639,8 +1640,8 @@
 | *codepipeline* | `DeletePipeline` | 1 |
 | *codepipeline* | `DeleteWebhook` | 0 |
 | *codepipeline* | `DeregisterWebhookWithThirdParty` | 0 |
-| *codepipeline* | `DisableStageTransition` | 0 |
-| *codepipeline* | `EnableStageTransition` | 0 |
+| *codepipeline* | `DisableStageTransition` | 1 |
+| *codepipeline* | `EnableStageTransition` | 1 |
 | *codepipeline* | `GetJobDetails` | 0 |
 | *codepipeline* | `GetPipeline` | 1 |
 | *codepipeline* | `GetPipelineExecution` | 1 |
@@ -1658,7 +1659,7 @@
 | *codepipeline* | `PutJobSuccessResult` | 0 |
 | *codepipeline* | `PutThirdPartyJobFailureResult` | 0 |
 | *codepipeline* | `PutThirdPartyJobSuccessResult` | 0 |
-| *codepipeline* | `PutWebhook` | 0 |
+| *codepipeline* | `PutWebhook` | 1 |
 | *codepipeline* | `RegisterWebhookWithThirdParty` | 0 |
 | *codepipeline* | `RetryStageExecution` | 0 |
 | *codepipeline* | `StartPipelineExecution` | 0 |
@@ -2241,7 +2242,7 @@
 | *ec2* | `AssociateDhcpOptions` | 1 |
 | *ec2* | `AssociateIamInstanceProfile` | 0 |
 | *ec2* | `AssociateRouteTable` | 1 |
-| *ec2* | `AssociateSubnetCidrBlock` | 0 |
+| *ec2* | `AssociateSubnetCidrBlock` | 1 |
 | *ec2* | `AssociateVpcCidrBlock` | 1 |
 | *ec2* | `AttachClassicLinkVpc` | 0 |
 | *ec2* | `AttachInternetGateway` | 0 |
@@ -2267,7 +2268,7 @@
 | *ec2* | `CreateCustomerGateway` | 1 |
 | *ec2* | `CreateDefaultSubnet` | 0 |
 | *ec2* | `CreateDefaultVpc` | 0 |
-| *ec2* | `CreateDhcpOptions` | 0 |
+| *ec2* | `CreateDhcpOptions` | 1 |
 | *ec2* | `CreateEgressOnlyInternetGateway` | 1 |
 | *ec2* | `CreateFleet` | 0 |
 | *ec2* | `CreateFlowLogs` | 1 |
@@ -2345,7 +2346,7 @@
 | *ec2* | `DescribeClassicLinkInstances` | 0 |
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeCustomerGateways` | 1 |
-| *ec2* | `DescribeDhcpOptions` | 3 |
+| *ec2* | `DescribeDhcpOptions` | 4 |
 | *ec2* | `DescribeEgressOnlyInternetGateways` | 2 |
 | *ec2* | `DescribeElasticGpus` | 0 |
 | *ec2* | `DescribeExportTasks` | 0 |
@@ -2418,7 +2419,7 @@
 | *ec2* | `DescribeVpcEndpointServices` | 1 |
 | *ec2* | `DescribeVpcEndpoints` | 2 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 20 |
+| *ec2* | `DescribeVpcs` | 21 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 1 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -2523,7 +2524,7 @@
 | *ecr* | `DeleteRepository` | 0 |
 | *ecr* | `DeleteRepositoryPolicy` | 0 |
 | *ecr* | `DescribeImages` | 0 |
-| *ecr* | `DescribeRepositories` | 0 |
+| *ecr* | `DescribeRepositories` | 1 |
 | *ecr* | `GetAuthorizationToken` | 0 |
 | *ecr* | `GetDownloadUrlForLayer` | 0 |
 | *ecr* | `GetLifecyclePolicy` | 0 |
@@ -2805,20 +2806,20 @@
 | *es* | `StartElasticsearchServiceSoftwareUpdate` | 0 |
 | *es* | `UpdateElasticsearchDomainConfig` | 0 |
 | *es* | `UpgradeElasticsearchDomain` | 0 |
-| *events* | `DeleteRule` | 1 |
+| *events* | `DeleteRule` | 2 |
 | *events* | `DescribeEventBus` | 0 |
 | *events* | `DescribeRule` | 1 |
 | *events* | `DisableRule` | 1 |
 | *events* | `EnableRule` | 1 |
 | *events* | `ListRuleNamesByTarget` | 1 |
 | *events* | `ListRules` | 1 |
-| *events* | `ListTargetsByRule` | 0 |
+| *events* | `ListTargetsByRule` | 1 |
 | *events* | `PutEvents` | 0 |
 | *events* | `PutPermission` | 0 |
-| *events* | `PutRule` | 2 |
-| *events* | `PutTargets` | 1 |
+| *events* | `PutRule` | 3 |
+| *events* | `PutTargets` | 2 |
 | *events* | `RemovePermission` | 0 |
-| *events* | `RemoveTargets` | 0 |
+| *events* | `RemoveTargets` | 1 |
 | *events* | `TestEventPattern` | 0 |
 | *firehose* | `CreateDeliveryStream` | 1 |
 | *firehose* | `DeleteDeliveryStream` | 1 |
@@ -3166,7 +3167,7 @@
 | *iam* | `AttachRolePolicy` | 2 |
 | *iam* | `AttachUserPolicy` | 1 |
 | *iam* | `ChangePassword` | 0 |
-| *iam* | `CreateAccessKey` | 0 |
+| *iam* | `CreateAccessKey` | 1 |
 | *iam* | `CreateAccountAlias` | 0 |
 | *iam* | `CreateGroup` | 1 |
 | *iam* | `CreateInstanceProfile` | 2 |
@@ -3511,13 +3512,13 @@
 | *iot-jobs-data* | `UpdateJobExecution` | 0 |
 | *iot1click-devices* | `ClaimDevicesByClaimCode` | 0 |
 | *iot1click-devices* | `DescribeDevice` | 0 |
-| *iot1click-devices* | `FinalizeDeviceClaim` | 0 |
+| *iot1click-devices* | `FinalizeDeviceClaim` | 1 |
 | *iot1click-devices* | `GetDeviceMethods` | 0 |
-| *iot1click-devices* | `InitiateDeviceClaim` | 0 |
+| *iot1click-devices* | `InitiateDeviceClaim` | 1 |
 | *iot1click-devices* | `InvokeDeviceMethod` | 0 |
 | *iot1click-devices* | `ListDeviceEvents` | 0 |
 | *iot1click-devices* | `ListDevices` | 0 |
-| *iot1click-devices* | `UnclaimDevice` | 0 |
+| *iot1click-devices* | `UnclaimDevice` | 1 |
 | *iot1click-devices* | `UpdateDeviceState` | 0 |
 | *iot1click-projects* | `AssociateDeviceWithPlacement` | 0 |
 | *iot1click-projects* | `CreatePlacement` | 1 |
@@ -4782,7 +4783,7 @@
 | *s3* | `ListBucketAnalyticsConfigurations` | 0 |
 | *s3* | `ListBucketInventoryConfigurations` | 0 |
 | *s3* | `ListBucketMetricsConfigurations` | 0 |
-| *s3* | `ListBuckets` | 3 |
+| *s3* | `ListBuckets` | 4 |
 | *s3* | `ListMultipartUploads` | 0 |
 | *s3* | `ListObjectVersions` | 0 |
 | *s3* | `ListObjects` | 1 |
@@ -5719,4 +5720,4 @@
 
 **Total Operations: 4863**
 
-**Total Unique Occurances: 826 (16%)**
+**Total Unique Occurances: 840 (17%)**
