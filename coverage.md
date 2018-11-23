@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**267/322 (82%)** Resources Covered
+**272/322 (84%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -63,7 +63,7 @@
 | *AWS::CloudFront::StreamingDistribution* | 0 |
 | *AWS::CloudTrail::Trail* | 1 |
 | *AWS::CloudWatch::Alarm* | 0 |
-| *AWS::CloudWatch::Dashboard* | 0 |
+| *AWS::CloudWatch::Dashboard* | 1 |
 | *AWS::CodeBuild::Project* | 1 |
 | *AWS::CodeCommit::Repository* | 1 |
 | *AWS::CodeDeploy::Application* | 1 |
@@ -205,9 +205,9 @@
 | *AWS::IoT1Click::Device* | 1 |
 | *AWS::IoT1Click::Placement* | 1 |
 | *AWS::IoT1Click::Project* | 1 |
-| *AWS::IoT::Certificate* | 0 |
-| *AWS::IoT::Policy* | 0 |
-| *AWS::IoT::PolicyPrincipalAttachment* | 0 |
+| *AWS::IoT::Certificate* | 1 |
+| *AWS::IoT::Policy* | 1 |
+| *AWS::IoT::PolicyPrincipalAttachment* | 1 |
 | *AWS::IoT::Thing* | 1 |
 | *AWS::IoT::ThingPrincipalAttachment* | 0 |
 | *AWS::IoT::TopicRule* | 0 |
@@ -269,7 +269,7 @@
 | *AWS::SES::ReceiptFilter* | 0 |
 | *AWS::SES::ReceiptRule* | 0 |
 | *AWS::SES::ReceiptRuleSet* | 1 |
-| *AWS::SES::Template* | 0 |
+| *AWS::SES::Template* | 1 |
 | *AWS::SNS::Subscription* | 1 |
 | *AWS::SNS::Topic* | 1 |
 | *AWS::SNS::TopicPolicy* | 1 |
@@ -781,7 +781,7 @@
 | *cloud9* | 6/10 (60%) |
 | *cloudformation* | 2/45 (4%) |
 | *cloudtrail* | 8/14 (57%) |
-| *cloudwatch* | 1/17 (5%) |
+| *cloudwatch* | 2/17 (11%) |
 | *codebuild* | 4/16 (25%) |
 | *codecommit* | 5/39 (12%) |
 | *codedeploy* | 15/40 (37%) |
@@ -811,7 +811,7 @@
 | *guardduty* | 23/42 (54%) |
 | *iam* | 30/133 (22%) |
 | *inspector* | 11/37 (29%) |
-| *iot* | 3/166 (1%) |
+| *iot* | 7/166 (4%) |
 | *iot1click-devices* | 3/10 (30%) |
 | *iot1click-projects* | 3/13 (23%) |
 | *kinesis* | 9/28 (32%) |
@@ -1533,7 +1533,7 @@
 | *cloudwatch* | `GetMetricWidgetImage` | 0 |
 | *cloudwatch* | `ListDashboards` | 0 |
 | *cloudwatch* | `ListMetrics` | 0 |
-| *cloudwatch* | `PutDashboard` | 0 |
+| *cloudwatch* | `PutDashboard` | 1 |
 | *cloudwatch* | `PutMetricAlarm` | 0 |
 | *cloudwatch* | `PutMetricData` | 0 |
 | *cloudwatch* | `SetAlarmState` | 0 |
@@ -3341,7 +3341,7 @@
 | *iot* | `AddThingToThingGroup` | 0 |
 | *iot* | `AssociateTargetsWithJob` | 0 |
 | *iot* | `AttachPolicy` | 0 |
-| *iot* | `AttachPrincipalPolicy` | 0 |
+| *iot* | `AttachPrincipalPolicy` | 1 |
 | *iot* | `AttachSecurityProfile` | 0 |
 | *iot* | `AttachThingPrincipal` | 0 |
 | *iot* | `CancelAuditTask` | 0 |
@@ -3351,12 +3351,12 @@
 | *iot* | `ClearDefaultAuthorizer` | 0 |
 | *iot* | `CreateAuthorizer` | 0 |
 | *iot* | `CreateBillingGroup` | 0 |
-| *iot* | `CreateCertificateFromCsr` | 0 |
+| *iot* | `CreateCertificateFromCsr` | 1 |
 | *iot* | `CreateDynamicThingGroup` | 0 |
 | *iot* | `CreateJob` | 0 |
 | *iot* | `CreateKeysAndCertificate` | 0 |
 | *iot* | `CreateOTAUpdate` | 0 |
-| *iot* | `CreatePolicy` | 0 |
+| *iot* | `CreatePolicy` | 1 |
 | *iot* | `CreatePolicyVersion` | 0 |
 | *iot* | `CreateRoleAlias` | 0 |
 | *iot* | `CreateScheduledAudit` | 0 |
@@ -3370,7 +3370,7 @@
 | *iot* | `DeleteAuthorizer` | 0 |
 | *iot* | `DeleteBillingGroup` | 0 |
 | *iot* | `DeleteCACertificate` | 0 |
-| *iot* | `DeleteCertificate` | 0 |
+| *iot* | `DeleteCertificate` | 1 |
 | *iot* | `DeleteDynamicThingGroup` | 0 |
 | *iot* | `DeleteJob` | 0 |
 | *iot* | `DeleteJobExecution` | 0 |
@@ -5720,4 +5720,4 @@
 
 **Total Operations: 4863**
 
-**Total Unique Occurances: 840 (17%)**
+**Total Unique Occurances: 845 (17%)**
