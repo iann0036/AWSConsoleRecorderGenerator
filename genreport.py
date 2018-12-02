@@ -36,7 +36,8 @@ cfn_occurances = [
     "AWS::CodePipeline::CustomActionType",
     "AWS::EC2::NetworkInterfacePermission",
     "AWS::EC2::TrunkInterfaceAssociation",
-    "AWS::SES::Template"
+    "AWS::SES::Template",
+    "AWS::Lambda::LayerVersionPermission"
 ]
 tf_occurances = []
 

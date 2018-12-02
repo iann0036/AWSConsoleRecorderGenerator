@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**272/322 (84%)** Resources Covered
+**280/322 (86%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -304,8 +304,8 @@
 | *AWS::ServiceCatalog::TagOption* | 1 |
 | *AWS::ServiceCatalog::TagOptionAssociation* | 1 |
 | *AWS::ServiceDiscovery::Instance* | 1 |
-| *AWS::ServiceDiscovery::PrivateDnsNamespace* | 1 |
-| *AWS::ServiceDiscovery::PublicDnsNamespace* | 1 |
+| *AWS::ServiceDiscovery::PrivateDnsNamespace* | 2 |
+| *AWS::ServiceDiscovery::PublicDnsNamespace* | 2 |
 | *AWS::ServiceDiscovery::Service* | 1 |
 | *AWS::StepFunctions::Activity* | 1 |
 | *AWS::StepFunctions::StateMachine* | 1 |
@@ -784,7 +784,7 @@
 | *cloudwatch* | 2/17 (11%) |
 | *codebuild* | 4/16 (25%) |
 | *codecommit* | 5/39 (12%) |
-| *codedeploy* | 15/40 (37%) |
+| *codedeploy* | 15/43 (34%) |
 | *codepipeline* | 11/32 (34%) |
 | *cognito-identity* | 1/18 (5%) |
 | *cognito-idp* | 10/95 (10%) |
@@ -793,8 +793,8 @@
 | *dlm* | 4/5 (80%) |
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
-| *dynamodb* | 3/34 (8%) |
-| *ec2* | 97/285 (34%) |
+| *dynamodb* | 3/36 (8%) |
+| *ec2* | 109/310 (35%) |
 | *ecr* | 2/22 (9%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -802,7 +802,7 @@
 | *elasticache* | 10/42 (23%) |
 | *elasticbeanstalk* | 8/44 (18%) |
 | *elb* | 4/29 (13%) |
-| *elbv2* | 15/34 (44%) |
+| *elbv2* | 15/36 (41%) |
 | *es* | 11/23 (47%) |
 | *events* | 10/15 (66%) |
 | *firehose* | 3/12 (25%) |
@@ -816,26 +816,26 @@
 | *iot1click-projects* | 3/13 (23%) |
 | *kinesis* | 9/28 (32%) |
 | *kinesisanalytics* | 9/17 (52%) |
-| *kms* | 6/35 (17%) |
-| *lambda* | 11/30 (36%) |
-| *logs* | 5/33 (15%) |
+| *kms* | 6/41 (14%) |
+| *lambda* | 14/38 (36%) |
+| *logs* | 5/39 (12%) |
 | *medialive* | 4/25 (16%) |
 | *mq* | 6/17 (35%) |
 | *neptune* | 11/57 (19%) |
 | *opsworks* | 16/74 (21%) |
 | *organizations* | 14/42 (33%) |
 | *pinpoint* | 1/74 (1%) |
-| *rds* | 22/102 (21%) |
+| *rds* | 22/107 (20%) |
 | *redshift* | 5/81 (6%) |
 | *rekognition* | 3/34 (8%) |
 | *route53* | 6/56 (10%) |
 | *route53resolver* | 10/22 (45%) |
-| *s3* | 25/82 (30%) |
-| *sagemaker* | 11/43 (25%) |
+| *s3* | 25/88 (28%) |
+| *sagemaker* | 11/75 (14%) |
 | *secretsmanager* | 5/18 (27%) |
-| *serverlessrepo* | 1/12 (8%) |
+| *serverlessrepo* | 1/13 (7%) |
 | *servicecatalog* | 13/77 (16%) |
-| *servicediscovery* | 1/18 (5%) |
+| *servicediscovery* | 6/20 (30%) |
 | *ses* | 8/70 (11%) |
 | *sns* | 8/30 (26%) |
 | *sqs* | 6/20 (30%) |
@@ -949,6 +949,26 @@
 | *alexaforbusiness* | `UpdateProfile` | 0 |
 | *alexaforbusiness* | `UpdateRoom` | 0 |
 | *alexaforbusiness* | `UpdateSkillGroup` | 0 |
+| *amplify* | `CreateApp` | 0 |
+| *amplify* | `CreateBranch` | 0 |
+| *amplify* | `CreateDomainAssociation` | 0 |
+| *amplify* | `DeleteApp` | 0 |
+| *amplify* | `DeleteBranch` | 0 |
+| *amplify* | `DeleteDomainAssociation` | 0 |
+| *amplify* | `DeleteJob` | 0 |
+| *amplify* | `GetApp` | 0 |
+| *amplify* | `GetBranch` | 0 |
+| *amplify* | `GetDomainAssociation` | 0 |
+| *amplify* | `GetJob` | 0 |
+| *amplify* | `ListApps` | 0 |
+| *amplify* | `ListBranches` | 0 |
+| *amplify* | `ListDomainAssociations` | 0 |
+| *amplify* | `ListJobs` | 0 |
+| *amplify* | `StartJob` | 0 |
+| *amplify* | `StopJob` | 0 |
+| *amplify* | `UpdateApp` | 0 |
+| *amplify* | `UpdateBranch` | 0 |
+| *amplify* | `UpdateDomainAssociation` | 0 |
 | *apigateway* | `CreateApiKey` | 1 |
 | *apigateway* | `CreateAuthorizer` | 1 |
 | *apigateway* | `CreateBasePathMapping` | 0 |
@@ -1079,6 +1099,25 @@
 | *application-autoscaling* | `PutScalingPolicy` | 1 |
 | *application-autoscaling* | `PutScheduledAction` | 0 |
 | *application-autoscaling* | `RegisterScalableTarget` | 1 |
+| *appmesh* | `CreateMesh` | 0 |
+| *appmesh* | `CreateRoute` | 0 |
+| *appmesh* | `CreateVirtualNode` | 0 |
+| *appmesh* | `CreateVirtualRouter` | 0 |
+| *appmesh* | `DeleteMesh` | 0 |
+| *appmesh* | `DeleteRoute` | 0 |
+| *appmesh* | `DeleteVirtualNode` | 0 |
+| *appmesh* | `DeleteVirtualRouter` | 0 |
+| *appmesh* | `DescribeMesh` | 0 |
+| *appmesh* | `DescribeRoute` | 0 |
+| *appmesh* | `DescribeVirtualNode` | 0 |
+| *appmesh* | `DescribeVirtualRouter` | 0 |
+| *appmesh* | `ListMeshes` | 0 |
+| *appmesh* | `ListRoutes` | 0 |
+| *appmesh* | `ListVirtualNodes` | 0 |
+| *appmesh* | `ListVirtualRouters` | 0 |
+| *appmesh* | `UpdateRoute` | 0 |
+| *appmesh* | `UpdateVirtualNode` | 0 |
+| *appmesh* | `UpdateVirtualRouter` | 0 |
 | *appstream* | `AssociateFleet` | 1 |
 | *appstream* | `BatchAssociateUserStack` | 1 |
 | *appstream* | `BatchDisassociateUserStack` | 0 |
@@ -1597,6 +1636,7 @@
 | *codedeploy* | `BatchGetApplications` | 0 |
 | *codedeploy* | `BatchGetDeploymentGroups` | 1 |
 | *codedeploy* | `BatchGetDeploymentInstances` | 0 |
+| *codedeploy* | `BatchGetDeploymentTargets` | 0 |
 | *codedeploy* | `BatchGetDeployments` | 1 |
 | *codedeploy* | `BatchGetOnPremisesInstances` | 0 |
 | *codedeploy* | `ContinueDeployment` | 0 |
@@ -1615,12 +1655,14 @@
 | *codedeploy* | `GetDeploymentConfig` | 0 |
 | *codedeploy* | `GetDeploymentGroup` | 1 |
 | *codedeploy* | `GetDeploymentInstance` | 0 |
+| *codedeploy* | `GetDeploymentTarget` | 0 |
 | *codedeploy* | `GetOnPremisesInstance` | 0 |
 | *codedeploy* | `ListApplicationRevisions` | 1 |
 | *codedeploy* | `ListApplications` | 0 |
 | *codedeploy* | `ListDeploymentConfigs` | 2 |
 | *codedeploy* | `ListDeploymentGroups` | 1 |
 | *codedeploy* | `ListDeploymentInstances` | 0 |
+| *codedeploy* | `ListDeploymentTargets` | 0 |
 | *codedeploy* | `ListDeployments` | 1 |
 | *codedeploy* | `ListGitHubAccountTokenNames` | 0 |
 | *codedeploy* | `ListOnPremisesInstances` | 0 |
@@ -1852,6 +1894,8 @@
 | *comprehend* | `StopEntitiesDetectionJob` | 0 |
 | *comprehend* | `StopKeyPhrasesDetectionJob` | 0 |
 | *comprehend* | `StopSentimentDetectionJob` | 0 |
+| *comprehendmedical* | `DetectEntities` | 0 |
+| *comprehendmedical* | `DetectPHI` | 0 |
 | *config* | `BatchGetAggregateResourceConfig` | 0 |
 | *config* | `BatchGetResourceConfig` | 0 |
 | *config* | `DeleteAggregationAuthorization` | 0 |
@@ -1941,6 +1985,31 @@
 | *datapipeline* | `SetStatus` | 0 |
 | *datapipeline* | `SetTaskStatus` | 0 |
 | *datapipeline* | `ValidatePipelineDefinition` | 0 |
+| *datasync* | `CancelTaskExecution` | 0 |
+| *datasync* | `CreateAgent` | 0 |
+| *datasync* | `CreateLocationEfs` | 0 |
+| *datasync* | `CreateLocationNfs` | 0 |
+| *datasync* | `CreateLocationS3` | 0 |
+| *datasync* | `CreateTask` | 0 |
+| *datasync* | `DeleteAgent` | 0 |
+| *datasync* | `DeleteLocation` | 0 |
+| *datasync* | `DeleteTask` | 0 |
+| *datasync* | `DescribeAgent` | 0 |
+| *datasync* | `DescribeLocationEfs` | 0 |
+| *datasync* | `DescribeLocationNfs` | 0 |
+| *datasync* | `DescribeLocationS3` | 0 |
+| *datasync* | `DescribeTask` | 0 |
+| *datasync* | `DescribeTaskExecution` | 0 |
+| *datasync* | `ListAgents` | 0 |
+| *datasync* | `ListLocations` | 0 |
+| *datasync* | `ListTagsForResource` | 0 |
+| *datasync* | `ListTaskExecutions` | 0 |
+| *datasync* | `ListTasks` | 0 |
+| *datasync* | `StartTaskExecution` | 0 |
+| *datasync* | `TagResource` | 0 |
+| *datasync* | `UntagResource` | 0 |
+| *datasync* | `UpdateAgent` | 0 |
+| *datasync* | `UpdateTask` | 0 |
 | *dax* | `CreateCluster` | 1 |
 | *dax* | `CreateParameterGroup` | 1 |
 | *dax* | `CreateSubnetGroup` | 1 |
@@ -2219,6 +2288,8 @@
 | *dynamodb* | `RestoreTableToPointInTime` | 0 |
 | *dynamodb* | `Scan` | 0 |
 | *dynamodb* | `TagResource` | 0 |
+| *dynamodb* | `TransactGetItems` | 0 |
+| *dynamodb* | `TransactWriteItems` | 0 |
 | *dynamodb* | `UntagResource` | 0 |
 | *dynamodb* | `UpdateContinuousBackups` | 0 |
 | *dynamodb* | `UpdateGlobalTable` | 0 |
@@ -2231,6 +2302,7 @@
 | *dynamodbstreams* | `GetShardIterator` | 0 |
 | *dynamodbstreams* | `ListStreams` | 0 |
 | *ec2* | `AcceptReservedInstancesExchangeQuote` | 0 |
+| *ec2* | `AcceptTransitGatewayVpcAttachment` | 0 |
 | *ec2* | `AcceptVpcEndpointConnections` | 0 |
 | *ec2* | `AcceptVpcPeeringConnection` | 0 |
 | *ec2* | `AdvertiseByoipCidr` | 0 |
@@ -2243,6 +2315,7 @@
 | *ec2* | `AssociateIamInstanceProfile` | 0 |
 | *ec2* | `AssociateRouteTable` | 1 |
 | *ec2* | `AssociateSubnetCidrBlock` | 1 |
+| *ec2* | `AssociateTransitGatewayRouteTable` | 1 |
 | *ec2* | `AssociateVpcCidrBlock` | 1 |
 | *ec2* | `AttachClassicLinkVpc` | 0 |
 | *ec2* | `AttachInternetGateway` | 0 |
@@ -2293,13 +2366,17 @@
 | *ec2* | `CreateSpotDatafeedSubscription` | 0 |
 | *ec2* | `CreateSubnet` | 1 |
 | *ec2* | `CreateTags` | 2 |
+| *ec2* | `CreateTransitGateway` | 1 |
+| *ec2* | `CreateTransitGatewayRoute` | 1 |
+| *ec2* | `CreateTransitGatewayRouteTable` | 1 |
+| *ec2* | `CreateTransitGatewayVpcAttachment` | 1 |
 | *ec2* | `CreateVolume` | 1 |
 | *ec2* | `CreateVpc` | 2 |
 | *ec2* | `CreateVpcEndpoint` | 1 |
 | *ec2* | `CreateVpcEndpointConnectionNotification` | 0 |
 | *ec2* | `CreateVpcEndpointServiceConfiguration` | 1 |
 | *ec2* | `CreateVpcPeeringConnection` | 0 |
-| *ec2* | `CreateVpnConnection` | 0 |
+| *ec2* | `CreateVpnConnection` | 1 |
 | *ec2* | `CreateVpnConnectionRoute` | 0 |
 | *ec2* | `CreateVpnGateway` | 1 |
 | *ec2* | `DeleteCustomerGateway` | 1 |
@@ -2325,6 +2402,10 @@
 | *ec2* | `DeleteSpotDatafeedSubscription` | 0 |
 | *ec2* | `DeleteSubnet` | 1 |
 | *ec2* | `DeleteTags` | 1 |
+| *ec2* | `DeleteTransitGateway` | 0 |
+| *ec2* | `DeleteTransitGatewayRoute` | 0 |
+| *ec2* | `DeleteTransitGatewayRouteTable` | 0 |
+| *ec2* | `DeleteTransitGatewayVpcAttachment` | 0 |
 | *ec2* | `DeleteVolume` | 0 |
 | *ec2* | `DeleteVpc` | 1 |
 | *ec2* | `DeleteVpcEndpointConnectionNotifications` | 0 |
@@ -2345,7 +2426,7 @@
 | *ec2* | `DescribeCapacityReservations` | 0 |
 | *ec2* | `DescribeClassicLinkInstances` | 0 |
 | *ec2* | `DescribeConversionTasks` | 0 |
-| *ec2* | `DescribeCustomerGateways` | 1 |
+| *ec2* | `DescribeCustomerGateways` | 2 |
 | *ec2* | `DescribeDhcpOptions` | 4 |
 | *ec2* | `DescribeEgressOnlyInternetGateways` | 2 |
 | *ec2* | `DescribeElasticGpus` | 0 |
@@ -2405,6 +2486,10 @@
 | *ec2* | `DescribeStaleSecurityGroups` | 1 |
 | *ec2* | `DescribeSubnets` | 17 |
 | *ec2* | `DescribeTags` | 2 |
+| *ec2* | `DescribeTransitGatewayAttachments` | 0 |
+| *ec2* | `DescribeTransitGatewayRouteTables` | 1 |
+| *ec2* | `DescribeTransitGatewayVpcAttachments` | 0 |
+| *ec2* | `DescribeTransitGateways` | 1 |
 | *ec2* | `DescribeVolumeAttribute` | 0 |
 | *ec2* | `DescribeVolumeStatus` | 0 |
 | *ec2* | `DescribeVolumes` | 1 |
@@ -2419,7 +2504,7 @@
 | *ec2* | `DescribeVpcEndpointServices` | 1 |
 | *ec2* | `DescribeVpcEndpoints` | 2 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 21 |
+| *ec2* | `DescribeVpcs` | 22 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 1 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -2427,6 +2512,7 @@
 | *ec2* | `DetachNetworkInterface` | 1 |
 | *ec2* | `DetachVolume` | 0 |
 | *ec2* | `DetachVpnGateway` | 0 |
+| *ec2* | `DisableTransitGatewayRouteTablePropagation` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `DisableVpcClassicLink` | 0 |
 | *ec2* | `DisableVpcClassicLinkDnsSupport` | 0 |
@@ -2434,17 +2520,23 @@
 | *ec2* | `DisassociateIamInstanceProfile` | 0 |
 | *ec2* | `DisassociateRouteTable` | 0 |
 | *ec2* | `DisassociateSubnetCidrBlock` | 0 |
+| *ec2* | `DisassociateTransitGatewayRouteTable` | 0 |
 | *ec2* | `DisassociateVpcCidrBlock` | 1 |
+| *ec2* | `EnableTransitGatewayRouteTablePropagation` | 1 |
 | *ec2* | `EnableVgwRoutePropagation` | 0 |
 | *ec2* | `EnableVolumeIO` | 0 |
 | *ec2* | `EnableVpcClassicLink` | 0 |
 | *ec2* | `EnableVpcClassicLinkDnsSupport` | 0 |
+| *ec2* | `ExportTransitGatewayRoutes` | 0 |
 | *ec2* | `GetConsoleOutput` | 0 |
 | *ec2* | `GetConsoleScreenshot` | 0 |
 | *ec2* | `GetHostReservationPurchasePreview` | 0 |
 | *ec2* | `GetLaunchTemplateData` | 0 |
 | *ec2* | `GetPasswordData` | 0 |
 | *ec2* | `GetReservedInstancesExchangeQuote` | 0 |
+| *ec2* | `GetTransitGatewayAttachmentPropagations` | 0 |
+| *ec2* | `GetTransitGatewayRouteTableAssociations` | 1 |
+| *ec2* | `GetTransitGatewayRouteTablePropagations` | 1 |
 | *ec2* | `ImportImage` | 0 |
 | *ec2* | `ImportInstance` | 0 |
 | *ec2* | `ImportKeyPair` | 1 |
@@ -2467,6 +2559,7 @@
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `ModifySpotFleetRequest` | 0 |
 | *ec2* | `ModifySubnetAttribute` | 0 |
+| *ec2* | `ModifyTransitGatewayVpcAttachment` | 0 |
 | *ec2* | `ModifyVolume` | 0 |
 | *ec2* | `ModifyVolumeAttribute` | 0 |
 | *ec2* | `ModifyVpcAttribute` | 0 |
@@ -2484,6 +2577,7 @@
 | *ec2* | `PurchaseScheduledInstances` | 0 |
 | *ec2* | `RebootInstances` | 0 |
 | *ec2* | `RegisterImage` | 0 |
+| *ec2* | `RejectTransitGatewayVpcAttachment` | 0 |
 | *ec2* | `RejectVpcEndpointConnections` | 0 |
 | *ec2* | `RejectVpcPeeringConnection` | 0 |
 | *ec2* | `ReleaseAddress` | 1 |
@@ -2493,6 +2587,7 @@
 | *ec2* | `ReplaceNetworkAclEntry` | 0 |
 | *ec2* | `ReplaceRoute` | 0 |
 | *ec2* | `ReplaceRouteTableAssociation` | 0 |
+| *ec2* | `ReplaceTransitGatewayRoute` | 0 |
 | *ec2* | `ReportInstanceStatus` | 0 |
 | *ec2* | `RequestSpotFleet` | 0 |
 | *ec2* | `RequestSpotInstances` | 0 |
@@ -2506,6 +2601,7 @@
 | *ec2* | `RevokeSecurityGroupIngress` | 0 |
 | *ec2* | `RunInstances` | 1 |
 | *ec2* | `RunScheduledInstances` | 0 |
+| *ec2* | `SearchTransitGatewayRoutes` | 1 |
 | *ec2* | `StartInstances` | 0 |
 | *ec2* | `StopInstances` | 0 |
 | *ec2* | `TerminateInstances` | 1 |
@@ -2738,6 +2834,7 @@
 | *elbv2* | `DescribeListeners` | 1 |
 | *elbv2* | `DescribeLoadBalancerAttributes` | 1 |
 | *elbv2* | `DescribeLoadBalancers` | 4 |
+| *elbv2* | `DescribeProvisionedCapacity` | 0 |
 | *elbv2* | `DescribeRules` | 1 |
 | *elbv2* | `DescribeSSLPolicies` | 1 |
 | *elbv2* | `DescribeTags` | 0 |
@@ -2746,6 +2843,7 @@
 | *elbv2* | `DescribeTargetHealth` | 0 |
 | *elbv2* | `ModifyListener` | 0 |
 | *elbv2* | `ModifyLoadBalancerAttributes` | 0 |
+| *elbv2* | `ModifyProvisionedCapacity` | 0 |
 | *elbv2* | `ModifyRule` | 0 |
 | *elbv2* | `ModifyTargetGroup` | 0 |
 | *elbv2* | `ModifyTargetGroupAttributes` | 0 |
@@ -2846,6 +2944,17 @@
 | *fms* | `ListPolicies` | 0 |
 | *fms* | `PutNotificationChannel` | 0 |
 | *fms* | `PutPolicy` | 0 |
+| *fsx* | `CreateBackup` | 0 |
+| *fsx* | `CreateFileSystem` | 0 |
+| *fsx* | `CreateFileSystemFromBackup` | 0 |
+| *fsx* | `DeleteBackup` | 0 |
+| *fsx* | `DeleteFileSystem` | 0 |
+| *fsx* | `DescribeBackups` | 0 |
+| *fsx* | `DescribeFileSystems` | 0 |
+| *fsx* | `ListTagsForResource` | 0 |
+| *fsx* | `TagResource` | 0 |
+| *fsx* | `UntagResource` | 0 |
+| *fsx* | `UpdateFileSystem` | 0 |
 | *gamelift* | `AcceptMatch` | 0 |
 | *gamelift* | `CreateAlias` | 1 |
 | *gamelift* | `CreateBuild` | 1 |
@@ -2946,6 +3055,23 @@
 | *glacier* | `SetVaultNotifications` | 0 |
 | *glacier* | `UploadArchive` | 0 |
 | *glacier* | `UploadMultipartPart` | 0 |
+| *globalaccelerator* | `CreateAccelerator` | 0 |
+| *globalaccelerator* | `CreateEndpointGroup` | 0 |
+| *globalaccelerator* | `CreateListener` | 0 |
+| *globalaccelerator* | `DeleteAccelerator` | 0 |
+| *globalaccelerator* | `DeleteEndpointGroup` | 0 |
+| *globalaccelerator* | `DeleteListener` | 0 |
+| *globalaccelerator* | `DescribeAccelerator` | 0 |
+| *globalaccelerator* | `DescribeAcceleratorAttributes` | 0 |
+| *globalaccelerator* | `DescribeEndpointGroup` | 0 |
+| *globalaccelerator* | `DescribeListener` | 0 |
+| *globalaccelerator* | `ListAccelerators` | 0 |
+| *globalaccelerator* | `ListEndpointGroups` | 0 |
+| *globalaccelerator* | `ListListeners` | 0 |
+| *globalaccelerator* | `UpdateAccelerator` | 0 |
+| *globalaccelerator* | `UpdateAcceleratorAttributes` | 0 |
+| *globalaccelerator* | `UpdateEndpointGroup` | 0 |
+| *globalaccelerator* | `UpdateListener` | 0 |
 | *glue* | `BatchCreatePartition` | 0 |
 | *glue* | `BatchDeleteConnection` | 1 |
 | *glue* | `BatchDeletePartition` | 0 |
@@ -3035,6 +3161,8 @@
 | *glue* | `UpdateUserDefinedFunction` | 0 |
 | *greengrass* | `AssociateRoleToGroup` | 0 |
 | *greengrass* | `AssociateServiceRoleToAccount` | 0 |
+| *greengrass* | `CreateConnectorDefinition` | 0 |
+| *greengrass* | `CreateConnectorDefinitionVersion` | 0 |
 | *greengrass* | `CreateCoreDefinition` | 0 |
 | *greengrass* | `CreateCoreDefinitionVersion` | 0 |
 | *greengrass* | `CreateDeployment` | 0 |
@@ -3052,6 +3180,7 @@
 | *greengrass* | `CreateSoftwareUpdateJob` | 0 |
 | *greengrass* | `CreateSubscriptionDefinition` | 0 |
 | *greengrass* | `CreateSubscriptionDefinitionVersion` | 0 |
+| *greengrass* | `DeleteConnectorDefinition` | 0 |
 | *greengrass* | `DeleteCoreDefinition` | 0 |
 | *greengrass* | `DeleteDeviceDefinition` | 0 |
 | *greengrass* | `DeleteFunctionDefinition` | 0 |
@@ -3064,6 +3193,8 @@
 | *greengrass* | `GetAssociatedRole` | 0 |
 | *greengrass* | `GetBulkDeploymentStatus` | 0 |
 | *greengrass* | `GetConnectivityInfo` | 0 |
+| *greengrass* | `GetConnectorDefinition` | 0 |
+| *greengrass* | `GetConnectorDefinitionVersion` | 0 |
 | *greengrass* | `GetCoreDefinition` | 0 |
 | *greengrass* | `GetCoreDefinitionVersion` | 0 |
 | *greengrass* | `GetDeploymentStatus` | 0 |
@@ -3084,6 +3215,8 @@
 | *greengrass* | `GetSubscriptionDefinitionVersion` | 0 |
 | *greengrass* | `ListBulkDeploymentDetailedReports` | 0 |
 | *greengrass* | `ListBulkDeployments` | 0 |
+| *greengrass* | `ListConnectorDefinitionVersions` | 0 |
+| *greengrass* | `ListConnectorDefinitions` | 0 |
 | *greengrass* | `ListCoreDefinitionVersions` | 0 |
 | *greengrass* | `ListCoreDefinitions` | 0 |
 | *greengrass* | `ListDeployments` | 0 |
@@ -3104,6 +3237,7 @@
 | *greengrass* | `StartBulkDeployment` | 0 |
 | *greengrass* | `StopBulkDeployment` | 0 |
 | *greengrass* | `UpdateConnectivityInfo` | 0 |
+| *greengrass* | `UpdateConnectorDefinition` | 0 |
 | *greengrass* | `UpdateCoreDefinition` | 0 |
 | *greengrass* | `UpdateDeviceDefinition` | 0 |
 | *greengrass* | `UpdateFunctionDefinition` | 0 |
@@ -3567,6 +3701,12 @@
 | *iotanalytics* | `UpdateDataset` | 0 |
 | *iotanalytics* | `UpdateDatastore` | 0 |
 | *iotanalytics* | `UpdatePipeline` | 0 |
+| *kafka* | `CreateCluster` | 0 |
+| *kafka* | `DeleteCluster` | 0 |
+| *kafka* | `DescribeCluster` | 0 |
+| *kafka* | `GetBootstrapBrokers` | 0 |
+| *kafka* | `ListClusters` | 0 |
+| *kafka* | `ListNodes` | 0 |
 | *kinesis* | `AddTagsToStream` | 0 |
 | *kinesis* | `CreateStream` | 2 |
 | *kinesis* | `DecreaseStreamRetentionPeriod` | 0 |
@@ -3616,6 +3756,27 @@
 | *kinesisanalytics* | `StartApplication` | 1 |
 | *kinesisanalytics* | `StopApplication` | 1 |
 | *kinesisanalytics* | `UpdateApplication` | 1 |
+| *kinesisanalyticsv2* | `AddApplicationCloudWatchLoggingOption` | 0 |
+| *kinesisanalyticsv2* | `AddApplicationInput` | 0 |
+| *kinesisanalyticsv2* | `AddApplicationInputProcessingConfiguration` | 0 |
+| *kinesisanalyticsv2* | `AddApplicationOutput` | 0 |
+| *kinesisanalyticsv2* | `AddApplicationReferenceDataSource` | 0 |
+| *kinesisanalyticsv2* | `CreateApplication` | 0 |
+| *kinesisanalyticsv2* | `CreateApplicationSnapshot` | 0 |
+| *kinesisanalyticsv2* | `DeleteApplication` | 0 |
+| *kinesisanalyticsv2* | `DeleteApplicationCloudWatchLoggingOption` | 0 |
+| *kinesisanalyticsv2* | `DeleteApplicationInputProcessingConfiguration` | 0 |
+| *kinesisanalyticsv2* | `DeleteApplicationOutput` | 0 |
+| *kinesisanalyticsv2* | `DeleteApplicationReferenceDataSource` | 0 |
+| *kinesisanalyticsv2* | `DeleteApplicationSnapshot` | 0 |
+| *kinesisanalyticsv2* | `DescribeApplication` | 0 |
+| *kinesisanalyticsv2* | `DescribeApplicationSnapshot` | 0 |
+| *kinesisanalyticsv2* | `DiscoverInputSchema` | 0 |
+| *kinesisanalyticsv2* | `ListApplicationSnapshots` | 0 |
+| *kinesisanalyticsv2* | `ListApplications` | 0 |
+| *kinesisanalyticsv2* | `StartApplication` | 0 |
+| *kinesisanalyticsv2* | `StopApplication` | 0 |
+| *kinesisanalyticsv2* | `UpdateApplication` | 0 |
 | *kinesisvideo* | `CreateStream` | 0 |
 | *kinesisvideo* | `DeleteStream` | 0 |
 | *kinesisvideo* | `DescribeStream` | 0 |
@@ -3627,15 +3788,20 @@
 | *kinesisvideo* | `UpdateDataRetention` | 0 |
 | *kinesisvideo* | `UpdateStream` | 0 |
 | *kms* | `CancelKeyDeletion` | 0 |
+| *kms* | `ConnectCustomKeyStore` | 0 |
 | *kms* | `CreateAlias` | 0 |
+| *kms* | `CreateCustomKeyStore` | 0 |
 | *kms* | `CreateGrant` | 0 |
 | *kms* | `CreateKey` | 1 |
 | *kms* | `Decrypt` | 0 |
 | *kms* | `DeleteAlias` | 0 |
+| *kms* | `DeleteCustomKeyStore` | 0 |
 | *kms* | `DeleteImportedKeyMaterial` | 0 |
+| *kms* | `DescribeCustomKeyStores` | 0 |
 | *kms* | `DescribeKey` | 5 |
 | *kms* | `DisableKey` | 0 |
 | *kms* | `DisableKeyRotation` | 0 |
+| *kms* | `DisconnectCustomKeyStore` | 0 |
 | *kms* | `EnableKey` | 0 |
 | *kms* | `EnableKeyRotation` | 0 |
 | *kms* | `Encrypt` | 0 |
@@ -3660,7 +3826,9 @@
 | *kms* | `TagResource` | 0 |
 | *kms* | `UntagResource` | 0 |
 | *kms* | `UpdateAlias` | 0 |
+| *kms* | `UpdateCustomKeyStore` | 0 |
 | *kms* | `UpdateKeyDescription` | 0 |
+| *lambda* | `AddLayerVersionPermission` | 0 |
 | *lambda* | `AddPermission` | 0 |
 | *lambda* | `CreateAlias` | 1 |
 | *lambda* | `CreateEventSourceMapping` | 0 |
@@ -3669,21 +3837,28 @@
 | *lambda* | `DeleteEventSourceMapping` | 0 |
 | *lambda* | `DeleteFunction` | 1 |
 | *lambda* | `DeleteFunctionConcurrency` | 0 |
+| *lambda* | `DeleteLayerVersion` | 1 |
 | *lambda* | `GetAccountSettings` | 0 |
 | *lambda* | `GetAlias` | 1 |
 | *lambda* | `GetEventSourceMapping` | 0 |
 | *lambda* | `GetFunction` | 1 |
 | *lambda* | `GetFunctionConfiguration` | 1 |
+| *lambda* | `GetLayerVersion` | 0 |
+| *lambda* | `GetLayerVersionPolicy` | 0 |
 | *lambda* | `GetPolicy` | 0 |
 | *lambda* | `Invoke` | 0 |
 | *lambda* | `InvokeAsync` | 0 |
 | *lambda* | `ListAliases` | 1 |
 | *lambda* | `ListEventSourceMappings` | 0 |
 | *lambda* | `ListFunctions` | 6 |
+| *lambda* | `ListLayerVersions` | 0 |
+| *lambda* | `ListLayers` | 1 |
 | *lambda* | `ListTags` | 1 |
 | *lambda* | `ListVersionsByFunction` | 1 |
+| *lambda* | `PublishLayerVersion` | 1 |
 | *lambda* | `PublishVersion` | 1 |
 | *lambda* | `PutFunctionConcurrency` | 0 |
+| *lambda* | `RemoveLayerVersionPermission` | 0 |
 | *lambda* | `RemovePermission` | 0 |
 | *lambda* | `TagResource` | 0 |
 | *lambda* | `UntagResource` | 0 |
@@ -3729,12 +3904,29 @@
 | *lex-models* | `StartImport` | 0 |
 | *lex-runtime* | `PostContent` | 0 |
 | *lex-runtime* | `PostText` | 0 |
+| *license-manager* | `CreateLicenseConfiguration` | 0 |
+| *license-manager* | `DeleteLicenseConfiguration` | 0 |
+| *license-manager* | `GetLicenseConfiguration` | 0 |
+| *license-manager* | `GetServiceSettings` | 0 |
+| *license-manager* | `ListAssociationsForLicenseConfiguration` | 0 |
+| *license-manager* | `ListLicenseConfigurations` | 0 |
+| *license-manager* | `ListLicenseSpecificationsForResource` | 0 |
+| *license-manager* | `ListResourceInventory` | 0 |
+| *license-manager* | `ListTagsForResource` | 0 |
+| *license-manager* | `ListUsageForLicenseConfiguration` | 0 |
+| *license-manager* | `TagResource` | 0 |
+| *license-manager* | `UntagResource` | 0 |
+| *license-manager* | `UpdateLicenseConfiguration` | 0 |
+| *license-manager* | `UpdateLicenseSpecificationsForResource` | 0 |
+| *license-manager* | `UpdateServiceSettings` | 0 |
 | *lightsail* | `AllocateStaticIp` | 0 |
 | *lightsail* | `AttachDisk` | 0 |
 | *lightsail* | `AttachInstancesToLoadBalancer` | 0 |
 | *lightsail* | `AttachLoadBalancerTlsCertificate` | 0 |
 | *lightsail* | `AttachStaticIp` | 0 |
 | *lightsail* | `CloseInstancePublicPorts` | 0 |
+| *lightsail* | `CopySnapshot` | 0 |
+| *lightsail* | `CreateCloudFormationStack` | 0 |
 | *lightsail* | `CreateDisk` | 0 |
 | *lightsail* | `CreateDiskFromSnapshot` | 0 |
 | *lightsail* | `CreateDiskSnapshot` | 0 |
@@ -3764,15 +3956,18 @@
 | *lightsail* | `DetachInstancesFromLoadBalancer` | 0 |
 | *lightsail* | `DetachStaticIp` | 0 |
 | *lightsail* | `DownloadDefaultKeyPair` | 0 |
+| *lightsail* | `ExportSnapshot` | 0 |
 | *lightsail* | `GetActiveNames` | 0 |
 | *lightsail* | `GetBlueprints` | 0 |
 | *lightsail* | `GetBundles` | 0 |
+| *lightsail* | `GetCloudFormationStackRecords` | 0 |
 | *lightsail* | `GetDisk` | 0 |
 | *lightsail* | `GetDiskSnapshot` | 0 |
 | *lightsail* | `GetDiskSnapshots` | 0 |
 | *lightsail* | `GetDisks` | 0 |
 | *lightsail* | `GetDomain` | 0 |
 | *lightsail* | `GetDomains` | 0 |
+| *lightsail* | `GetExportSnapshotRecords` | 0 |
 | *lightsail* | `GetInstance` | 0 |
 | *lightsail* | `GetInstanceAccessDetails` | 0 |
 | *lightsail* | `GetInstanceMetricData` | 0 |
@@ -3817,7 +4012,9 @@
 | *lightsail* | `StartRelationalDatabase` | 0 |
 | *lightsail* | `StopInstance` | 0 |
 | *lightsail* | `StopRelationalDatabase` | 0 |
+| *lightsail* | `TagResource` | 0 |
 | *lightsail* | `UnpeerVpc` | 0 |
+| *lightsail* | `UntagResource` | 0 |
 | *lightsail* | `UpdateDomainEntry` | 0 |
 | *lightsail* | `UpdateLoadBalancerAttribute` | 0 |
 | *lightsail* | `UpdateRelationalDatabase` | 0 |
@@ -3839,11 +4036,15 @@
 | *logs* | `DescribeLogGroups` | 3 |
 | *logs* | `DescribeLogStreams` | 0 |
 | *logs* | `DescribeMetricFilters` | 0 |
+| *logs* | `DescribeQueries` | 0 |
 | *logs* | `DescribeResourcePolicies` | 0 |
 | *logs* | `DescribeSubscriptionFilters` | 0 |
 | *logs* | `DisassociateKmsKey` | 0 |
 | *logs* | `FilterLogEvents` | 0 |
 | *logs* | `GetLogEvents` | 0 |
+| *logs* | `GetLogGroupFields` | 0 |
+| *logs* | `GetLogRecord` | 0 |
+| *logs* | `GetQueryResults` | 0 |
 | *logs* | `ListTagsLogGroup` | 0 |
 | *logs* | `PutDestination` | 0 |
 | *logs* | `PutDestinationPolicy` | 0 |
@@ -3852,6 +4053,8 @@
 | *logs* | `PutResourcePolicy` | 0 |
 | *logs* | `PutRetentionPolicy` | 0 |
 | *logs* | `PutSubscriptionFilter` | 1 |
+| *logs* | `StartQuery` | 0 |
+| *logs* | `StopQuery` | 0 |
 | *logs* | `TagLogGroup` | 0 |
 | *logs* | `TestMetricFilter` | 0 |
 | *logs* | `UntagLogGroup` | 0 |
@@ -3893,6 +4096,20 @@
 | *marketplace-entitlement* | `GetEntitlements` | 0 |
 | *marketplacecommerceanalytics* | `GenerateDataSet` | 0 |
 | *marketplacecommerceanalytics* | `StartSupportDataExport` | 0 |
+| *mediaconnect* | `AddFlowOutputs` | 0 |
+| *mediaconnect* | `CreateFlow` | 0 |
+| *mediaconnect* | `DeleteFlow` | 0 |
+| *mediaconnect* | `DescribeFlow` | 0 |
+| *mediaconnect* | `GrantFlowEntitlements` | 0 |
+| *mediaconnect* | `ListEntitlements` | 0 |
+| *mediaconnect* | `ListFlows` | 0 |
+| *mediaconnect* | `RemoveFlowOutput` | 0 |
+| *mediaconnect* | `RevokeFlowEntitlement` | 0 |
+| *mediaconnect* | `StartFlow` | 0 |
+| *mediaconnect* | `StopFlow` | 0 |
+| *mediaconnect* | `UpdateFlowEntitlement` | 0 |
+| *mediaconnect* | `UpdateFlowOutput` | 0 |
+| *mediaconnect* | `UpdateFlowSource` | 0 |
 | *mediaconvert* | `AssociateCertificate` | 0 |
 | *mediaconvert* | `CancelJob` | 0 |
 | *mediaconvert* | `CreateJob` | 0 |
@@ -3976,6 +4193,7 @@
 | *mediatailor* | `PutPlaybackConfiguration` | 0 |
 | *meteringmarketplace* | `BatchMeterUsage` | 0 |
 | *meteringmarketplace* | `MeterUsage` | 0 |
+| *meteringmarketplace* | `RegisterUsage` | 0 |
 | *meteringmarketplace* | `ResolveCustomer` | 0 |
 | *mgh* | `AssociateCreatedArtifact` | 0 |
 | *mgh* | `AssociateDiscoveredResource` | 0 |
@@ -4418,6 +4636,7 @@
 | *rds* | `CreateDBSnapshot` | 0 |
 | *rds* | `CreateDBSubnetGroup` | 1 |
 | *rds* | `CreateEventSubscription` | 1 |
+| *rds* | `CreateGlobalCluster` | 0 |
 | *rds* | `CreateOptionGroup` | 1 |
 | *rds* | `DeleteDBCluster` | 0 |
 | *rds* | `DeleteDBClusterEndpoint` | 0 |
@@ -4430,6 +4649,7 @@
 | *rds* | `DeleteDBSnapshot` | 0 |
 | *rds* | `DeleteDBSubnetGroup` | 0 |
 | *rds* | `DeleteEventSubscription` | 0 |
+| *rds* | `DeleteGlobalCluster` | 0 |
 | *rds* | `DeleteOptionGroup` | 0 |
 | *rds* | `DescribeAccountAttributes` | 0 |
 | *rds* | `DescribeCertificates` | 0 |
@@ -4455,6 +4675,7 @@
 | *rds* | `DescribeEventCategories` | 0 |
 | *rds* | `DescribeEventSubscriptions` | 1 |
 | *rds* | `DescribeEvents` | 1 |
+| *rds* | `DescribeGlobalClusters` | 0 |
 | *rds* | `DescribeOptionGroupOptions` | 0 |
 | *rds* | `DescribeOptionGroups` | 1 |
 | *rds* | `DescribeOrderableDBInstanceOptions` | 0 |
@@ -4477,11 +4698,13 @@
 | *rds* | `ModifyDBSnapshotAttribute` | 0 |
 | *rds* | `ModifyDBSubnetGroup` | 0 |
 | *rds* | `ModifyEventSubscription` | 0 |
+| *rds* | `ModifyGlobalCluster` | 0 |
 | *rds* | `ModifyOptionGroup` | 0 |
 | *rds* | `PromoteReadReplica` | 0 |
 | *rds* | `PromoteReadReplicaDBCluster` | 0 |
 | *rds* | `PurchaseReservedDBInstancesOffering` | 0 |
 | *rds* | `RebootDBInstance` | 0 |
+| *rds* | `RemoveFromGlobalCluster` | 0 |
 | *rds* | `RemoveRoleFromDBCluster` | 0 |
 | *rds* | `RemoveSourceIdentifierFromSubscription` | 0 |
 | *rds* | `RemoveTagsFromResource` | 0 |
@@ -4631,6 +4854,38 @@
 | *resourcegroupstaggingapi* | `GetTagValues` | 0 |
 | *resourcegroupstaggingapi* | `TagResources` | 0 |
 | *resourcegroupstaggingapi* | `UntagResources` | 0 |
+| *robomaker* | `BatchDescribeSimulationJob` | 0 |
+| *robomaker* | `CancelSimulationJob` | 0 |
+| *robomaker* | `CreateDeploymentJob` | 0 |
+| *robomaker* | `CreateFleet` | 0 |
+| *robomaker* | `CreateRobot` | 0 |
+| *robomaker* | `CreateRobotApplication` | 0 |
+| *robomaker* | `CreateRobotApplicationVersion` | 0 |
+| *robomaker* | `CreateSimulationApplication` | 0 |
+| *robomaker* | `CreateSimulationApplicationVersion` | 0 |
+| *robomaker* | `CreateSimulationJob` | 0 |
+| *robomaker* | `DeleteFleet` | 0 |
+| *robomaker* | `DeleteRobot` | 0 |
+| *robomaker* | `DeleteRobotApplication` | 0 |
+| *robomaker* | `DeleteSimulationApplication` | 0 |
+| *robomaker* | `DeregisterRobot` | 0 |
+| *robomaker* | `DescribeDeploymentJob` | 0 |
+| *robomaker* | `DescribeFleet` | 0 |
+| *robomaker* | `DescribeRobot` | 0 |
+| *robomaker* | `DescribeRobotApplication` | 0 |
+| *robomaker* | `DescribeSimulationApplication` | 0 |
+| *robomaker* | `DescribeSimulationJob` | 0 |
+| *robomaker* | `ListDeploymentJobs` | 0 |
+| *robomaker* | `ListFleets` | 0 |
+| *robomaker* | `ListRobotApplications` | 0 |
+| *robomaker* | `ListRobots` | 0 |
+| *robomaker* | `ListSimulationApplications` | 0 |
+| *robomaker* | `ListSimulationJobs` | 0 |
+| *robomaker* | `RegisterRobot` | 0 |
+| *robomaker* | `RestartSimulationJob` | 0 |
+| *robomaker* | `SyncDeploymentJob` | 0 |
+| *robomaker* | `UpdateRobotApplication` | 0 |
+| *robomaker* | `UpdateSimulationApplication` | 0 |
 | *route53* | `AssociateVPCWithHostedZone` | 0 |
 | *route53* | `ChangeResourceRecordSets` | 0 |
 | *route53* | `ChangeTagsForResource` | 0 |
@@ -4775,6 +5030,9 @@
 | *s3* | `GetBucketWebsite` | 1 |
 | *s3* | `GetObject` | 0 |
 | *s3* | `GetObjectAcl` | 0 |
+| *s3* | `GetObjectLegalHold` | 0 |
+| *s3* | `GetObjectLockConfiguration` | 0 |
+| *s3* | `GetObjectRetention` | 0 |
 | *s3* | `GetObjectTagging` | 0 |
 | *s3* | `GetObjectTorrent` | 0 |
 | *s3* | `GetPublicAccessBlock` | 0 |
@@ -4809,6 +5067,9 @@
 | *s3* | `PutBucketWebsite` | 0 |
 | *s3* | `PutObject` | 0 |
 | *s3* | `PutObjectAcl` | 0 |
+| *s3* | `PutObjectLegalHold` | 0 |
+| *s3* | `PutObjectLockConfiguration` | 0 |
+| *s3* | `PutObjectRetention` | 0 |
 | *s3* | `PutObjectTagging` | 0 |
 | *s3* | `PutPublicAccessBlock` | 0 |
 | *s3* | `RestoreObject` | 0 |
@@ -4819,48 +5080,80 @@
 | *s3control* | `GetPublicAccessBlock` | 0 |
 | *s3control* | `PutPublicAccessBlock` | 0 |
 | *sagemaker* | `AddTags` | 0 |
+| *sagemaker* | `CreateAlgorithm` | 0 |
+| *sagemaker* | `CreateCodeRepository` | 0 |
+| *sagemaker* | `CreateCompilationJob` | 0 |
 | *sagemaker* | `CreateEndpoint` | 0 |
 | *sagemaker* | `CreateEndpointConfig` | 0 |
 | *sagemaker* | `CreateHyperParameterTuningJob` | 0 |
+| *sagemaker* | `CreateLabelingJob` | 0 |
 | *sagemaker* | `CreateModel` | 1 |
+| *sagemaker* | `CreateModelPackage` | 0 |
 | *sagemaker* | `CreateNotebookInstance` | 1 |
 | *sagemaker* | `CreateNotebookInstanceLifecycleConfig` | 1 |
 | *sagemaker* | `CreatePresignedNotebookInstanceUrl` | 0 |
 | *sagemaker* | `CreateTrainingJob` | 0 |
 | *sagemaker* | `CreateTransformJob` | 0 |
+| *sagemaker* | `CreateWorkteam` | 0 |
+| *sagemaker* | `DeleteAlgorithm` | 0 |
+| *sagemaker* | `DeleteCodeRepository` | 0 |
 | *sagemaker* | `DeleteEndpoint` | 0 |
 | *sagemaker* | `DeleteEndpointConfig` | 0 |
 | *sagemaker* | `DeleteModel` | 0 |
+| *sagemaker* | `DeleteModelPackage` | 0 |
 | *sagemaker* | `DeleteNotebookInstance` | 1 |
 | *sagemaker* | `DeleteNotebookInstanceLifecycleConfig` | 1 |
 | *sagemaker* | `DeleteTags` | 0 |
+| *sagemaker* | `DeleteWorkteam` | 0 |
+| *sagemaker* | `DescribeAlgorithm` | 0 |
+| *sagemaker* | `DescribeCodeRepository` | 0 |
+| *sagemaker* | `DescribeCompilationJob` | 0 |
 | *sagemaker* | `DescribeEndpoint` | 0 |
 | *sagemaker* | `DescribeEndpointConfig` | 0 |
 | *sagemaker* | `DescribeHyperParameterTuningJob` | 0 |
+| *sagemaker* | `DescribeLabelingJob` | 0 |
 | *sagemaker* | `DescribeModel` | 0 |
+| *sagemaker* | `DescribeModelPackage` | 0 |
 | *sagemaker* | `DescribeNotebookInstance` | 0 |
 | *sagemaker* | `DescribeNotebookInstanceLifecycleConfig` | 0 |
+| *sagemaker* | `DescribeSubscribedWorkteam` | 0 |
 | *sagemaker* | `DescribeTrainingJob` | 0 |
 | *sagemaker* | `DescribeTransformJob` | 0 |
+| *sagemaker* | `DescribeWorkteam` | 0 |
+| *sagemaker* | `GetSearchSuggestions` | 0 |
+| *sagemaker* | `ListAlgorithms` | 0 |
+| *sagemaker* | `ListCodeRepositories` | 0 |
+| *sagemaker* | `ListCompilationJobs` | 0 |
 | *sagemaker* | `ListEndpointConfigs` | 1 |
 | *sagemaker* | `ListEndpoints` | 1 |
 | *sagemaker* | `ListHyperParameterTuningJobs` | 0 |
+| *sagemaker* | `ListLabelingJobs` | 0 |
+| *sagemaker* | `ListLabelingJobsForWorkteam` | 0 |
+| *sagemaker* | `ListModelPackages` | 0 |
 | *sagemaker* | `ListModels` | 1 |
 | *sagemaker* | `ListNotebookInstanceLifecycleConfigs` | 1 |
 | *sagemaker* | `ListNotebookInstances` | 1 |
+| *sagemaker* | `ListSubscribedWorkteams` | 0 |
 | *sagemaker* | `ListTags` | 0 |
 | *sagemaker* | `ListTrainingJobs` | 0 |
 | *sagemaker* | `ListTrainingJobsForHyperParameterTuningJob` | 0 |
 | *sagemaker* | `ListTransformJobs` | 0 |
+| *sagemaker* | `ListWorkteams` | 0 |
+| *sagemaker* | `RenderUiTemplate` | 0 |
+| *sagemaker* | `Search` | 0 |
 | *sagemaker* | `StartNotebookInstance` | 0 |
+| *sagemaker* | `StopCompilationJob` | 0 |
 | *sagemaker* | `StopHyperParameterTuningJob` | 0 |
+| *sagemaker* | `StopLabelingJob` | 0 |
 | *sagemaker* | `StopNotebookInstance` | 1 |
 | *sagemaker* | `StopTrainingJob` | 0 |
 | *sagemaker* | `StopTransformJob` | 0 |
+| *sagemaker* | `UpdateCodeRepository` | 0 |
 | *sagemaker* | `UpdateEndpoint` | 0 |
 | *sagemaker* | `UpdateEndpointWeightsAndCapacities` | 0 |
 | *sagemaker* | `UpdateNotebookInstance` | 0 |
 | *sagemaker* | `UpdateNotebookInstanceLifecycleConfig` | 0 |
+| *sagemaker* | `UpdateWorkteam` | 0 |
 | *sagemaker-runtime* | `InvokeEndpoint` | 0 |
 | *sdb* | `BatchDeleteAttributes` | 0 |
 | *sdb* | `BatchPutAttributes` | 0 |
@@ -4890,6 +5183,35 @@
 | *secretsmanager* | `UntagResource` | 0 |
 | *secretsmanager* | `UpdateSecret` | 0 |
 | *secretsmanager* | `UpdateSecretVersionStage` | 0 |
+| *securityhub* | `AcceptInvitation` | 0 |
+| *securityhub* | `BatchDisableStandards` | 0 |
+| *securityhub* | `BatchEnableStandards` | 0 |
+| *securityhub* | `BatchImportFindings` | 0 |
+| *securityhub* | `CreateInsight` | 0 |
+| *securityhub* | `CreateMembers` | 0 |
+| *securityhub* | `DeclineInvitations` | 0 |
+| *securityhub* | `DeleteInsight` | 0 |
+| *securityhub* | `DeleteInvitations` | 0 |
+| *securityhub* | `DeleteMembers` | 0 |
+| *securityhub* | `DisableImportFindingsForProduct` | 0 |
+| *securityhub* | `DisableSecurityHub` | 0 |
+| *securityhub* | `DisassociateFromMasterAccount` | 0 |
+| *securityhub* | `DisassociateMembers` | 0 |
+| *securityhub* | `EnableImportFindingsForProduct` | 0 |
+| *securityhub* | `EnableSecurityHub` | 0 |
+| *securityhub* | `GetEnabledStandards` | 0 |
+| *securityhub* | `GetFindings` | 0 |
+| *securityhub* | `GetInsightResults` | 0 |
+| *securityhub* | `GetInsights` | 0 |
+| *securityhub* | `GetInvitationsCount` | 0 |
+| *securityhub* | `GetMasterAccount` | 0 |
+| *securityhub* | `GetMembers` | 0 |
+| *securityhub* | `InviteMembers` | 0 |
+| *securityhub* | `ListEnabledProductsForImport` | 0 |
+| *securityhub* | `ListInvitations` | 0 |
+| *securityhub* | `ListMembers` | 0 |
+| *securityhub* | `UpdateFindings` | 0 |
+| *securityhub* | `UpdateInsight` | 0 |
 | *serverlessrepo* | `CreateApplication` | 0 |
 | *serverlessrepo* | `CreateApplicationVersion` | 0 |
 | *serverlessrepo* | `CreateCloudFormationChangeSet` | 1 |
@@ -4898,6 +5220,7 @@
 | *serverlessrepo* | `GetApplication` | 0 |
 | *serverlessrepo* | `GetApplicationPolicy` | 0 |
 | *serverlessrepo* | `GetCloudFormationTemplate` | 0 |
+| *serverlessrepo* | `ListApplicationDependencies` | 0 |
 | *serverlessrepo* | `ListApplicationVersions` | 0 |
 | *serverlessrepo* | `ListApplications` | 0 |
 | *serverlessrepo* | `PutApplicationPolicy` | 0 |
@@ -4979,19 +5302,21 @@
 | *servicecatalog* | `UpdateProvisioningArtifact` | 0 |
 | *servicecatalog* | `UpdateServiceAction` | 0 |
 | *servicecatalog* | `UpdateTagOption` | 0 |
-| *servicediscovery* | `CreatePrivateDnsNamespace` | 0 |
-| *servicediscovery* | `CreatePublicDnsNamespace` | 0 |
+| *servicediscovery* | `CreateHttpNamespace` | 1 |
+| *servicediscovery* | `CreatePrivateDnsNamespace` | 1 |
+| *servicediscovery* | `CreatePublicDnsNamespace` | 1 |
 | *servicediscovery* | `CreateService` | 0 |
-| *servicediscovery* | `DeleteNamespace` | 0 |
+| *servicediscovery* | `DeleteNamespace` | 1 |
 | *servicediscovery* | `DeleteService` | 0 |
 | *servicediscovery* | `DeregisterInstance` | 0 |
+| *servicediscovery* | `DiscoverInstances` | 0 |
 | *servicediscovery* | `GetInstance` | 0 |
 | *servicediscovery* | `GetInstancesHealthStatus` | 0 |
 | *servicediscovery* | `GetNamespace` | 0 |
-| *servicediscovery* | `GetOperation` | 0 |
+| *servicediscovery* | `GetOperation` | 1 |
 | *servicediscovery* | `GetService` | 0 |
 | *servicediscovery* | `ListInstances` | 0 |
-| *servicediscovery* | `ListNamespaces` | 1 |
+| *servicediscovery* | `ListNamespaces` | 2 |
 | *servicediscovery* | `ListOperations` | 0 |
 | *servicediscovery* | `ListServices` | 0 |
 | *servicediscovery* | `RegisterInstance` | 0 |
@@ -5094,16 +5419,33 @@
 | *signer* | `ListSigningProfiles` | 0 |
 | *signer* | `PutSigningProfile` | 0 |
 | *signer* | `StartSigningJob` | 0 |
+| *sms* | `CreateApp` | 0 |
 | *sms* | `CreateReplicationJob` | 0 |
+| *sms* | `DeleteApp` | 0 |
+| *sms* | `DeleteAppLaunchConfiguration` | 0 |
+| *sms* | `DeleteAppReplicationConfiguration` | 0 |
 | *sms* | `DeleteReplicationJob` | 0 |
 | *sms* | `DeleteServerCatalog` | 0 |
 | *sms* | `DisassociateConnector` | 0 |
+| *sms* | `GenerateChangeSet` | 0 |
+| *sms* | `GenerateTemplate` | 0 |
+| *sms* | `GetApp` | 0 |
+| *sms* | `GetAppLaunchConfiguration` | 0 |
+| *sms* | `GetAppReplicationConfiguration` | 0 |
 | *sms* | `GetConnectors` | 0 |
 | *sms* | `GetReplicationJobs` | 0 |
 | *sms* | `GetReplicationRuns` | 0 |
 | *sms* | `GetServers` | 0 |
 | *sms* | `ImportServerCatalog` | 0 |
+| *sms* | `LaunchApp` | 0 |
+| *sms* | `ListApps` | 0 |
+| *sms* | `PutAppLaunchConfiguration` | 0 |
+| *sms* | `PutAppReplicationConfiguration` | 0 |
+| *sms* | `StartAppReplication` | 0 |
 | *sms* | `StartOnDemandReplicationRun` | 0 |
+| *sms* | `StopAppReplication` | 0 |
+| *sms* | `TerminateApp` | 0 |
+| *sms* | `UpdateApp` | 0 |
 | *sms* | `UpdateReplicationJob` | 0 |
 | *sms-voice* | `CreateConfigurationSet` | 0 |
 | *sms-voice* | `CreateConfigurationSetEventDestination` | 0 |
@@ -5440,6 +5782,28 @@
 | *transcribe* | `ListVocabularies` | 0 |
 | *transcribe* | `StartTranscriptionJob` | 0 |
 | *transcribe* | `UpdateVocabulary` | 0 |
+| *transfer* | `CreateServer` | 0 |
+| *transfer* | `CreateUser` | 0 |
+| *transfer* | `DeleteServer` | 0 |
+| *transfer* | `DeleteSshPublicKey` | 0 |
+| *transfer* | `DeleteUser` | 0 |
+| *transfer* | `DescribeServer` | 0 |
+| *transfer* | `DescribeUser` | 0 |
+| *transfer* | `ImportSshPublicKey` | 0 |
+| *transfer* | `ListServers` | 0 |
+| *transfer* | `ListTagsForResource` | 0 |
+| *transfer* | `ListUsers` | 0 |
+| *transfer* | `StartServer` | 0 |
+| *transfer* | `StopServer` | 0 |
+| *transfer* | `TagResource` | 0 |
+| *transfer* | `TestIdentityProvider` | 0 |
+| *transfer* | `UntagResource` | 0 |
+| *transfer* | `UpdateServer` | 0 |
+| *transfer* | `UpdateUser` | 0 |
+| *translate* | `DeleteTerminology` | 0 |
+| *translate* | `GetTerminology` | 0 |
+| *translate* | `ImportTerminology` | 0 |
+| *translate* | `ListTerminologies` | 0 |
 | *translate* | `TranslateText` | 0 |
 | *waf* | `CreateByteMatchSet` | 1 |
 | *waf* | `CreateGeoMatchSet` | 0 |
@@ -5716,8 +6080,8 @@
 | *xray* | `UpdateSamplingRule` | 0 |
 
 
-**Total Services: 153**
+**Total Services: 166**
 
-**Total Operations: 4863**
+**Total Operations: 5227**
 
-**Total Unique Occurances: 845 (17%)**
+**Total Unique Occurances: 865 (16%)**
