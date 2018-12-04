@@ -171,7 +171,7 @@ function doFinalize() {
     );
 
     if (response[i]['requestBody'].match(/^\{\"version\"\:\"[0-9.]+\"\, \"actions\"\:/g)) // dirty hack
-        document.getElementById('final_output').innerHTML += `} else if (action['action'] == "` + jsonRequestBody["actions"][0]["action"] + `") {`;
+        document.getElementById('final_output').innerHTML += `} else if (action['action'] == "` + /action\"\:\"([a-zA-Z0-9.-]+)\"/g.exec(response[i]['requestBody'])[1] + `") {`;
 
     document.getElementById('final_output').innerHTML += `
     // autogen:${service}:${apiservice}.${apimethod}

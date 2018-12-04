@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**280/322 (86%)** Resources Covered
+**288/322 (89%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -131,12 +131,11 @@
 | *AWS::EC2::VPCCidrBlock* | 1 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
-| *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 1 |
 | *AWS::EC2::VPCGatewayAttachment* | 0 |
 | *AWS::EC2::VPCPeeringConnection* | 0 |
-| *AWS::EC2::VPNConnection* | 0 |
-| *AWS::EC2::VPNConnectionRoute* | 0 |
+| *AWS::EC2::VPNConnection* | 1 |
+| *AWS::EC2::VPNConnectionRoute* | 1 |
 | *AWS::EC2::VPNGateway* | 1 |
 | *AWS::EC2::VPNGatewayRoutePropagation* | 0 |
 | *AWS::EC2::Volume* | 1 |
@@ -148,11 +147,11 @@
 | *AWS::EFS::FileSystem* | 1 |
 | *AWS::EFS::MountTarget* | 1 |
 | *AWS::EKS::Cluster* | 1 |
-| *AWS::EMR::Cluster* | 0 |
+| *AWS::EMR::Cluster* | 1 |
 | *AWS::EMR::InstanceFleetConfig* | 0 |
-| *AWS::EMR::InstanceGroupConfig* | 0 |
-| *AWS::EMR::SecurityConfiguration* | 0 |
-| *AWS::EMR::Step* | 0 |
+| *AWS::EMR::InstanceGroupConfig* | 1 |
+| *AWS::EMR::SecurityConfiguration* | 1 |
+| *AWS::EMR::Step* | 1 |
 | *AWS::ElastiCache::CacheCluster* | 1 |
 | *AWS::ElastiCache::ParameterGroup* | 1 |
 | *AWS::ElastiCache::ReplicationGroup* | 0 |
@@ -170,7 +169,7 @@
 | *AWS::ElasticLoadBalancingV2::LoadBalancer* | 1 |
 | *AWS::ElasticLoadBalancingV2::TargetGroup* | 1 |
 | *AWS::Elasticsearch::Domain* | 1 |
-| *AWS::Events::EventBusPolicy* | 0 |
+| *AWS::Events::EventBusPolicy* | 1 |
 | *AWS::Events::Rule* | 1 |
 | *AWS::GameLift::Alias* | 1 |
 | *AWS::GameLift::Build* | 1 |
@@ -255,7 +254,7 @@
 | *AWS::Redshift::ClusterSecurityGroup* | 1 |
 | *AWS::Redshift::ClusterSecurityGroupIngress* | 1 |
 | *AWS::Redshift::ClusterSubnetGroup* | 1 |
-| *AWS::Route53::HealthCheck* | 0 |
+| *AWS::Route53::HealthCheck* | 1 |
 | *AWS::Route53::HostedZone* | 2 |
 | *AWS::Route53::RecordSet* | 0 |
 | *AWS::Route53::RecordSetGroup* | 0 |
@@ -278,6 +277,7 @@
 | *AWS::SSM::Association* | 1 |
 | *AWS::SSM::Document* | 1 |
 | *AWS::SSM::MaintenanceWindow* | 1 |
+| *AWS::SSM::MaintenanceWindowTarget* | 1 |
 | *AWS::SSM::MaintenanceWindowTask* | 0 |
 | *AWS::SSM::Parameter* | 1 |
 | *AWS::SSM::PatchBaseline* | 1 |
@@ -794,7 +794,7 @@
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 109/310 (35%) |
+| *ec2* | 110/310 (35%) |
 | *ecr* | 2/22 (9%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -803,8 +803,9 @@
 | *elasticbeanstalk* | 8/44 (18%) |
 | *elb* | 4/29 (13%) |
 | *elbv2* | 15/36 (41%) |
+| *emr* | 9/27 (33%) |
 | *es* | 11/23 (47%) |
-| *events* | 10/15 (66%) |
+| *events* | 11/15 (73%) |
 | *firehose* | 3/12 (25%) |
 | *gamelift* | 8/67 (11%) |
 | *glue* | 35/87 (40%) |
@@ -828,7 +829,7 @@
 | *rds* | 22/107 (20%) |
 | *redshift* | 5/81 (6%) |
 | *rekognition* | 3/34 (8%) |
-| *route53* | 6/56 (10%) |
+| *route53* | 8/56 (14%) |
 | *route53resolver* | 10/22 (45%) |
 | *s3* | 25/88 (28%) |
 | *sagemaker* | 11/75 (14%) |
@@ -2377,7 +2378,7 @@
 | *ec2* | `CreateVpcEndpointServiceConfiguration` | 1 |
 | *ec2* | `CreateVpcPeeringConnection` | 0 |
 | *ec2* | `CreateVpnConnection` | 1 |
-| *ec2* | `CreateVpnConnectionRoute` | 0 |
+| *ec2* | `CreateVpnConnectionRoute` | 1 |
 | *ec2* | `CreateVpnGateway` | 1 |
 | *ec2* | `DeleteCustomerGateway` | 1 |
 | *ec2* | `DeleteDhcpOptions` | 1 |
@@ -2855,32 +2856,32 @@
 | *elbv2* | `SetSecurityGroups` | 0 |
 | *elbv2* | `SetSubnets` | 0 |
 | *emr* | `AddInstanceFleet` | 0 |
-| *emr* | `AddInstanceGroups` | 0 |
-| *emr* | `AddJobFlowSteps` | 0 |
+| *emr* | `AddInstanceGroups` | 1 |
+| *emr* | `AddJobFlowSteps` | 1 |
 | *emr* | `AddTags` | 0 |
 | *emr* | `CancelSteps` | 0 |
-| *emr* | `CreateSecurityConfiguration` | 0 |
+| *emr* | `CreateSecurityConfiguration` | 1 |
 | *emr* | `DeleteSecurityConfiguration` | 0 |
-| *emr* | `DescribeCluster` | 0 |
+| *emr* | `DescribeCluster` | 1 |
 | *emr* | `DescribeJobFlows` | 0 |
 | *emr* | `DescribeSecurityConfiguration` | 0 |
 | *emr* | `DescribeStep` | 0 |
-| *emr* | `ListBootstrapActions` | 0 |
+| *emr* | `ListBootstrapActions` | 1 |
 | *emr* | `ListClusters` | 0 |
 | *emr* | `ListInstanceFleets` | 0 |
-| *emr* | `ListInstanceGroups` | 0 |
+| *emr* | `ListInstanceGroups` | 1 |
 | *emr* | `ListInstances` | 0 |
 | *emr* | `ListSecurityConfigurations` | 0 |
-| *emr* | `ListSteps` | 0 |
+| *emr* | `ListSteps` | 1 |
 | *emr* | `ModifyInstanceFleet` | 0 |
 | *emr* | `ModifyInstanceGroups` | 0 |
 | *emr* | `PutAutoScalingPolicy` | 0 |
 | *emr* | `RemoveAutoScalingPolicy` | 0 |
 | *emr* | `RemoveTags` | 0 |
-| *emr* | `RunJobFlow` | 0 |
+| *emr* | `RunJobFlow` | 1 |
 | *emr* | `SetTerminationProtection` | 0 |
 | *emr* | `SetVisibleToAllUsers` | 0 |
-| *emr* | `TerminateJobFlows` | 0 |
+| *emr* | `TerminateJobFlows` | 1 |
 | *es* | `AddTags` | 0 |
 | *es* | `CancelElasticsearchServiceSoftwareUpdate` | 0 |
 | *es* | `CreateElasticsearchDomain` | 1 |
@@ -2913,7 +2914,7 @@
 | *events* | `ListRules` | 1 |
 | *events* | `ListTargetsByRule` | 1 |
 | *events* | `PutEvents` | 0 |
-| *events* | `PutPermission` | 0 |
+| *events* | `PutPermission` | 1 |
 | *events* | `PutRule` | 3 |
 | *events* | `PutTargets` | 2 |
 | *events* | `RemovePermission` | 0 |
@@ -4889,7 +4890,7 @@
 | *route53* | `AssociateVPCWithHostedZone` | 0 |
 | *route53* | `ChangeResourceRecordSets` | 0 |
 | *route53* | `ChangeTagsForResource` | 0 |
-| *route53* | `CreateHealthCheck` | 0 |
+| *route53* | `CreateHealthCheck` | 1 |
 | *route53* | `CreateHostedZone` | 2 |
 | *route53* | `CreateQueryLoggingConfig` | 0 |
 | *route53* | `CreateReusableDelegationSet` | 0 |
@@ -4897,7 +4898,7 @@
 | *route53* | `CreateTrafficPolicyInstance` | 0 |
 | *route53* | `CreateTrafficPolicyVersion` | 0 |
 | *route53* | `CreateVPCAssociationAuthorization` | 0 |
-| *route53* | `DeleteHealthCheck` | 0 |
+| *route53* | `DeleteHealthCheck` | 1 |
 | *route53* | `DeleteHostedZone` | 1 |
 | *route53* | `DeleteQueryLoggingConfig` | 0 |
 | *route53* | `DeleteReusableDelegationSet` | 0 |
@@ -6084,4 +6085,4 @@
 
 **Total Operations: 5227**
 
-**Total Unique Occurances: 865 (16%)**
+**Total Unique Occurances: 878 (16%)**
