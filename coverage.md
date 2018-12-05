@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**297/322 (92%)** Resources Covered
+**308/322 (95%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -79,11 +79,11 @@
 | *AWS::Cognito::UserPoolGroup* | 1 |
 | *AWS::Cognito::UserPoolUser* | 1 |
 | *AWS::Cognito::UserPoolUserToGroupAttachment* | 1 |
-| *AWS::Config::AggregationAuthorization* | 0 |
+| *AWS::Config::AggregationAuthorization* | 1 |
 | *AWS::Config::ConfigRule* | 1 |
 | *AWS::Config::ConfigurationAggregator* | 1 |
-| *AWS::Config::ConfigurationRecorder* | 0 |
-| *AWS::Config::DeliveryChannel* | 0 |
+| *AWS::Config::ConfigurationRecorder* | 1 |
+| *AWS::Config::DeliveryChannel* | 1 |
 | *AWS::DAX::Cluster* | 1 |
 | *AWS::DAX::ParameterGroup* | 1 |
 | *AWS::DAX::SubnetGroup* | 1 |
@@ -132,12 +132,12 @@
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 1 |
-| *AWS::EC2::VPCGatewayAttachment* | 0 |
+| *AWS::EC2::VPCGatewayAttachment* | 2 |
 | *AWS::EC2::VPCPeeringConnection* | 1 |
 | *AWS::EC2::VPNConnection* | 1 |
 | *AWS::EC2::VPNConnectionRoute* | 1 |
 | *AWS::EC2::VPNGateway* | 1 |
-| *AWS::EC2::VPNGatewayRoutePropagation* | 0 |
+| *AWS::EC2::VPNGatewayRoutePropagation* | 1 |
 | *AWS::EC2::Volume* | 1 |
 | *AWS::EC2::VolumeAttachment* | 1 |
 | *AWS::ECR::Repository* | 1 |
@@ -186,14 +186,14 @@
 | *AWS::GuardDuty::Detector* | 1 |
 | *AWS::GuardDuty::Filter* | 1 |
 | *AWS::GuardDuty::IPSet* | 1 |
-| *AWS::GuardDuty::Master* | 0 |
+| *AWS::GuardDuty::Master* | 1 |
 | *AWS::GuardDuty::Member* | 1 |
 | *AWS::GuardDuty::ThreatIntelSet* | 1 |
 | *AWS::IAM::AccessKey* | 1 |
 | *AWS::IAM::Group* | 1 |
 | *AWS::IAM::InstanceProfile* | 1 |
 | *AWS::IAM::ManagedPolicy* | 1 |
-| *AWS::IAM::Policy* | 0 |
+| *AWS::IAM::Policy* | 3 |
 | *AWS::IAM::Role* | 1 |
 | *AWS::IAM::ServiceLinkedRole* | 1 |
 | *AWS::IAM::User* | 1 |
@@ -265,7 +265,7 @@
 | *AWS::SDB::Domain* | 1 |
 | *AWS::SES::ConfigurationSet* | 1 |
 | *AWS::SES::ConfigurationSetEventDestination* | 0 |
-| *AWS::SES::ReceiptFilter* | 0 |
+| *AWS::SES::ReceiptFilter* | 1 |
 | *AWS::SES::ReceiptRule* | 0 |
 | *AWS::SES::ReceiptRuleSet* | 1 |
 | *AWS::SES::Template* | 1 |
@@ -282,8 +282,8 @@
 | *AWS::SSM::Parameter* | 1 |
 | *AWS::SSM::PatchBaseline* | 1 |
 | *AWS::SSM::ResourceDataSync* | 1 |
-| *AWS::SageMaker::Endpoint* | 0 |
-| *AWS::SageMaker::EndpointConfig* | 0 |
+| *AWS::SageMaker::Endpoint* | 1 |
+| *AWS::SageMaker::EndpointConfig* | 1 |
 | *AWS::SageMaker::Model* | 1 |
 | *AWS::SageMaker::NotebookInstance* | 1 |
 | *AWS::SageMaker::NotebookInstanceLifecycleConfig* | 1 |
@@ -322,7 +322,7 @@
 | *AWS::WAFRegional::SizeConstraintSet* | 1 |
 | *AWS::WAFRegional::SqlInjectionMatchSet* | 1 |
 | *AWS::WAFRegional::WebACL* | 1 |
-| *AWS::WAFRegional::WebACLAssociation* | 0 |
+| *AWS::WAFRegional::WebACLAssociation* | 1 |
 | *AWS::WAFRegional::XssMatchSet* | 1 |
 | *AWS::WorkSpaces::Workspace* | 1 |
 | *Alexa::ASK::Skill* | 1 |
@@ -788,13 +788,13 @@
 | *codepipeline* | 11/32 (34%) |
 | *cognito-identity* | 1/18 (5%) |
 | *cognito-idp* | 10/95 (10%) |
-| *config* | 6/47 (12%) |
+| *config* | 9/47 (19%) |
 | *dax* | 10/21 (47%) |
 | *dlm* | 4/5 (80%) |
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 112/310 (36%) |
+| *ec2* | 117/310 (37%) |
 | *ecr* | 2/22 (9%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -809,8 +809,8 @@
 | *firehose* | 3/12 (25%) |
 | *gamelift* | 8/67 (11%) |
 | *glue* | 35/87 (40%) |
-| *guardduty* | 23/42 (54%) |
-| *iam* | 30/133 (22%) |
+| *guardduty* | 25/42 (59%) |
+| *iam* | 33/133 (24%) |
 | *inspector* | 11/37 (29%) |
 | *iot* | 12/166 (7%) |
 | *iot1click-devices* | 3/10 (30%) |
@@ -832,19 +832,19 @@
 | *route53* | 8/56 (14%) |
 | *route53resolver* | 10/22 (45%) |
 | *s3* | 25/88 (28%) |
-| *sagemaker* | 11/75 (14%) |
+| *sagemaker* | 16/75 (21%) |
 | *secretsmanager* | 5/18 (27%) |
 | *serverlessrepo* | 1/13 (7%) |
 | *servicecatalog* | 13/77 (16%) |
 | *servicediscovery* | 6/20 (30%) |
-| *ses* | 8/70 (11%) |
+| *ses* | 9/70 (12%) |
 | *sns* | 8/30 (26%) |
 | *sqs* | 6/20 (30%) |
 | *ssm* | 20/111 (18%) |
 | *stepfunctions* | 7/19 (36%) |
 | *support* | 5/14 (35%) |
 | *waf* | 32/73 (43%) |
-| *waf-regional* | 33/77 (42%) |
+| *waf-regional* | 34/77 (44%) |
 | *workspaces* | 4/32 (12%) |
 | *xray* | 7/19 (36%) |
 
@@ -1909,7 +1909,7 @@
 | *config* | `DeleteRetentionConfiguration` | 0 |
 | *config* | `DeliverConfigSnapshot` | 0 |
 | *config* | `DescribeAggregateComplianceByConfigRules` | 0 |
-| *config* | `DescribeAggregationAuthorizations` | 0 |
+| *config* | `DescribeAggregationAuthorizations` | 1 |
 | *config* | `DescribeComplianceByConfigRule` | 0 |
 | *config* | `DescribeComplianceByResource` | 0 |
 | *config* | `DescribeConfigRuleEvaluationStatus` | 0 |
@@ -1934,10 +1934,10 @@
 | *config* | `GetResourceConfigHistory` | 0 |
 | *config* | `ListAggregateDiscoveredResources` | 0 |
 | *config* | `ListDiscoveredResources` | 0 |
-| *config* | `PutAggregationAuthorization` | 0 |
+| *config* | `PutAggregationAuthorization` | 1 |
 | *config* | `PutConfigRule` | 1 |
 | *config* | `PutConfigurationAggregator` | 1 |
-| *config* | `PutConfigurationRecorder` | 0 |
+| *config* | `PutConfigurationRecorder` | 1 |
 | *config* | `PutDeliveryChannel` | 0 |
 | *config* | `PutEvaluations` | 0 |
 | *config* | `PutRetentionConfiguration` | 0 |
@@ -2319,10 +2319,10 @@
 | *ec2* | `AssociateTransitGatewayRouteTable` | 1 |
 | *ec2* | `AssociateVpcCidrBlock` | 1 |
 | *ec2* | `AttachClassicLinkVpc` | 0 |
-| *ec2* | `AttachInternetGateway` | 0 |
+| *ec2* | `AttachInternetGateway` | 1 |
 | *ec2* | `AttachNetworkInterface` | 1 |
 | *ec2* | `AttachVolume` | 1 |
-| *ec2* | `AttachVpnGateway` | 0 |
+| *ec2* | `AttachVpnGateway` | 1 |
 | *ec2* | `AuthorizeSecurityGroupEgress` | 0 |
 | *ec2* | `AuthorizeSecurityGroupIngress` | 1 |
 | *ec2* | `BundleInstance` | 0 |
@@ -2452,7 +2452,7 @@
 | *ec2* | `DescribeInstanceCreditSpecifications` | 1 |
 | *ec2* | `DescribeInstanceStatus` | 0 |
 | *ec2* | `DescribeInstances` | 6 |
-| *ec2* | `DescribeInternetGateways` | 2 |
+| *ec2* | `DescribeInternetGateways` | 3 |
 | *ec2* | `DescribeKeyPairs` | 2 |
 | *ec2* | `DescribeLaunchTemplateVersions` | 1 |
 | *ec2* | `DescribeLaunchTemplates` | 2 |
@@ -2471,7 +2471,7 @@
 | *ec2* | `DescribeReservedInstancesListings` | 0 |
 | *ec2* | `DescribeReservedInstancesModifications` | 0 |
 | *ec2* | `DescribeReservedInstancesOfferings` | 0 |
-| *ec2* | `DescribeRouteTables` | 4 |
+| *ec2* | `DescribeRouteTables` | 5 |
 | *ec2* | `DescribeScheduledInstanceAvailability` | 0 |
 | *ec2* | `DescribeScheduledInstances` | 0 |
 | *ec2* | `DescribeSecurityGroupReferences` | 0 |
@@ -2507,12 +2507,12 @@
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
 | *ec2* | `DescribeVpcs` | 22 |
 | *ec2* | `DescribeVpnConnections` | 1 |
-| *ec2* | `DescribeVpnGateways` | 1 |
+| *ec2* | `DescribeVpnGateways` | 2 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
-| *ec2* | `DetachInternetGateway` | 0 |
+| *ec2* | `DetachInternetGateway` | 1 |
 | *ec2* | `DetachNetworkInterface` | 1 |
 | *ec2* | `DetachVolume` | 0 |
-| *ec2* | `DetachVpnGateway` | 0 |
+| *ec2* | `DetachVpnGateway` | 1 |
 | *ec2* | `DisableTransitGatewayRouteTablePropagation` | 0 |
 | *ec2* | `DisableVgwRoutePropagation` | 0 |
 | *ec2* | `DisableVpcClassicLink` | 0 |
@@ -2524,7 +2524,7 @@
 | *ec2* | `DisassociateTransitGatewayRouteTable` | 0 |
 | *ec2* | `DisassociateVpcCidrBlock` | 1 |
 | *ec2* | `EnableTransitGatewayRouteTablePropagation` | 1 |
-| *ec2* | `EnableVgwRoutePropagation` | 0 |
+| *ec2* | `EnableVgwRoutePropagation` | 1 |
 | *ec2* | `EnableVolumeIO` | 0 |
 | *ec2* | `EnableVpcClassicLink` | 0 |
 | *ec2* | `EnableVpcClassicLinkDnsSupport` | 0 |
@@ -3247,7 +3247,7 @@
 | *greengrass* | `UpdateLoggerDefinition` | 0 |
 | *greengrass* | `UpdateResourceDefinition` | 0 |
 | *greengrass* | `UpdateSubscriptionDefinition` | 0 |
-| *guardduty* | `AcceptInvitation` | 0 |
+| *guardduty* | `AcceptInvitation` | 1 |
 | *guardduty* | `ArchiveFindings` | 1 |
 | *guardduty* | `CreateDetector` | 1 |
 | *guardduty* | `CreateFilter` | 1 |
@@ -3270,7 +3270,7 @@
 | *guardduty* | `GetFindingsStatistics` | 1 |
 | *guardduty* | `GetIPSet` | 1 |
 | *guardduty* | `GetInvitationsCount` | 1 |
-| *guardduty* | `GetMasterAccount` | 1 |
+| *guardduty* | `GetMasterAccount` | 2 |
 | *guardduty* | `GetMembers` | 0 |
 | *guardduty* | `GetThreatIntelSet` | 0 |
 | *guardduty* | `InviteMembers` | 0 |
@@ -3278,7 +3278,7 @@
 | *guardduty* | `ListFilters` | 1 |
 | *guardduty* | `ListFindings` | 1 |
 | *guardduty* | `ListIPSets` | 2 |
-| *guardduty* | `ListInvitations` | 0 |
+| *guardduty* | `ListInvitations` | 1 |
 | *guardduty* | `ListMembers` | 1 |
 | *guardduty* | `ListThreatIntelSets` | 1 |
 | *guardduty* | `StartMonitoringMembers` | 0 |
@@ -3394,11 +3394,11 @@
 | *iam* | `ListUserTags` | 0 |
 | *iam* | `ListUsers` | 2 |
 | *iam* | `ListVirtualMFADevices` | 0 |
-| *iam* | `PutGroupPolicy` | 0 |
+| *iam* | `PutGroupPolicy` | 1 |
 | *iam* | `PutRolePermissionsBoundary` | 0 |
-| *iam* | `PutRolePolicy` | 0 |
+| *iam* | `PutRolePolicy` | 1 |
 | *iam* | `PutUserPermissionsBoundary` | 0 |
-| *iam* | `PutUserPolicy` | 0 |
+| *iam* | `PutUserPolicy` | 1 |
 | *iam* | `RemoveClientIDFromOpenIDConnectProvider` | 0 |
 | *iam* | `RemoveRoleFromInstanceProfile` | 0 |
 | *iam* | `RemoveUserFromGroup` | 0 |
@@ -5084,8 +5084,8 @@
 | *sagemaker* | `CreateAlgorithm` | 0 |
 | *sagemaker* | `CreateCodeRepository` | 0 |
 | *sagemaker* | `CreateCompilationJob` | 0 |
-| *sagemaker* | `CreateEndpoint` | 0 |
-| *sagemaker* | `CreateEndpointConfig` | 0 |
+| *sagemaker* | `CreateEndpoint` | 1 |
+| *sagemaker* | `CreateEndpointConfig` | 1 |
 | *sagemaker* | `CreateHyperParameterTuningJob` | 0 |
 | *sagemaker* | `CreateLabelingJob` | 0 |
 | *sagemaker* | `CreateModel` | 1 |
@@ -5098,9 +5098,9 @@
 | *sagemaker* | `CreateWorkteam` | 0 |
 | *sagemaker* | `DeleteAlgorithm` | 0 |
 | *sagemaker* | `DeleteCodeRepository` | 0 |
-| *sagemaker* | `DeleteEndpoint` | 0 |
-| *sagemaker* | `DeleteEndpointConfig` | 0 |
-| *sagemaker* | `DeleteModel` | 0 |
+| *sagemaker* | `DeleteEndpoint` | 1 |
+| *sagemaker* | `DeleteEndpointConfig` | 1 |
+| *sagemaker* | `DeleteModel` | 1 |
 | *sagemaker* | `DeleteModelPackage` | 0 |
 | *sagemaker* | `DeleteNotebookInstance` | 1 |
 | *sagemaker* | `DeleteNotebookInstanceLifecycleConfig` | 1 |
@@ -5328,7 +5328,7 @@
 | *ses* | `CreateConfigurationSetEventDestination` | 0 |
 | *ses* | `CreateConfigurationSetTrackingOptions` | 0 |
 | *ses* | `CreateCustomVerificationEmailTemplate` | 0 |
-| *ses* | `CreateReceiptFilter` | 0 |
+| *ses* | `CreateReceiptFilter` | 1 |
 | *ses* | `CreateReceiptRule` | 1 |
 | *ses* | `CreateReceiptRuleSet` | 1 |
 | *ses* | `CreateTemplate` | 0 |
@@ -5478,7 +5478,7 @@
 | *sns* | `ConfirmSubscription` | 0 |
 | *sns* | `CreatePlatformApplication` | 0 |
 | *sns* | `CreatePlatformEndpoint` | 0 |
-| *sns* | `CreateTopic` | 1 |
+| *sns* | `CreateTopic` | 2 |
 | *sns* | `DeleteEndpoint` | 0 |
 | *sns* | `DeletePlatformApplication` | 0 |
 | *sns* | `DeleteTopic` | 1 |
@@ -5879,7 +5879,7 @@
 | *waf* | `UpdateSqlInjectionMatchSet` | 1 |
 | *waf* | `UpdateWebACL` | 1 |
 | *waf* | `UpdateXssMatchSet` | 1 |
-| *waf-regional* | `AssociateWebACL` | 0 |
+| *waf-regional* | `AssociateWebACL` | 1 |
 | *waf-regional* | `CreateByteMatchSet` | 1 |
 | *waf-regional* | `CreateGeoMatchSet` | 0 |
 | *waf-regional* | `CreateIPSet` | 1 |
@@ -6085,4 +6085,4 @@
 
 **Total Operations: 5227**
 
-**Total Unique Occurances: 889 (17%)**
+**Total Unique Occurances: 909 (17%)**
