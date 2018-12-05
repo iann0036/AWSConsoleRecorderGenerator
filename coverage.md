@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**288/322 (89%)** Resources Covered
+**297/322 (92%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -9,11 +9,11 @@
 | *AWS::ApiGateway::Account* | 1 |
 | *AWS::ApiGateway::ApiKey* | 1 |
 | *AWS::ApiGateway::Authorizer* | 1 |
-| *AWS::ApiGateway::BasePathMapping* | 0 |
+| *AWS::ApiGateway::BasePathMapping* | 1 |
 | *AWS::ApiGateway::ClientCertificate* | 1 |
 | *AWS::ApiGateway::Deployment* | 1 |
 | *AWS::ApiGateway::DocumentationPart* | 1 |
-| *AWS::ApiGateway::DocumentationVersion* | 0 |
+| *AWS::ApiGateway::DocumentationVersion* | 1 |
 | *AWS::ApiGateway::DomainName* | 1 |
 | *AWS::ApiGateway::GatewayResponse* | 1 |
 | *AWS::ApiGateway::Method* | 1 |
@@ -58,7 +58,7 @@
 | *AWS::CloudFormation::Stack* | 1 |
 | *AWS::CloudFormation::WaitCondition* | 1 |
 | *AWS::CloudFormation::WaitConditionHandle* | 1 |
-| *AWS::CloudFront::CloudFrontOriginAccessIdentity* | 0 |
+| *AWS::CloudFront::CloudFrontOriginAccessIdentity* | 1 |
 | *AWS::CloudFront::Distribution* | 0 |
 | *AWS::CloudFront::StreamingDistribution* | 0 |
 | *AWS::CloudTrail::Trail* | 1 |
@@ -133,7 +133,7 @@
 | *AWS::EC2::VPCEndpoint* | 1 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 1 |
 | *AWS::EC2::VPCGatewayAttachment* | 0 |
-| *AWS::EC2::VPCPeeringConnection* | 0 |
+| *AWS::EC2::VPCPeeringConnection* | 1 |
 | *AWS::EC2::VPNConnection* | 1 |
 | *AWS::EC2::VPNConnectionRoute* | 1 |
 | *AWS::EC2::VPNGateway* | 1 |
@@ -164,7 +164,7 @@
 | *AWS::ElasticBeanstalk::Environment* | 1 |
 | *AWS::ElasticLoadBalancing::LoadBalancer* | 1 |
 | *AWS::ElasticLoadBalancingV2::Listener* | 1 |
-| *AWS::ElasticLoadBalancingV2::ListenerCertificate* | 0 |
+| *AWS::ElasticLoadBalancingV2::ListenerCertificate* | 1 |
 | *AWS::ElasticLoadBalancingV2::ListenerRule* | 1 |
 | *AWS::ElasticLoadBalancingV2::LoadBalancer* | 1 |
 | *AWS::ElasticLoadBalancingV2::TargetGroup* | 1 |
@@ -195,7 +195,7 @@
 | *AWS::IAM::ManagedPolicy* | 1 |
 | *AWS::IAM::Policy* | 0 |
 | *AWS::IAM::Role* | 1 |
-| *AWS::IAM::ServiceLinkedRole* | 0 |
+| *AWS::IAM::ServiceLinkedRole* | 1 |
 | *AWS::IAM::User* | 1 |
 | *AWS::IAM::UserToGroupAddition* | 1 |
 | *AWS::Inspector::AssessmentTarget* | 1 |
@@ -208,10 +208,10 @@
 | *AWS::IoT::Policy* | 1 |
 | *AWS::IoT::PolicyPrincipalAttachment* | 1 |
 | *AWS::IoT::Thing* | 1 |
-| *AWS::IoT::ThingPrincipalAttachment* | 0 |
-| *AWS::IoT::TopicRule* | 0 |
-| *AWS::KMS::Alias* | 0 |
-| *AWS::KMS::Key* | 1 |
+| *AWS::IoT::ThingPrincipalAttachment* | 1 |
+| *AWS::IoT::TopicRule* | 1 |
+| *AWS::KMS::Alias* | 1 |
+| *AWS::KMS::Key* | 2 |
 | *AWS::Kinesis::Stream* | 2 |
 | *AWS::Kinesis::StreamConsumer* | 1 |
 | *AWS::KinesisAnalytics::Application* | 1 |
@@ -566,7 +566,7 @@
 | *aws_kinesis_stream* | 2 |
 | *aws_kms_alias* | 0 |
 | *aws_kms_grant* | 0 |
-| *aws_kms_key* | 1 |
+| *aws_kms_key* | 2 |
 | *aws_lambda_alias* | 1 |
 | *aws_lambda_event_source_mapping* | 0 |
 | *aws_lambda_function* | 0 |
@@ -770,7 +770,7 @@
 | --- | --- |
 | *acm* | 3/12 (25%) |
 | *acm-pca* | 1/17 (5%) |
-| *apigateway* | 40/120 (33%) |
+| *apigateway* | 42/120 (35%) |
 | *application-autoscaling* | 2/10 (20%) |
 | *appstream* | 15/44 (34%) |
 | *appsync* | 17/33 (51%) |
@@ -794,7 +794,7 @@
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 110/310 (35%) |
+| *ec2* | 112/310 (36%) |
 | *ecr* | 2/22 (9%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -802,7 +802,7 @@
 | *elasticache* | 10/42 (23%) |
 | *elasticbeanstalk* | 8/44 (18%) |
 | *elb* | 4/29 (13%) |
-| *elbv2* | 15/36 (41%) |
+| *elbv2* | 16/36 (44%) |
 | *emr* | 9/27 (33%) |
 | *es* | 11/23 (47%) |
 | *events* | 11/15 (73%) |
@@ -812,12 +812,12 @@
 | *guardduty* | 23/42 (54%) |
 | *iam* | 30/133 (22%) |
 | *inspector* | 11/37 (29%) |
-| *iot* | 7/166 (4%) |
+| *iot* | 12/166 (7%) |
 | *iot1click-devices* | 3/10 (30%) |
 | *iot1click-projects* | 3/13 (23%) |
 | *kinesis* | 9/28 (32%) |
 | *kinesisanalytics* | 9/17 (52%) |
-| *kms* | 6/41 (14%) |
+| *kms* | 7/41 (17%) |
 | *lambda* | 14/38 (36%) |
 | *logs* | 5/39 (12%) |
 | *medialive* | 4/25 (16%) |
@@ -972,10 +972,10 @@
 | *amplify* | `UpdateDomainAssociation` | 0 |
 | *apigateway* | `CreateApiKey` | 1 |
 | *apigateway* | `CreateAuthorizer` | 1 |
-| *apigateway* | `CreateBasePathMapping` | 0 |
+| *apigateway* | `CreateBasePathMapping` | 1 |
 | *apigateway* | `CreateDeployment` | 1 |
 | *apigateway* | `CreateDocumentationPart` | 1 |
-| *apigateway* | `CreateDocumentationVersion` | 0 |
+| *apigateway* | `CreateDocumentationVersion` | 1 |
 | *apigateway* | `CreateDomainName` | 1 |
 | *apigateway* | `CreateModel` | 1 |
 | *apigateway* | `CreateRequestValidator` | 1 |
@@ -2376,7 +2376,7 @@
 | *ec2* | `CreateVpcEndpoint` | 1 |
 | *ec2* | `CreateVpcEndpointConnectionNotification` | 0 |
 | *ec2* | `CreateVpcEndpointServiceConfiguration` | 1 |
-| *ec2* | `CreateVpcPeeringConnection` | 0 |
+| *ec2* | `CreateVpcPeeringConnection` | 1 |
 | *ec2* | `CreateVpnConnection` | 1 |
 | *ec2* | `CreateVpnConnectionRoute` | 1 |
 | *ec2* | `CreateVpnGateway` | 1 |
@@ -2412,7 +2412,7 @@
 | *ec2* | `DeleteVpcEndpointConnectionNotifications` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `DeleteVpcEndpoints` | 1 |
-| *ec2* | `DeleteVpcPeeringConnection` | 0 |
+| *ec2* | `DeleteVpcPeeringConnection` | 1 |
 | *ec2* | `DeleteVpnConnection` | 0 |
 | *ec2* | `DeleteVpnConnectionRoute` | 0 |
 | *ec2* | `DeleteVpnGateway` | 1 |
@@ -2819,7 +2819,7 @@
 | *elb* | `SetLoadBalancerListenerSSLCertificate` | 0 |
 | *elb* | `SetLoadBalancerPoliciesForBackendServer` | 0 |
 | *elb* | `SetLoadBalancerPoliciesOfListener` | 0 |
-| *elbv2* | `AddListenerCertificates` | 0 |
+| *elbv2* | `AddListenerCertificates` | 1 |
 | *elbv2* | `AddTags` | 0 |
 | *elbv2* | `CreateListener` | 1 |
 | *elbv2* | `CreateLoadBalancer` | 1 |
@@ -3478,7 +3478,7 @@
 | *iot* | `AttachPolicy` | 0 |
 | *iot* | `AttachPrincipalPolicy` | 1 |
 | *iot* | `AttachSecurityProfile` | 0 |
-| *iot* | `AttachThingPrincipal` | 0 |
+| *iot* | `AttachThingPrincipal` | 1 |
 | *iot* | `CancelAuditTask` | 0 |
 | *iot* | `CancelCertificateTransfer` | 0 |
 | *iot* | `CancelJob` | 0 |
@@ -3500,7 +3500,7 @@
 | *iot* | `CreateThing` | 1 |
 | *iot* | `CreateThingGroup` | 0 |
 | *iot* | `CreateThingType` | 1 |
-| *iot* | `CreateTopicRule` | 0 |
+| *iot* | `CreateTopicRule` | 1 |
 | *iot* | `DeleteAccountAuditConfiguration` | 0 |
 | *iot* | `DeleteAuthorizer` | 0 |
 | *iot* | `DeleteBillingGroup` | 0 |
@@ -3520,7 +3520,7 @@
 | *iot* | `DeleteThing` | 0 |
 | *iot* | `DeleteThingGroup` | 0 |
 | *iot* | `DeleteThingType` | 0 |
-| *iot* | `DeleteTopicRule` | 0 |
+| *iot* | `DeleteTopicRule` | 1 |
 | *iot* | `DeleteV2LoggingLevel` | 0 |
 | *iot* | `DeprecateThingType` | 0 |
 | *iot* | `DescribeAccountAuditConfiguration` | 0 |
@@ -3547,8 +3547,8 @@
 | *iot* | `DetachPrincipalPolicy` | 0 |
 | *iot* | `DetachSecurityProfile` | 0 |
 | *iot* | `DetachThingPrincipal` | 0 |
-| *iot* | `DisableTopicRule` | 0 |
-| *iot* | `EnableTopicRule` | 0 |
+| *iot* | `DisableTopicRule` | 1 |
+| *iot* | `EnableTopicRule` | 1 |
 | *iot* | `GetEffectivePolicies` | 0 |
 | *iot* | `GetIndexingConfiguration` | 0 |
 | *iot* | `GetJobDocument` | 0 |
@@ -3790,10 +3790,10 @@
 | *kinesisvideo* | `UpdateStream` | 0 |
 | *kms* | `CancelKeyDeletion` | 0 |
 | *kms* | `ConnectCustomKeyStore` | 0 |
-| *kms* | `CreateAlias` | 0 |
+| *kms* | `CreateAlias` | 1 |
 | *kms* | `CreateCustomKeyStore` | 0 |
 | *kms* | `CreateGrant` | 0 |
-| *kms* | `CreateKey` | 1 |
+| *kms* | `CreateKey` | 2 |
 | *kms* | `Decrypt` | 0 |
 | *kms* | `DeleteAlias` | 0 |
 | *kms* | `DeleteCustomKeyStore` | 0 |
@@ -6085,4 +6085,4 @@
 
 **Total Operations: 5227**
 
-**Total Unique Occurances: 878 (16%)**
+**Total Unique Occurances: 889 (17%)**
