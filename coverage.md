@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**308/322 (95%)** Resources Covered
+**315/322 (97%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -73,7 +73,7 @@
 | *AWS::CodePipeline::Pipeline* | 1 |
 | *AWS::CodePipeline::Webhook* | 1 |
 | *AWS::Cognito::IdentityPool* | 1 |
-| *AWS::Cognito::IdentityPoolRoleAttachment* | 0 |
+| *AWS::Cognito::IdentityPoolRoleAttachment* | 1 |
 | *AWS::Cognito::UserPool* | 1 |
 | *AWS::Cognito::UserPoolClient* | 1 |
 | *AWS::Cognito::UserPoolGroup* | 1 |
@@ -154,7 +154,7 @@
 | *AWS::EMR::Step* | 1 |
 | *AWS::ElastiCache::CacheCluster* | 1 |
 | *AWS::ElastiCache::ParameterGroup* | 1 |
-| *AWS::ElastiCache::ReplicationGroup* | 0 |
+| *AWS::ElastiCache::ReplicationGroup* | 1 |
 | *AWS::ElastiCache::SecurityGroup* | 1 |
 | *AWS::ElastiCache::SecurityGroupIngress* | 1 |
 | *AWS::ElastiCache::SubnetGroup* | 1 |
@@ -216,19 +216,19 @@
 | *AWS::Kinesis::StreamConsumer* | 1 |
 | *AWS::KinesisAnalytics::Application* | 1 |
 | *AWS::KinesisAnalytics::ApplicationOutput* | 1 |
-| *AWS::KinesisAnalytics::ApplicationReferenceDataSource* | 0 |
+| *AWS::KinesisAnalytics::ApplicationReferenceDataSource* | 1 |
 | *AWS::KinesisFirehose::DeliveryStream* | 1 |
 | *AWS::Lambda::Alias* | 1 |
 | *AWS::Lambda::EventSourceMapping* | 0 |
 | *AWS::Lambda::Function* | 1 |
-| *AWS::Lambda::Permission* | 0 |
+| *AWS::Lambda::Permission* | 1 |
 | *AWS::Lambda::Version* | 1 |
-| *AWS::Logs::Destination* | 0 |
+| *AWS::Logs::Destination* | 1 |
 | *AWS::Logs::LogGroup* | 1 |
 | *AWS::Logs::LogStream* | 1 |
 | *AWS::Logs::MetricFilter* | 1 |
 | *AWS::Logs::SubscriptionFilter* | 1 |
-| *AWS::Neptune::DBCluster* | 0 |
+| *AWS::Neptune::DBCluster* | 1 |
 | *AWS::Neptune::DBClusterParameterGroup* | 1 |
 | *AWS::Neptune::DBInstance* | 1 |
 | *AWS::Neptune::DBParameterGroup* | 1 |
@@ -240,7 +240,7 @@
 | *AWS::OpsWorks::Stack* | 1 |
 | *AWS::OpsWorks::UserProfile* | 1 |
 | *AWS::OpsWorks::Volume* | 1 |
-| *AWS::RDS::DBCluster* | 0 |
+| *AWS::RDS::DBCluster* | 1 |
 | *AWS::RDS::DBClusterParameterGroup* | 1 |
 | *AWS::RDS::DBInstance* | 1 |
 | *AWS::RDS::DBParameterGroup* | 1 |
@@ -779,14 +779,14 @@
 | *batch* | 11/16 (68%) |
 | *budgets* | 1/14 (7%) |
 | *cloud9* | 6/10 (60%) |
-| *cloudformation* | 2/45 (4%) |
+| *cloudformation* | 3/45 (6%) |
 | *cloudtrail* | 8/14 (57%) |
 | *cloudwatch* | 2/17 (11%) |
 | *codebuild* | 4/16 (25%) |
 | *codecommit* | 5/39 (12%) |
 | *codedeploy* | 15/43 (34%) |
 | *codepipeline* | 11/32 (34%) |
-| *cognito-identity* | 1/18 (5%) |
+| *cognito-identity* | 2/18 (11%) |
 | *cognito-idp* | 10/95 (10%) |
 | *config* | 9/47 (19%) |
 | *dax* | 10/21 (47%) |
@@ -799,7 +799,7 @@
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
 | *eks* | 1/4 (25%) |
-| *elasticache* | 10/42 (23%) |
+| *elasticache* | 11/42 (26%) |
 | *elasticbeanstalk* | 8/44 (18%) |
 | *elb* | 4/29 (13%) |
 | *elbv2* | 16/36 (44%) |
@@ -817,23 +817,24 @@
 | *iot1click-projects* | 3/13 (23%) |
 | *kinesis* | 9/28 (32%) |
 | *kinesisanalytics* | 9/17 (52%) |
+| *kinesisanalyticsv2* | 1/21 (4%) |
 | *kms* | 7/41 (17%) |
 | *lambda* | 14/38 (36%) |
 | *logs* | 5/39 (12%) |
 | *medialive* | 4/25 (16%) |
 | *mq* | 6/17 (35%) |
-| *neptune* | 11/57 (19%) |
+| *neptune* | 12/57 (21%) |
 | *opsworks* | 16/74 (21%) |
 | *organizations* | 14/42 (33%) |
 | *pinpoint* | 1/74 (1%) |
-| *rds* | 22/107 (20%) |
+| *rds* | 23/107 (21%) |
 | *redshift* | 5/81 (6%) |
 | *rekognition* | 3/34 (8%) |
 | *route53* | 8/56 (14%) |
 | *route53resolver* | 10/22 (45%) |
 | *s3* | 25/88 (28%) |
 | *sagemaker* | 16/75 (21%) |
-| *secretsmanager* | 5/18 (27%) |
+| *secretsmanager* | 6/18 (33%) |
 | *serverlessrepo* | 1/13 (7%) |
 | *servicecatalog* | 13/77 (16%) |
 | *servicediscovery* | 6/20 (30%) |
@@ -1416,7 +1417,7 @@
 | *cloudformation* | `DescribeStackResources` | 0 |
 | *cloudformation* | `DescribeStackSet` | 0 |
 | *cloudformation* | `DescribeStackSetOperation` | 0 |
-| *cloudformation* | `DescribeStacks` | 0 |
+| *cloudformation* | `DescribeStacks` | 1 |
 | *cloudformation* | `DetectStackDrift` | 0 |
 | *cloudformation* | `DetectStackResourceDrift` | 0 |
 | *cloudformation* | `EstimateTemplateCost` | 0 |
@@ -1739,7 +1740,7 @@
 | *cognito-identity* | `ListIdentityPools` | 0 |
 | *cognito-identity* | `LookupDeveloperIdentity` | 0 |
 | *cognito-identity* | `MergeDeveloperIdentities` | 0 |
-| *cognito-identity* | `SetIdentityPoolRoles` | 0 |
+| *cognito-identity* | `SetIdentityPoolRoles` | 1 |
 | *cognito-identity* | `UnlinkDeveloperIdentity` | 0 |
 | *cognito-identity* | `UnlinkIdentity` | 0 |
 | *cognito-identity* | `UpdateIdentityPool` | 0 |
@@ -2694,7 +2695,7 @@
 | *elasticache* | `CreateCacheParameterGroup` | 1 |
 | *elasticache* | `CreateCacheSecurityGroup` | 0 |
 | *elasticache* | `CreateCacheSubnetGroup` | 1 |
-| *elasticache* | `CreateReplicationGroup` | 0 |
+| *elasticache* | `CreateReplicationGroup` | 1 |
 | *elasticache* | `CreateSnapshot` | 0 |
 | *elasticache* | `DecreaseReplicaCount` | 0 |
 | *elasticache* | `DeleteCacheCluster` | 0 |
@@ -3761,7 +3762,7 @@
 | *kinesisanalyticsv2* | `AddApplicationInput` | 0 |
 | *kinesisanalyticsv2* | `AddApplicationInputProcessingConfiguration` | 0 |
 | *kinesisanalyticsv2* | `AddApplicationOutput` | 0 |
-| *kinesisanalyticsv2* | `AddApplicationReferenceDataSource` | 0 |
+| *kinesisanalyticsv2* | `AddApplicationReferenceDataSource` | 1 |
 | *kinesisanalyticsv2* | `CreateApplication` | 0 |
 | *kinesisanalyticsv2* | `CreateApplicationSnapshot` | 0 |
 | *kinesisanalyticsv2* | `DeleteApplication` | 0 |
@@ -4284,7 +4285,7 @@
 | *neptune* | `CopyDBClusterParameterGroup` | 0 |
 | *neptune* | `CopyDBClusterSnapshot` | 0 |
 | *neptune* | `CopyDBParameterGroup` | 0 |
-| *neptune* | `CreateDBCluster` | 0 |
+| *neptune* | `CreateDBCluster` | 1 |
 | *neptune* | `CreateDBClusterParameterGroup` | 1 |
 | *neptune* | `CreateDBClusterSnapshot` | 0 |
 | *neptune* | `CreateDBInstance` | 1 |
@@ -4626,7 +4627,7 @@
 | *rds* | `CopyDBParameterGroup` | 0 |
 | *rds* | `CopyDBSnapshot` | 0 |
 | *rds* | `CopyOptionGroup` | 0 |
-| *rds* | `CreateDBCluster` | 0 |
+| *rds* | `CreateDBCluster` | 1 |
 | *rds* | `CreateDBClusterEndpoint` | 0 |
 | *rds* | `CreateDBClusterParameterGroup` | 1 |
 | *rds* | `CreateDBClusterSnapshot` | 0 |
@@ -5037,7 +5038,7 @@
 | *s3* | `GetObjectTagging` | 0 |
 | *s3* | `GetObjectTorrent` | 0 |
 | *s3* | `GetPublicAccessBlock` | 0 |
-| *s3* | `HeadBucket` | 1 |
+| *s3* | `HeadBucket` | 2 |
 | *s3* | `HeadObject` | 0 |
 | *s3* | `ListBucketAnalyticsConfigurations` | 0 |
 | *s3* | `ListBucketInventoryConfigurations` | 0 |
@@ -5173,7 +5174,7 @@
 | *secretsmanager* | `DescribeSecret` | 1 |
 | *secretsmanager* | `GetRandomPassword` | 0 |
 | *secretsmanager* | `GetResourcePolicy` | 0 |
-| *secretsmanager* | `GetSecretValue` | 0 |
+| *secretsmanager* | `GetSecretValue` | 1 |
 | *secretsmanager* | `ListSecretVersionIds` | 0 |
 | *secretsmanager* | `ListSecrets` | 1 |
 | *secretsmanager* | `PutResourcePolicy` | 0 |
@@ -6085,4 +6086,4 @@
 
 **Total Operations: 5227**
 
-**Total Unique Occurances: 909 (17%)**
+**Total Unique Occurances: 916 (17%)**

@@ -37,7 +37,9 @@ cfn_occurances = [
     "AWS::EC2::NetworkInterfacePermission",
     "AWS::EC2::TrunkInterfaceAssociation",
     "AWS::SES::Template",
-    "AWS::Lambda::LayerVersionPermission"
+    "AWS::Lambda::LayerVersionPermission",
+    "AWS::Lambda::Permission",
+    "AWS::Logs::Destination"
 ]
 tf_occurances = []
 
