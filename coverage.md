@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**315/322 (97%)** Resources Covered
+**317/322 (98%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -278,7 +278,7 @@
 | *AWS::SSM::Document* | 1 |
 | *AWS::SSM::MaintenanceWindow* | 1 |
 | *AWS::SSM::MaintenanceWindowTarget* | 1 |
-| *AWS::SSM::MaintenanceWindowTask* | 0 |
+| *AWS::SSM::MaintenanceWindowTask* | 1 |
 | *AWS::SSM::Parameter* | 1 |
 | *AWS::SSM::PatchBaseline* | 1 |
 | *AWS::SSM::ResourceDataSync* | 1 |
@@ -293,7 +293,7 @@
 | *AWS::SecretsManager::SecretTargetAttachment* | 1 |
 | *AWS::ServiceCatalog::AcceptedPortfolioShare* | 1 |
 | *AWS::ServiceCatalog::CloudFormationProduct* | 1 |
-| *AWS::ServiceCatalog::CloudFormationProvisionedProduct* | 0 |
+| *AWS::ServiceCatalog::CloudFormationProvisionedProduct* | 1 |
 | *AWS::ServiceCatalog::LaunchNotificationConstraint* | 1 |
 | *AWS::ServiceCatalog::LaunchRoleConstraint* | 1 |
 | *AWS::ServiceCatalog::LaunchTemplateConstraint* | 1 |
@@ -836,12 +836,12 @@
 | *sagemaker* | 16/75 (21%) |
 | *secretsmanager* | 6/18 (33%) |
 | *serverlessrepo* | 1/13 (7%) |
-| *servicecatalog* | 13/77 (16%) |
+| *servicecatalog* | 14/77 (18%) |
 | *servicediscovery* | 6/20 (30%) |
 | *ses* | 9/70 (12%) |
 | *sns* | 8/30 (26%) |
 | *sqs* | 6/20 (30%) |
-| *ssm* | 20/111 (18%) |
+| *ssm* | 21/111 (18%) |
 | *stepfunctions* | 7/19 (36%) |
 | *support* | 5/14 (35%) |
 | *waf* | 32/73 (43%) |
@@ -5290,7 +5290,7 @@
 | *servicecatalog* | `ListServiceActions` | 0 |
 | *servicecatalog* | `ListServiceActionsForProvisioningArtifact` | 0 |
 | *servicecatalog* | `ListTagOptions` | 1 |
-| *servicecatalog* | `ProvisionProduct` | 0 |
+| *servicecatalog* | `ProvisionProduct` | 1 |
 | *servicecatalog* | `RejectPortfolioShare` | 0 |
 | *servicecatalog* | `ScanProvisionedProducts` | 0 |
 | *servicecatalog* | `SearchProducts` | 0 |
@@ -5616,7 +5616,7 @@
 | *ssm* | `RegisterDefaultPatchBaseline` | 0 |
 | *ssm* | `RegisterPatchBaselineForPatchGroup` | 0 |
 | *ssm* | `RegisterTargetWithMaintenanceWindow` | 1 |
-| *ssm* | `RegisterTaskWithMaintenanceWindow` | 0 |
+| *ssm* | `RegisterTaskWithMaintenanceWindow` | 1 |
 | *ssm* | `RemoveTagsFromResource` | 0 |
 | *ssm* | `ResumeSession` | 0 |
 | *ssm* | `SendAutomationSignal` | 0 |
@@ -6086,4 +6086,4 @@
 
 **Total Operations: 5227**
 
-**Total Unique Occurances: 916 (17%)**
+**Total Unique Occurances: 918 (17%)**
