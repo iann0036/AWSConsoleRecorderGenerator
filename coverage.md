@@ -1,11 +1,12 @@
 ## CloudFormation Resource Coverage
 
-**317/322 (98%)** Resources Covered
+**318/334 (95%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
 | *AWS::AmazonMQ::Broker* | 1 |
 | *AWS::AmazonMQ::Configuration* | 1 |
+| *AWS::AmazonMQ::ConfigurationAssociation* | 0 |
 | *AWS::ApiGateway::Account* | 1 |
 | *AWS::ApiGateway::ApiKey* | 1 |
 | *AWS::ApiGateway::Authorizer* | 1 |
@@ -126,6 +127,12 @@
 | *AWS::EC2::SubnetCidrBlock* | 1 |
 | *AWS::EC2::SubnetNetworkAclAssociation* | 1 |
 | *AWS::EC2::SubnetRouteTableAssociation* | 1 |
+| *AWS::EC2::TransitGateway* | 1 |
+| *AWS::EC2::TransitGatewayAttachment* | 2 |
+| *AWS::EC2::TransitGatewayRoute* | 1 |
+| *AWS::EC2::TransitGatewayRouteTable* | 0 |
+| *AWS::EC2::TransitGatewayRouteTableAssociation* | 1 |
+| *AWS::EC2::TransitGatewayRouteTablePropagation* | 1 |
 | *AWS::EC2::TrunkInterfaceAssociation* | 1 |
 | *AWS::EC2::VPC* | 2 |
 | *AWS::EC2::VPCCidrBlock* | 1 |
@@ -140,7 +147,7 @@
 | *AWS::EC2::VPNGatewayRoutePropagation* | 1 |
 | *AWS::EC2::Volume* | 1 |
 | *AWS::EC2::VolumeAttachment* | 1 |
-| *AWS::ECR::Repository* | 1 |
+| *AWS::ECR::Repository* | 2 |
 | *AWS::ECS::Cluster* | 1 |
 | *AWS::ECS::Service* | 1 |
 | *AWS::ECS::TaskDefinition* | 1 |
@@ -210,6 +217,10 @@
 | *AWS::IoT::Thing* | 1 |
 | *AWS::IoT::ThingPrincipalAttachment* | 1 |
 | *AWS::IoT::TopicRule* | 1 |
+| *AWS::IoTAnalytics::Channel* | 0 |
+| *AWS::IoTAnalytics::Dataset* | 0 |
+| *AWS::IoTAnalytics::Datastore* | 0 |
+| *AWS::IoTAnalytics::Pipeline* | 0 |
 | *AWS::KMS::Alias* | 1 |
 | *AWS::KMS::Key* | 2 |
 | *AWS::Kinesis::Stream* | 2 |
@@ -260,7 +271,7 @@
 | *AWS::Route53::RecordSetGroup* | 0 |
 | *AWS::Route53Resolver::ResolverEndpoint* | 1 |
 | *AWS::Route53Resolver::ResolverRule* | 1 |
-| *AWS::S3::Bucket* | 2 |
+| *AWS::S3::Bucket* | 3 |
 | *AWS::S3::BucketPolicy* | 1 |
 | *AWS::SDB::Domain* | 1 |
 | *AWS::SES::ConfigurationSet* | 1 |
@@ -303,6 +314,7 @@
 | *AWS::ServiceCatalog::PortfolioShare* | 1 |
 | *AWS::ServiceCatalog::TagOption* | 1 |
 | *AWS::ServiceCatalog::TagOptionAssociation* | 1 |
+| *AWS::ServiceDiscovery::HttpNamespace* | 1 |
 | *AWS::ServiceDiscovery::Instance* | 1 |
 | *AWS::ServiceDiscovery::PrivateDnsNamespace* | 2 |
 | *AWS::ServiceDiscovery::PublicDnsNamespace* | 2 |
@@ -329,7 +341,7 @@
 
 ## Terraform Coverage
 
-**79/430 (18%)** Resources Covered
+**91/430 (21%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -356,17 +368,17 @@
 | *aws_api_gateway_documentation_version* | 0 |
 | *aws_api_gateway_domain_name* | 0 |
 | *aws_api_gateway_gateway_response* | 0 |
-| *aws_api_gateway_integration* | 0 |
-| *aws_api_gateway_integration_response* | 0 |
-| *aws_api_gateway_method* | 0 |
-| *aws_api_gateway_method_response* | 0 |
+| *aws_api_gateway_integration* | 1 |
+| *aws_api_gateway_integration_response* | 1 |
+| *aws_api_gateway_method* | 1 |
+| *aws_api_gateway_method_response* | 1 |
 | *aws_api_gateway_method_settings* | 0 |
-| *aws_api_gateway_model* | 0 |
+| *aws_api_gateway_model* | 1 |
 | *aws_api_gateway_request_validator* | 0 |
 | *aws_api_gateway_resource* | 0 |
 | *aws_api_gateway_rest_api* | 0 |
 | *aws_api_gateway_stage* | 2 |
-| *aws_api_gateway_usage_plan* | 0 |
+| *aws_api_gateway_usage_plan* | 1 |
 | *aws_api_gateway_usage_plan_key* | 1 |
 | *aws_api_gateway_vpc_link* | 1 |
 | *aws_app_cookie_stickiness_policy* | 0 |
@@ -479,7 +491,7 @@
 | *aws_ec2_capacity_reservation* | 0 |
 | *aws_ec2_fleet* | 0 |
 | *aws_ecr_lifecycle_policy* | 0 |
-| *aws_ecr_repository* | 1 |
+| *aws_ecr_repository* | 2 |
 | *aws_ecr_repository_policy* | 0 |
 | *aws_ecs_cluster* | 1 |
 | *aws_ecs_service* | 0 |
@@ -489,7 +501,7 @@
 | *aws_egress_only_internet_gateway* | 1 |
 | *aws_eip* | 1 |
 | *aws_eip_association* | 1 |
-| *aws_eks_cluster* | 0 |
+| *aws_eks_cluster* | 1 |
 | *aws_elastic_beanstalk_application* | 1 |
 | *aws_elastic_beanstalk_application_version* | 0 |
 | *aws_elastic_beanstalk_configuration_template* | 0 |
@@ -508,7 +520,7 @@
 | *aws_emr_cluster* | 0 |
 | *aws_emr_instance_group* | 0 |
 | *aws_emr_security_configuration* | 0 |
-| *aws_flow_log* | 0 |
+| *aws_flow_log* | 1 |
 | *aws_gamelift_alias* | 1 |
 | *aws_gamelift_build* | 1 |
 | *aws_gamelift_fleet* | 0 |
@@ -541,10 +553,10 @@
 | *aws_iam_role_policy_attachment* | 0 |
 | *aws_iam_saml_provider* | 0 |
 | *aws_iam_server_certificate* | 0 |
-| *aws_iam_service_linked_role* | 0 |
+| *aws_iam_service_linked_role* | 1 |
 | *aws_iam_user* | 1 |
-| *aws_iam_user_group_membership* | 0 |
-| *aws_iam_user_login_profile* | 0 |
+| *aws_iam_user_group_membership* | 1 |
+| *aws_iam_user_login_profile* | 1 |
 | *aws_iam_user_policy* | 0 |
 | *aws_iam_user_policy_attachment* | 0 |
 | *aws_iam_user_ssh_key* | 0 |
@@ -660,7 +672,7 @@
 | *aws_route53_zone_association* | 0 |
 | *aws_route_table* | 2 |
 | *aws_route_table_association* | 0 |
-| *aws_s3_bucket* | 1 |
+| *aws_s3_bucket* | 2 |
 | *aws_s3_bucket_inventory* | 0 |
 | *aws_s3_bucket_metric* | 0 |
 | *aws_s3_bucket_notification* | 0 |
@@ -720,7 +732,7 @@
 | *aws_subnet* | 2 |
 | *aws_swf_domain* | 0 |
 | *aws_volume_attachment* | 1 |
-| *aws_vpc* | 0 |
+| *aws_vpc* | 1 |
 | *aws_vpc_dhcp_options* | 0 |
 | *aws_vpc_dhcp_options_association* | 0 |
 | *aws_vpc_endpoint* | 0 |
@@ -782,7 +794,7 @@
 | *cloudformation* | 3/45 (6%) |
 | *cloudtrail* | 8/14 (57%) |
 | *cloudwatch* | 2/17 (11%) |
-| *codebuild* | 4/16 (25%) |
+| *codebuild* | 4/19 (21%) |
 | *codecommit* | 5/39 (12%) |
 | *codedeploy* | 15/43 (34%) |
 | *codepipeline* | 11/32 (34%) |
@@ -795,14 +807,14 @@
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
 | *ec2* | 117/310 (37%) |
-| *ecr* | 2/22 (9%) |
+| *ecr* | 3/22 (13%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
-| *eks* | 1/4 (25%) |
+| *eks* | 2/7 (28%) |
 | *elasticache* | 11/42 (26%) |
 | *elasticbeanstalk* | 8/44 (18%) |
 | *elb* | 4/29 (13%) |
-| *elbv2* | 16/36 (44%) |
+| *elbv2* | 16/34 (47%) |
 | *emr* | 9/27 (33%) |
 | *es* | 11/23 (47%) |
 | *events* | 11/15 (73%) |
@@ -810,7 +822,7 @@
 | *gamelift* | 8/67 (11%) |
 | *glue* | 35/87 (40%) |
 | *guardduty* | 25/42 (59%) |
-| *iam* | 33/133 (24%) |
+| *iam* | 33/137 (24%) |
 | *inspector* | 11/37 (29%) |
 | *iot* | 12/166 (7%) |
 | *iot1click-devices* | 3/10 (30%) |
@@ -822,7 +834,7 @@
 | *lambda* | 14/38 (36%) |
 | *logs* | 5/39 (12%) |
 | *medialive* | 4/25 (16%) |
-| *mq* | 6/17 (35%) |
+| *mq* | 6/20 (30%) |
 | *neptune* | 12/57 (21%) |
 | *opsworks* | 16/74 (21%) |
 | *organizations* | 14/42 (33%) |
@@ -887,7 +899,9 @@
 | *alexaforbusiness* | `AssociateDeviceWithRoom` | 0 |
 | *alexaforbusiness* | `AssociateSkillGroupWithRoom` | 0 |
 | *alexaforbusiness* | `AssociateSkillWithSkillGroup` | 0 |
+| *alexaforbusiness* | `AssociateSkillWithUsers` | 0 |
 | *alexaforbusiness* | `CreateAddressBook` | 0 |
+| *alexaforbusiness* | `CreateBusinessReportSchedule` | 0 |
 | *alexaforbusiness* | `CreateConferenceProvider` | 0 |
 | *alexaforbusiness* | `CreateContact` | 0 |
 | *alexaforbusiness* | `CreateProfile` | 0 |
@@ -895,6 +909,7 @@
 | *alexaforbusiness* | `CreateSkillGroup` | 0 |
 | *alexaforbusiness* | `CreateUser` | 0 |
 | *alexaforbusiness* | `DeleteAddressBook` | 0 |
+| *alexaforbusiness* | `DeleteBusinessReportSchedule` | 0 |
 | *alexaforbusiness* | `DeleteConferenceProvider` | 0 |
 | *alexaforbusiness* | `DeleteContact` | 0 |
 | *alexaforbusiness* | `DeleteDevice` | 0 |
@@ -907,6 +922,7 @@
 | *alexaforbusiness* | `DisassociateContactFromAddressBook` | 0 |
 | *alexaforbusiness* | `DisassociateDeviceFromRoom` | 0 |
 | *alexaforbusiness* | `DisassociateSkillFromSkillGroup` | 0 |
+| *alexaforbusiness* | `DisassociateSkillFromUsers` | 0 |
 | *alexaforbusiness* | `DisassociateSkillGroupFromRoom` | 0 |
 | *alexaforbusiness* | `ForgetSmartHomeAppliances` | 0 |
 | *alexaforbusiness* | `GetAddressBook` | 0 |
@@ -918,6 +934,7 @@
 | *alexaforbusiness* | `GetRoom` | 0 |
 | *alexaforbusiness* | `GetRoomSkillParameter` | 0 |
 | *alexaforbusiness* | `GetSkillGroup` | 0 |
+| *alexaforbusiness* | `ListBusinessReportSchedules` | 0 |
 | *alexaforbusiness* | `ListConferenceProviders` | 0 |
 | *alexaforbusiness* | `ListDeviceEvents` | 0 |
 | *alexaforbusiness* | `ListSkills` | 0 |
@@ -945,6 +962,7 @@
 | *alexaforbusiness* | `TagResource` | 0 |
 | *alexaforbusiness* | `UntagResource` | 0 |
 | *alexaforbusiness* | `UpdateAddressBook` | 0 |
+| *alexaforbusiness* | `UpdateBusinessReportSchedule` | 0 |
 | *alexaforbusiness* | `UpdateConferenceProvider` | 0 |
 | *alexaforbusiness* | `UpdateContact` | 0 |
 | *alexaforbusiness* | `UpdateDevice` | 0 |
@@ -1584,12 +1602,15 @@
 | *codebuild* | `CreateProject` | 1 |
 | *codebuild* | `CreateWebhook` | 0 |
 | *codebuild* | `DeleteProject` | 0 |
+| *codebuild* | `DeleteSourceCredentials` | 0 |
 | *codebuild* | `DeleteWebhook` | 0 |
+| *codebuild* | `ImportSourceCredentials` | 0 |
 | *codebuild* | `InvalidateProjectCache` | 0 |
 | *codebuild* | `ListBuilds` | 0 |
 | *codebuild* | `ListBuildsForProject` | 0 |
 | *codebuild* | `ListCuratedEnvironmentImages` | 1 |
 | *codebuild* | `ListProjects` | 1 |
+| *codebuild* | `ListSourceCredentials` | 0 |
 | *codebuild* | `StartBuild` | 0 |
 | *codebuild* | `StopBuild` | 0 |
 | *codebuild* | `UpdateProject` | 0 |
@@ -1950,6 +1971,7 @@
 | *connect* | `DescribeUser` | 0 |
 | *connect* | `DescribeUserHierarchyGroup` | 0 |
 | *connect* | `DescribeUserHierarchyStructure` | 0 |
+| *connect* | `GetContactAttributes` | 0 |
 | *connect* | `GetCurrentMetricData` | 0 |
 | *connect* | `GetFederationToken` | 0 |
 | *connect* | `GetMetricData` | 0 |
@@ -2476,7 +2498,7 @@
 | *ec2* | `DescribeScheduledInstanceAvailability` | 0 |
 | *ec2* | `DescribeScheduledInstances` | 0 |
 | *ec2* | `DescribeSecurityGroupReferences` | 0 |
-| *ec2* | `DescribeSecurityGroups` | 18 |
+| *ec2* | `DescribeSecurityGroups` | 19 |
 | *ec2* | `DescribeSnapshotAttribute` | 0 |
 | *ec2* | `DescribeSnapshots` | 2 |
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
@@ -2486,7 +2508,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DescribeSpotPriceHistory` | 1 |
 | *ec2* | `DescribeStaleSecurityGroups` | 1 |
-| *ec2* | `DescribeSubnets` | 17 |
+| *ec2* | `DescribeSubnets` | 18 |
 | *ec2* | `DescribeTags` | 2 |
 | *ec2* | `DescribeTransitGatewayAttachments` | 0 |
 | *ec2* | `DescribeTransitGatewayRouteTables` | 1 |
@@ -2506,7 +2528,7 @@
 | *ec2* | `DescribeVpcEndpointServices` | 1 |
 | *ec2* | `DescribeVpcEndpoints` | 2 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 22 |
+| *ec2* | `DescribeVpcs` | 23 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 2 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -2617,12 +2639,12 @@
 | *ecr* | `BatchDeleteImage` | 0 |
 | *ecr* | `BatchGetImage` | 0 |
 | *ecr* | `CompleteLayerUpload` | 0 |
-| *ecr* | `CreateRepository` | 1 |
+| *ecr* | `CreateRepository` | 2 |
 | *ecr* | `DeleteLifecyclePolicy` | 0 |
-| *ecr* | `DeleteRepository` | 0 |
+| *ecr* | `DeleteRepository` | 1 |
 | *ecr* | `DeleteRepositoryPolicy` | 0 |
 | *ecr* | `DescribeImages` | 0 |
-| *ecr* | `DescribeRepositories` | 1 |
+| *ecr* | `DescribeRepositories` | 2 |
 | *ecr* | `GetAuthorizationToken` | 0 |
 | *ecr* | `GetDownloadUrlForLayer` | 0 |
 | *ecr* | `GetLifecyclePolicy` | 0 |
@@ -2687,7 +2709,10 @@
 | *eks* | `CreateCluster` | 1 |
 | *eks* | `DeleteCluster` | 0 |
 | *eks* | `DescribeCluster` | 0 |
-| *eks* | `ListClusters` | 0 |
+| *eks* | `DescribeUpdate` | 0 |
+| *eks* | `ListClusters` | 1 |
+| *eks* | `ListUpdates` | 0 |
+| *eks* | `UpdateClusterVersion` | 0 |
 | *elasticache* | `AddTagsToResource` | 0 |
 | *elasticache* | `AuthorizeCacheSecurityGroupIngress` | 0 |
 | *elasticache* | `CopySnapshot` | 0 |
@@ -2836,7 +2861,6 @@
 | *elbv2* | `DescribeListeners` | 1 |
 | *elbv2* | `DescribeLoadBalancerAttributes` | 1 |
 | *elbv2* | `DescribeLoadBalancers` | 4 |
-| *elbv2* | `DescribeProvisionedCapacity` | 0 |
 | *elbv2* | `DescribeRules` | 1 |
 | *elbv2* | `DescribeSSLPolicies` | 1 |
 | *elbv2* | `DescribeTags` | 0 |
@@ -2845,7 +2869,6 @@
 | *elbv2* | `DescribeTargetHealth` | 0 |
 | *elbv2* | `ModifyListener` | 0 |
 | *elbv2* | `ModifyLoadBalancerAttributes` | 0 |
-| *elbv2* | `ModifyProvisionedCapacity` | 0 |
 | *elbv2* | `ModifyRule` | 0 |
 | *elbv2* | `ModifyTargetGroup` | 0 |
 | *elbv2* | `ModifyTargetGroupAttributes` | 0 |
@@ -3346,6 +3369,7 @@
 | *iam* | `DetachUserPolicy` | 0 |
 | *iam* | `EnableMFADevice` | 0 |
 | *iam* | `GenerateCredentialReport` | 0 |
+| *iam* | `GenerateServiceLastAccessedDetails` | 0 |
 | *iam* | `GetAccessKeyLastUsed` | 0 |
 | *iam* | `GetAccountAuthorizationDetails` | 0 |
 | *iam* | `GetAccountPasswordPolicy` | 0 |
@@ -3365,6 +3389,8 @@
 | *iam* | `GetSAMLProvider` | 0 |
 | *iam* | `GetSSHPublicKey` | 0 |
 | *iam* | `GetServerCertificate` | 0 |
+| *iam* | `GetServiceLastAccessedDetails` | 0 |
+| *iam* | `GetServiceLastAccessedDetailsWithEntities` | 0 |
 | *iam* | `GetServiceLinkedRoleDeletionStatus` | 0 |
 | *iam* | `GetUser` | 1 |
 | *iam* | `GetUserPolicy` | 0 |
@@ -3382,10 +3408,11 @@
 | *iam* | `ListMFADevices` | 0 |
 | *iam* | `ListOpenIDConnectProviders` | 0 |
 | *iam* | `ListPolicies` | 1 |
+| *iam* | `ListPoliciesGrantingServiceAccess` | 0 |
 | *iam* | `ListPolicyVersions` | 1 |
 | *iam* | `ListRolePolicies` | 0 |
 | *iam* | `ListRoleTags` | 0 |
-| *iam* | `ListRoles` | 11 |
+| *iam* | `ListRoles` | 12 |
 | *iam* | `ListSAMLProviders` | 0 |
 | *iam* | `ListSSHPublicKeys` | 0 |
 | *iam* | `ListServerCertificates` | 1 |
@@ -4178,12 +4205,15 @@
 | *mediastore* | `DeleteContainer` | 0 |
 | *mediastore* | `DeleteContainerPolicy` | 0 |
 | *mediastore* | `DeleteCorsPolicy` | 0 |
+| *mediastore* | `DeleteLifecyclePolicy` | 0 |
 | *mediastore* | `DescribeContainer` | 0 |
 | *mediastore* | `GetContainerPolicy` | 0 |
 | *mediastore* | `GetCorsPolicy` | 0 |
+| *mediastore* | `GetLifecyclePolicy` | 0 |
 | *mediastore* | `ListContainers` | 0 |
 | *mediastore* | `PutContainerPolicy` | 0 |
 | *mediastore* | `PutCorsPolicy` | 0 |
+| *mediastore* | `PutLifecyclePolicy` | 0 |
 | *mediastore-data* | `DeleteObject` | 0 |
 | *mediastore-data* | `DescribeObject` | 0 |
 | *mediastore-data* | `GetObject` | 0 |
@@ -4224,8 +4254,10 @@
 | *mobile* | `UpdateProject` | 0 |
 | *mq* | `CreateBroker` | 1 |
 | *mq* | `CreateConfiguration` | 1 |
+| *mq* | `CreateTags` | 0 |
 | *mq* | `CreateUser` | 0 |
 | *mq* | `DeleteBroker` | 0 |
+| *mq* | `DeleteTags` | 0 |
 | *mq* | `DeleteUser` | 0 |
 | *mq* | `DescribeBroker` | 0 |
 | *mq* | `DescribeConfiguration` | 1 |
@@ -4234,6 +4266,7 @@
 | *mq* | `ListBrokers` | 1 |
 | *mq* | `ListConfigurationRevisions` | 0 |
 | *mq* | `ListConfigurations` | 1 |
+| *mq* | `ListTags` | 0 |
 | *mq* | `ListUsers` | 0 |
 | *mq* | `RebootBroker` | 0 |
 | *mq* | `UpdateBroker` | 0 |
@@ -4546,19 +4579,25 @@
 | *pinpoint-email* | `CreateConfigurationSet` | 0 |
 | *pinpoint-email* | `CreateConfigurationSetEventDestination` | 0 |
 | *pinpoint-email* | `CreateDedicatedIpPool` | 0 |
+| *pinpoint-email* | `CreateDeliverabilityTestReport` | 0 |
 | *pinpoint-email* | `CreateEmailIdentity` | 0 |
 | *pinpoint-email* | `DeleteConfigurationSet` | 0 |
 | *pinpoint-email* | `DeleteConfigurationSetEventDestination` | 0 |
 | *pinpoint-email* | `DeleteDedicatedIpPool` | 0 |
 | *pinpoint-email* | `DeleteEmailIdentity` | 0 |
 | *pinpoint-email* | `GetAccount` | 0 |
+| *pinpoint-email* | `GetBlacklistReports` | 0 |
 | *pinpoint-email* | `GetConfigurationSet` | 0 |
 | *pinpoint-email* | `GetConfigurationSetEventDestinations` | 0 |
 | *pinpoint-email* | `GetDedicatedIp` | 0 |
 | *pinpoint-email* | `GetDedicatedIps` | 0 |
+| *pinpoint-email* | `GetDeliverabilityDashboardOptions` | 0 |
+| *pinpoint-email* | `GetDeliverabilityTestReport` | 0 |
+| *pinpoint-email* | `GetDomainStatisticsReport` | 0 |
 | *pinpoint-email* | `GetEmailIdentity` | 0 |
 | *pinpoint-email* | `ListConfigurationSets` | 0 |
 | *pinpoint-email* | `ListDedicatedIpPools` | 0 |
+| *pinpoint-email* | `ListDeliverabilityTestReports` | 0 |
 | *pinpoint-email* | `ListEmailIdentities` | 0 |
 | *pinpoint-email* | `PutAccountDedicatedIpWarmupAttributes` | 0 |
 | *pinpoint-email* | `PutAccountSendingAttributes` | 0 |
@@ -4568,6 +4607,7 @@
 | *pinpoint-email* | `PutConfigurationSetTrackingOptions` | 0 |
 | *pinpoint-email* | `PutDedicatedIpInPool` | 0 |
 | *pinpoint-email* | `PutDedicatedIpWarmupAttributes` | 0 |
+| *pinpoint-email* | `PutDeliverabilityDashboardOption` | 0 |
 | *pinpoint-email* | `PutEmailIdentityDkimAttributes` | 0 |
 | *pinpoint-email* | `PutEmailIdentityFeedbackAttributes` | 0 |
 | *pinpoint-email* | `PutEmailIdentityMailFromAttributes` | 0 |
@@ -6084,6 +6124,6 @@
 
 **Total Services: 166**
 
-**Total Operations: 5227**
+**Total Operations: 5255**
 
-**Total Unique Occurances: 918 (17%)**
+**Total Unique Occurances: 920 (17%)**

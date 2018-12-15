@@ -39,7 +39,8 @@ cfn_occurances = [
     "AWS::SES::Template",
     "AWS::Lambda::LayerVersionPermission",
     "AWS::Lambda::Permission",
-    "AWS::Logs::Destination"
+    "AWS::Logs::Destination",
+    "AWS::CDK::Metadata"
 ]
 tf_occurances = []
 

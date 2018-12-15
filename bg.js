@@ -1528,9 +1528,9 @@ function analyseRequest(details) {
 
     // autogen:cloud9:cloud9.DescribeEnvironmentMemberships
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloud9\/api\/cloud9$/g) && jsonRequestBody.operation == "describeEnvironmentMemberships" && jsonRequestBody.method == "POST") {
-        reqParams.boto3['Permissions'] = jsonRequestBody.contentString.permissions;
+        reqParams.boto3['permissions'] = jsonRequestBody.contentString.permissions;
         reqParams.cli['--permissions'] = jsonRequestBody.contentString.permissions;
-        reqParams.boto3['MaxResults'] = jsonRequestBody.contentString.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.contentString.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.contentString.maxResults;
 
         outputs.push({
@@ -1550,7 +1550,7 @@ function analyseRequest(details) {
 
     // autogen:cloud9:cloud9.DescribeEnvironments
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloud9\/api\/cloud9$/g) && jsonRequestBody.operation == "describeEnvironments" && jsonRequestBody.method == "POST") {
-        reqParams.boto3['EnvironmentIds'] = jsonRequestBody.contentString.environmentIds;
+        reqParams.boto3['environmentIds'] = jsonRequestBody.contentString.environmentIds;
         reqParams.cli['--environment-ids'] = jsonRequestBody.contentString.environmentIds;
 
         outputs.push({
@@ -1590,11 +1590,11 @@ function analyseRequest(details) {
 
     // autogen:cloud9:cloud9.UpdateEnvironment
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloud9\/api\/cloud9$/g) && jsonRequestBody.operation == "describeEC2Remote" && jsonRequestBody.method == "POST" && jsonRequestBody.operation == "updateEnvironment" && jsonRequestBody.method == "POST") {
-        reqParams.boto3['EnvironmentId'] = jsonRequestBody.contentString.environmentId;
+        reqParams.boto3['environmentId'] = jsonRequestBody.contentString.environmentId;
         reqParams.cli['--environment-id'] = jsonRequestBody.contentString.environmentId;
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
 
         outputs.push({
@@ -1655,17 +1655,17 @@ function analyseRequest(details) {
 
     // autogen:cloud9:cloud9.CreateEnvironmentEC2
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloud9\/api\/cloud9$/g) && jsonRequestBody.operation == "createEnvironmentEC2" && jsonRequestBody.method == "POST") {
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
-        reqParams.boto3['InstanceType'] = jsonRequestBody.contentString.instanceType;
+        reqParams.boto3['instanceType'] = jsonRequestBody.contentString.instanceType;
         reqParams.cli['--instance-type'] = jsonRequestBody.contentString.instanceType;
-        reqParams.boto3['AutomaticStopTimeMinutes'] = jsonRequestBody.contentString.automaticStopTimeMinutes;
+        reqParams.boto3['automaticStopTimeMinutes'] = jsonRequestBody.contentString.automaticStopTimeMinutes;
         reqParams.cli['--automatic-stop-time-minutes'] = jsonRequestBody.contentString.automaticStopTimeMinutes;
-        reqParams.boto3['SubnetId'] = jsonRequestBody.contentString.subnetId;
+        reqParams.boto3['subnetId'] = jsonRequestBody.contentString.subnetId;
         reqParams.cli['--subnet-id'] = jsonRequestBody.contentString.subnetId;
-        reqParams.boto3['ClientRequestToken'] = jsonRequestBody.contentString.clientRequestToken;
+        reqParams.boto3['clientRequestToken'] = jsonRequestBody.contentString.clientRequestToken;
         reqParams.cli['--client-request-token'] = jsonRequestBody.contentString.clientRequestToken;
 
         reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
@@ -1713,7 +1713,7 @@ function analyseRequest(details) {
 
     // autogen:cloud9:cloud9.DeleteEnvironment
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloud9\/api\/cloud9$/g) && jsonRequestBody.operation == "deleteEnvironment" && jsonRequestBody.method == "POST") {
-        reqParams.boto3['EnvironmentId'] = jsonRequestBody.contentString.environmentId;
+        reqParams.boto3['environmentId'] = jsonRequestBody.contentString.environmentId;
         reqParams.cli['--environment-id'] = jsonRequestBody.contentString.environmentId;
 
         outputs.push({
@@ -2492,6 +2492,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['AWSServiceName'] = 'elasticbeanstalk.amazonaws.com';
 
+        reqParams.tf['aws_service_name'] = 'elasticbeanstalk.amazonaws.com';
+
         outputs.push({
             'region': region,
             'service': 'iam',
@@ -2509,6 +2511,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'iam',
             'type': 'AWS::IAM::ServiceLinkedRole',
+            'terraformType': 'aws_iam_service_linked_role',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -2527,6 +2530,10 @@ function analyseRequest(details) {
         reqParams.boto3['Bucket'] = jsonRequestBody.s3BucketName;
         reqParams.cli['--bucket'] = jsonRequestBody.s3BucketName;
 
+        reqParams.cfn['BucketName'] = jsonRequestBody.s3BucketName;
+
+        reqParams.tf['bucket'] = jsonRequestBody.s3BucketName;
+
         outputs.push({
             'region': region,
             'service': 's3',
@@ -2537,6 +2544,17 @@ function analyseRequest(details) {
             },
             'options': reqParams,
             'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('s3', details.requestId),
+            'region': region,
+            'service': 's3',
+            'type': 'AWS::S3::Bucket',
+            'terraformType': 'aws_s3_bucket',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
         });
 
         if (blocking) {
@@ -4718,6 +4736,9 @@ function analyseRequest(details) {
         reqParams.cfn['CidrBlock'] = getPipeSplitField(requestBody, 18);
         reqParams.cfn['InstanceTenancy'] = getPipeSplitField(requestBody, 19);
 
+        reqParams.tf['cidr_block'] = getPipeSplitField(requestBody, 18);
+        reqParams.tf['instance_tenancy'] = getPipeSplitField(requestBody, 19);
+
         outputs.push({
             'region': region,
             'service': 'ec2',
@@ -4735,6 +4756,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPC',
+            'terraformType': 'aws_vpc',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -4821,11 +4843,24 @@ function analyseRequest(details) {
             reqParams.cfn['LogDestination'] = jsonRequestBody.LogDestination;
             reqParams.cfn['DeliverLogsPermissionArn'] = jsonRequestBody.DeliverLogsPermissionArn;
 
+            if (jsonRequestBody.ResourceType == "VPC") {
+                reqParams.tf['vpc_id'] = resource_id;
+            } else if (jsonRequestBody.ResourceType == "Subnet") {
+                reqParams.tf['subnet_id'] = resource_id;
+            } else if (jsonRequestBody.ResourceType == "NetworkInterfaces") {
+                reqParams.tf['eni_id'] = resource_id;
+            }
+            reqParams.tf['traffic_type'] = jsonRequestBody.TrafficType;
+            reqParams.tf['log_destination_type'] = jsonRequestBody.LogDestinationType;
+            reqParams.tf['log_destination'] = jsonRequestBody.LogDestination;
+            reqParams.tf['iam_role_arn'] = jsonRequestBody.DeliverLogsPermissionArn;
+
             tracked_resources.push({
                 'logicalId': getResourceName('ec2', details.requestId),
                 'region': region,
                 'service': 'ec2',
                 'type': 'AWS::EC2::FlowLog',
+                'terraformType': 'aws_flow_log',
                 'options': reqParams,
                 'requestDetails': details,
                 'was_blocked': blocking
@@ -5659,6 +5694,11 @@ function analyseRequest(details) {
         reqParams.cfn['Users'] = [jsonRequestBody.userName];
         reqParams.cfn['GroupName'] = /.+console\.aws\.amazon\.com\/iam\/api\/groups\/(.+)\//g.exec(details.url)[1];
 
+        reqParams.tf['user'] = jsonRequestBody.userName;
+        reqParams.tf['groups'] = [
+            /.+console\.aws\.amazon\.com\/iam\/api\/groups\/(.+)\//g.exec(details.url)[1]
+        ];
+
         outputs.push({
             'region': region,
             'service': 'iam',
@@ -5676,6 +5716,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'ec2',
             'type': 'AWS::IAM::UserToGroupAddition',
+            'terraformType': 'aws_iam_user_group_membership',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -5758,6 +5799,10 @@ function analyseRequest(details) {
         reqParams.boto3['PasswordResetRequired'] = jsonRequestBody.resetRequired;
         reqParams.cli['--password-reset-required'] = jsonRequestBody.resetRequired;
 
+        reqParams.tf['name'] = /.+console\.aws\.amazon\.com\/iam\/api\/users\/(.+)\//g.exec(details.url)[1];
+        reqParams.tf['pgp_key'] = "REPLACEME"
+        reqParams.tf['password_reset_required'] = jsonRequestBody.resetRequired;
+
         outputs.push({
             'region': region,
             'service': 'iam',
@@ -5768,6 +5813,16 @@ function analyseRequest(details) {
             },
             'options': reqParams,
             'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('ec2', details.requestId),
+            'region': region,
+            'service': 'ec2',
+            'terraformType': 'aws_iam_user_login_profile',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
         });
 
         if (blocking) {
@@ -5861,7 +5916,7 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetRestApis
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "GET" && jsonRequestBody.path == "/restapis") {
-        reqParams.boto3['Limit'] = jsonRequestBody.params.limit;
+        reqParams.boto3['limit'] = jsonRequestBody.params.limit;
         reqParams.cli['--limit'] = jsonRequestBody.params.limit;
 
         outputs.push({
@@ -5881,7 +5936,7 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetRestApi
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "GET" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+$/g)) {
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
@@ -5923,9 +5978,9 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetRequestValidators
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/requestvalidators$/g) && jsonRequestBody.method == "GET") {
-        reqParams.boto3['Limit'] = jsonRequestBody.params.limit;
+        reqParams.boto3['limit'] = jsonRequestBody.params.limit;
         reqParams.cli['--limit'] = jsonRequestBody.params.limit;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
@@ -5945,9 +6000,9 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetDocumentationParts
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "GET" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/documentation\/parts$/g)) {
-        reqParams.boto3['Limit'] = jsonRequestBody.params.limit;
+        reqParams.boto3['limit'] = jsonRequestBody.params.limit;
         reqParams.cli['--limit'] = jsonRequestBody.params.limit;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
@@ -5967,11 +6022,11 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetResources
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/resources$/g) && jsonRequestBody.method == "GET") {
-        reqParams.boto3['Embed'] = jsonRequestBody.params.embed;
+        reqParams.boto3['embed'] = jsonRequestBody.params.embed;
         reqParams.cli['--embed'] = jsonRequestBody.params.embed;
-        reqParams.boto3['Limit'] = jsonRequestBody.params.limit;
+        reqParams.boto3['limit'] = jsonRequestBody.params.limit;
         reqParams.cli['--limit'] = jsonRequestBody.params.limit;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
@@ -5991,7 +6046,7 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetStages
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "GET" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/stages$/g)) {
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
@@ -6031,15 +6086,15 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.PutMethod
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/resources\/[a-zA-Z0-9]+\/methods\/[A-Z]+$/g) && jsonRequestBody.method == "PUT") {
-        reqParams.boto3['AuthorizationType'] = jsonRequestBody.contentString.authorizationType;
+        reqParams.boto3['authorizationType'] = jsonRequestBody.contentString.authorizationType;
         reqParams.cli['--authorization-type'] = jsonRequestBody.contentString.authorizationType;
-        reqParams.boto3['RequestParameters'] = jsonRequestBody.contentString.requestParameters;
+        reqParams.boto3['requestParameters'] = jsonRequestBody.contentString.requestParameters;
         reqParams.cli['--request-parameters'] = jsonRequestBody.contentString.requestParameters;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['ResourceId'] = jsonRequestBody.path.split("/")[4];
+        reqParams.boto3['resourceId'] = jsonRequestBody.path.split("/")[4];
         reqParams.cli['--resource-id'] = jsonRequestBody.path.split("/")[4];
-        reqParams.boto3['HttpMethod'] = jsonRequestBody.path.split("/")[6];
+        reqParams.boto3['httpMethod'] = jsonRequestBody.path.split("/")[6];
         reqParams.cli['--http-method'] = jsonRequestBody.path.split("/")[6];
 
         reqParams.cfn['AuthorizationType'] = jsonRequestBody.contentString.authorizationType;
@@ -6047,6 +6102,12 @@ function analyseRequest(details) {
         reqParams.cfn['RestApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cfn['ResourceId'] = jsonRequestBody.path.split("/")[4];
         reqParams.cfn['HttpMethod'] = jsonRequestBody.path.split("/")[6];
+
+        reqParams.tf['authorization'] = jsonRequestBody.contentString.authorizationType;
+        reqParams.tf['request_parameters'] = jsonRequestBody.contentString.requestParameters;
+        reqParams.tf['rest_api_id'] = jsonRequestBody.path.split("/")[2];
+        reqParams.tf['resource_id'] = jsonRequestBody.path.split("/")[4];
+        reqParams.tf['http_method'] = jsonRequestBody.path.split("/")[6];
 
         outputs.push({
             'region': region,
@@ -6065,6 +6126,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Method',
+            'terraformType': 'aws_api_gateway_method',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -6080,16 +6142,22 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.PutMethodResponse
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/resources\/[a-zA-Z0-9]+\/methods\/[A-Z]+\/responses\/[0-9]+$/g) && jsonRequestBody.method == "PUT") {
-        reqParams.boto3['ResponseModels'] = jsonRequestBody.contentString.responseModels;
+        reqParams.boto3['responseModels'] = jsonRequestBody.contentString.responseModels;
         reqParams.cli['--response-models'] = jsonRequestBody.contentString.responseModels;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['ResourceId'] = jsonRequestBody.path.split("/")[4];
+        reqParams.boto3['resourceId'] = jsonRequestBody.path.split("/")[4];
         reqParams.cli['--resource-id'] = jsonRequestBody.path.split("/")[4];
-        reqParams.boto3['HttpMethod'] = jsonRequestBody.path.split("/")[6];
+        reqParams.boto3['httpMethod'] = jsonRequestBody.path.split("/")[6];
         reqParams.cli['--http-method'] = jsonRequestBody.path.split("/")[6];
-        reqParams.boto3['StatusCode'] = jsonRequestBody.path.split("/")[8];
+        reqParams.boto3['statusCode'] = jsonRequestBody.path.split("/")[8];
         reqParams.cli['--status-code'] = jsonRequestBody.path.split("/")[8];
+
+        reqParams.tf['response_models'] = jsonRequestBody.contentString.responseModels;
+        reqParams.tf['rest_api_id'] = jsonRequestBody.path.split("/")[2];
+        reqParams.tf['resource_id'] = jsonRequestBody.path.split("/")[4];
+        reqParams.tf['http_method'] = jsonRequestBody.path.split("/")[6];
+        reqParams.tf['status_code'] = jsonRequestBody.path.split("/")[8];
 
         outputs.push({
             'region': region,
@@ -6101,6 +6169,16 @@ function analyseRequest(details) {
             },
             'options': reqParams,
             'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
+            'region': region,
+            'service': 'apigateway',
+            'terraformType': 'aws_api_gateway_method_response',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
         });
 
         if (blocking) {
@@ -6131,16 +6209,22 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.PutIntegration
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "PUT" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/resources\/[a-zA-Z0-9]+\/methods\/[A-Z]+\/integration$/g)) {
-        reqParams.boto3['Type'] = jsonRequestBody.contentString.type;
+        reqParams.boto3['type'] = jsonRequestBody.contentString.type;
         reqParams.cli['--type'] = jsonRequestBody.contentString.type;
-        reqParams.boto3['RequestTemplates'] = jsonRequestBody.contentString.requestTemplates;
+        reqParams.boto3['requestTemplates'] = jsonRequestBody.contentString.requestTemplates;
         reqParams.cli['--request-templates'] = jsonRequestBody.contentString.requestTemplates;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['ResourceId'] = jsonRequestBody.path.split("/")[4];
+        reqParams.boto3['resourceId'] = jsonRequestBody.path.split("/")[4];
         reqParams.cli['--resource-id'] = jsonRequestBody.path.split("/")[4];
-        reqParams.boto3['HttpMethod'] = jsonRequestBody.path.split("/")[6];
+        reqParams.boto3['httpMethod'] = jsonRequestBody.path.split("/")[6];
         reqParams.cli['--http-method'] = jsonRequestBody.path.split("/")[6];
+
+        reqParams.tf['type'] = jsonRequestBody.contentString.type;
+        reqParams.tf['request_templates'] = jsonRequestBody.contentString.requestTemplates;
+        reqParams.tf['rest_api_id'] = jsonRequestBody.path.split("/")[2];
+        reqParams.tf['resource_id'] = jsonRequestBody.path.split("/")[4];
+        reqParams.tf['http_method'] = jsonRequestBody.path.split("/")[6];
 
         outputs.push({
             'region': region,
@@ -6154,6 +6238,16 @@ function analyseRequest(details) {
             'requestDetails': details
         });
 
+        tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
+            'region': region,
+            'service': 'apigateway',
+            'terraformType': 'aws_api_gateway_integration',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+
         if (blocking) {
             notifyBlocked();
             return {cancel: true};
@@ -6164,16 +6258,22 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.PutIntegrationResponse
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "PUT" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/resources\/[a-zA-Z0-9]+\/methods\/[A-Z]+\/integration\/responses\/[0-9]+$/g)) {
-        reqParams.boto3['ResponseTemplates'] = jsonRequestBody.contentString.responseTemplates;
+        reqParams.boto3['responseTemplates'] = jsonRequestBody.contentString.responseTemplates;
         reqParams.cli['--response-templates'] = jsonRequestBody.contentString.responseTemplates;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['ResourceId'] = jsonRequestBody.path.split("/")[4];
+        reqParams.boto3['resourceId'] = jsonRequestBody.path.split("/")[4];
         reqParams.cli['--resource-id'] = jsonRequestBody.path.split("/")[4];
-        reqParams.boto3['HttpMethod'] = jsonRequestBody.path.split("/")[6];
+        reqParams.boto3['httpMethod'] = jsonRequestBody.path.split("/")[6];
         reqParams.cli['--http-method'] = jsonRequestBody.path.split("/")[6];
-        reqParams.boto3['StatusCode'] = jsonRequestBody.path.split("/")[9];
+        reqParams.boto3['statusCode'] = jsonRequestBody.path.split("/")[9];
         reqParams.cli['--status-code'] = jsonRequestBody.path.split("/")[9];
+
+        reqParams.tf['response_templates'] = jsonRequestBody.contentString.responseTemplates;
+        reqParams.tf['rest_api_id'] = jsonRequestBody.path.split("/")[2];
+        reqParams.tf['resource_id'] = jsonRequestBody.path.split("/")[4];
+        reqParams.tf['http_method'] = jsonRequestBody.path.split("/")[6];
+        reqParams.tf['status_code'] = jsonRequestBody.path.split("/")[9];
 
         outputs.push({
             'region': region,
@@ -6187,6 +6287,16 @@ function analyseRequest(details) {
             'requestDetails': details
         });
 
+        tracked_resources.push({
+            'logicalId': getResourceName('apigateway', details.requestId),
+            'region': region,
+            'service': 'apigateway',
+            'terraformType': 'aws_api_gateway_integration_response',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+
         if (blocking) {
             notifyBlocked();
             return {cancel: true};
@@ -6197,11 +6307,11 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateDocumentationPart
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/documentation\/parts$/g) && jsonRequestBody.method == "POST") {
-        reqParams.boto3['Properties'] = jsonRequestBody.contentString.properties;
+        reqParams.boto3['properties'] = jsonRequestBody.contentString.properties;
         reqParams.cli['--properties'] = jsonRequestBody.contentString.properties;
-        reqParams.boto3['Location'] = jsonRequestBody.contentString.location;
+        reqParams.boto3['location'] = jsonRequestBody.contentString.location;
         reqParams.cli['--location'] = jsonRequestBody.contentString.location;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
 
         reqParams.cfn['Properties'] = jsonRequestBody.contentString.properties;
@@ -6240,9 +6350,9 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.DeleteDocumentationPart
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "DELETE" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/documentation\/parts\/[a-zA-Z0-9]+$/g)) {
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['DocumentationPartId'] = jsonRequestBody.path.split("/")[5];
+        reqParams.boto3['documentationPartId'] = jsonRequestBody.path.split("/")[5];
         reqParams.cli['--documentation-part-id'] = jsonRequestBody.path.split("/")[5];
 
         outputs.push({
@@ -6267,11 +6377,11 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.DeleteMethod
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "DELETE" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/resources\/[a-zA-Z0-9]+\/methods\/[A-Z]+$/g)) {
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['ResourceId'] = jsonRequestBody.path.split("/")[4];
+        reqParams.boto3['resourceId'] = jsonRequestBody.path.split("/")[4];
         reqParams.cli['--resource-id'] = jsonRequestBody.path.split("/")[4];
-        reqParams.boto3['HttpMethod'] = jsonRequestBody.path.split("/")[6];
+        reqParams.boto3['httpMethod'] = jsonRequestBody.path.split("/")[6];
         reqParams.cli['--http-method'] = jsonRequestBody.path.split("/")[6];
 
         outputs.push({
@@ -6316,21 +6426,21 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateAuthorizer
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "POST" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/authorizers$/g)) {
-        reqParams.boto3['Type'] = jsonRequestBody.contentString.type;
+        reqParams.boto3['type'] = jsonRequestBody.contentString.type;
         reqParams.cli['--type'] = jsonRequestBody.contentString.type;
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['AuthorizerUri'] = jsonRequestBody.contentString.authorizerUri;
+        reqParams.boto3['authorizerUri'] = jsonRequestBody.contentString.authorizerUri;
         reqParams.cli['--authorizer-uri'] = jsonRequestBody.contentString.authorizerUri;
-        reqParams.boto3['AuthorizerCredentials'] = jsonRequestBody.contentString.authorizerCredentials;
+        reqParams.boto3['authorizerCredentials'] = jsonRequestBody.contentString.authorizerCredentials;
         reqParams.cli['--authorizer-credentials'] = jsonRequestBody.contentString.authorizerCredentials;
-        reqParams.boto3['IdentityValidationExpression'] = jsonRequestBody.contentString.identityValidationExpression;
+        reqParams.boto3['identityValidationExpression'] = jsonRequestBody.contentString.identityValidationExpression;
         reqParams.cli['--identity-validation-expression'] = jsonRequestBody.contentString.identityValidationExpression;
-        reqParams.boto3['AuthorizerResultTtlInSeconds'] = jsonRequestBody.contentString.authorizerResultTtlInSeconds;
+        reqParams.boto3['authorizerResultTtlInSeconds'] = jsonRequestBody.contentString.authorizerResultTtlInSeconds;
         reqParams.cli['--authorizer-result-ttl-in-seconds'] = jsonRequestBody.contentString.authorizerResultTtlInSeconds;
-        reqParams.boto3['IdentitySource'] = jsonRequestBody.contentString.identitySource;
+        reqParams.boto3['identitySource'] = jsonRequestBody.contentString.identitySource;
         reqParams.cli['--identity-source'] = jsonRequestBody.contentString.identitySource;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
 
         reqParams.cfn['Type'] = jsonRequestBody.contentString.type;
@@ -6374,15 +6484,15 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.PutGatewayResponse
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "PUT" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/gatewayresponses\/[a-zA-Z0-9_]+$/g)) {
-        reqParams.boto3['StatusCode'] = jsonRequestBody.contentString.statusCode;
+        reqParams.boto3['statusCode'] = jsonRequestBody.contentString.statusCode;
         reqParams.cli['--status-code'] = jsonRequestBody.contentString.statusCode;
-        reqParams.boto3['ResponseParameters'] = jsonRequestBody.contentString.responseParameters;
+        reqParams.boto3['responseParameters'] = jsonRequestBody.contentString.responseParameters;
         reqParams.cli['--response-parameters'] = jsonRequestBody.contentString.responseParameters;
-        reqParams.boto3['ResponseTemplates'] = jsonRequestBody.contentString.responseTemplates;
+        reqParams.boto3['responseTemplates'] = jsonRequestBody.contentString.responseTemplates;
         reqParams.cli['--response-templates'] = jsonRequestBody.contentString.responseTemplates;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['ResponseType'] = jsonRequestBody.path.split("/")[4];
+        reqParams.boto3['responseType'] = jsonRequestBody.path.split("/")[4];
         reqParams.cli['--response-type'] = jsonRequestBody.path.split("/")[4];
 
         reqParams.cfn['StatusCode'] = jsonRequestBody.contentString.statusCode;
@@ -6423,19 +6533,24 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateModel
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "POST" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/models$/g)) {
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['ContentType'] = jsonRequestBody.contentString.contentType;
+        reqParams.boto3['contentType'] = jsonRequestBody.contentString.contentType;
         reqParams.cli['--content-type'] = jsonRequestBody.contentString.contentType;
-        reqParams.boto3['Schema'] = jsonRequestBody.contentString.schema;
+        reqParams.boto3['schema'] = jsonRequestBody.contentString.schema;
         reqParams.cli['--schema'] = jsonRequestBody.contentString.schema;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
 
         reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
         reqParams.cfn['ContentType'] = jsonRequestBody.contentString.contentType;
         reqParams.cfn['Schema'] = jsonRequestBody.contentString.schema;
         reqParams.cfn['RestApiId'] = jsonRequestBody.path.split("/")[2];
+
+        reqParams.tf['name'] = jsonRequestBody.contentString.name;
+        reqParams.tf['content_type'] = jsonRequestBody.contentString.contentType;
+        reqParams.tf['schema'] = jsonRequestBody.contentString.schema;
+        reqParams.tf['rest_api_id'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
             'region': region,
@@ -6454,6 +6569,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::Model',
+            'terraformType': 'aws_api_gateway_model',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -6469,9 +6585,9 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.DeleteModel
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "DELETE" && jsonRequestBody.path.match(/^\/restapis\/[a-zA-Z0-9]+\/models\/[a-zA-Z0-9]+$/g)) {
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['ModelName'] = jsonRequestBody.path.split("/")[4];
+        reqParams.boto3['modelName'] = jsonRequestBody.path.split("/")[4];
         reqParams.cli['--model-name'] = jsonRequestBody.path.split("/")[4];
 
         outputs.push({
@@ -6526,19 +6642,36 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateUsagePlan
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "POST" && jsonRequestBody.path == "/usageplans") {
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
-        reqParams.boto3['Throttle'] = jsonRequestBody.contentString.throttle;
+        reqParams.boto3['throttle'] = jsonRequestBody.contentString.throttle;
         reqParams.cli['--throttle'] = jsonRequestBody.contentString.throttle;
-        reqParams.boto3['Quota'] = jsonRequestBody.contentString.quota;
+        reqParams.boto3['quota'] = jsonRequestBody.contentString.quota;
         reqParams.cli['--quota'] = jsonRequestBody.contentString.quota;
 
         reqParams.cfn['UsagePlanName'] = jsonRequestBody.contentString.name;
         reqParams.cfn['Description'] = jsonRequestBody.contentString.description;
-        reqParams.cfn['Throttle'] = jsonRequestBody.contentString.throttle;
-        reqParams.cfn['Quota'] = jsonRequestBody.contentString.quota;
+        reqParams.cfn['Throttle'] = {
+            'RateLimit': jsonRequestBody.contentString.throttle.rateLimit,
+            'BurstLimit': jsonRequestBody.contentString.throttle.burstLimit
+        };
+        reqParams.cfn['Quota'] = {
+            'Limit': jsonRequestBody.contentString.quota.limit,
+            'Period': jsonRequestBody.contentString.quota.period
+        };
+
+        reqParams.tf['name'] = jsonRequestBody.contentString.name;
+        reqParams.tf['description'] = jsonRequestBody.contentString.description;
+        reqParams.tf['throttle_settings'] = {
+            'rate_limit': jsonRequestBody.contentString.throttle.rateLimit,
+            'burst_limit': jsonRequestBody.contentString.throttle.burstLimit
+        };
+        reqParams.tf['quota_settings'] = {
+            'limit': jsonRequestBody.contentString.quota.limit,
+            'period': jsonRequestBody.contentString.quota.period
+        };
 
         outputs.push({
             'region': region,
@@ -6557,6 +6690,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::UsagePlan',
+            'terraformType': 'aws_api_gateway_usage_plan',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -6572,9 +6706,9 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetStage
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.operation == "getStage") {
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['StageName'] = jsonRequestBody.path.split("/")[4];
+        reqParams.boto3['stageName'] = jsonRequestBody.path.split("/")[4];
         reqParams.cli['--stage-name'] = jsonRequestBody.path.split("/")[4];
 
         outputs.push({
@@ -6594,11 +6728,11 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetDeployment
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.operation == "getDeployment") {
-        reqParams.boto3['Embed'] = jsonRequestBody.params.embed;
+        reqParams.boto3['embed'] = jsonRequestBody.params.embed;
         reqParams.cli['--embed'] = jsonRequestBody.params.embed;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['restApiId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--rest-api-id'] = jsonRequestBody.path.split("/")[2];
-        reqParams.boto3['DeploymentId'] = jsonRequestBody.path.split("/")[4];
+        reqParams.boto3['deploymentId'] = jsonRequestBody.path.split("/")[4];
         reqParams.cli['--deployment-id'] = jsonRequestBody.path.split("/")[4];
 
         outputs.push({
@@ -6618,15 +6752,15 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateApiKey
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path == "/apikeys" && jsonRequestBody.method == "POST") {
-        reqParams.boto3['Enabled'] = jsonRequestBody.contentString.enabled;
+        reqParams.boto3['enabled'] = jsonRequestBody.contentString.enabled;
         reqParams.cli['--enabled'] = jsonRequestBody.contentString.enabled;
-        reqParams.boto3['GenerateDistinctId'] = jsonRequestBody.contentString.generateDistinctId;
+        reqParams.boto3['generateDistinctId'] = jsonRequestBody.contentString.generateDistinctId;
         reqParams.cli['--generate-distinct-id'] = jsonRequestBody.contentString.generateDistinctId;
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['Value'] = jsonRequestBody.contentString.value;
+        reqParams.boto3['value'] = jsonRequestBody.contentString.value;
         reqParams.cli['--value'] = jsonRequestBody.contentString.value;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
 
         reqParams.cfn['Enabled'] = jsonRequestBody.contentString.enabled;
@@ -6671,7 +6805,7 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.DeleteUsagePlan
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "POST" && jsonRequestBody.path.match(/^\/usageplans\/[a-zA-Z0-9]+$/g)) {
-        reqParams.boto3['UsagePlanId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['usagePlanId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--usage-plan-id'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
@@ -6696,9 +6830,9 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetApiKey
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "GET" && jsonRequestBody.path.match(/^\/apikeys\/[a-zA-Z0-9]+$/g)) {
-        reqParams.boto3['IncludeValue'] = jsonRequestBody.params.includeValue;
+        reqParams.boto3['includeValue'] = jsonRequestBody.params.includeValue;
         reqParams.cli['--include-value'] = jsonRequestBody.params.includeValue;
-        reqParams.boto3['ApiKey'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['apiKey'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--api-key'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
@@ -6718,9 +6852,9 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.UpdateApiKey
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "PATCH" && jsonRequestBody.path.match(/^\/apikeys\/[a-zA-Z0-9]+$/g)) {
-        reqParams.boto3['PatchOperations'] = jsonRequestBody.contentString.patchOperations;
+        reqParams.boto3['patchOperations'] = jsonRequestBody.contentString.patchOperations;
         reqParams.cli['--patch-operations'] = jsonRequestBody.contentString.patchOperations;
-        reqParams.boto3['ApiKey'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['apiKey'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--api-key'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
@@ -6763,7 +6897,7 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.GetDomainNames
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "GET" && jsonRequestBody.path == "/domainnames") {
-        reqParams.boto3['Limit'] = jsonRequestBody.params.limit;
+        reqParams.boto3['limit'] = jsonRequestBody.params.limit;
         reqParams.cli['--limit'] = jsonRequestBody.params.limit;
 
         outputs.push({
@@ -6826,7 +6960,7 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.DeleteClientCertificate
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "POST" && jsonRequestBody.path == "/clientcertificates" && jsonRequestBody.path == "/clientcertificates/oty57y" && jsonRequestBody.method == "DELETE") {
-        reqParams.boto3['ClientCertificateId'] = jsonRequestBody.path.split("/")[2];
+        reqParams.boto3['clientCertificateId'] = jsonRequestBody.path.split("/")[2];
         reqParams.cli['--client-certificate-id'] = jsonRequestBody.path.split("/")[2];
 
         outputs.push({
@@ -6869,7 +7003,7 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.UpdateAccount
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path == "/account" && jsonRequestBody.method == "PATCH") {
-        reqParams.boto3['PatchOperations'] = jsonRequestBody.contentString.patchOperations;
+        reqParams.boto3['patchOperations'] = jsonRequestBody.contentString.patchOperations;
         reqParams.cli['--patch-operations'] = jsonRequestBody.contentString.patchOperations;
 
         outputs.push({
@@ -7016,7 +7150,7 @@ function analyseRequest(details) {
 
     // autogen:cloudwatch:stepfunctions.ListStateMachines
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloudwatch\/CloudWatch\/data\/jetstream\.ListStepFunctionsStateMachines\//g)) {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.MaxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.MaxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.MaxResults;
 
         outputs.push({
@@ -7527,9 +7661,9 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.CreateGraphqlApi
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "createGraphqlApi") {
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['AuthenticationType'] = jsonRequestBody.contentString.authenticationType;
+        reqParams.boto3['authenticationType'] = jsonRequestBody.contentString.authenticationType;
         reqParams.cli['--authentication-type'] = jsonRequestBody.contentString.authenticationType;
 
         reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
@@ -7571,9 +7705,9 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.CreateApiKey
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "createApiKey") {
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
 
         reqParams.cfn['Description'] = jsonRequestBody.contentString.description;
@@ -7684,9 +7818,9 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.StartSchemaCreation
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "startSchemaCreation") {
-        reqParams.boto3['Definition'] = jsonRequestBody.contentString.definition;
+        reqParams.boto3['definition'] = jsonRequestBody.contentString.definition;
         reqParams.cli['--definition'] = jsonRequestBody.contentString.definition;
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
 
         reqParams.cfn['Definition'] = jsonRequestBody.contentString.definition;
@@ -7724,7 +7858,7 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.GetSchemaCreationStatus
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "getSchemaCreationStatus") {
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
 
         outputs.push({
@@ -7793,17 +7927,17 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.CreateResolver
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "createResolver") {
-        reqParams.boto3['FieldName'] = jsonRequestBody.contentString.fieldName;
+        reqParams.boto3['dieldName'] = jsonRequestBody.contentString.fieldName;
         reqParams.cli['--field-name'] = jsonRequestBody.contentString.fieldName;
-        reqParams.boto3['DataSourceName'] = jsonRequestBody.contentString.dataSourceName;
+        reqParams.boto3['dataSourceName'] = jsonRequestBody.contentString.dataSourceName;
         reqParams.cli['--data-source-name'] = jsonRequestBody.contentString.dataSourceName;
-        reqParams.boto3['RequestMappingTemplate'] = jsonRequestBody.contentString.requestMappingTemplate;
+        reqParams.boto3['requestMappingTemplate'] = jsonRequestBody.contentString.requestMappingTemplate;
         reqParams.cli['--request-mapping-template'] = jsonRequestBody.contentString.requestMappingTemplate;
-        reqParams.boto3['ResponseMappingTemplate'] = jsonRequestBody.contentString.responseMappingTemplate;
+        reqParams.boto3['responseMappingTemplate'] = jsonRequestBody.contentString.responseMappingTemplate;
         reqParams.cli['--response-mapping-template'] = jsonRequestBody.contentString.responseMappingTemplate;
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
-        reqParams.boto3['TypeName'] = jsonRequestBody.path.split("/")[5];
+        reqParams.boto3['typeName'] = jsonRequestBody.path.split("/")[5];
         reqParams.cli['--type-name'] = jsonRequestBody.path.split("/")[5];
 
         reqParams.cfn['FieldName'] = jsonRequestBody.contentString.fieldName;
@@ -7845,11 +7979,11 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.ListResolvers
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "listResolvers") {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.params.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.params.maxResults;
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
-        reqParams.boto3['TypeName'] = jsonRequestBody.path.split("/")[5];
+        reqParams.boto3['typeName'] = jsonRequestBody.path.split("/")[5];
         reqParams.cli['--type-name'] = jsonRequestBody.path.split("/")[5];
 
         outputs.push({
@@ -7869,11 +8003,11 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.UpdateGraphqlApi
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "updateGraphqlApi") {
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['AuthenticationType'] = jsonRequestBody.contentString.authenticationType;
+        reqParams.boto3['authenticationType'] = jsonRequestBody.contentString.authenticationType;
         reqParams.cli['--authentication-type'] = jsonRequestBody.contentString.authenticationType;
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
 
         outputs.push({
@@ -7898,7 +8032,7 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.DeleteGraphqlApi
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "deleteGraphqlApi") {
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
 
         outputs.push({
@@ -8768,15 +8902,15 @@ function analyseRequest(details) {
 
     // autogen:batch:batch.CreateComputeEnvironment
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "createcomputeenvironment") {
-        reqParams.boto3['ComputeEnvironmentName'] = jsonRequestBody.contentString.computeEnvironmentName;
+        reqParams.boto3['computeEnvironmentName'] = jsonRequestBody.contentString.computeEnvironmentName;
         reqParams.cli['--compute-environment-name'] = jsonRequestBody.contentString.computeEnvironmentName;
-        reqParams.boto3['ComputeResources'] = jsonRequestBody.contentString.computeResources;
+        reqParams.boto3['computeResources'] = jsonRequestBody.contentString.computeResources;
         reqParams.cli['--compute-resources'] = jsonRequestBody.contentString.computeResources;
-        reqParams.boto3['ServiceRole'] = jsonRequestBody.contentString.serviceRole;
+        reqParams.boto3['serviceRole'] = jsonRequestBody.contentString.serviceRole;
         reqParams.cli['--service-role'] = jsonRequestBody.contentString.serviceRole;
-        reqParams.boto3['State'] = jsonRequestBody.contentString.state;
+        reqParams.boto3['state'] = jsonRequestBody.contentString.state;
         reqParams.cli['--state'] = jsonRequestBody.contentString.state;
-        reqParams.boto3['Type'] = jsonRequestBody.contentString.type;
+        reqParams.boto3['type'] = jsonRequestBody.contentString.type;
         reqParams.cli['--type'] = jsonRequestBody.contentString.type;
 
         reqParams.cfn['ComputeEnvironmentName'] = jsonRequestBody.contentString.computeEnvironmentName;
@@ -8817,7 +8951,7 @@ function analyseRequest(details) {
 
     // autogen:batch:batch.DescribeComputeEnvironments
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "describecomputeenvironments") {
-        reqParams.boto3['ComputeEnvironments'] = jsonRequestBody.contentString.computeEnvironments;
+        reqParams.boto3['computeEnvironments'] = jsonRequestBody.contentString.computeEnvironments;
         reqParams.cli['--compute-environments'] = jsonRequestBody.contentString.computeEnvironments;
 
         outputs.push({
@@ -8889,13 +9023,13 @@ function analyseRequest(details) {
 
     // autogen:batch:batch.RegisterJobDefinition
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "registerjobdefinition") {
-        reqParams.boto3['ContainerProperties'] = jsonRequestBody.contentString.containerProperties;
+        reqParams.boto3['containerProperties'] = jsonRequestBody.contentString.containerProperties;
         reqParams.cli['--container-properties'] = jsonRequestBody.contentString.containerProperties;
-        reqParams.boto3['JobDefinitionName'] = jsonRequestBody.contentString.jobDefinitionName;
+        reqParams.boto3['jobDefinitionName'] = jsonRequestBody.contentString.jobDefinitionName;
         reqParams.cli['--job-definition-name'] = jsonRequestBody.contentString.jobDefinitionName;
-        reqParams.boto3['Parameters'] = jsonRequestBody.contentString.parameters;
+        reqParams.boto3['parameters'] = jsonRequestBody.contentString.parameters;
         reqParams.cli['--parameters'] = jsonRequestBody.contentString.parameters;
-        reqParams.boto3['Type'] = jsonRequestBody.contentString.type;
+        reqParams.boto3['type'] = jsonRequestBody.contentString.type;
         reqParams.cli['--type'] = jsonRequestBody.contentString.type;
 
         reqParams.cfn['ContainerProperties'] = jsonRequestBody.contentString.containerProperties;
@@ -8935,13 +9069,13 @@ function analyseRequest(details) {
 
     // autogen:batch:batch.SubmitJob
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "submitjob") {
-        reqParams.boto3['JobDefinition'] = jsonRequestBody.contentString.jobDefinition;
+        reqParams.boto3['jobDefinition'] = jsonRequestBody.contentString.jobDefinition;
         reqParams.cli['--job-definition'] = jsonRequestBody.contentString.jobDefinition;
-        reqParams.boto3['JobName'] = jsonRequestBody.contentString.jobName;
+        reqParams.boto3['jobName'] = jsonRequestBody.contentString.jobName;
         reqParams.cli['--job-name'] = jsonRequestBody.contentString.jobName;
-        reqParams.boto3['JobQueue'] = jsonRequestBody.contentString.jobQueue;
+        reqParams.boto3['jobQueue'] = jsonRequestBody.contentString.jobQueue;
         reqParams.cli['--job-queue'] = jsonRequestBody.contentString.jobQueue;
-        reqParams.boto3['Parameters'] = jsonRequestBody.contentString.parameters;
+        reqParams.boto3['parameters'] = jsonRequestBody.contentString.parameters;
         reqParams.cli['--parameters'] = jsonRequestBody.contentString.parameters;
 
         outputs.push({
@@ -8966,9 +9100,9 @@ function analyseRequest(details) {
 
     // autogen:batch:batch.ListJobs
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "listjobs") {
-        reqParams.boto3['JobQueue'] = jsonRequestBody.contentString.jobQueue;
+        reqParams.boto3['jobQueue'] = jsonRequestBody.contentString.jobQueue;
         reqParams.cli['--job-queue'] = jsonRequestBody.contentString.jobQueue;
-        reqParams.boto3['JobStatus'] = jsonRequestBody.contentString.jobStatus;
+        reqParams.boto3['jobStatus'] = jsonRequestBody.contentString.jobStatus;
         reqParams.cli['--job-status'] = jsonRequestBody.contentString.jobStatus;
 
         outputs.push({
@@ -8988,9 +9122,9 @@ function analyseRequest(details) {
 
     // autogen:batch:batch.CancelJob
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "cancelJob") {
-        reqParams.boto3['JobId'] = jsonRequestBody.contentString.jobId;
+        reqParams.boto3['jobId'] = jsonRequestBody.contentString.jobId;
         reqParams.cli['--job-id'] = jsonRequestBody.contentString.jobId;
-        reqParams.boto3['Reason'] = jsonRequestBody.contentString.reason;
+        reqParams.boto3['reason'] = jsonRequestBody.contentString.reason;
         reqParams.cli['--reason'] = jsonRequestBody.contentString.reason;
 
         outputs.push({
@@ -9015,7 +9149,7 @@ function analyseRequest(details) {
 
     // autogen:batch:batch.DeleteComputeEnvironment
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "deletecomputeenvironment") {
-        reqParams.boto3['ComputeEnvironment'] = jsonRequestBody.contentString.computeEnvironment;
+        reqParams.boto3['computeEnvironment'] = jsonRequestBody.contentString.computeEnvironment;
         reqParams.cli['--compute-environment'] = jsonRequestBody.contentString.computeEnvironment;
 
         outputs.push({
@@ -9040,9 +9174,9 @@ function analyseRequest(details) {
 
     // autogen:batch:batch.UpdateComputeEnvironment
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "updatecomputeenvironment") {
-        reqParams.boto3['ComputeEnvironment'] = jsonRequestBody.contentString.computeEnvironment;
+        reqParams.boto3['computeEnvironment'] = jsonRequestBody.contentString.computeEnvironment;
         reqParams.cli['--compute-environment'] = jsonRequestBody.contentString.computeEnvironment;
-        reqParams.boto3['State'] = jsonRequestBody.contentString.state;
+        reqParams.boto3['state'] = jsonRequestBody.contentString.state;
         reqParams.cli['--state'] = jsonRequestBody.contentString.state;
 
         outputs.push({
@@ -9067,7 +9201,7 @@ function analyseRequest(details) {
 
     // autogen:batch:batch.DeregisterJobDefinition
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/batch\/api\/batch$/g) && jsonRequestBody.operation == "deregisterjobdefinition") {
-        reqParams.boto3['JobDefinition'] = jsonRequestBody.contentString.jobDefinition;
+        reqParams.boto3['jobDefinition'] = jsonRequestBody.contentString.jobDefinition;
         reqParams.cli['--job-definition'] = jsonRequestBody.contentString.jobDefinition;
 
         outputs.push({
@@ -9092,9 +9226,9 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.CreateApplication
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "createApplication") {
-        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['applicationName'] = jsonRequestBody.contentString.applicationName;
         reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
-        reqParams.boto3['ComputePlatform'] = jsonRequestBody.contentString.computePlatform;
+        reqParams.boto3['computePlatform'] = jsonRequestBody.contentString.computePlatform;
         reqParams.cli['--compute-platform'] = jsonRequestBody.contentString.computePlatform;
 
         reqParams.cfn['ApplicationName'] = jsonRequestBody.contentString.applicationName;
@@ -9132,7 +9266,7 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.GetApplication
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "getApplication") {
-        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['applicationName'] = jsonRequestBody.contentString.applicationName;
         reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
 
         outputs.push({
@@ -9176,7 +9310,7 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.ListDeploymentGroups
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "listDeploymentGroups") {
-        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['applicationName'] = jsonRequestBody.contentString.applicationName;
         reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
 
         outputs.push({
@@ -9214,25 +9348,25 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.CreateDeploymentGroup
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "describeLoadBalancers" && jsonRequestBody.operation == "createDeploymentGroup") {
-        reqParams.boto3['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.boto3['deploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
         reqParams.cli['--deployment-config-name'] = jsonRequestBody.contentString.deploymentConfigName;
-        reqParams.boto3['DeploymentStyle'] = jsonRequestBody.contentString.deploymentStyle;
+        reqParams.boto3['deploymentStyle'] = jsonRequestBody.contentString.deploymentStyle;
         reqParams.cli['--deployment-style'] = jsonRequestBody.contentString.deploymentStyle;
-        reqParams.boto3['AutoScalingGroups'] = jsonRequestBody.contentString.autoScalingGroups;
+        reqParams.boto3['autoScalingGroups'] = jsonRequestBody.contentString.autoScalingGroups;
         reqParams.cli['--auto-scaling-groups'] = jsonRequestBody.contentString.autoScalingGroups;
-        reqParams.boto3['Ec2TagSet'] = jsonRequestBody.contentString.ec2TagSet;
+        reqParams.boto3['ec2TagSet'] = jsonRequestBody.contentString.ec2TagSet;
         reqParams.cli['--ec-2-tag-set'] = jsonRequestBody.contentString.ec2TagSet;
-        reqParams.boto3['OnPremisesTagSet'] = jsonRequestBody.contentString.onPremisesTagSet;
+        reqParams.boto3['onPremisesTagSet'] = jsonRequestBody.contentString.onPremisesTagSet;
         reqParams.cli['--on-premises-tag-set'] = jsonRequestBody.contentString.onPremisesTagSet;
-        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['applicationName'] = jsonRequestBody.contentString.applicationName;
         reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
-        reqParams.boto3['TriggerConfigurations'] = jsonRequestBody.contentString.triggerConfigurations;
+        reqParams.boto3['triggerConfigurations'] = jsonRequestBody.contentString.triggerConfigurations;
         reqParams.cli['--trigger-configurations'] = jsonRequestBody.contentString.triggerConfigurations;
-        reqParams.boto3['ServiceRoleArn'] = jsonRequestBody.contentString.serviceRoleArn;
+        reqParams.boto3['serviceRoleArn'] = jsonRequestBody.contentString.serviceRoleArn;
         reqParams.cli['--service-role-arn'] = jsonRequestBody.contentString.serviceRoleArn;
-        reqParams.boto3['AutoRollbackConfiguration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
+        reqParams.boto3['autoRollbackConfiguration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
         reqParams.cli['--auto-rollback-configuration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
-        reqParams.boto3['DeploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
+        reqParams.boto3['deploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
         reqParams.cli['--deployment-group-name'] = jsonRequestBody.contentString.deploymentGroupName;
 
         reqParams.cfn['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
@@ -9278,9 +9412,9 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.GetDeploymentGroup
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "getDeploymentGroup") {
-        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['applicationName'] = jsonRequestBody.contentString.applicationName;
         reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
-        reqParams.boto3['DeploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
+        reqParams.boto3['deploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
         reqParams.cli['--deployment-group-name'] = jsonRequestBody.contentString.deploymentGroupName;
 
         outputs.push({
@@ -9300,9 +9434,9 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.ListDeployments
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "listDeployments") {
-        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['applicationName'] = jsonRequestBody.contentString.applicationName;
         reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
-        reqParams.boto3['DeploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
+        reqParams.boto3['deploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
         reqParams.cli['--deployment-group-name'] = jsonRequestBody.contentString.deploymentGroupName;
 
         outputs.push({
@@ -9340,9 +9474,9 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.BatchGetDeploymentGroups
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "batchGetDeploymentGroups") {
-        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['applicationName'] = jsonRequestBody.contentString.applicationName;
         reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
-        reqParams.boto3['DeploymentGroupNames'] = jsonRequestBody.contentString.deploymentGroupNames;
+        reqParams.boto3['deploymentGroupNames'] = jsonRequestBody.contentString.deploymentGroupNames;
         reqParams.cli['--deployment-group-names'] = jsonRequestBody.contentString.deploymentGroupNames;
 
         outputs.push({
@@ -9362,15 +9496,15 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.CreateDeployment
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "createDeployment") {
-        reqParams.boto3['ApplicationName'] = jsonRequestBody.contentString.applicationName;
+        reqParams.boto3['applicationName'] = jsonRequestBody.contentString.applicationName;
         reqParams.cli['--application-name'] = jsonRequestBody.contentString.applicationName;
-        reqParams.boto3['DeploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
+        reqParams.boto3['deploymentGroupName'] = jsonRequestBody.contentString.deploymentGroupName;
         reqParams.cli['--deployment-group-name'] = jsonRequestBody.contentString.deploymentGroupName;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
-        reqParams.boto3['AutoRollbackConfiguration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
+        reqParams.boto3['autoRollbackConfiguration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
         reqParams.cli['--auto-rollback-configuration'] = jsonRequestBody.contentString.autoRollbackConfiguration;
-        reqParams.boto3['Revision'] = jsonRequestBody.contentString.revision;
+        reqParams.boto3['revision'] = jsonRequestBody.contentString.revision;
         reqParams.cli['--revision'] = jsonRequestBody.contentString.revision;
 
         outputs.push({
@@ -9395,9 +9529,9 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.StopDeployment
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "stopDeployment") {
-        reqParams.boto3['AutoRollbackEnabled'] = jsonRequestBody.contentString.autoRollbackEnabled;
+        reqParams.boto3['autoRollbackEnabled'] = jsonRequestBody.contentString.autoRollbackEnabled;
         reqParams.cli['--auto-rollback-enabled'] = jsonRequestBody.contentString.autoRollbackEnabled;
-        reqParams.boto3['DeploymentId'] = jsonRequestBody.contentString.deploymentId;
+        reqParams.boto3['deploymentId'] = jsonRequestBody.contentString.deploymentId;
         reqParams.cli['--deployment-id'] = jsonRequestBody.contentString.deploymentId;
 
         outputs.push({
@@ -9422,11 +9556,11 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.CreateDeploymentConfig
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "createDeploymentConfig") {
-        reqParams.boto3['ComputePlatform'] = jsonRequestBody.contentString.computePlatform;
+        reqParams.boto3['computePlatform'] = jsonRequestBody.contentString.computePlatform;
         reqParams.cli['--compute-platform'] = jsonRequestBody.contentString.computePlatform;
-        reqParams.boto3['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.boto3['deploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
         reqParams.cli['--deployment-config-name'] = jsonRequestBody.contentString.deploymentConfigName;
-        reqParams.boto3['MinimumHealthyHosts'] = jsonRequestBody.contentString.minimumHealthyHosts;
+        reqParams.boto3['minimumHealthyHosts'] = jsonRequestBody.contentString.minimumHealthyHosts;
         reqParams.cli['--minimum-healthy-hosts'] = jsonRequestBody.contentString.minimumHealthyHosts;
 
         reqParams.cfn['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
@@ -9463,7 +9597,7 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.DeleteDeploymentConfig
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "deleteDeploymentConfig") {
-        reqParams.boto3['DeploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
+        reqParams.boto3['deploymentConfigName'] = jsonRequestBody.contentString.deploymentConfigName;
         reqParams.cli['--deployment-config-name'] = jsonRequestBody.contentString.deploymentConfigName;
 
         outputs.push({
@@ -9488,7 +9622,7 @@ function analyseRequest(details) {
 
     // autogen:codedeploy:codedeploy.BatchGetDeployments
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codedeploy$/g) && jsonRequestBody.operation == "batchGetDeployments") {
-        reqParams.boto3['DeploymentIds'] = jsonRequestBody.contentString.deploymentIds;
+        reqParams.boto3['deploymentIds'] = jsonRequestBody.contentString.deploymentIds;
         reqParams.cli['--deployment-ids'] = jsonRequestBody.contentString.deploymentIds;
 
         outputs.push({
@@ -9623,21 +9757,21 @@ function analyseRequest(details) {
 
     // autogen:codebuild:codebuild.CreateProject
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codebuild$/g) && jsonRequestBody.operation == "createProject") {
-        reqParams.boto3['TimeoutInMinutes'] = jsonRequestBody.contentString.timeoutInMinutes;
+        reqParams.boto3['timeoutInMinutes'] = jsonRequestBody.contentString.timeoutInMinutes;
         reqParams.cli['--timeout-in-minutes'] = jsonRequestBody.contentString.timeoutInMinutes;
-        reqParams.boto3['Artifacts'] = jsonRequestBody.contentString.artifacts;
+        reqParams.boto3['artifacts'] = jsonRequestBody.contentString.artifacts;
         reqParams.cli['--artifacts'] = jsonRequestBody.contentString.artifacts;
-        reqParams.boto3['Cache'] = jsonRequestBody.contentString.cache;
+        reqParams.boto3['cache'] = jsonRequestBody.contentString.cache;
         reqParams.cli['--cache'] = jsonRequestBody.contentString.cache;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
-        reqParams.boto3['Environment'] = jsonRequestBody.contentString.environment;
+        reqParams.boto3['environment'] = jsonRequestBody.contentString.environment;
         reqParams.cli['--environment'] = jsonRequestBody.contentString.environment;
-        reqParams.boto3['ServiceRole'] = jsonRequestBody.contentString.serviceRole;
+        reqParams.boto3['serviceRole'] = jsonRequestBody.contentString.serviceRole;
         reqParams.cli['--service-role'] = jsonRequestBody.contentString.serviceRole;
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['Source'] = jsonRequestBody.contentString.source;
+        reqParams.boto3['source'] = jsonRequestBody.contentString.source;
         reqParams.cli['--source'] = jsonRequestBody.contentString.source;
 
         reqParams.cfn['TimeoutInMinutes'] = jsonRequestBody.contentString.timeoutInMinutes;
@@ -9681,7 +9815,7 @@ function analyseRequest(details) {
 
     // autogen:codebuild:codebuild.BatchGetProjects
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codebuild$/g) && jsonRequestBody.operation == "batchGetProjects") {
-        reqParams.boto3['Names'] = jsonRequestBody.contentString.names;
+        reqParams.boto3['names'] = jsonRequestBody.contentString.names;
         reqParams.cli['--names'] = jsonRequestBody.contentString.names;
 
         outputs.push({
@@ -9701,7 +9835,7 @@ function analyseRequest(details) {
 
     // autogen:codepipeline:codepipeline.CreatePipeline
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "createPipeline") {
-        reqParams.boto3['Pipeline'] = jsonRequestBody.contentString.pipeline;
+        reqParams.boto3['pipeline'] = jsonRequestBody.contentString.pipeline;
         reqParams.cli['--pipeline'] = jsonRequestBody.contentString.pipeline;
 
         reqParams.cfn['ArtifactStore'] = {
@@ -9750,7 +9884,7 @@ function analyseRequest(details) {
 
     // autogen:codepipeline:codepipeline.GetPipeline
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "getPipeline") {
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
 
         outputs.push({
@@ -9790,9 +9924,9 @@ function analyseRequest(details) {
 
     // autogen:codepipeline:codepipeline.GetPipelineExecution
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "getPipelineExecution") {
-        reqParams.boto3['PipelineExecutionId'] = jsonRequestBody.contentString.pipelineExecutionId;
+        reqParams.boto3['pipelineExecutionId'] = jsonRequestBody.contentString.pipelineExecutionId;
         reqParams.cli['--pipeline-execution-id'] = jsonRequestBody.contentString.pipelineExecutionId;
-        reqParams.boto3['PipelineName'] = jsonRequestBody.contentString.pipelineName;
+        reqParams.boto3['pipelineName'] = jsonRequestBody.contentString.pipelineName;
         reqParams.cli['--pipeline-name'] = jsonRequestBody.contentString.pipelineName;
 
         outputs.push({
@@ -9812,7 +9946,7 @@ function analyseRequest(details) {
 
     // autogen:codepipeline:codepipeline.UpdatePipeline
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "updatePipeline") {
-        reqParams.boto3['Pipeline'] = jsonRequestBody.contentString.pipeline;
+        reqParams.boto3['pipeline'] = jsonRequestBody.contentString.pipeline;
         reqParams.cli['--pipeline'] = jsonRequestBody.contentString.pipeline;
 
         outputs.push({
@@ -9837,7 +9971,7 @@ function analyseRequest(details) {
 
     // autogen:codepipeline:codepipeline.DeletePipeline
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "deletePipeline") {
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
 
         outputs.push({
@@ -9862,9 +9996,9 @@ function analyseRequest(details) {
 
     // autogen:codecommit:codecommit.CreateRepository
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "createRepository") {
-        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['repositoryName'] = jsonRequestBody.contentString.repositoryName;
         reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
-        reqParams.boto3['RepositoryDescription'] = jsonRequestBody.contentString.repositoryDescription;
+        reqParams.boto3['repositoryDescription'] = jsonRequestBody.contentString.repositoryDescription;
         reqParams.cli['--repository-description'] = jsonRequestBody.contentString.repositoryDescription;
 
         reqParams.cfn['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
@@ -9906,7 +10040,7 @@ function analyseRequest(details) {
 
     // autogen:codecommit:codecommit.GetRepository
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "getRepository") {
-        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['repositoryName'] = jsonRequestBody.contentString.repositoryName;
         reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
 
         outputs.push({
@@ -9948,11 +10082,11 @@ function analyseRequest(details) {
 
     // autogen:codecommit:codecommit.ListPullRequests
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "listPullRequests") {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.contentString.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.contentString.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.contentString.maxResults;
-        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['repositoryName'] = jsonRequestBody.contentString.repositoryName;
         reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
-        reqParams.boto3['PullRequestStatus'] = jsonRequestBody.contentString.pullRequestStatus;
+        reqParams.boto3['pullRequestStatus'] = jsonRequestBody.contentString.pullRequestStatus;
         reqParams.cli['--pull-request-status'] = jsonRequestBody.contentString.pullRequestStatus;
 
         outputs.push({
@@ -9972,7 +10106,7 @@ function analyseRequest(details) {
 
     // autogen:codecommit:codecommit.DeleteRepository
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codecommit$/g) && jsonRequestBody.operation == "deleteRepository") {
-        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['repositoryName'] = jsonRequestBody.contentString.repositoryName;
         reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
 
         outputs.push({
@@ -15200,7 +15334,7 @@ function analyseRequest(details) {
     // manual:cloudwatch:logs.PutSubscriptionFilter
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloudwatch\/CloudWatch\//g)) {
         if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "wuLyBG8jCdQ61w9bK2g4kaSdI4Q") {
-            reqParams.boto3['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.boto3['logGroupName'] = jsonRequestBody.I[0]["P"][0];
             reqParams.cli['--log-group-name'] = jsonRequestBody.I[0]["P"][0];
 
             reqParams.cfn['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
@@ -15235,9 +15369,9 @@ function analyseRequest(details) {
                 return {cancel: true};
             }
         } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "bDg0Lbt_pKcqOJ8vSNZWGQW7Rfk=") {
-            reqParams.boto3['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.boto3['logGroupName'] = jsonRequestBody.I[0]["P"][0];
             reqParams.cli['--log-group-name'] = jsonRequestBody.I[0]["P"][0];
-            reqParams.boto3['LogStreamName'] = jsonRequestBody.I[0]["P"][1];
+            reqParams.boto3['logStreamName'] = jsonRequestBody.I[0]["P"][1];
             reqParams.cli['--log-stream-name'] = jsonRequestBody.I[0]["P"][1];
 
             reqParams.cfn['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
@@ -15274,13 +15408,13 @@ function analyseRequest(details) {
                 return {cancel: true};
             }
         } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "w3zy8wcdTk4$qD2iBc81AziNanc=") {
-            reqParams.boto3['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
+            reqParams.boto3['logGroupName'] = jsonRequestBody.I[0]["P"][0];
             reqParams.cli['--log-group-name'] = jsonRequestBody.I[0]["P"][0];
-            reqParams.boto3['FilterName'] = jsonRequestBody.I[0]["P"][1];
+            reqParams.boto3['filterName'] = jsonRequestBody.I[0]["P"][1];
             reqParams.cli['--filter-name'] = jsonRequestBody.I[0]["P"][1];
-            reqParams.boto3['FilterPattern'] = jsonRequestBody.I[0]["P"][2];
+            reqParams.boto3['filterPattern'] = jsonRequestBody.I[0]["P"][2];
             reqParams.cli['--filter-pattern'] = jsonRequestBody.I[0]["P"][2];
-            reqParams.boto3['MetricTransformations'] = jsonRequestBody.O[0]["P"];
+            reqParams.boto3['metricTransformations'] = jsonRequestBody.O[0]["P"];
             reqParams.cli['--metric-transformations'] = jsonRequestBody.O[0]["P"];
 
             reqParams.cfn['LogGroupName'] = jsonRequestBody.I[0]["P"][0];
@@ -15314,15 +15448,15 @@ function analyseRequest(details) {
                 return {cancel: true};
             }
         } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "lRd9M18y9YlzeZbi97CtbWseYDE=") {
-            reqParams.boto3['DestinationArn'] = jsonRequestBody.O[0]["P"]["destinationArn"];
+            reqParams.boto3['destinationArn'] = jsonRequestBody.O[0]["P"]["destinationArn"];
             reqParams.cli['--destination-arn'] = jsonRequestBody.O[0]["P"]["destinationArn"];
-            reqParams.boto3['FilterName'] = jsonRequestBody.O[0]["P"]["filterName"];
+            reqParams.boto3['filterName'] = jsonRequestBody.O[0]["P"]["filterName"];
             reqParams.cli['--filter-name'] = jsonRequestBody.O[0]["P"]["filterName"];
-            reqParams.boto3['FilterPattern'] = jsonRequestBody.O[0]["P"]["filterPattern"];
+            reqParams.boto3['filterPattern'] = jsonRequestBody.O[0]["P"]["filterPattern"];
             reqParams.cli['--filter-pattern'] = jsonRequestBody.O[0]["P"]["filterPattern"];
-            reqParams.boto3['LogGroupName'] = jsonRequestBody.O[0]["P"]["logGroupName"];
+            reqParams.boto3['logGroupName'] = jsonRequestBody.O[0]["P"]["logGroupName"];
             reqParams.cli['--log-group-name'] = jsonRequestBody.O[0]["P"]["logGroupName"];
-            reqParams.boto3['RoleArn'] = jsonRequestBody.O[0]["P"]["roleArn"];
+            reqParams.boto3['roleArn'] = jsonRequestBody.O[0]["P"]["roleArn"];
             reqParams.cli['--role-arn'] = jsonRequestBody.O[0]["P"]["roleArn"];
 
             reqParams.cfn['DestinationArn'] = jsonRequestBody.O[0]["P"]["destinationArn"];
@@ -17557,7 +17691,7 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.ListAssessmentTargets
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/ListAssessmentTargets$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.ListAssessmentTargets") {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.content.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.content.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.content.maxResults;
 
         outputs.push({
@@ -17577,7 +17711,7 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.ListRulesPackages
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/ListRulesPackages$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.ListRulesPackages") {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.content.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.content.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.content.maxResults;
 
         outputs.push({
@@ -17597,7 +17731,7 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.DescribeRulesPackages
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/DescribeRulesPackages$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.DescribeRulesPackages") {
-        reqParams.boto3['RulesPackageArns'] = jsonRequestBody.content.rulesPackageArns;
+        reqParams.boto3['rulesPackageArns'] = jsonRequestBody.content.rulesPackageArns;
         reqParams.cli['--rules-package-arns'] = jsonRequestBody.content.rulesPackageArns;
 
         outputs.push({
@@ -17617,7 +17751,7 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.RegisterCrossAccountAccessRole
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/RegisterCrossAccountAccessRole$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.RegisterCrossAccountAccessRole") {
-        reqParams.boto3['RoleArn'] = jsonRequestBody.content.roleArn;
+        reqParams.boto3['roleArn'] = jsonRequestBody.content.roleArn;
         reqParams.cli['--role-arn'] = jsonRequestBody.content.roleArn;
 
         outputs.push({
@@ -17642,7 +17776,7 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.CreateAssessmentTarget
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/CreateAssessmentTarget$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.CreateAssessmentTarget") {
-        reqParams.boto3['AssessmentTargetName'] = jsonRequestBody.content.assessmentTargetName;
+        reqParams.boto3['assessmentTargetName'] = jsonRequestBody.content.assessmentTargetName;
         reqParams.cli['--assessment-target-name'] = jsonRequestBody.content.assessmentTargetName;
 
         reqParams.cfn['AssessmentTargetName'] = jsonRequestBody.content.assessmentTargetName;
@@ -17679,7 +17813,7 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.ListAssessmentTargets
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/ListAssessmentTargets$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.ListAssessmentTargets") {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.content.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.content.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.content.maxResults;
 
         outputs.push({
@@ -17699,13 +17833,13 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.CreateAssessmentTemplate
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/CreateAssessmentTemplate$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.CreateAssessmentTemplate") {
-        reqParams.boto3['AssessmentTemplateName'] = jsonRequestBody.content.assessmentTemplateName;
+        reqParams.boto3['assessmentTemplateName'] = jsonRequestBody.content.assessmentTemplateName;
         reqParams.cli['--assessment-template-name'] = jsonRequestBody.content.assessmentTemplateName;
-        reqParams.boto3['AssessmentTargetArn'] = jsonRequestBody.content.assessmentTargetArn;
+        reqParams.boto3['assessmentTargetArn'] = jsonRequestBody.content.assessmentTargetArn;
         reqParams.cli['--assessment-target-arn'] = jsonRequestBody.content.assessmentTargetArn;
-        reqParams.boto3['DurationInSeconds'] = jsonRequestBody.content.durationInSeconds;
+        reqParams.boto3['durationInSeconds'] = jsonRequestBody.content.durationInSeconds;
         reqParams.cli['--duration-in-seconds'] = jsonRequestBody.content.durationInSeconds;
-        reqParams.boto3['RulesPackageArns'] = jsonRequestBody.content.rulesPackageArns;
+        reqParams.boto3['rulesPackageArns'] = jsonRequestBody.content.rulesPackageArns;
         reqParams.cli['--rules-package-arns'] = jsonRequestBody.content.rulesPackageArns;
 
         reqParams.cfn['AssessmentTemplateName'] = jsonRequestBody.content.assessmentTemplateName;
@@ -17745,7 +17879,7 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.DescribeAssessmentTargets
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/DescribeAssessmentTargets$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.DescribeAssessmentTargets") {
-        reqParams.boto3['AssessmentTargetArns'] = jsonRequestBody.content.assessmentTargetArns;
+        reqParams.boto3['assessmentTargetArns'] = jsonRequestBody.content.assessmentTargetArns;
         reqParams.cli['--assessment-target-arns'] = jsonRequestBody.content.assessmentTargetArns;
 
         outputs.push({
@@ -17765,9 +17899,9 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.ListAssessmentTemplates
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/ListAssessmentTemplates$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.ListAssessmentTemplates") {
-        reqParams.boto3['AssessmentTargetArns'] = jsonRequestBody.content.assessmentTargetArns;
+        reqParams.boto3['assessmentTargetArns'] = jsonRequestBody.content.assessmentTargetArns;
         reqParams.cli['--assessment-target-arns'] = jsonRequestBody.content.assessmentTargetArns;
-        reqParams.boto3['MaxResults'] = jsonRequestBody.content.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.content.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.content.maxResults;
 
         outputs.push({
@@ -17883,9 +18017,9 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.ListEventSubscriptions
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/ListEventSubscriptions$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.ListEventSubscriptions") {
-        reqParams.boto3['ResourceArn'] = jsonRequestBody.content.resourceArn;
+        reqParams.boto3['resourceArn'] = jsonRequestBody.content.resourceArn;
         reqParams.cli['--resource-arn'] = jsonRequestBody.content.resourceArn;
-        reqParams.boto3['MaxResults'] = jsonRequestBody.content.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.content.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.content.maxResults;
 
         outputs.push({
@@ -17905,7 +18039,7 @@ function analyseRequest(details) {
 
     // autogen:inspector:inspector.CreateResourceGroup
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/inspector\/service\/CreateResourceGroup$/g) && jsonRequestBody.headers.X-Amz-Target == "com.amazonaws.inspector.v20160216.InspectorService.CreateResourceGroup") {
-        reqParams.boto3['ResourceGroupTags'] = jsonRequestBody.content.resourceGroupTags;
+        reqParams.boto3['resourceGroupTags'] = jsonRequestBody.content.resourceGroupTags;
         reqParams.cli['--resource-group-tags'] = jsonRequestBody.content.resourceGroupTags;
 
         reqParams.cfn['ResourceGroupTags'] = jsonRequestBody.content.resourceGroupTags;
@@ -21900,9 +22034,9 @@ function analyseRequest(details) {
 
     // autogen:iot:iot.CreateThingType
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/thingType$/g)) {
-        reqParams.boto3['ThingTypeName'] = jsonRequestBody.thingTypeName;
+        reqParams.boto3['thingTypeName'] = jsonRequestBody.thingTypeName;
         reqParams.cli['--thing-type-name'] = jsonRequestBody.thingTypeName;
-        reqParams.boto3['ThingTypeProperties'] = jsonRequestBody.thingTypeProperties;
+        reqParams.boto3['thingTypeProperties'] = jsonRequestBody.thingTypeProperties;
         reqParams.cli['--thing-type-properties'] = jsonRequestBody.thingTypeProperties;
 
         outputs.push({
@@ -21927,11 +22061,11 @@ function analyseRequest(details) {
 
     // autogen:iot:iot.CreateThing
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/provision\/thing$/g)) {
-        reqParams.boto3['AttributePayload'] = jsonRequestBody.templateBody.Resources.Thing.Properties.AttributePayload;
+        reqParams.boto3['attributePayload'] = jsonRequestBody.templateBody.Resources.Thing.Properties.AttributePayload;
         reqParams.cli['--attribute-payload'] = jsonRequestBody.templateBody.Resources.Thing.Properties.AttributePayload;
-        reqParams.boto3['ThingTypeName'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingTypeName;
+        reqParams.boto3['thingTypeName'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingTypeName;
         reqParams.cli['--thing-type-name'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingTypeName;
-        reqParams.boto3['ThingName'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingName;
+        reqParams.boto3['thingName'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingName;
         reqParams.cli['--thing-name'] = jsonRequestBody.templateBody.Resources.Thing.Properties.ThingName;
 
         reqParams.cfn['AttributePayload'] = jsonRequestBody.templateBody.Resources.Thing.Properties.AttributePayload;
@@ -22564,7 +22698,7 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateStage
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path.match(/^\/restapis\/.+\/stages$/g)) {
-        reqParams.boto3['RestApiId'] = /^\/restapis\/(.+)\/stages$/g.exec(jsonRequestBody.path)[1];
+        reqParams.boto3['restApiId'] = /^\/restapis\/(.+)\/stages$/g.exec(jsonRequestBody.path)[1];
         reqParams.cli['--rest-api-id'] = /^\/restapis\/(.+)\/stages$/g.exec(jsonRequestBody.path)[1];
         reqParams.boto3['stageName'] = jsonRequestBody.contentString.stageName;
         reqParams.cli['--stage-name'] = jsonRequestBody.contentString.stageName;
@@ -22654,7 +22788,7 @@ function analyseRequest(details) {
 
     // autogen:ecs:ecr.CreateRepository
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecs\/proxy\/repository\/create\?/g)) {
-        reqParams.boto3['RepositoryName'] = jsonRequestBody.repositoryName[0];
+        reqParams.boto3['repositoryName'] = jsonRequestBody.repositoryName[0];
         reqParams.cli['--repository-name'] = jsonRequestBody.repositoryName[0];
 
         reqParams.cfn['RepositoryName'] = jsonRequestBody.repositoryName[0];
@@ -24065,21 +24199,32 @@ function analyseRequest(details) {
 
     // autogen:eks:eks.CreateCluster
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/eks\/api\/eks$/g) && jsonRequestBody.operation == "createCluster") {
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['Version'] = jsonRequestBody.contentString.version;
+        reqParams.boto3['cersion'] = jsonRequestBody.contentString.version;
         reqParams.cli['--version'] = jsonRequestBody.contentString.version;
-        reqParams.boto3['RoleArn'] = jsonRequestBody.contentString.roleArn;
+        reqParams.boto3['roleArn'] = jsonRequestBody.contentString.roleArn;
         reqParams.cli['--role-arn'] = jsonRequestBody.contentString.roleArn;
-        reqParams.boto3['ResourcesVpcConfig'] = jsonRequestBody.contentString.resourcesVpcConfig;
+        reqParams.boto3['resourcesVpcConfig'] = jsonRequestBody.contentString.resourcesVpcConfig;
         reqParams.cli['--resources-vpc-config'] = jsonRequestBody.contentString.resourcesVpcConfig;
-        reqParams.boto3['ClientRequestToken'] = jsonRequestBody.contentString.clientRequestToken;
+        reqParams.boto3['clientRequestToken'] = jsonRequestBody.contentString.clientRequestToken;
         reqParams.cli['--client-request-token'] = jsonRequestBody.contentString.clientRequestToken;
 
         reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
         reqParams.cfn['Version'] = jsonRequestBody.contentString.version;
         reqParams.cfn['RoleArn'] = jsonRequestBody.contentString.roleArn;
-        reqParams.cfn['ResourcesVpcConfig'] = jsonRequestBody.contentString.resourcesVpcConfig;
+        reqParams.cfn['ResourcesVpcConfig'] = {
+            'SecurityGroupIds': jsonRequestBody.contentString.resourcesVpcConfig.securityGroupIds,
+            'SubnetIds': jsonRequestBody.contentString.resourcesVpcConfig.subnetIds
+        };
+
+        reqParams.tf['name'] = jsonRequestBody.contentString.name;
+        reqParams.tf['version'] = jsonRequestBody.contentString.version;
+        reqParams.tf['role_arn'] = jsonRequestBody.contentString.roleArn;
+        reqParams.tf['vpc_config'] = {
+            'security_group_ids': jsonRequestBody.contentString.resourcesVpcConfig.securityGroupIds,
+            'subnet_ids': jsonRequestBody.contentString.resourcesVpcConfig.subnetIds
+        };
 
         outputs.push({
             'region': region,
@@ -24098,6 +24243,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'eks',
             'type': 'AWS::EKS::Cluster',
+            'terraformType': 'aws_eks_cluster',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -24126,11 +24272,11 @@ function analyseRequest(details) {
 
     // autogen:iot1click-projects:iot1click-projects.CreateProject
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/iot1click\/api\/iot1click$/g) && jsonRequestBody.method == "POST" && jsonRequestBody.path == "/projects") {
-        reqParams.boto3['ProjectName'] = jsonRequestBody.contentString.projectName;
+        reqParams.boto3['projectName'] = jsonRequestBody.contentString.projectName;
         reqParams.cli['--project-name'] = jsonRequestBody.contentString.projectName;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
-        reqParams.boto3['PlacementTemplate'] = jsonRequestBody.contentString.placementTemplate;
+        reqParams.boto3['placementTemplate'] = jsonRequestBody.contentString.placementTemplate;
         reqParams.cli['--placement-template'] = jsonRequestBody.contentString.placementTemplate;
 
         reqParams.cfn['ProjectName'] = jsonRequestBody.contentString.projectName;
@@ -24164,11 +24310,11 @@ function analyseRequest(details) {
 
     // autogen:iot1click-projects:iot1click-projects.CreatePlacement
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/iot1click\/api\/iot1click$/g) && jsonRequestBody.method == "POST" && jsonRequestBody.path.match(/^\/projects\/.+\/placements$/g)) {
-        reqParams.boto3['PlacementName'] = jsonRequestBody.contentString.placementName;
+        reqParams.boto3['placementName'] = jsonRequestBody.contentString.placementName;
         reqParams.cli['--placement-name'] = jsonRequestBody.contentString.placementName;
-        reqParams.boto3['Attributes'] = jsonRequestBody.contentString.attributes;
+        reqParams.boto3['attributes'] = jsonRequestBody.contentString.attributes;
         reqParams.cli['--attributes'] = jsonRequestBody.contentString.attributes;
-        reqParams.boto3['ProjectName'] = /^\/projects\/(.+)\/placements$/g.exec(jsonRequestBody.path)[1];
+        reqParams.boto3['projectName'] = /^\/projects\/(.+)\/placements$/g.exec(jsonRequestBody.path)[1];
         reqParams.cli['--project-name'] = /^\/projects\/(.+)\/placements$/g.exec(jsonRequestBody.path)[1];
 
         reqParams.cfn['PlacementName'] = jsonRequestBody.contentString.placementName;
@@ -25502,11 +25648,11 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateVpcLink
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path == "/vpclinks" && jsonRequestBody.method == "POST") {
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
-        reqParams.boto3['TargetArns'] = jsonRequestBody.contentString.targetArns;
+        reqParams.boto3['targetArns'] = jsonRequestBody.contentString.targetArns;
         reqParams.cli['--target-arns'] = jsonRequestBody.contentString.targetArns;
 
         reqParams.cfn['Name'] = jsonRequestBody.contentString.name;
@@ -25545,9 +25691,9 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.DeleteStage
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "DELETE" && jsonRequestBody.path.match(/$\/restapis\/.+\/stages\/.+^/g)) {
-        reqParams.boto3['RestApiId'] = /$\/restapis\/(.+)\/stages\/.+^/g.exec(jsonRequestBody.path)[1];
+        reqParams.boto3['restApiId'] = /$\/restapis\/(.+)\/stages\/.+^/g.exec(jsonRequestBody.path)[1];
         reqParams.cli['--rest-api-id'] = /$\/restapis\/(.+)\/stages\/.+^/g.exec(jsonRequestBody.path)[1];
-        reqParams.boto3['StageName'] = /$\/restapis\/.+\/stages\/(.+)^/g.exec(jsonRequestBody.path)[1];
+        reqParams.boto3['stageName'] = /$\/restapis\/.+\/stages\/(.+)^/g.exec(jsonRequestBody.path)[1];
         reqParams.cli['--stage-name'] = /$\/restapis\/.+\/stages\/(.+)^/g.exec(jsonRequestBody.path)[1];
 
         outputs.push({
@@ -25614,11 +25760,11 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateDeployment
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path.match(/$\/restapis\/.+\/deployments^/g) && jsonRequestBody.method == "POST") {
-        reqParams.boto3['RestApiId'] = /$\/restapis\/(.+)\/deployments^/g.exec(jsonRequestBody.path)[1];
+        reqParams.boto3['restApiId'] = /$\/restapis\/(.+)\/deployments^/g.exec(jsonRequestBody.path)[1];
         reqParams.cli['--rest-api-id'] = /$\/restapis\/(.+)\/deployments^/g.exec(jsonRequestBody.path)[1];
-        reqParams.boto3['StageName'] = jsonRequestBody.contentString.stageName;
+        reqParams.boto3['stageName'] = jsonRequestBody.contentString.stageName;
         reqParams.cli['--stage-name'] = jsonRequestBody.contentString.stageName;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
 
         reqParams.cfn['RestApiId'] = /$\/restapis\/(.+)\/deployments^/g.exec(jsonRequestBody.path)[1];
@@ -25657,13 +25803,13 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateRequestValidator
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.method == "POST" && jsonRequestBody.path.match(/$\/restapis\/.+\/requestvalidators^/g)) {
-        reqParams.boto3['RestApiId'] = /$\/restapis\/(.+)\/requestvalidators^/g.exec(jsonRequestBody.path)[1];
+        reqParams.boto3['restApiId'] = /$\/restapis\/(.+)\/requestvalidators^/g.exec(jsonRequestBody.path)[1];
         reqParams.cli['--rest-api-id'] = /$\/restapis\/(.+)\/requestvalidators^/g.exec(jsonRequestBody.path)[1];
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['ValidateRequestBody'] = jsonRequestBody.contentString.validateRequestBody;
+        reqParams.boto3['validateRequestBody'] = jsonRequestBody.contentString.validateRequestBody;
         reqParams.cli['--validate-request-body'] = jsonRequestBody.contentString.validateRequestBody;
-        reqParams.boto3['ValidateRequestParameters'] = jsonRequestBody.contentString.validateRequestParameters;
+        reqParams.boto3['validateRequestParameters'] = jsonRequestBody.contentString.validateRequestParameters;
         reqParams.cli['--validate-request-parameters'] = jsonRequestBody.contentString.validateRequestParameters;
 
         reqParams.cfn['RestApiId'] = /$\/restapis\/(.+)\/requestvalidators^/g.exec(jsonRequestBody.path)[1];
@@ -25727,7 +25873,7 @@ function analyseRequest(details) {
 
     // autogen:ecs:ecs.ListClusters
     if (details.method == "GET" && details.url.match(/.+console\.aws\.amazon\.com\/ecs\/proxy\/clusters\/list\?/g)) {
-        reqParams.boto3['MaxResults'] = getUrlValue(details.url, 'maxResults');
+        reqParams.boto3['maxResults'] = getUrlValue(details.url, 'maxResults');
         reqParams.cli['--max-results'] = getUrlValue(details.url, 'maxResults');
 
         outputs.push({
@@ -25783,7 +25929,7 @@ function analyseRequest(details) {
 
     // autogen:ecs:ecs.CreateCluster
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecs\/proxy\/clusters\/create\?/g)) {
-        reqParams.boto3['ClusterName'] = jsonRequestBody.clusterName[0];
+        reqParams.boto3['clusterName'] = jsonRequestBody.clusterName[0];
         reqParams.cli['--cluster-name'] = jsonRequestBody.clusterName[0];
 
         reqParams.cfn['ClusterName'] = jsonRequestBody.clusterName[0];
@@ -25838,23 +25984,23 @@ function analyseRequest(details) {
 
     // autogen:ecs:ecs.RegisterTaskDefinition
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecs\/proxy\/taskDefinitions\/register\?/g)) {
-        reqParams.boto3['RequiresCompatibilities'] = jsonRequestBody.requiresCompatibilities;
+        reqParams.boto3['requiresCompatibilities'] = jsonRequestBody.requiresCompatibilities;
         reqParams.cli['--requires-compatibilities'] = jsonRequestBody.requiresCompatibilities;
-        reqParams.boto3['ContainerDefinitions'] = jsonRequestBody.containerDefinitions;
+        reqParams.boto3['containerDefinitions'] = jsonRequestBody.containerDefinitions;
         reqParams.cli['--container-definitions'] = jsonRequestBody.containerDefinitions;
-        reqParams.boto3['Volumes'] = jsonRequestBody.volumes;
+        reqParams.boto3['volumes'] = jsonRequestBody.volumes;
         reqParams.cli['--volumes'] = jsonRequestBody.volumes;
-        reqParams.boto3['NetworkMode'] = jsonRequestBody.networkMode;
+        reqParams.boto3['networkMode'] = jsonRequestBody.networkMode;
         reqParams.cli['--network-mode'] = jsonRequestBody.networkMode;
-        reqParams.boto3['Memory'] = jsonRequestBody.memory;
+        reqParams.boto3['memory'] = jsonRequestBody.memory;
         reqParams.cli['--memory'] = jsonRequestBody.memory;
-        reqParams.boto3['Cpu'] = jsonRequestBody.cpu;
+        reqParams.boto3['cpu'] = jsonRequestBody.cpu;
         reqParams.cli['--cpu'] = jsonRequestBody.cpu;
-        reqParams.boto3['ExecutionRoleArn'] = jsonRequestBody.executionRoleArn;
+        reqParams.boto3['executionRoleArn'] = jsonRequestBody.executionRoleArn;
         reqParams.cli['--execution-role-arn'] = jsonRequestBody.executionRoleArn;
-        reqParams.boto3['Family'] = jsonRequestBody.family;
+        reqParams.boto3['family'] = jsonRequestBody.family;
         reqParams.cli['--family'] = jsonRequestBody.family;
-        reqParams.boto3['TaskRoleArn'] = jsonRequestBody.taskRoleArn;
+        reqParams.boto3['taskRoleArn'] = jsonRequestBody.taskRoleArn;
         reqParams.cli['--task-role-arn'] = jsonRequestBody.taskRoleArn;
 
         reqParams.cfn['RequiresCompatibilities'] = jsonRequestBody.requiresCompatibilities;
@@ -25955,29 +26101,29 @@ function analyseRequest(details) {
 
     // autogen:ecs:ecs.CreateService
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecs\/proxy\/clusters\/.+\/services\/create\?/g)) {
-        reqParams.boto3['ServiceName'] = jsonRequestBody.serviceName;
+        reqParams.boto3['serviceName'] = jsonRequestBody.serviceName;
         reqParams.cli['--service-name'] = jsonRequestBody.serviceName;
-        reqParams.boto3['TaskDefinition'] = jsonRequestBody.taskDefinition;
+        reqParams.boto3['taskDefinition'] = jsonRequestBody.taskDefinition;
         reqParams.cli['--task-definition'] = jsonRequestBody.taskDefinition;
-        reqParams.boto3['DesiredCount'] = jsonRequestBody.desiredCount;
+        reqParams.boto3['desiredCount'] = jsonRequestBody.desiredCount;
         reqParams.cli['--desired-count'] = jsonRequestBody.desiredCount;
-        reqParams.boto3['Role'] = jsonRequestBody.role;
+        reqParams.boto3['role'] = jsonRequestBody.role;
         reqParams.cli['--role'] = jsonRequestBody.role;
-        reqParams.boto3['LoadBalancers'] = jsonRequestBody.loadBalancers;
+        reqParams.boto3['loadBalancers'] = jsonRequestBody.loadBalancers;
         reqParams.cli['--load-balancers'] = jsonRequestBody.loadBalancers;
-        reqParams.boto3['PlacementConstraints'] = jsonRequestBody.placementConstraints;
+        reqParams.boto3['placementConstraints'] = jsonRequestBody.placementConstraints;
         reqParams.cli['--placement-constraints'] = jsonRequestBody.placementConstraints;
-        reqParams.boto3['DeploymentConfiguration'] = jsonRequestBody.deploymentConfiguration;
+        reqParams.boto3['deploymentConfiguration'] = jsonRequestBody.deploymentConfiguration;
         reqParams.cli['--deployment-configuration'] = jsonRequestBody.deploymentConfiguration;
-        reqParams.boto3['LaunchType'] = jsonRequestBody.launchType;
+        reqParams.boto3['launchType'] = jsonRequestBody.launchType;
         reqParams.cli['--launch-type'] = jsonRequestBody.launchType;
-        reqParams.boto3['PlatformVersion'] = jsonRequestBody.platformVersion;
+        reqParams.boto3['platformVersion'] = jsonRequestBody.platformVersion;
         reqParams.cli['--platform-version'] = jsonRequestBody.platformVersion;
-        reqParams.boto3['NetworkConfiguration'] = jsonRequestBody.networkConfiguration;
+        reqParams.boto3['networkConfiguration'] = jsonRequestBody.networkConfiguration;
         reqParams.cli['--network-configuration'] = jsonRequestBody.networkConfiguration;
-        reqParams.boto3['SchedulingStrategy'] = jsonRequestBody.schedulingStrategy;
+        reqParams.boto3['schedulingStrategy'] = jsonRequestBody.schedulingStrategy;
         reqParams.cli['--scheduling-strategy'] = jsonRequestBody.schedulingStrategy;
-        reqParams.boto3['Cluster'] = /.+console\.aws\.amazon\.com\/ecs\/proxy\/clusters\/(.+)\/services\/create\?/g.exec(details.url)[1];
+        reqParams.boto3['cluster'] = /.+console\.aws\.amazon\.com\/ecs\/proxy\/clusters\/(.+)\/services\/create\?/g.exec(details.url)[1];
         reqParams.cli['--cluster'] = /.+console\.aws\.amazon\.com\/ecs\/proxy\/clusters\/(.+)\/services\/create\?/g.exec(details.url)[1];
 
         reqParams.cfn['ServiceName'] = jsonRequestBody.serviceName;
@@ -26427,7 +26573,7 @@ function analyseRequest(details) {
 
     // autogen:states:stepfunctions.CreateActivity
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/states\/service\/activities\/create$/g)) {
-        reqParams.boto3['Name'] = jsonRequestBody.name;
+        reqParams.boto3['name'] = jsonRequestBody.name;
         reqParams.cli['--name'] = jsonRequestBody.name;
 
         reqParams.cfn['Name'] = jsonRequestBody.name;
@@ -26462,7 +26608,7 @@ function analyseRequest(details) {
 
     // autogen:states:stepfunctions.ListActivities
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/states\/service\/activities\/list$/g)) {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.maxResults;
 
         outputs.push({
@@ -26502,7 +26648,7 @@ function analyseRequest(details) {
 
     // autogen:states:stepfunctions.ListStateMachines
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/states\/service\/statemachines$/g)) {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.maxResults;
 
         outputs.push({
@@ -26522,7 +26668,7 @@ function analyseRequest(details) {
 
     // autogen:states:stepfunctions.DescribeStateMachine
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/states\/service\/statemachines\/details$/g)) {
-        reqParams.boto3['StateMachineArn'] = jsonRequestBody.stateMachineArn;
+        reqParams.boto3['stateMachineArn'] = jsonRequestBody.stateMachineArn;
         reqParams.cli['--state-machine-arn'] = jsonRequestBody.stateMachineArn;
 
         outputs.push({
@@ -26542,11 +26688,11 @@ function analyseRequest(details) {
 
     // autogen:states:stepfunctions.CreateStateMachine
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/states\/service\/statemachines\/create$/g)) {
-        reqParams.boto3['Name'] = jsonRequestBody.name;
+        reqParams.boto3['name'] = jsonRequestBody.name;
         reqParams.cli['--name'] = jsonRequestBody.name;
-        reqParams.boto3['Definition'] = jsonRequestBody.definition;
+        reqParams.boto3['definition'] = jsonRequestBody.definition;
         reqParams.cli['--definition'] = jsonRequestBody.definition;
-        reqParams.boto3['RoleArn'] = jsonRequestBody.roleArn;
+        reqParams.boto3['roleArn'] = jsonRequestBody.roleArn;
         reqParams.cli['--role-arn'] = jsonRequestBody.roleArn;
 
         reqParams.cfn['StateMachineName'] = jsonRequestBody.name;
@@ -26585,7 +26731,7 @@ function analyseRequest(details) {
 
     // autogen:states:stepfunctions.DeleteStateMachine
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/states\/service\/statemachines\/delete$/g)) {
-        reqParams.boto3['StateMachineArn'] = jsonRequestBody.stateMachineArn;
+        reqParams.boto3['stateMachineArn'] = jsonRequestBody.stateMachineArn;
         reqParams.cli['--state-machine-arn'] = jsonRequestBody.stateMachineArn;
 
         outputs.push({
@@ -28419,7 +28565,7 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.GetGraphqlApi
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "getGraphqlApi") {
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
 
         outputs.push({
@@ -28461,11 +28607,11 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.ListTypes
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "listTypes") {
-        reqParams.boto3['Format'] = jsonRequestBody.params.format;
+        reqParams.boto3['format'] = jsonRequestBody.params.format;
         reqParams.cli['--format'] = jsonRequestBody.params.format;
-        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.params.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.params.maxResults;
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
 
         outputs.push({
@@ -28485,9 +28631,9 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.ListDataSources
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "listDataSources") {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.params.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.params.maxResults;
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
 
         outputs.push({
@@ -28507,7 +28653,7 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.ListGraphqlApis
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "listGraphqlApis") {
-        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.boto3['maxResults'] = jsonRequestBody.params.maxResults;
         reqParams.cli['--max-results'] = jsonRequestBody.params.maxResults;
 
         outputs.push({
@@ -28549,19 +28695,19 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.CreateFunction
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "createFunction") {
-        reqParams.boto3['DataSourceName'] = jsonRequestBody.contentString.dataSourceName;
+        reqParams.boto3['dataSourceName'] = jsonRequestBody.contentString.dataSourceName;
         reqParams.cli['--data-source-name'] = jsonRequestBody.contentString.dataSourceName;
-        reqParams.boto3['RequestMappingTemplate'] = jsonRequestBody.contentString.requestMappingTemplate;
+        reqParams.boto3['requestMappingTemplate'] = jsonRequestBody.contentString.requestMappingTemplate;
         reqParams.cli['--request-mapping-template'] = jsonRequestBody.contentString.requestMappingTemplate;
-        reqParams.boto3['ResponseMappingTemplate'] = jsonRequestBody.contentString.responseMappingTemplate;
+        reqParams.boto3['responseMappingTemplate'] = jsonRequestBody.contentString.responseMappingTemplate;
         reqParams.cli['--response-mapping-template'] = jsonRequestBody.contentString.responseMappingTemplate;
-        reqParams.boto3['Name'] = jsonRequestBody.contentString.name;
+        reqParams.boto3['name'] = jsonRequestBody.contentString.name;
         reqParams.cli['--name'] = jsonRequestBody.contentString.name;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
-        reqParams.boto3['FunctionVersion'] = jsonRequestBody.contentString.functionVersion;
+        reqParams.boto3['functionVersion'] = jsonRequestBody.contentString.functionVersion;
         reqParams.cli['--function-version'] = jsonRequestBody.contentString.functionVersion;
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
 
         reqParams.cfn['DataSourceName'] = jsonRequestBody.contentString.dataSourceName;
@@ -28599,9 +28745,9 @@ function analyseRequest(details) {
 
     // autogen:appsync:appsync.DeleteFunction
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/appsync\/api\/appsync$/g) && jsonRequestBody.operation == "deleteFunction") {
-        reqParams.boto3['ApiId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.boto3['apiId'] = jsonRequestBody.path.split("/")[3];
         reqParams.cli['--api-id'] = jsonRequestBody.path.split("/")[3];
-        reqParams.boto3['FunctionId'] = jsonRequestBody.path.split("/")[5];
+        reqParams.boto3['functionId'] = jsonRequestBody.path.split("/")[5];
         reqParams.cli['--function-id'] = jsonRequestBody.path.split("/")[5];
 
         outputs.push({
@@ -28803,13 +28949,13 @@ function analyseRequest(details) {
 
     // autogen:codepipeline:codepipeline.DisableStageTransition
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "disableStageTransition") {
-        reqParams.boto3['PipelineName'] = jsonRequestBody.contentString.pipelineName;
+        reqParams.boto3['pipelineName'] = jsonRequestBody.contentString.pipelineName;
         reqParams.cli['--pipeline-name'] = jsonRequestBody.contentString.pipelineName;
-        reqParams.boto3['StageName'] = jsonRequestBody.contentString.stageName;
+        reqParams.boto3['stageName'] = jsonRequestBody.contentString.stageName;
         reqParams.cli['--stage-name'] = jsonRequestBody.contentString.stageName;
-        reqParams.boto3['Reason'] = jsonRequestBody.contentString.reason;
+        reqParams.boto3['reason'] = jsonRequestBody.contentString.reason;
         reqParams.cli['--reason'] = jsonRequestBody.contentString.reason;
-        reqParams.boto3['TransitionType'] = jsonRequestBody.contentString.transitionType;
+        reqParams.boto3['transitionType'] = jsonRequestBody.contentString.transitionType;
         reqParams.cli['--transition-type'] = jsonRequestBody.contentString.transitionType;
 
         outputs.push({
@@ -28829,11 +28975,11 @@ function analyseRequest(details) {
 
     // autogen:codepipeline:codepipeline.EnableStageTransition
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "enableStageTransition") {
-        reqParams.boto3['PipelineName'] = jsonRequestBody.contentString.pipelineName;
+        reqParams.boto3['pipelineName'] = jsonRequestBody.contentString.pipelineName;
         reqParams.cli['--pipeline-name'] = jsonRequestBody.contentString.pipelineName;
-        reqParams.boto3['StageName'] = jsonRequestBody.contentString.stageName;
+        reqParams.boto3['stageName'] = jsonRequestBody.contentString.stageName;
         reqParams.cli['--stage-name'] = jsonRequestBody.contentString.stageName;
-        reqParams.boto3['TransitionType'] = jsonRequestBody.contentString.transitionType;
+        reqParams.boto3['transitionType'] = jsonRequestBody.contentString.transitionType;
         reqParams.cli['--transition-type'] = jsonRequestBody.contentString.transitionType;
 
         outputs.push({
@@ -28957,7 +29103,7 @@ function analyseRequest(details) {
 
     // autogen:codepipeline:codepipeline.PutWebhook
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/codesuite\/api\/codepipeline$/g) && jsonRequestBody.operation == "putWebhook") {
-        reqParams.boto3['Webhook'] = jsonRequestBody.contentString.webhook;
+        reqParams.boto3['webhook'] = jsonRequestBody.contentString.webhook;
         reqParams.cli['--webhook'] = jsonRequestBody.contentString.webhook;
 
         outputs.push({
@@ -29224,7 +29370,7 @@ function analyseRequest(details) {
 
     // autogen:iot:iot.DeleteCertificate
     if (details.method == "DELETE" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/certificate\/[a-f0-9]+$/g)) {
-        reqParams.boto3['CertificateId'] = /.+console\.aws\.amazon\.com\/iot\/api\/certificate\/[a-f0-9]+$/g.exec(details.url)[1];
+        reqParams.boto3['certificateId'] = /.+console\.aws\.amazon\.com\/iot\/api\/certificate\/[a-f0-9]+$/g.exec(details.url)[1];
         reqParams.cli['--certificate-id'] = /.+console\.aws\.amazon\.com\/iot\/api\/certificate\/[a-f0-9]+$/g.exec(details.url)[1];
 
         outputs.push({
@@ -29244,9 +29390,9 @@ function analyseRequest(details) {
 
     // autogen:iot:iot.CreateCertificateFromCsr
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/certificate$/g)) {
-        reqParams.boto3['CertificateSigningRequest'] = jsonRequestBody.csr;
+        reqParams.boto3['certificateSigningRequest'] = jsonRequestBody.csr;
         reqParams.cli['--certificate-signing-request'] = jsonRequestBody.csr;
-        reqParams.boto3['SetAsActive'] = jsonRequestBody.setAsActive;
+        reqParams.boto3['setAsActive'] = jsonRequestBody.setAsActive;
         reqParams.cli['--set-as-active'] = jsonRequestBody.setAsActive;
 
         reqParams.cfn['CertificateSigningRequest'] = jsonRequestBody.csr;
@@ -29279,9 +29425,9 @@ function analyseRequest(details) {
 
     // autogen:iot:iot.CreatePolicy
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/policy$/g)) {
-        reqParams.boto3['PolicyName'] = jsonRequestBody.name;
+        reqParams.boto3['policyName'] = jsonRequestBody.name;
         reqParams.cli['--policy-name'] = jsonRequestBody.name;
-        reqParams.boto3['PolicyDocument'] = jsonRequestBody.value;
+        reqParams.boto3['policyDocument'] = jsonRequestBody.value;
         reqParams.cli['--policy-document'] = jsonRequestBody.value;
 
         reqParams.cfn['PolicyName'] = jsonRequestBody.name;
@@ -29314,9 +29460,9 @@ function analyseRequest(details) {
 
     // autogen:iot:iot.AttachPrincipalPolicy
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/principal\/attach$/g)) {
-        reqParams.boto3['PolicyName'] = jsonRequestBody.name;
+        reqParams.boto3['policyName'] = jsonRequestBody.name;
         reqParams.cli['--policy-name'] = jsonRequestBody.name;
-        reqParams.boto3['Principal'] = jsonRequestBody.principal;
+        reqParams.boto3['principal'] = jsonRequestBody.principal;
         reqParams.cli['--principal'] = jsonRequestBody.principal;
 
         reqParams.cfn['PolicyName'] = jsonRequestBody.name;
@@ -30527,7 +30673,7 @@ function analyseRequest(details) {
 
     // autogen:iot:iot.DisableTopicRule
     if (details.method == "PUT" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/rule\/.+\/disable$/g) && formRequestBody._ == "{") {
-        reqParams.boto3['RuleName'] = /.+console\.aws\.amazon\.com\/iot\/api\/rule\/(.+)\/disable$/g.exec(details.url)[1];
+        reqParams.boto3['ruleName'] = /.+console\.aws\.amazon\.com\/iot\/api\/rule\/(.+)\/disable$/g.exec(details.url)[1];
         reqParams.cli['--rule-name'] = /.+console\.aws\.amazon\.com\/iot\/api\/rule\/(.+)\/disable$/g.exec(details.url)[1];
 
         outputs.push({
@@ -30547,7 +30693,7 @@ function analyseRequest(details) {
 
     // autogen:iot:iot.EnableTopicRule
     if (details.method == "PUT" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/rule\/.+\/enable$/g)) {
-        reqParams.boto3['RuleName'] = /.+console\.aws\.amazon\.com\/iot\/api\/rule\/(.+)\/enable$/g.exec(details.url)[1];
+        reqParams.boto3['ruleName'] = /.+console\.aws\.amazon\.com\/iot\/api\/rule\/(.+)\/enable$/g.exec(details.url)[1];
         reqParams.cli['--rule-name'] = /.+console\.aws\.amazon\.com\/iot\/api\/rule\/(.+)\/enable$/g.exec(details.url)[1];
 
         outputs.push({
@@ -30567,7 +30713,7 @@ function analyseRequest(details) {
 
     // autogen:iot:iot.DeleteTopicRule
     if (details.method == "DELETE" && details.url.match(/.+console\.aws\.amazon\.com\/iot\/api\/rule\/.+$/g)) {
-        reqParams.boto3['RuleName'] = /.+console\.aws\.amazon\.com\/iot\/api\/rule\/(.+)$/g.exec(details.url)[1];
+        reqParams.boto3['ruleName'] = /.+console\.aws\.amazon\.com\/iot\/api\/rule\/(.+)$/g.exec(details.url)[1];
         reqParams.cli['--rule-name'] = /.+console\.aws\.amazon\.com\/iot\/api\/rule\/(.+)$/g.exec(details.url)[1];
 
         outputs.push({
@@ -30864,13 +31010,13 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateDocumentationVersion
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path.match(/^\/restapis\/.+\/documentation\/versions$/g)) {
-        reqParams.boto3['RestApiId'] = /^\/restapis\/(.+)\/documentation\/versions$/g.exec(jsonRequestBody.path)[1];
+        reqParams.boto3['restApiId'] = /^\/restapis\/(.+)\/documentation\/versions$/g.exec(jsonRequestBody.path)[1];
         reqParams.cli['--rest-api-id'] = /^\/restapis\/(.+)\/documentation\/versions$/g.exec(jsonRequestBody.path)[1];
-        reqParams.boto3['DocumentationVersion'] = jsonRequestBody.contentString.documentationVersion;
+        reqParams.boto3['documentationVersion'] = jsonRequestBody.contentString.documentationVersion;
         reqParams.cli['--documentation-version'] = jsonRequestBody.contentString.documentationVersion;
-        reqParams.boto3['Description'] = jsonRequestBody.contentString.description;
+        reqParams.boto3['description'] = jsonRequestBody.contentString.description;
         reqParams.cli['--description'] = jsonRequestBody.contentString.description;
-        reqParams.boto3['StageName'] = jsonRequestBody.contentString.stageName;
+        reqParams.boto3['stageName'] = jsonRequestBody.contentString.stageName;
         reqParams.cli['--stage-name'] = jsonRequestBody.contentString.stageName;
 
         reqParams.cfn['RestApiId'] = /^\/restapis\/(.+)\/documentation\/versions$/g.exec(jsonRequestBody.path)[1];
@@ -30904,13 +31050,13 @@ function analyseRequest(details) {
 
     // autogen:apigateway:apigateway.CreateBasePathMapping
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/apigateway\/api\/apigateway$/g) && jsonRequestBody.path.match(/^\/domainname\/.+\/basepathmappings$/g)) {
-        reqParams.boto3['DomainName'] = /^\/domainname\/(.+)\/basepathmappings$/g.exec(jsonRequestBody.path)[1];
+        reqParams.boto3['domainName'] = /^\/domainname\/(.+)\/basepathmappings$/g.exec(jsonRequestBody.path)[1];
         reqParams.cli['--domain-name'] = /^\/domainname\/(.+)\/basepathmappings$/g.exec(jsonRequestBody.path)[1];
-        reqParams.boto3['BasePath'] = jsonRequestBody.contentString.basePath;
+        reqParams.boto3['basePath'] = jsonRequestBody.contentString.basePath;
         reqParams.cli['--base-path'] = jsonRequestBody.contentString.basePath;
-        reqParams.boto3['RestApiId'] = jsonRequestBody.contentString.restApiId;
+        reqParams.boto3['restApiId'] = jsonRequestBody.contentString.restApiId;
         reqParams.cli['--rest-api-id'] = jsonRequestBody.contentString.restApiId;
-        reqParams.boto3['Stage'] = jsonRequestBody.contentString.stage;
+        reqParams.boto3['stage'] = jsonRequestBody.contentString.stage;
         reqParams.cli['--stage'] = jsonRequestBody.contentString.stage;
 
         reqParams.cfn['DomainName'] = /^\/domainname\/(.+)\/basepathmappings$/g.exec(jsonRequestBody.path)[1];
@@ -32142,6 +32288,173 @@ function analyseRequest(details) {
             notifyBlocked();
             return {cancel: true};
         }
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.DescribeRepositories
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "describeRepositories") {
+        reqParams.boto3['maxResults'] = jsonRequestBody.contentString.maxResults;
+        reqParams.cli['--max-results'] = jsonRequestBody.contentString.maxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'DescribeRepositories',
+                'boto3': 'describe_repositories',
+                'cli': 'describe-repositories'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.CreateRepository
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "createRepository") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+
+        reqParams.cfn['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+
+        reqParams.tf['name'] = jsonRequestBody.contentString.repositoryName;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'CreateRepository',
+                'boto3': 'create_repository',
+                'cli': 'create-repository'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+            
+        tracked_resources.push({
+            'logicalId': getResourceName('ecr', details.requestId),
+            'region': region,
+            'service': 'ecr',
+            'type': 'AWS::ECR::Repository',
+            'terraformType': 'aws_ecr_repository',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.DeleteRepository
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "deleteRepository") {
+        reqParams.boto3['repositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['fsorce'] = jsonRequestBody.contentString.force;
+        reqParams.cli['--force'] = jsonRequestBody.contentString.force;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'DeleteRepository',
+                'boto3': 'delete_repository',
+                'cli': 'delete-repository'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:eks:iam.ListRoles
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/eks\/api\/iam$/g) && jsonRequestBody.operation == "listRoles") {
+
+        outputs.push({
+            'region': region,
+            'service': 'iam',
+            'method': {
+                'api': 'ListRoles',
+                'boto3': 'list_roles',
+                'cli': 'list-roles'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:eks:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/eks\/api\/ec2$/g) && jsonRequestBody.operation == "describeVpcs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:eks:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/eks\/api\/ec2$/g) && jsonRequestBody.operation == "describeSubnets") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:eks:ec2.DescribeSecurityGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/eks\/api\/ec2$/g) && jsonRequestBody.operation == "describeSecurityGroups") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSecurityGroups',
+                'boto3': 'describe_security_groups',
+                'cli': 'describe-security-groups'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:eks:eks.ListClusters
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/eks\/api\/eks$/g) && jsonRequestBody.operation == "listClusters") {
+
+        outputs.push({
+            'region': region,
+            'service': 'eks',
+            'method': {
+                'api': 'ListClusters',
+                'boto3': 'list_clusters',
+                'cli': 'list-clusters'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
         
         return {};
     }
