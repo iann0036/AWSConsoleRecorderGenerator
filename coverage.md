@@ -1,12 +1,12 @@
 ## CloudFormation Resource Coverage
 
-**318/334 (95%)** Resources Covered
+**321/334 (96%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
 | *AWS::AmazonMQ::Broker* | 1 |
 | *AWS::AmazonMQ::Configuration* | 1 |
-| *AWS::AmazonMQ::ConfigurationAssociation* | 0 |
+| *AWS::AmazonMQ::ConfigurationAssociation* | 1 |
 | *AWS::ApiGateway::Account* | 1 |
 | *AWS::ApiGateway::ApiKey* | 1 |
 | *AWS::ApiGateway::Authorizer* | 1 |
@@ -217,9 +217,9 @@
 | *AWS::IoT::Thing* | 1 |
 | *AWS::IoT::ThingPrincipalAttachment* | 1 |
 | *AWS::IoT::TopicRule* | 1 |
-| *AWS::IoTAnalytics::Channel* | 0 |
+| *AWS::IoTAnalytics::Channel* | 2 |
 | *AWS::IoTAnalytics::Dataset* | 0 |
-| *AWS::IoTAnalytics::Datastore* | 0 |
+| *AWS::IoTAnalytics::Datastore* | 1 |
 | *AWS::IoTAnalytics::Pipeline* | 0 |
 | *AWS::KMS::Alias* | 1 |
 | *AWS::KMS::Key* | 2 |
@@ -827,6 +827,7 @@
 | *iot* | 12/166 (7%) |
 | *iot1click-devices* | 3/10 (30%) |
 | *iot1click-projects* | 3/13 (23%) |
+| *iotanalytics* | 9/34 (26%) |
 | *kinesis* | 9/28 (32%) |
 | *kinesisanalytics* | 9/17 (52%) |
 | *kinesisanalyticsv2* | 1/21 (4%) |
@@ -834,7 +835,7 @@
 | *lambda* | 14/38 (36%) |
 | *logs* | 5/39 (12%) |
 | *medialive* | 4/25 (16%) |
-| *mq* | 6/20 (30%) |
+| *mq* | 7/20 (35%) |
 | *neptune* | 12/57 (21%) |
 | *opsworks* | 16/74 (21%) |
 | *organizations* | 14/42 (33%) |
@@ -3412,7 +3413,7 @@
 | *iam* | `ListPolicyVersions` | 1 |
 | *iam* | `ListRolePolicies` | 0 |
 | *iam* | `ListRoleTags` | 0 |
-| *iam* | `ListRoles` | 12 |
+| *iam* | `ListRoles` | 13 |
 | *iam* | `ListSAMLProviders` | 0 |
 | *iam* | `ListSSHPublicKeys` | 0 |
 | *iam* | `ListServerCertificates` | 1 |
@@ -3528,7 +3529,7 @@
 | *iot* | `CreateThing` | 1 |
 | *iot* | `CreateThingGroup` | 0 |
 | *iot* | `CreateThingType` | 1 |
-| *iot* | `CreateTopicRule` | 1 |
+| *iot* | `CreateTopicRule` | 2 |
 | *iot* | `DeleteAccountAuditConfiguration` | 0 |
 | *iot* | `DeleteAuthorizer` | 0 |
 | *iot* | `DeleteBillingGroup` | 0 |
@@ -3698,27 +3699,27 @@
 | *iot1click-projects* | `UpdateProject` | 0 |
 | *iotanalytics* | `BatchPutMessage` | 0 |
 | *iotanalytics* | `CancelPipelineReprocessing` | 0 |
-| *iotanalytics* | `CreateChannel` | 0 |
+| *iotanalytics* | `CreateChannel` | 1 |
 | *iotanalytics* | `CreateDataset` | 0 |
 | *iotanalytics* | `CreateDatasetContent` | 0 |
-| *iotanalytics* | `CreateDatastore` | 0 |
-| *iotanalytics* | `CreatePipeline` | 0 |
-| *iotanalytics* | `DeleteChannel` | 0 |
+| *iotanalytics* | `CreateDatastore` | 1 |
+| *iotanalytics* | `CreatePipeline` | 1 |
+| *iotanalytics* | `DeleteChannel` | 1 |
 | *iotanalytics* | `DeleteDataset` | 0 |
 | *iotanalytics* | `DeleteDatasetContent` | 0 |
-| *iotanalytics* | `DeleteDatastore` | 0 |
-| *iotanalytics* | `DeletePipeline` | 0 |
+| *iotanalytics* | `DeleteDatastore` | 1 |
+| *iotanalytics* | `DeletePipeline` | 1 |
 | *iotanalytics* | `DescribeChannel` | 0 |
 | *iotanalytics* | `DescribeDataset` | 0 |
 | *iotanalytics* | `DescribeDatastore` | 0 |
 | *iotanalytics* | `DescribeLoggingOptions` | 0 |
 | *iotanalytics* | `DescribePipeline` | 0 |
 | *iotanalytics* | `GetDatasetContent` | 0 |
-| *iotanalytics* | `ListChannels` | 0 |
+| *iotanalytics* | `ListChannels` | 1 |
 | *iotanalytics* | `ListDatasetContents` | 0 |
 | *iotanalytics* | `ListDatasets` | 0 |
-| *iotanalytics* | `ListDatastores` | 0 |
-| *iotanalytics* | `ListPipelines` | 0 |
+| *iotanalytics* | `ListDatastores` | 1 |
+| *iotanalytics* | `ListPipelines` | 1 |
 | *iotanalytics* | `ListTagsForResource` | 0 |
 | *iotanalytics* | `PutLoggingOptions` | 0 |
 | *iotanalytics* | `RunPipelineActivity` | 0 |
@@ -4269,7 +4270,7 @@
 | *mq* | `ListTags` | 0 |
 | *mq* | `ListUsers` | 0 |
 | *mq* | `RebootBroker` | 0 |
-| *mq* | `UpdateBroker` | 0 |
+| *mq* | `UpdateBroker` | 1 |
 | *mq* | `UpdateConfiguration` | 0 |
 | *mq* | `UpdateUser` | 0 |
 | *mturk* | `AcceptQualificationRequest` | 0 |
@@ -6126,4 +6127,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 920 (17%)**
+**Total Unique Occurances: 930 (17%)**
