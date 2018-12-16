@@ -9037,6 +9037,11 @@ function analyseRequest(details) {
         reqParams.cfn['Parameters'] = jsonRequestBody.contentString.parameters;
         reqParams.cfn['Type'] = jsonRequestBody.contentString.type;
 
+        reqParams.tf['container_properties'] = jsonRequestBody.contentString.containerProperties;
+        reqParams.tf['name'] = jsonRequestBody.contentString.jobDefinitionName;
+        reqParams.tf['parameters'] = jsonRequestBody.contentString.parameters;
+        reqParams.tf['type'] = jsonRequestBody.contentString.type;
+
         outputs.push({
             'region': region,
             'service': 'batch',
@@ -9054,6 +9059,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'batch',
             'type': 'AWS::Batch::JobDefinition',
+            'terraformType': 'aws_batch_job_definition',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -10697,6 +10703,10 @@ function analyseRequest(details) {
                 reqParams.cfn['Description'] = action['parameters'][0]['cacheSubnetGroupDescription'];
                 reqParams.cfn['SubnetIds'] = action['parameters'][0]['subnetIds'];
 
+                reqParams.tf['name'] = action['parameters'][0]['cacheSubnetGroupName'];
+                reqParams.tf['description'] = action['parameters'][0]['cacheSubnetGroupDescription'];
+                reqParams.tf['subnet_ids'] = action['parameters'][0]['subnetIds'];
+
                 outputs.push({
                     'region': region,
                     'service': 'elasticache',
@@ -10714,6 +10724,7 @@ function analyseRequest(details) {
                     'region': region,
                     'service': 'elasticache',
                     'type': 'AWS::ElastiCache::SubnetGroup',
+                    'terraformType': 'aws_elasticache_subnet_group',
                     'options': reqParams,
                     'requestDetails': details,
                     'was_blocked': blocking
@@ -10835,6 +10846,10 @@ function analyseRequest(details) {
                 reqParams.cfn['CacheParameterGroupFamily'] = action['parameters'][0]['cacheParameterGroupFamily'];
                 reqParams.cfn['Description'] = action['parameters'][0]['description'];
 
+                reqParams.tf['family'] = action['parameters'][0]['cacheParameterGroupFamily'];
+                reqParams.tf['name'] = action['parameters'][0]['cacheParameterGroupName'];
+                reqParams.tf['description'] = action['parameters'][0]['description'];
+
                 outputs.push({
                     'region': region,
                     'service': 'elasticache',
@@ -10852,6 +10867,7 @@ function analyseRequest(details) {
                     'region': region,
                     'service': 'elasticache',
                     'type': 'AWS::ElastiCache::ParameterGroup',
+                    'terraformType': 'aws_elasticache_parameter_group',
                     'options': reqParams,
                     'requestDetails': details,
                     'was_blocked': blocking
@@ -12080,6 +12096,24 @@ function analyseRequest(details) {
                     if (action['parameters'][0]['vpcSecurityGroupIds'] && action['parameters'][0]['vpcSecurityGroupIds'][0] != "-create-rds-default-security-group") {
                         reqParams.cfn['VPCSecurityGroups'] = action['parameters'][0]['vpcSecurityGroupIds'];
                     }
+
+                    reqParams.tf['backup_retention_period'] = action['parameters'][0]['backupRetentionPeriod'];
+                    reqParams.tf['database_name'] = action['parameters'][0]['DBName'];
+                    reqParams.tf['cluster_identifier'] = action['parameters'][0]['dbClusterIdentifier'];
+                    reqParams.tf['db_cluster_parameter_group_name'] = action['parameters'][0]['DBClusterParameterGroupName'];
+                    reqParams.tf['db_subnet_group_name'] = action['parameters'][0]['DBSubnetGroupName'];
+                    reqParams.tf['deletion_protection'] = action['parameters'][0]['deletionProtection'];
+                    reqParams.tf['enabled_cloudwatch_logs_exports'] = action['parameters'][0]['enableCloudwatchLogsExports'];
+                    reqParams.tf['engine'] = action['parameters'][0]['engine'];
+                    reqParams.tf['engine_mode'] = action['parameters'][0]['engineMode'];
+                    reqParams.tf['engine_version'] = action['parameters'][0]['engineVersion'];
+                    reqParams.tf['master_password'] = action['parameters'][0]['masterUserPassword'];
+                    reqParams.tf['master_username'] = action['parameters'][0]['masterUsername'];
+                    reqParams.tf['port'] = action['parameters'][0]['port'];
+                    reqParams.tf['preferred_maintenance_window'] = action['parameters'][0]['preferredMaintenanceWindow'];
+                    if (action['parameters'][0]['vpcSecurityGroupIds'] && action['parameters'][0]['vpcSecurityGroupIds'][0] != "-create-rds-default-security-group") {
+                        reqParams.tf['vpc_security_group_ids'] = action['parameters'][0]['vpcSecurityGroupIds'];
+                    }
         
                     outputs.push({
                         'region': region,
@@ -12098,6 +12132,7 @@ function analyseRequest(details) {
                         'region': region,
                         'service': 'rds',
                         'type': 'AWS::RDS::DBCluster',
+                        'terraformType': 'aws_rds_cluster',
                         'options': reqParams,
                         'requestDetails': details,
                         'was_blocked': blocking
@@ -12205,6 +12240,36 @@ function analyseRequest(details) {
                 if (action['parameters'][0]['vpcSecurityGroupIds'] && action['parameters'][0]['vpcSecurityGroupIds'][0] != "-create-rds-default-security-group") {
                     reqParams.cfn['VPCSecurityGroups'] = action['parameters'][0]['vpcSecurityGroupIds'];
                 }
+
+                reqParams.tf['auto_minor_version_upgrade'] = action['parameters'][0]['autoMinorVersionUpgrade'];
+                reqParams.tf['copy_tags_to_snapshot'] = action['parameters'][0]['copyTagsToSnapshot'];
+                reqParams.tf['multi_az'] = action['parameters'][0]['multiAZ'];
+                reqParams.tf['publicly_accessible'] = action['parameters'][0]['publiclyAccessible'];
+                reqParams.tf['storage_encrypted'] = action['parameters'][0]['storageEncrypted'];
+                reqParams.tf['allocated_storage'] = action['parameters'][0]['allocatedStorage'];
+                reqParams.tf['backup_retention_period'] = action['parameters'][0]['backupRetentionPeriod'];
+                reqParams.tf['iops'] = action['parameters'][0]['iops'];
+                reqParams.tf['monitoring_interval'] = action['parameters'][0]['monitoringInterval'];
+                reqParams.tf['port'] = action['parameters'][0]['port'];
+                reqParams.tf['availability_zone'] = action['parameters'][0]['availabilityZone'];
+                reqParams.tf['instance_class'] = action['parameters'][0]['DBInstanceClass'];
+                reqParams.tf['identifier'] = action['parameters'][0]['DBInstanceIdentifier'];
+                reqParams.tf['database_name'] = action['parameters'][0]['DBName'];
+                reqParams.tf['parameter_group_name'] = action['parameters'][0]['DBParameterGroupName'];
+                reqParams.tf['db_subnet_group_name'] = action['parameters'][0]['DBSubnetGroupName'];
+                reqParams.tf['cluster_identifier'] = action['parameters'][0]['dbClusterIdentifier'];
+                reqParams.tf['engine'] = action['parameters'][0]['engine'];
+                reqParams.tf['engine_version'] = action['parameters'][0]['engineVersion'];
+                reqParams.tf['license_model'] = action['parameters'][0]['licenseModel'];
+                reqParams.tf['master_password'] = action['parameters'][0]['masterUserPassword'];
+                reqParams.tf['master_username'] = action['parameters'][0]['masterUsername'];
+                reqParams.tf['monitoring_role_arn'] = action['parameters'][0]['monitoringRoleArn'];
+                reqParams.tf['option_group_name'] = action['parameters'][0]['optionGroupName'];
+                reqParams.tf['preferred_maintenance_window'] = action['parameters'][0]['preferredMaintenanceWindow'];
+                reqParams.tf['storage_type'] = action['parameters'][0]['storageType'];
+                if (action['parameters'][0]['vpcSecurityGroupIds'] && action['parameters'][0]['vpcSecurityGroupIds'][0] != "-create-rds-default-security-group") {
+                    reqParams.tf['vpc_security_group_ids'] = action['parameters'][0]['vpcSecurityGroupIds'];
+                }
         
                 outputs.push({
                     'region': region,
@@ -12223,6 +12288,7 @@ function analyseRequest(details) {
                     'region': region,
                     'service': 'rds',
                     'type': 'AWS::RDS::DBInstance',
+                    'terraformType': 'aws_db_instance',
                     'options': reqParams,
                     'requestDetails': details,
                     'was_blocked': blocking
@@ -16953,6 +17019,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf',
@@ -16970,6 +17038,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf',
             'type': 'AWS::WAF::XssMatchSet',
+            'type': 'aws_waf_xss_match_set',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -17021,6 +17090,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf',
@@ -17038,6 +17109,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf',
             'type': 'AWS::WAF::IPSet',
+            'type': 'aws_waf_ipset',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -17089,6 +17161,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf',
@@ -17106,6 +17180,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf',
             'type': 'AWS::WAF::SizeConstraintSet',
+            'terraformType': 'aws_waf_size_constraint_set',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -17235,6 +17310,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf',
@@ -17252,6 +17329,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf',
             'type': 'AWS::WAF::SqlInjectionMatchSet',
+            'terraformType': 'aws_waf_sql_injection_match_set',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -17306,6 +17384,9 @@ function analyseRequest(details) {
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
         reqParams.cfn['MetricName'] = jsonRequestBody.content.MetricName;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+        reqParams.tf['metric_name'] = jsonRequestBody.content.MetricName;
+
         outputs.push({
             'region': region,
             'service': 'waf',
@@ -17323,6 +17404,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf',
             'type': 'AWS::WAF::Rule',
+            'terraformType': 'aws_waf_rule',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -17585,6 +17667,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf',
@@ -17602,6 +17686,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf',
             'type': 'AWS::WAF::ByteMatchSet',
+            'terraformType': 'aws_waf_byte_match_set',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -23479,6 +23564,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf-regional',
@@ -23496,6 +23583,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf-regional',
             'type': 'AWS::WAFRegional::XssMatchSet',
+            'terraformType': 'aws_wafregional_xss_match_set',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -23547,6 +23635,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf-regional',
@@ -23564,6 +23654,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf-regional',
             'type': 'AWS::WAFRegional::IPSet',
+            'terraformType': 'aws_wafregional_ipset',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -23615,6 +23706,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf-regional',
@@ -23632,6 +23725,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf-regional',
             'type': 'AWS::WAFRegional::SizeConstraintSet',
+            'terraformType': 'aws_wafregional_ipset',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -23761,6 +23855,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf-regional',
@@ -23778,6 +23874,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf-regional',
             'type': 'AWS::WAFRegional::SqlInjectionMatchSet',
+            'terraformType': 'aws_wafregional_sql_injection_match_set',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -23832,6 +23929,9 @@ function analyseRequest(details) {
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
         reqParams.cfn['MetricName'] = jsonRequestBody.content.MetricName;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+        reqParams.tf['metric_name'] = jsonRequestBody.content.MetricName;
+
         outputs.push({
             'region': region,
             'service': 'waf-regional',
@@ -23849,6 +23949,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf-regional',
             'type': 'AWS::WAFRegional::Rule',
+            'terraformType': 'aws_wafregional_rule',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -24111,6 +24212,8 @@ function analyseRequest(details) {
 
         reqParams.cfn['Name'] = jsonRequestBody.content.Name;
 
+        reqParams.tf['name'] = jsonRequestBody.content.Name;
+
         outputs.push({
             'region': region,
             'service': 'waf-regional',
@@ -24128,6 +24231,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf-regional',
             'type': 'AWS::WAFRegional::ByteMatchSet',
+            'terraformType': 'aws_wafregional_byte_match_set',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -24712,6 +24816,9 @@ function analyseRequest(details) {
         reqParams.cfn['ApplicationName'] = jsonRequestBody.content.ApplicationName;
         reqParams.cfn['ApplicationDescription'] = jsonRequestBody.content.ApplicationDescription;
 
+        reqParams.tf['name'] = jsonRequestBody.content.ApplicationName;
+        reqParams.tf['description'] = jsonRequestBody.content.ApplicationDescription;
+
         outputs.push({
             'region': region,
             'service': 'kinesisanalytics',
@@ -24729,6 +24836,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'kinesisanalytics',
             'type': 'AWS::KinesisAnalytics::Application',
+            'terraformType': 'aws_kinesis_analytics_application',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -25122,6 +25230,18 @@ function analyseRequest(details) {
         reqParams.cfn['TemplateURL'] = jsonRequestBody.templateURL;
         reqParams.cfn['TimeoutInMinutes'] = jsonRequestBody.timeoutInMinutes;
 
+        reqParams.tf['capabilities'] = jsonRequestBody.capabilities;
+        reqParams.tf['disable_rollback'] = jsonRequestBody.disableRollback;
+        reqParams.tf['notification_arns'] = jsonRequestBody.notificationARNs;
+        reqParams.tf['parameters'] = jsonRequestBody.parameters;
+        reqParams.tf['iam_role_arn'] = jsonRequestBody.roleARN;
+        reqParams.tf['name'] = jsonRequestBody.stackName;
+        reqParams.tf['tags'] = jsonRequestBody.tags;
+        reqParams.tf['template_url'] = jsonRequestBody.templateURL;
+        reqParams.tf['timeout_in_minutes'] = jsonRequestBody.timeoutInMinutes;
+        reqParams.tf['policy_body'] = jsonRequestBody.stackPolicyBody;
+        reqParams.tf['policy_url'] = jsonRequestBody.stackPolicyURL;
+
         outputs.push({
             'region': region,
             'service': 'cloudformation',
@@ -25140,6 +25260,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'cloudformation',
             'type': 'AWS::CloudFormation::Stack',
+            'terraformType': 'aws_cloudformation_stack',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -26966,6 +27087,10 @@ function analyseRequest(details) {
         reqParams.boto3['RoleName'] = jsonRequestBody.roleName;
         reqParams.cli['--role-name'] = jsonRequestBody.roleName;
 
+        reqParams.tf['name'] = jsonRequestBody.name;
+        reqParams.tf['email'] = jsonRequestBody.email;
+        reqParams.tf['role_name'] = jsonRequestBody.roleName;
+
         outputs.push({
             'region': region,
             'service': 'organizations',
@@ -26976,6 +27101,16 @@ function analyseRequest(details) {
             },
             'options': reqParams,
             'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('organizations', details.requestId),
+            'region': region,
+            'service': 'organizations',
+            'terraformType': 'aws_organizations_account',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
         });
         
         return {};
@@ -27116,6 +27251,11 @@ function analyseRequest(details) {
         reqParams.boto3['Content'] = jsonRequestBody.content;
         reqParams.cli['--content'] = jsonRequestBody.content;
 
+        reqParams.tf['name'] = jsonRequestBody.name;
+        reqParams.tf['type'] = jsonRequestBody.type;
+        reqParams.tf['description'] = jsonRequestBody.description;
+        reqParams.tf['content'] = jsonRequestBody.content;
+
         outputs.push({
             'region': region,
             'service': 'organizations',
@@ -27126,6 +27266,16 @@ function analyseRequest(details) {
             },
             'options': reqParams,
             'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('organizations', details.requestId),
+            'region': region,
+            'service': 'organizations',
+            'terraformType': 'aws_organizations_policy',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
         });
         
         return {};
@@ -29235,6 +29385,9 @@ function analyseRequest(details) {
 
         reqParams.cfn['UserName'] = /.+console\.aws\.amazon\.com\/iam\/api\/users\/(.+)\/accessKeys$/g.exec(details.url)[1];
 
+        reqParams.tf['user'] = /.+console\.aws\.amazon\.com\/iam\/api\/users\/(.+)\/accessKeys$/g.exec(details.url)[1];
+        reqParams.tf['pgp_key'] = "REPLACEME";
+
         outputs.push({
             'region': region,
             'service': 'iam',
@@ -29252,6 +29405,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'iam',
             'type': 'AWS::IAM::AccessKey',
+            'terraformType': 'aws_iam_access_key',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -29341,7 +29495,10 @@ function analyseRequest(details) {
         reqParams.cli['dashboard-name'] = jsonRequestBody.DashboardName;
 
         reqParams.cfn['DashboardBody'] = jsonRequestBody.Dashboard;
-        reqParams.boto3['DashboardName'] = jsonRequestBody.DashboardName;
+        reqParams.cfn['DashboardName'] = jsonRequestBody.DashboardName;
+
+        reqParams.tf['dashboard_body'] = jsonRequestBody.Dashboard;
+        reqParams.tf['dashboard_name'] = jsonRequestBody.DashboardName;
 
         outputs.push({
             'region': region,
@@ -29360,6 +29517,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'cloudwatch',
             'type': 'AWS::CloudWatch::Dashboard',
+            'terraformType': 'aws_cloudwatch_dashboard',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -29398,6 +29556,9 @@ function analyseRequest(details) {
         reqParams.cfn['CertificateSigningRequest'] = jsonRequestBody.csr;
         reqParams.cfn['Status'] = jsonRequestBody.setAsActive;
 
+        reqParams.tf['csr'] = jsonRequestBody.csr;
+        reqParams.tf['active'] = jsonRequestBody.setAsActive;
+
         outputs.push({
             'region': region,
             'service': 'iot',
@@ -29415,6 +29576,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'iot',
             'type': 'AWS::IoT::Certificate',
+            'terraformType': 'aws_iot_certificate',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -29433,6 +29595,9 @@ function analyseRequest(details) {
         reqParams.cfn['PolicyName'] = jsonRequestBody.name;
         reqParams.cfn['PolicyDocument'] = jsonRequestBody.value;
 
+        reqParams.tf['name'] = jsonRequestBody.name;
+        reqParams.tf['policy'] = jsonRequestBody.value;
+
         outputs.push({
             'region': region,
             'service': 'iot',
@@ -29450,6 +29615,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'iot',
             'type': 'AWS::IoT::Policy',
+            'terraformType': 'aws_iot_policy',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -29468,6 +29634,9 @@ function analyseRequest(details) {
         reqParams.cfn['PolicyName'] = jsonRequestBody.name;
         reqParams.cfn['Principal'] = jsonRequestBody.principal;
 
+        reqParams.tf['policy'] = jsonRequestBody.name;
+        reqParams.tf['target'] = jsonRequestBody.principal;
+
         outputs.push({
             'region': region,
             'service': 'iot',
@@ -29485,6 +29654,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'iot',
             'type': 'AWS::IoT::PolicyPrincipalAttachment',
+            'terraformType': 'aws_iot_policy_attachment',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -29874,6 +30044,12 @@ function analyseRequest(details) {
         reqParams.cfn['Type'] = jsonRequestBody.Type;
         reqParams.cfn['StaticRoutesOnly'] = jsonRequestBody.options.staticRoutesOnly;
 
+        reqParams.tf['customer_gateway_id'] = jsonRequestBody.CustomerGatewayId;
+        reqParams.tf['vpn_gateway_id'] = jsonRequestBody.VpnGatewayId;
+        reqParams.tf['transit_gateway_id'] = jsonRequestBody.TransitGatewayId;
+        reqParams.tf['type'] = jsonRequestBody.Type;
+        reqParams.tf['static_routes_only'] = jsonRequestBody.options.staticRoutesOnly;
+
         outputs.push({
             'region': region,
             'service': 'ec2',
@@ -29891,6 +30067,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPNConnection',
+            'terraformType': 'aws_vpn_connection',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -30608,6 +30785,9 @@ function analyseRequest(details) {
         reqParams.cfn['VpnConnectionId'] = jsonRequestBody.VpnConnectionId;
         reqParams.cfn['DestinationCidrBlock'] = jsonRequestBody.DestinationCidrBlock;
 
+        reqParams.tf['vpn_connection_id'] = jsonRequestBody.VpnConnectionId;
+        reqParams.tf['destination_cidr_block'] = jsonRequestBody.DestinationCidrBlock;
+
         outputs.push({
             'region': region,
             'service': 'ec2',
@@ -30625,6 +30805,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPNConnectionRoute',
+            'terraformType': 'aws_vpn_connection_route',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -30948,6 +31129,9 @@ function analyseRequest(details) {
         reqParams.cfn['ThingName'] = /.+console\.aws\.amazon\.com\/iot\/api\/thing\/(.+)\/principal\/attach$/g.exec(details.url)[1];
         reqParams.cfn['Principal'] = jsonRequestBody.principal;
 
+        reqParams.tf['thing'] = /.+console\.aws\.amazon\.com\/iot\/api\/thing\/(.+)\/principal\/attach$/g.exec(details.url)[1];
+        reqParams.tf['principal'] = jsonRequestBody.principal;
+
         outputs.push({
             'region': region,
             'service': 'iot',
@@ -30965,6 +31149,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'iot',
             'type': 'AWS::IoT::ThingPrincipalAttachment',
+            'terraformType': 'aws_iot_thing_principal_attachment',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -30983,6 +31168,9 @@ function analyseRequest(details) {
         reqParams.cfn['ListenerArn'] = jsonRequestBody.listenerArn;
         reqParams.cfn['Certificates'] = jsonRequestBody.certificates;
 
+        reqParams.tf['listener_arn'] = jsonRequestBody.listenerArn;
+        reqParams.tf['certificate_arn'] = jsonRequestBody.certificates[0];
+
         outputs.push({
             'region': region,
             'service': 'elbv2',
@@ -31000,6 +31188,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'elbv2',
             'type': 'AWS::ElasticLoadBalancingV2::ListenerCertificate',
+            'terraformType': 'aws_lb_listener_certificate',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -31023,6 +31212,10 @@ function analyseRequest(details) {
         reqParams.cfn['DocumentationVersion'] = jsonRequestBody.contentString.documentationVersion;
         reqParams.cfn['Description'] = jsonRequestBody.contentString.description;
 
+        reqParams.tf['rest_api_id'] = /^\/restapis\/(.+)\/documentation\/versions$/g.exec(jsonRequestBody.path)[1];
+        reqParams.tf['version'] = jsonRequestBody.contentString.documentationVersion;
+        reqParams.tf['description'] = jsonRequestBody.contentString.description;
+
         outputs.push({
             'region': region,
             'service': 'apigateway',
@@ -31040,6 +31233,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::DocumentationVersion',
+            'terraformType': 'aws_api_gateway_documentation_version',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -31064,6 +31258,11 @@ function analyseRequest(details) {
         reqParams.cfn['RestApiId'] = jsonRequestBody.contentString.restApiId;
         reqParams.cfn['Stage'] = jsonRequestBody.contentString.stage;
 
+        reqParams.tf['domain_name'] = /^\/domainname\/(.+)\/basepathmappings$/g.exec(jsonRequestBody.path)[1];
+        reqParams.tf['base_path'] = jsonRequestBody.contentString.basePath;
+        reqParams.tf['api_id'] = jsonRequestBody.contentString.restApiId;
+        reqParams.tf['stage_name'] = jsonRequestBody.contentString.stage;
+
         outputs.push({
             'region': region,
             'service': 'apigateway',
@@ -31081,6 +31280,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'apigateway',
             'type': 'AWS::ApiGateway::BasePathMapping',
+            'terraformType': 'aws_api_gateway_base_path_mapping',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -31105,6 +31305,11 @@ function analyseRequest(details) {
         reqParams.cfn['PeerOwnerId'] = jsonRequestBody.peerOwnerId;
         reqParams.cfn['PeerRegion'] = jsonRequestBody.PeerRegion;
 
+        reqParams.tf['vpc_id'] = jsonRequestBody.vpcId;
+        reqParams.tf['peer_vpc_id'] = jsonRequestBody.peerVpcId;
+        reqParams.tf['peer_owner_id'] = jsonRequestBody.peerOwnerId;
+        reqParams.tf['peer_region'] = jsonRequestBody.PeerRegion;
+
         outputs.push({
             'region': region,
             'service': 'ec2',
@@ -31122,6 +31327,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPCPeeringConnection',
+            'terraformType': 'aws_vpc_peering_connection',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -31205,6 +31411,9 @@ function analyseRequest(details) {
         reqParams.cfn['AliasName'] = jsonRequestBody.contentString.AliasName;
         reqParams.cfn['TargetKeyId'] = jsonRequestBody.contentString.TargetKeyId;
 
+        reqParams.tf['name'] = jsonRequestBody.contentString.AliasName;
+        reqParams.tf['target_key_id'] = jsonRequestBody.contentString.TargetKeyId;
+
         outputs.push({
             'region': region,
             'service': 'kms',
@@ -31222,6 +31431,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'kms',
             'type': 'AWS::KMS::Alias',
+            'terraformType': 'aws_kms_alias',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -31280,6 +31490,9 @@ function analyseRequest(details) {
         reqParams.cfn['AuthorizedAccountId'] = jsonRequestBody.authorizedAccountId;
         reqParams.cfn['AuthorizedAwsRegion'] = jsonRequestBody.authorizedAwsRegion;
 
+        reqParams.tf['account_id'] = jsonRequestBody.authorizedAccountId;
+        reqParams.tf['region'] = jsonRequestBody.authorizedAwsRegion;
+
         outputs.push({
             'region': region,
             'service': 'config',
@@ -31297,6 +31510,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'config',
             'type': 'AWS::Config::AggregationAuthorization',
+            'terraformType': 'aws_config_aggregate_authorization',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -31541,6 +31755,9 @@ function analyseRequest(details) {
         reqParams.cfn['VpcId'] = jsonRequestBody.VpcId;
         reqParams.cfn['VpnGatewayId'] = jsonRequestBody.VpnGatewayId;
 
+        reqParams.tf['vpc_id'] = jsonRequestBody.VpcId;
+        reqParams.tf['vpn_gateway_id'] = jsonRequestBody.VpnGatewayId;
+
         outputs.push({
             'region': region,
             'service': 'ec2',
@@ -31558,6 +31775,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPCGatewayAttachment',
+            'terraformType': 'aws_vpn_gateway_attachment',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -31598,6 +31816,9 @@ function analyseRequest(details) {
         reqParams.cfn['RouteTableIds'] = [jsonRequestBody.RouteTableId];
         reqParams.cfn['VpnGatewayId'] = jsonRequestBody.GatewayId;
 
+        reqParams.tf['route_table_id'] = jsonRequestBody.RouteTableId;
+        reqParams.tf['vpn_gateway_id'] = jsonRequestBody.GatewayId;
+
         outputs.push({
             'region': region,
             'service': 'ec2',
@@ -31615,6 +31836,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'ec2',
             'type': 'AWS::EC2::VPNGatewayRoutePropagation',
+            'terraformType': 'AWS::EC2::VPNGatewayRoutePropagation',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -31756,6 +31978,10 @@ function analyseRequest(details) {
         reqParams.cfn['PolicyDocument'] = jsonRequestBody.document;
         reqParams.cfn['Users'] = [/.+console\.aws\.amazon\.com\/iam\/api\/users\/(.+)\/inlinePolicies$/g.exec(details.url)[1]];
 
+        reqParams.tf['name'] = jsonRequestBody.policyName;
+        reqParams.tf['policy'] = jsonRequestBody.document;
+        reqParams.tf['user'] = /.+console\.aws\.amazon\.com\/iam\/api\/users\/(.+)\/inlinePolicies$/g.exec(details.url)[1];
+
         outputs.push({
             'region': region,
             'service': 'iam',
@@ -31773,6 +31999,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'iam',
             'type': 'AWS::IAM::Policy',
+            'terraformType': 'aws_iam_user_policy',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -32006,6 +32233,9 @@ function analyseRequest(details) {
         reqParams.cfn['ResourceArn'] = jsonRequestBody.content.ResourceArn;
         reqParams.cfn['WebACLId'] = jsonRequestBody.content.WebACLId;
 
+        reqParams.tf['resource_arn'] = jsonRequestBody.content.ResourceArn;
+        reqParams.tf['web_acl_id'] = jsonRequestBody.content.WebACLId;
+
         outputs.push({
             'region': region,
             'service': 'waf-regional',
@@ -32023,6 +32253,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'waf-regional',
             'type': 'AWS::WAFRegional::WebACLAssociation',
+            'terraformType': 'aws_wafregional_web_acl_association',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -32131,15 +32362,22 @@ function analyseRequest(details) {
     // autogen:cognito-idp:cognito-identity.SetIdentityPoolRoles
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cognito\/pool\/edit\/\?/g)) {
         reqParams.boto3['IdentityPoolId'] = getUrlValue(details.url, 'id');
+        reqParams.tf['identity_pool_id'] = getUrlValue(details.url, 'id');
         reqParams.boto3['Roles'] = {
             'authenticated': jsonRequestBody.authRoleARN,
             'unauthenticated': jsonRequestBody.unauthRoleARN
         };
+        reqParams.tf['roles'] = {
+            'authenticated': jsonRequestBody.authRoleARN,
+            'unauthenticated': jsonRequestBody.unauthRoleARN
+        };
         reqParams.boto3['RoleMappings'] = {};
+        reqParams.tf['role_mapping'] = [];
         
         role_mappings_obj = JSON.parse(decodeURIComponent(jsonRequestBody.cipRoleMappingPerProviderAsString));
         for (var k in role_mappings_obj) {
             rules = [];
+            rules_tf = [];
 
             for (var i=0; i<role_mappings_obj[k]['rulesConfiguration']['rules'].length; i++) {
                 rules.push({
@@ -32147,6 +32385,12 @@ function analyseRequest(details) {
                     'MatchType': role_mappings_obj[k]['rulesConfiguration']['rules'][0]['matchType'],
                     'RoleARN': role_mappings_obj[k]['rulesConfiguration']['rules'][0]['roleARN'],
                     'Value': role_mappings_obj[k]['rulesConfiguration']['rules'][0]['value']
+                });
+                rules_tf.push({
+                    'claim': role_mappings_obj[k]['rulesConfiguration']['rules'][0]['claim'],
+                    'match_type': role_mappings_obj[k]['rulesConfiguration']['rules'][0]['matchType'],
+                    'role_arn': role_mappings_obj[k]['rulesConfiguration']['rules'][0]['roleARN'],
+                    'value': role_mappings_obj[k]['rulesConfiguration']['rules'][0]['value']
                 });
             }
 
@@ -32158,6 +32402,13 @@ function analyseRequest(details) {
                 //'': role_mappings_obj[k]['identityProviderName'],
                 'Type': role_mappings_obj[k]['type']
             };
+
+            reqParams.tf['role_mapping'].push({
+                'identity_provider': k,
+                'ambiguous_role_resolution': role_mappings_obj[k]['ambiguousRoleResolution'],
+                'type': role_mappings_obj[k]['type'],
+                'mapping_rule': rules_tf
+            });
         }
 
         reqParams.cli['--identity-pool-id'] = reqParams.boto3['IdentityPoolId'];
@@ -32185,6 +32436,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'cognito-identity',
             'type': 'AWS::Cognito::IdentityPoolRoleAttachment',
+            'terraformType': 'aws_cognito_identity_pool_roles_attachment',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
