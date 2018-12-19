@@ -40,7 +40,8 @@ cfn_occurances = [
     "AWS::Lambda::LayerVersionPermission",
     "AWS::Lambda::Permission",
     "AWS::Logs::Destination",
-    "AWS::CDK::Metadata"
+    "AWS::CDK::Metadata",
+    "AWS::Route53::RecordSetGroup"
 ]
 tf_occurances = []
 

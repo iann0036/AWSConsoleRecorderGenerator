@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**321/334 (96%)** Resources Covered
+**324/334 (97%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -128,9 +128,9 @@
 | *AWS::EC2::SubnetNetworkAclAssociation* | 1 |
 | *AWS::EC2::SubnetRouteTableAssociation* | 1 |
 | *AWS::EC2::TransitGateway* | 1 |
-| *AWS::EC2::TransitGatewayAttachment* | 2 |
+| *AWS::EC2::TransitGatewayAttachment* | 1 |
 | *AWS::EC2::TransitGatewayRoute* | 1 |
-| *AWS::EC2::TransitGatewayRouteTable* | 0 |
+| *AWS::EC2::TransitGatewayRouteTable* | 1 |
 | *AWS::EC2::TransitGatewayRouteTableAssociation* | 1 |
 | *AWS::EC2::TransitGatewayRouteTablePropagation* | 1 |
 | *AWS::EC2::TrunkInterfaceAssociation* | 1 |
@@ -267,8 +267,8 @@
 | *AWS::Redshift::ClusterSubnetGroup* | 1 |
 | *AWS::Route53::HealthCheck* | 1 |
 | *AWS::Route53::HostedZone* | 2 |
-| *AWS::Route53::RecordSet* | 0 |
-| *AWS::Route53::RecordSetGroup* | 0 |
+| *AWS::Route53::RecordSet* | 1 |
+| *AWS::Route53::RecordSetGroup* | 1 |
 | *AWS::Route53Resolver::ResolverEndpoint* | 1 |
 | *AWS::Route53Resolver::ResolverRule* | 1 |
 | *AWS::S3::Bucket* | 3 |
@@ -843,7 +843,7 @@
 | *rds* | 23/107 (21%) |
 | *redshift* | 5/81 (6%) |
 | *rekognition* | 3/34 (8%) |
-| *route53* | 8/56 (14%) |
+| *route53* | 9/56 (16%) |
 | *route53resolver* | 10/22 (45%) |
 | *s3* | 25/88 (28%) |
 | *sagemaker* | 16/75 (21%) |
@@ -4930,7 +4930,7 @@
 | *robomaker* | `UpdateRobotApplication` | 0 |
 | *robomaker* | `UpdateSimulationApplication` | 0 |
 | *route53* | `AssociateVPCWithHostedZone` | 0 |
-| *route53* | `ChangeResourceRecordSets` | 0 |
+| *route53* | `ChangeResourceRecordSets` | 1 |
 | *route53* | `ChangeTagsForResource` | 0 |
 | *route53* | `CreateHealthCheck` | 1 |
 | *route53* | `CreateHostedZone` | 2 |
@@ -6127,4 +6127,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 930 (17%)**
+**Total Unique Occurances: 931 (17%)**

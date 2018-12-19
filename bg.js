@@ -30114,7 +30114,7 @@ function analyseRequest(details) {
             'logicalId': getResourceName('ec2', details.requestId),
             'region': region,
             'service': 'ec2',
-            'type': 'AWS::EC2::TransitGatewayAttachment',
+            'type': 'AWS::EC2::TransitGatewayRouteTable',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -33037,6 +33037,80 @@ function analyseRequest(details) {
             'options': reqParams,
             'requestDetails': details
         });
+        
+        return {};
+    }
+
+    // manual:route53:route53.ChangeResourceRecordSets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/route53\/route53console\/route53$/g) && gwtRequest['method'] == "changeResourceRecordSets") {
+        reqParams.boto3['HostedZoneId'] = gwtRequest.args[0].value.value;
+        reqParams.cli['--hosted-zone-id'] = gwtRequest.args[0].value.value;
+
+        var changes = [];
+        for (var i=0; i<gwtRequest.args[1].value.value.length; i++) {
+            for (var j=0; j<gwtRequest.args[1].value.value[i].recordset.records.value.length; j++) {
+                changes.push({
+                    'Action': gwtRequest.args[1].value.value[i].action,
+                    'ResourceRecordSet': {
+                        'Name': gwtRequest.args[1].value.value[i].recordset.recordname,
+                        'Type': gwtRequest.args[1].value.value[i].recordset.records.value[j].recordtype,
+                        'TTL': gwtRequest.args[1].value.value[i].recordset.records.value[j].ttl.value,
+                        'ResourceRecords': [{
+                            'Value': gwtRequest.args[1].value.value[i].recordset.records.value[j].value
+                        }]
+                    }
+                });
+            }
+        }
+
+        reqParams.boto3['ChangeBatch'] = {
+            'Changes': changes
+        };
+        reqParams.cli['--change-batch'] = {
+            'Changes': changes
+        };
+
+        outputs.push({
+            'region': region,
+            'service': 'route53',
+            'method': {
+                'api': 'ChangeResourceRecordSets',
+                'boto3': 'change_resource_record_sets',
+                'cli': 'change-resource-record-sets'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        for (var i=0; i<gwtRequest.args[1].value.value.length; i++) {
+            for (var j=0; j<gwtRequest.args[1].value.value[i].recordset.records.value.length; j++) {
+                if (gwtRequest.args[1].value.value[i].action == "CREATE") {
+                    var reqParams = {
+                        'boto3': {},
+                        'go': {},
+                        'cfn': {},
+                        'cli': {},
+                        'tf': {}
+                    };
+
+                    reqParams.cfn['HostedZoneId'] = gwtRequest.args[0].value.value;
+                    reqParams.cfn['Name'] = gwtRequest.args[1].value.value[i].recordset.recordname;
+                    reqParams.cfn['Type'] = gwtRequest.args[1].value.value[i].recordset.records.value[j].recordtype;
+                    reqParams.cfn['TTL'] = gwtRequest.args[1].value.value[i].recordset.records.value[j].ttl.value;
+                    reqParams.cfn['ResourceRecords'] = [gwtRequest.args[1].value.value[i].recordset.records.value[j].value];
+        
+                    tracked_resources.push({
+                        'logicalId': getResourceName('route53', details.requestId),
+                        'region': region,
+                        'service': 'route53',
+                        'type': 'AWS::Route53::RecordSet',
+                        'options': reqParams,
+                        'requestDetails': details,
+                        'was_blocked': blocking
+                    });
+                }
+            }
+        }
         
         return {};
     }
