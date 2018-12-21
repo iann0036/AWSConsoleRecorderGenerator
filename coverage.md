@@ -144,7 +144,7 @@
 | *AWS::EC2::VPNConnection* | 1 |
 | *AWS::EC2::VPNConnectionRoute* | 1 |
 | *AWS::EC2::VPNGateway* | 1 |
-| *AWS::EC2::VPNGatewayRoutePropagation* | 2 |
+| *AWS::EC2::VPNGatewayRoutePropagation* | 1 |
 | *AWS::EC2::Volume* | 1 |
 | *AWS::EC2::VolumeAttachment* | 1 |
 | *AWS::ECR::Repository* | 2 |
@@ -341,7 +341,7 @@
 
 ## Terraform Coverage
 
-**127/430 (29%)** Resources Covered
+**180/457 (39%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -354,7 +354,7 @@
 | *aws_alb_listener_rule* | 0 |
 | *aws_alb_target_group* | 0 |
 | *aws_alb_target_group_attachment* | 0 |
-| *aws_ami* | 0 |
+| *aws_ami* | 1 |
 | *aws_ami_copy* | 0 |
 | *aws_ami_from_instance* | 0 |
 | *aws_ami_launch_permission* | 0 |
@@ -375,7 +375,7 @@
 | *aws_api_gateway_method_settings* | 0 |
 | *aws_api_gateway_model* | 1 |
 | *aws_api_gateway_request_validator* | 0 |
-| *aws_api_gateway_resource* | 0 |
+| *aws_api_gateway_resource* | 1 |
 | *aws_api_gateway_rest_api* | 0 |
 | *aws_api_gateway_stage* | 2 |
 | *aws_api_gateway_usage_plan* | 1 |
@@ -385,6 +385,10 @@
 | *aws_appautoscaling_policy* | 0 |
 | *aws_appautoscaling_scheduled_action* | 0 |
 | *aws_appautoscaling_target* | 0 |
+| *aws_appmesh_mesh* | 0 |
+| *aws_appmesh_route* | 0 |
+| *aws_appmesh_virtual_node* | 0 |
+| *aws_appmesh_virtual_router* | 0 |
 | *aws_appsync_api_key* | 1 |
 | *aws_appsync_datasource* | 0 |
 | *aws_appsync_graphql_api* | 1 |
@@ -403,7 +407,7 @@
 | *aws_cloud9_environment_ec2* | 1 |
 | *aws_cloudformation_stack* | 1 |
 | *aws_cloudfront_distribution* | 0 |
-| *aws_cloudfront_origin_access_identity* | 0 |
+| *aws_cloudfront_origin_access_identity* | 1 |
 | *aws_cloudfront_public_key* | 0 |
 | *aws_cloudhsm_v2_cluster* | 0 |
 | *aws_cloudhsm_v2_hsm* | 0 |
@@ -418,43 +422,48 @@
 | *aws_cloudwatch_log_metric_filter* | 0 |
 | *aws_cloudwatch_log_resource_policy* | 0 |
 | *aws_cloudwatch_log_stream* | 1 |
-| *aws_cloudwatch_log_subscription_filter* | 0 |
+| *aws_cloudwatch_log_subscription_filter* | 1 |
 | *aws_cloudwatch_metric_alarm* | 0 |
 | *aws_codebuild_project* | 0 |
 | *aws_codebuild_webhook* | 0 |
 | *aws_codecommit_repository* | 1 |
 | *aws_codecommit_trigger* | 0 |
-| *aws_codedeploy_app* | 0 |
+| *aws_codedeploy_app* | 1 |
 | *aws_codedeploy_deployment_config* | 1 |
 | *aws_codedeploy_deployment_group* | 0 |
 | *aws_codepipeline* | 1 |
 | *aws_codepipeline_webhook* | 0 |
-| *aws_cognito_identity_pool* | 0 |
+| *aws_cognito_identity_pool* | 1 |
 | *aws_cognito_identity_pool_roles_attachment* | 1 |
 | *aws_cognito_identity_provider* | 0 |
 | *aws_cognito_resource_server* | 0 |
 | *aws_cognito_user_group* | 1 |
 | *aws_cognito_user_pool* | 0 |
-| *aws_cognito_user_pool_client* | 0 |
+| *aws_cognito_user_pool_client* | 1 |
 | *aws_cognito_user_pool_domain* | 0 |
 | *aws_config_aggregate_authorization* | 1 |
 | *aws_config_config_rule* | 0 |
 | *aws_config_configuration_aggregator* | 0 |
-| *aws_config_configuration_recorder* | 0 |
+| *aws_config_configuration_recorder* | 1 |
 | *aws_config_configuration_recorder_status* | 0 |
-| *aws_config_delivery_channel* | 0 |
+| *aws_config_delivery_channel* | 1 |
 | *aws_customer_gateway* | 1 |
-| *aws_dax_cluster* | 0 |
+| *aws_datasync_agent* | 0 |
+| *aws_datasync_location_efs* | 0 |
+| *aws_datasync_location_nfs* | 0 |
+| *aws_datasync_location_s3* | 0 |
+| *aws_datasync_task* | 0 |
+| *aws_dax_cluster* | 1 |
 | *aws_dax_parameter_group* | 1 |
 | *aws_dax_subnet_group* | 1 |
 | *aws_db_cluster_snapshot* | 0 |
-| *aws_db_event_subscription* | 0 |
+| *aws_db_event_subscription* | 1 |
 | *aws_db_instance* | 1 |
-| *aws_db_option_group* | 0 |
-| *aws_db_parameter_group* | 0 |
+| *aws_db_option_group* | 1 |
+| *aws_db_parameter_group* | 1 |
 | *aws_db_security_group* | 0 |
 | *aws_db_snapshot* | 0 |
-| *aws_db_subnet_group* | 0 |
+| *aws_db_subnet_group* | 1 |
 | *aws_default_network_acl* | 0 |
 | *aws_default_route_table* | 0 |
 | *aws_default_security_group* | 0 |
@@ -466,9 +475,9 @@
 | *aws_directory_service_directory* | 0 |
 | *aws_dlm_lifecycle_policy* | 0 |
 | *aws_dms_certificate* | 1 |
-| *aws_dms_endpoint* | 0 |
+| *aws_dms_endpoint* | 1 |
 | *aws_dms_replication_instance* | 0 |
-| *aws_dms_replication_subnet_group* | 0 |
+| *aws_dms_replication_subnet_group* | 1 |
 | *aws_dms_replication_task* | 0 |
 | *aws_dx_bgp_peer* | 0 |
 | *aws_dx_connection* | 0 |
@@ -487,9 +496,15 @@
 | *aws_dynamodb_table_item* | 0 |
 | *aws_ebs_snapshot* | 0 |
 | *aws_ebs_snapshot_copy* | 0 |
-| *aws_ebs_volume* | 0 |
+| *aws_ebs_volume* | 1 |
 | *aws_ec2_capacity_reservation* | 0 |
 | *aws_ec2_fleet* | 0 |
+| *aws_ec2_transit_gateway* | 1 |
+| *aws_ec2_transit_gateway_route* | 1 |
+| *aws_ec2_transit_gateway_route_table* | 1 |
+| *aws_ec2_transit_gateway_route_table_association* | 1 |
+| *aws_ec2_transit_gateway_route_table_propagation* | 1 |
+| *aws_ec2_transit_gateway_vpc_attachment* | 1 |
 | *aws_ecr_lifecycle_policy* | 0 |
 | *aws_ecr_repository* | 2 |
 | *aws_ecr_repository_policy* | 0 |
@@ -504,7 +519,7 @@
 | *aws_eks_cluster* | 1 |
 | *aws_elastic_beanstalk_application* | 1 |
 | *aws_elastic_beanstalk_application_version* | 0 |
-| *aws_elastic_beanstalk_configuration_template* | 0 |
+| *aws_elastic_beanstalk_configuration_template* | 1 |
 | *aws_elastic_beanstalk_environment* | 0 |
 | *aws_elasticache_cluster* | 0 |
 | *aws_elasticache_parameter_group* | 1 |
@@ -519,12 +534,14 @@
 | *aws_elb_attachment* | 0 |
 | *aws_emr_cluster* | 0 |
 | *aws_emr_instance_group* | 0 |
-| *aws_emr_security_configuration* | 0 |
+| *aws_emr_security_configuration* | 1 |
 | *aws_flow_log* | 1 |
 | *aws_gamelift_alias* | 1 |
 | *aws_gamelift_build* | 1 |
 | *aws_gamelift_fleet* | 0 |
+| *aws_gamelift_game_session_queue* | 0 |
 | *aws_glacier_vault* | 0 |
+| *aws_glacier_vault_lock* | 0 |
 | *aws_glue_catalog_database* | 0 |
 | *aws_glue_catalog_table* | 0 |
 | *aws_glue_classifier* | 0 |
@@ -536,20 +553,20 @@
 | *aws_guardduty_detector* | 1 |
 | *aws_guardduty_ipset* | 1 |
 | *aws_guardduty_member* | 1 |
-| *aws_guardduty_threatintelset* | 0 |
+| *aws_guardduty_threatintelset* | 1 |
 | *aws_iam_access_key* | 1 |
 | *aws_iam_account_alias* | 0 |
 | *aws_iam_account_password_policy* | 0 |
-| *aws_iam_group* | 0 |
+| *aws_iam_group* | 1 |
 | *aws_iam_group_membership* | 0 |
-| *aws_iam_group_policy* | 0 |
-| *aws_iam_group_policy_attachment* | 0 |
+| *aws_iam_group_policy* | 1 |
+| *aws_iam_group_policy_attachment* | 1 |
 | *aws_iam_instance_profile* | 2 |
 | *aws_iam_openid_connect_provider* | 0 |
 | *aws_iam_policy* | 0 |
 | *aws_iam_policy_attachment* | 0 |
 | *aws_iam_role* | 1 |
-| *aws_iam_role_policy* | 0 |
+| *aws_iam_role_policy* | 1 |
 | *aws_iam_role_policy_attachment* | 0 |
 | *aws_iam_saml_provider* | 0 |
 | *aws_iam_server_certificate* | 0 |
@@ -561,7 +578,7 @@
 | *aws_iam_user_policy_attachment* | 0 |
 | *aws_iam_user_ssh_key* | 0 |
 | *aws_inspector_assessment_target* | 0 |
-| *aws_inspector_assessment_template* | 0 |
+| *aws_inspector_assessment_template* | 1 |
 | *aws_inspector_resource_group* | 0 |
 | *aws_instance* | 1 |
 | *aws_internet_gateway* | 1 |
@@ -585,7 +602,7 @@
 | *aws_lambda_permission* | 0 |
 | *aws_launch_configuration* | 0 |
 | *aws_launch_template* | 1 |
-| *aws_lb* | 0 |
+| *aws_lb* | 1 |
 | *aws_lb_cookie_stickiness_policy* | 0 |
 | *aws_lb_listener* | 0 |
 | *aws_lb_listener_certificate* | 1 |
@@ -593,6 +610,7 @@
 | *aws_lb_ssl_negotiation_policy* | 0 |
 | *aws_lb_target_group* | 0 |
 | *aws_lb_target_group_attachment* | 0 |
+| *aws_licensemanager_license_configuration* | 0 |
 | *aws_lightsail_domain* | 0 |
 | *aws_lightsail_instance* | 0 |
 | *aws_lightsail_key_pair* | 0 |
@@ -609,15 +627,15 @@
 | *aws_mq_broker* | 1 |
 | *aws_mq_configuration* | 1 |
 | *aws_nat_gateway* | 1 |
-| *aws_neptune_cluster* | 0 |
-| *aws_neptune_cluster_instance* | 0 |
+| *aws_neptune_cluster* | 1 |
+| *aws_neptune_cluster_instance* | 1 |
 | *aws_neptune_cluster_parameter_group* | 1 |
 | *aws_neptune_cluster_snapshot* | 0 |
 | *aws_neptune_event_subscription* | 0 |
 | *aws_neptune_parameter_group* | 1 |
 | *aws_neptune_subnet_group* | 1 |
 | *aws_network_acl* | 2 |
-| *aws_network_acl_rule* | 0 |
+| *aws_network_acl_rule* | 1 |
 | *aws_network_interface* | 1 |
 | *aws_network_interface_attachment* | 1 |
 | *aws_network_interface_sg_attachment* | 0 |
@@ -636,7 +654,7 @@
 | *aws_opsworks_rds_db_instance* | 0 |
 | *aws_opsworks_stack* | 0 |
 | *aws_opsworks_static_web_layer* | 0 |
-| *aws_opsworks_user_profile* | 0 |
+| *aws_opsworks_user_profile* | 1 |
 | *aws_organizations_account* | 1 |
 | *aws_organizations_organization* | 0 |
 | *aws_organizations_policy* | 1 |
@@ -652,27 +670,30 @@
 | *aws_pinpoint_event_stream* | 0 |
 | *aws_pinpoint_gcm_channel* | 0 |
 | *aws_pinpoint_sms_channel* | 0 |
-| *aws_placement_group* | 0 |
+| *aws_placement_group* | 1 |
 | *aws_proxy_protocol_policy* | 0 |
 | *aws_rds_cluster* | 1 |
+| *aws_rds_cluster_endpoint* | 0 |
 | *aws_rds_cluster_instance* | 0 |
-| *aws_rds_cluster_parameter_group* | 0 |
+| *aws_rds_cluster_parameter_group* | 1 |
+| *aws_rds_global_cluster* | 0 |
 | *aws_redshift_cluster* | 0 |
 | *aws_redshift_event_subscription* | 0 |
-| *aws_redshift_parameter_group* | 0 |
+| *aws_redshift_parameter_group* | 1 |
 | *aws_redshift_security_group* | 0 |
 | *aws_redshift_snapshot_copy_grant* | 0 |
-| *aws_redshift_subnet_group* | 0 |
+| *aws_redshift_subnet_group* | 1 |
 | *aws_route* | 0 |
 | *aws_route53_delegation_set* | 0 |
-| *aws_route53_health_check* | 0 |
+| *aws_route53_health_check* | 1 |
 | *aws_route53_query_log* | 0 |
-| *aws_route53_record* | 0 |
-| *aws_route53_zone* | 0 |
+| *aws_route53_record* | 1 |
+| *aws_route53_zone* | 2 |
 | *aws_route53_zone_association* | 0 |
 | *aws_route_table* | 2 |
 | *aws_route_table_association* | 0 |
-| *aws_s3_bucket* | 2 |
+| *aws_s3_account_public_access_block* | 0 |
+| *aws_s3_bucket* | 3 |
 | *aws_s3_bucket_inventory* | 0 |
 | *aws_s3_bucket_metric* | 0 |
 | *aws_s3_bucket_notification* | 0 |
@@ -682,8 +703,11 @@
 | *aws_secretsmanager_secret_version* | 0 |
 | *aws_security_group* | 2 |
 | *aws_security_group_rule* | 0 |
-| *aws_service_discovery_private_dns_namespace* | 0 |
-| *aws_service_discovery_public_dns_namespace* | 0 |
+| *aws_securityhub_account* | 0 |
+| *aws_securityhub_standards_subscription* | 0 |
+| *aws_service_discovery_http_namespace* | 0 |
+| *aws_service_discovery_private_dns_namespace* | 1 |
+| *aws_service_discovery_public_dns_namespace* | 1 |
 | *aws_service_discovery_service* | 0 |
 | *aws_servicecatalog_portfolio* | 0 |
 | *aws_ses_active_receipt_rule_set* | 0 |
@@ -694,7 +718,7 @@
 | *aws_ses_domain_mail_from* | 0 |
 | *aws_ses_event_destination* | 0 |
 | *aws_ses_identity_notification_topic* | 0 |
-| *aws_ses_receipt_filter* | 0 |
+| *aws_ses_receipt_filter* | 1 |
 | *aws_ses_receipt_rule* | 0 |
 | *aws_ses_receipt_rule_set* | 1 |
 | *aws_ses_template* | 0 |
@@ -721,7 +745,7 @@
 | *aws_ssm_parameter* | 1 |
 | *aws_ssm_patch_baseline* | 0 |
 | *aws_ssm_patch_group* | 0 |
-| *aws_ssm_resource_data_sync* | 0 |
+| *aws_ssm_resource_data_sync* | 1 |
 | *aws_storagegateway_cache* | 0 |
 | *aws_storagegateway_cached_iscsi_volume* | 0 |
 | *aws_storagegateway_gateway* | 0 |
@@ -729,17 +753,20 @@
 | *aws_storagegateway_smb_file_share* | 0 |
 | *aws_storagegateway_upload_buffer* | 0 |
 | *aws_storagegateway_working_storage* | 0 |
-| *aws_subnet* | 2 |
+| *aws_subnet* | 1 |
 | *aws_swf_domain* | 0 |
+| *aws_transfer_server* | 0 |
+| *aws_transfer_ssh_key* | 0 |
+| *aws_transfer_user* | 0 |
 | *aws_volume_attachment* | 1 |
-| *aws_vpc* | 1 |
-| *aws_vpc_dhcp_options* | 0 |
-| *aws_vpc_dhcp_options_association* | 0 |
-| *aws_vpc_endpoint* | 0 |
+| *aws_vpc* | 2 |
+| *aws_vpc_dhcp_options* | 1 |
+| *aws_vpc_dhcp_options_association* | 1 |
+| *aws_vpc_endpoint* | 1 |
 | *aws_vpc_endpoint_connection_notification* | 0 |
 | *aws_vpc_endpoint_route_table_association* | 0 |
 | *aws_vpc_endpoint_service* | 1 |
-| *aws_vpc_endpoint_service_allowed_principal* | 0 |
+| *aws_vpc_endpoint_service_allowed_principal* | 1 |
 | *aws_vpc_endpoint_subnet_association* | 0 |
 | *aws_vpc_ipv4_cidr_block_association* | 1 |
 | *aws_vpc_peering_connection* | 1 |
@@ -749,7 +776,7 @@
 | *aws_vpn_connection_route* | 1 |
 | *aws_vpn_gateway* | 1 |
 | *aws_vpn_gateway_attachment* | 1 |
-| *aws_vpn_gateway_route_propagation* | 0 |
+| *aws_vpn_gateway_route_propagation* | 1 |
 | *aws_waf_byte_match_set* | 1 |
 | *aws_waf_geo_match_set* | 0 |
 | *aws_waf_ipset* | 0 |
@@ -806,7 +833,7 @@
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 117/310 (37%) |
+| *ec2* | 122/310 (39%) |
 | *ecr* | 3/22 (13%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -2448,7 +2475,7 @@
 | *ec2* | `DescribeAvailabilityZones` | 10 |
 | *ec2* | `DescribeBundleTasks` | 0 |
 | *ec2* | `DescribeByoipCidrs` | 0 |
-| *ec2* | `DescribeCapacityReservations` | 0 |
+| *ec2* | `DescribeCapacityReservations` | 1 |
 | *ec2* | `DescribeClassicLinkInstances` | 0 |
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeCustomerGateways` | 2 |
@@ -2600,8 +2627,8 @@
 | *ec2* | `PurchaseHostReservation` | 0 |
 | *ec2* | `PurchaseReservedInstancesOffering` | 0 |
 | *ec2* | `PurchaseScheduledInstances` | 0 |
-| *ec2* | `RebootInstances` | 0 |
-| *ec2* | `RegisterImage` | 0 |
+| *ec2* | `RebootInstances` | 1 |
+| *ec2* | `RegisterImage` | 1 |
 | *ec2* | `RejectTransitGatewayVpcAttachment` | 0 |
 | *ec2* | `RejectVpcEndpointConnections` | 0 |
 | *ec2* | `RejectVpcPeeringConnection` | 0 |
@@ -2627,8 +2654,8 @@
 | *ec2* | `RunInstances` | 1 |
 | *ec2* | `RunScheduledInstances` | 0 |
 | *ec2* | `SearchTransitGatewayRoutes` | 1 |
-| *ec2* | `StartInstances` | 0 |
-| *ec2* | `StopInstances` | 0 |
+| *ec2* | `StartInstances` | 1 |
+| *ec2* | `StopInstances` | 1 |
 | *ec2* | `TerminateInstances` | 1 |
 | *ec2* | `UnassignIpv6Addresses` | 0 |
 | *ec2* | `UnassignPrivateIpAddresses` | 0 |
@@ -6127,4 +6154,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 931 (17%)**
+**Total Unique Occurances: 936 (17%)**
