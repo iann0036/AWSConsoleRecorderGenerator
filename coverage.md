@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**324/334 (97%)** Resources Covered
+**330/334 (98%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -122,7 +122,7 @@
 | *AWS::EC2::SecurityGroup* | 2 |
 | *AWS::EC2::SecurityGroupEgress* | 1 |
 | *AWS::EC2::SecurityGroupIngress* | 1 |
-| *AWS::EC2::SpotFleet* | 0 |
+| *AWS::EC2::SpotFleet* | 1 |
 | *AWS::EC2::Subnet* | 1 |
 | *AWS::EC2::SubnetCidrBlock* | 1 |
 | *AWS::EC2::SubnetNetworkAclAssociation* | 1 |
@@ -155,7 +155,7 @@
 | *AWS::EFS::MountTarget* | 1 |
 | *AWS::EKS::Cluster* | 1 |
 | *AWS::EMR::Cluster* | 1 |
-| *AWS::EMR::InstanceFleetConfig* | 0 |
+| *AWS::EMR::InstanceFleetConfig* | 1 |
 | *AWS::EMR::InstanceGroupConfig* | 1 |
 | *AWS::EMR::SecurityConfiguration* | 1 |
 | *AWS::EMR::Step* | 1 |
@@ -187,7 +187,7 @@
 | *AWS::Glue::Database* | 1 |
 | *AWS::Glue::DevEndpoint* | 1 |
 | *AWS::Glue::Job* | 1 |
-| *AWS::Glue::Partition* | 0 |
+| *AWS::Glue::Partition* | 1 |
 | *AWS::Glue::Table* | 1 |
 | *AWS::Glue::Trigger* | 1 |
 | *AWS::GuardDuty::Detector* | 1 |
@@ -217,10 +217,10 @@
 | *AWS::IoT::Thing* | 1 |
 | *AWS::IoT::ThingPrincipalAttachment* | 1 |
 | *AWS::IoT::TopicRule* | 1 |
-| *AWS::IoTAnalytics::Channel* | 2 |
-| *AWS::IoTAnalytics::Dataset* | 0 |
+| *AWS::IoTAnalytics::Channel* | 1 |
+| *AWS::IoTAnalytics::Dataset* | 1 |
 | *AWS::IoTAnalytics::Datastore* | 1 |
-| *AWS::IoTAnalytics::Pipeline* | 0 |
+| *AWS::IoTAnalytics::Pipeline* | 1 |
 | *AWS::KMS::Alias* | 1 |
 | *AWS::KMS::Key* | 2 |
 | *AWS::Kinesis::Stream* | 2 |
@@ -833,7 +833,7 @@
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 122/310 (39%) |
+| *ec2* | 125/310 (40%) |
 | *ecr* | 3/22 (13%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -854,7 +854,7 @@
 | *iot* | 12/166 (7%) |
 | *iot1click-devices* | 3/10 (30%) |
 | *iot1click-projects* | 3/13 (23%) |
-| *iotanalytics* | 9/34 (26%) |
+| *iotanalytics* | 11/34 (32%) |
 | *kinesis* | 9/28 (32%) |
 | *kinesisanalytics* | 9/17 (52%) |
 | *kinesisanalyticsv2* | 1/21 (4%) |
@@ -2383,7 +2383,7 @@
 | *ec2* | `CancelExportTask` | 0 |
 | *ec2* | `CancelImportTask` | 0 |
 | *ec2* | `CancelReservedInstancesListing` | 0 |
-| *ec2* | `CancelSpotFleetRequests` | 0 |
+| *ec2* | `CancelSpotFleetRequests` | 1 |
 | *ec2* | `CancelSpotInstanceRequests` | 0 |
 | *ec2* | `ConfirmProductInstance` | 0 |
 | *ec2* | `CopyFpgaImage` | 0 |
@@ -2472,7 +2472,7 @@
 | *ec2* | `DescribeAccountAttributes` | 2 |
 | *ec2* | `DescribeAddresses` | 3 |
 | *ec2* | `DescribeAggregateIdFormat` | 0 |
-| *ec2* | `DescribeAvailabilityZones` | 10 |
+| *ec2* | `DescribeAvailabilityZones` | 11 |
 | *ec2* | `DescribeBundleTasks` | 0 |
 | *ec2* | `DescribeByoipCidrs` | 0 |
 | *ec2* | `DescribeCapacityReservations` | 1 |
@@ -2504,9 +2504,9 @@
 | *ec2* | `DescribeInstanceStatus` | 0 |
 | *ec2* | `DescribeInstances` | 6 |
 | *ec2* | `DescribeInternetGateways` | 3 |
-| *ec2* | `DescribeKeyPairs` | 2 |
-| *ec2* | `DescribeLaunchTemplateVersions` | 1 |
-| *ec2* | `DescribeLaunchTemplates` | 2 |
+| *ec2* | `DescribeKeyPairs` | 3 |
+| *ec2* | `DescribeLaunchTemplateVersions` | 2 |
+| *ec2* | `DescribeLaunchTemplates` | 3 |
 | *ec2* | `DescribeMovingAddresses` | 0 |
 | *ec2* | `DescribeNatGateways` | 3 |
 | *ec2* | `DescribeNetworkAcls` | 3 |
@@ -2526,13 +2526,13 @@
 | *ec2* | `DescribeScheduledInstanceAvailability` | 0 |
 | *ec2* | `DescribeScheduledInstances` | 0 |
 | *ec2* | `DescribeSecurityGroupReferences` | 0 |
-| *ec2* | `DescribeSecurityGroups` | 19 |
+| *ec2* | `DescribeSecurityGroups` | 20 |
 | *ec2* | `DescribeSnapshotAttribute` | 0 |
 | *ec2* | `DescribeSnapshots` | 2 |
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
 | *ec2* | `DescribeSpotFleetInstances` | 0 |
 | *ec2* | `DescribeSpotFleetRequestHistory` | 0 |
-| *ec2* | `DescribeSpotFleetRequests` | 0 |
+| *ec2* | `DescribeSpotFleetRequests` | 1 |
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DescribeSpotPriceHistory` | 1 |
 | *ec2* | `DescribeStaleSecurityGroups` | 1 |
@@ -2556,7 +2556,7 @@
 | *ec2* | `DescribeVpcEndpointServices` | 1 |
 | *ec2* | `DescribeVpcEndpoints` | 2 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 23 |
+| *ec2* | `DescribeVpcs` | 24 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 2 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -2641,7 +2641,7 @@
 | *ec2* | `ReplaceRouteTableAssociation` | 0 |
 | *ec2* | `ReplaceTransitGatewayRoute` | 0 |
 | *ec2* | `ReportInstanceStatus` | 0 |
-| *ec2* | `RequestSpotFleet` | 0 |
+| *ec2* | `RequestSpotFleet` | 1 |
 | *ec2* | `RequestSpotInstances` | 0 |
 | *ec2* | `ResetFpgaImageAttribute` | 0 |
 | *ec2* | `ResetImageAttribute` | 0 |
@@ -3431,7 +3431,7 @@
 | *iam* | `ListGroupPolicies` | 0 |
 | *iam* | `ListGroups` | 2 |
 | *iam* | `ListGroupsForUser` | 1 |
-| *iam* | `ListInstanceProfiles` | 3 |
+| *iam* | `ListInstanceProfiles` | 4 |
 | *iam* | `ListInstanceProfilesForRole` | 0 |
 | *iam* | `ListMFADevices` | 0 |
 | *iam* | `ListOpenIDConnectProviders` | 0 |
@@ -3727,7 +3727,7 @@
 | *iotanalytics* | `BatchPutMessage` | 0 |
 | *iotanalytics* | `CancelPipelineReprocessing` | 0 |
 | *iotanalytics* | `CreateChannel` | 1 |
-| *iotanalytics* | `CreateDataset` | 0 |
+| *iotanalytics* | `CreateDataset` | 1 |
 | *iotanalytics* | `CreateDatasetContent` | 0 |
 | *iotanalytics* | `CreateDatastore` | 1 |
 | *iotanalytics* | `CreatePipeline` | 1 |
@@ -3744,7 +3744,7 @@
 | *iotanalytics* | `GetDatasetContent` | 0 |
 | *iotanalytics* | `ListChannels` | 1 |
 | *iotanalytics* | `ListDatasetContents` | 0 |
-| *iotanalytics* | `ListDatasets` | 0 |
+| *iotanalytics* | `ListDatasets` | 1 |
 | *iotanalytics* | `ListDatastores` | 1 |
 | *iotanalytics* | `ListPipelines` | 1 |
 | *iotanalytics* | `ListTagsForResource` | 0 |
@@ -6154,4 +6154,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 936 (17%)**
+**Total Unique Occurances: 941 (17%)**

@@ -33,6 +33,7 @@ cfn_occurances = [
     "AWS::EC2::EC2Fleet",
     "AWS::Kinesis::StreamConsumer",
     "AWS::CloudFormation::Macro",
+    "AWS::CloudFormation::Transform",
     "AWS::CodePipeline::CustomActionType",
     "AWS::EC2::NetworkInterfacePermission",
     "AWS::EC2::TrunkInterfaceAssociation",
@@ -41,7 +42,9 @@ cfn_occurances = [
     "AWS::Lambda::Permission",
     "AWS::Logs::Destination",
     "AWS::CDK::Metadata",
-    "AWS::Route53::RecordSetGroup"
+    "AWS::Route53::RecordSetGroup",
+    "AWS::EMR::InstanceFleetConfig",
+    "AWS::Glue::Partition"
 ]
 tf_occurances = []
 
