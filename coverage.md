@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**332/339 (97%)** Resources Covered
+**333/339 (98%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -47,7 +47,7 @@
 | *AWS::AutoScaling::LifecycleHook* | 1 |
 | *AWS::AutoScaling::ScalingPolicy* | 1 |
 | *AWS::AutoScaling::ScheduledAction* | 1 |
-| *AWS::AutoScalingPlans::ScalingPlan* | 0 |
+| *AWS::AutoScalingPlans::ScalingPlan* | 1 |
 | *AWS::Batch::ComputeEnvironment* | 1 |
 | *AWS::Batch::JobDefinition* | 1 |
 | *AWS::Batch::JobQueue* | 1 |
@@ -820,6 +820,7 @@
 | *appsync* | 17/33 (51%) |
 | *athena* | 1/11 (9%) |
 | *autoscaling* | 19/54 (35%) |
+| *autoscaling-plans* | 3/6 (50%) |
 | *batch* | 11/16 (68%) |
 | *budgets* | 1/14 (7%) |
 | *cloud9* | 6/10 (60%) |
@@ -1313,10 +1314,10 @@
 | *autoscaling* | `SuspendProcesses` | 0 |
 | *autoscaling* | `TerminateInstanceInAutoScalingGroup` | 0 |
 | *autoscaling* | `UpdateAutoScalingGroup` | 0 |
-| *autoscaling-plans* | `CreateScalingPlan` | 0 |
-| *autoscaling-plans* | `DeleteScalingPlan` | 0 |
+| *autoscaling-plans* | `CreateScalingPlan` | 1 |
+| *autoscaling-plans* | `DeleteScalingPlan` | 1 |
 | *autoscaling-plans* | `DescribeScalingPlanResources` | 0 |
-| *autoscaling-plans* | `DescribeScalingPlans` | 0 |
+| *autoscaling-plans* | `DescribeScalingPlans` | 1 |
 | *autoscaling-plans* | `GetScalingPlanResourceForecastData` | 0 |
 | *autoscaling-plans* | `UpdateScalingPlan` | 0 |
 | *batch* | `CancelJob` | 1 |
@@ -6159,4 +6160,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 942 (17%)**
+**Total Unique Occurances: 945 (17%)**
