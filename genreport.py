@@ -62,6 +62,13 @@ with open("tf_resources.txt", "r") as f:
 for cfntype, _ in cfn_spec.items():
     cfn_types.append(cfntype)
 
+cfn_types.append("AWS::CloudFormation::Transform")
+cfn_types.append("AWS::Lambda::LayerVersionPermission")
+cfn_types.append("AWS::CDK::Metadata")
+cfn_types.append("AWS::EC2::VPCEndpointService")
+cfn_types.append("AWS::Lambda::LayerVersion")
+cfn_types = set(cfn_types)
+
 with open("bg.js", "r") as f:
     text = f.read()
     lines = text.splitlines()

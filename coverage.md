@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**330/334 (98%)** Resources Covered
+**332/339 (97%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -52,11 +52,13 @@
 | *AWS::Batch::JobDefinition* | 1 |
 | *AWS::Batch::JobQueue* | 1 |
 | *AWS::Budgets::Budget* | 1 |
+| *AWS::CDK::Metadata* | 1 |
 | *AWS::CertificateManager::Certificate* | 1 |
 | *AWS::Cloud9::EnvironmentEC2* | 1 |
 | *AWS::CloudFormation::CustomResource* | 1 |
 | *AWS::CloudFormation::Macro* | 1 |
 | *AWS::CloudFormation::Stack* | 1 |
+| *AWS::CloudFormation::Transform* | 1 |
 | *AWS::CloudFormation::WaitCondition* | 1 |
 | *AWS::CloudFormation::WaitConditionHandle* | 1 |
 | *AWS::CloudFront::CloudFrontOriginAccessIdentity* | 1 |
@@ -117,7 +119,7 @@
 | *AWS::EC2::NetworkInterfaceAttachment* | 1 |
 | *AWS::EC2::NetworkInterfacePermission* | 1 |
 | *AWS::EC2::PlacementGroup* | 1 |
-| *AWS::EC2::Route* | 0 |
+| *AWS::EC2::Route* | 1 |
 | *AWS::EC2::RouteTable* | 2 |
 | *AWS::EC2::SecurityGroup* | 2 |
 | *AWS::EC2::SecurityGroupEgress* | 1 |
@@ -138,6 +140,7 @@
 | *AWS::EC2::VPCCidrBlock* | 1 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
+| *AWS::EC2::VPCEndpointService* | 1 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 1 |
 | *AWS::EC2::VPCGatewayAttachment* | 2 |
 | *AWS::EC2::VPCPeeringConnection* | 1 |
@@ -232,6 +235,8 @@
 | *AWS::Lambda::Alias* | 1 |
 | *AWS::Lambda::EventSourceMapping* | 0 |
 | *AWS::Lambda::Function* | 1 |
+| *AWS::Lambda::LayerVersion* | 1 |
+| *AWS::Lambda::LayerVersionPermission* | 1 |
 | *AWS::Lambda::Permission* | 1 |
 | *AWS::Lambda::Version* | 1 |
 | *AWS::Logs::Destination* | 1 |
@@ -277,7 +282,7 @@
 | *AWS::SES::ConfigurationSet* | 1 |
 | *AWS::SES::ConfigurationSetEventDestination* | 0 |
 | *AWS::SES::ReceiptFilter* | 1 |
-| *AWS::SES::ReceiptRule* | 0 |
+| *AWS::SES::ReceiptRule* | 1 |
 | *AWS::SES::ReceiptRuleSet* | 1 |
 | *AWS::SES::Template* | 1 |
 | *AWS::SNS::Subscription* | 1 |
@@ -833,7 +838,7 @@
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 125/310 (40%) |
+| *ec2* | 126/310 (40%) |
 | *ecr* | 3/22 (13%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -2411,7 +2416,7 @@
 | *ec2* | `CreateNetworkInterfacePermission` | 0 |
 | *ec2* | `CreatePlacementGroup` | 1 |
 | *ec2* | `CreateReservedInstancesListing` | 0 |
-| *ec2* | `CreateRoute` | 0 |
+| *ec2* | `CreateRoute` | 1 |
 | *ec2* | `CreateRouteTable` | 3 |
 | *ec2* | `CreateSecurityGroup` | 2 |
 | *ec2* | `CreateSnapshot` | 0 |
@@ -5398,7 +5403,7 @@
 | *ses* | `CreateConfigurationSetTrackingOptions` | 0 |
 | *ses* | `CreateCustomVerificationEmailTemplate` | 0 |
 | *ses* | `CreateReceiptFilter` | 1 |
-| *ses* | `CreateReceiptRule` | 1 |
+| *ses* | `CreateReceiptRule` | 2 |
 | *ses* | `CreateReceiptRuleSet` | 1 |
 | *ses* | `CreateTemplate` | 0 |
 | *ses* | `DeleteConfigurationSet` | 1 |
@@ -6154,4 +6159,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 941 (17%)**
+**Total Unique Occurances: 942 (17%)**
