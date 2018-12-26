@@ -136,7 +136,7 @@
 | *AWS::EC2::TransitGatewayRouteTableAssociation* | 1 |
 | *AWS::EC2::TransitGatewayRouteTablePropagation* | 1 |
 | *AWS::EC2::TrunkInterfaceAssociation* | 1 |
-| *AWS::EC2::VPC* | 2 |
+| *AWS::EC2::VPC* | 3 |
 | *AWS::EC2::VPCCidrBlock* | 1 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
@@ -346,13 +346,14 @@
 
 ## Terraform Coverage
 
-**180/457 (39%)** Resources Covered
+**185/458 (40%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
 | *aws_acm_certificate* | 1 |
 | *aws_acm_certificate_validation* | 0 |
-| *aws_acmpca_certificate_authority* | 0 |
+| *aws_acm_certificate_validation* | 0 |
+| *aws_acmpca_certificate_authority* | 1 |
 | *aws_alb* | 0 |
 | *aws_alb_listener* | 0 |
 | *aws_alb_listener_certificate* | 0 |
@@ -387,9 +388,9 @@
 | *aws_api_gateway_usage_plan_key* | 1 |
 | *aws_api_gateway_vpc_link* | 1 |
 | *aws_app_cookie_stickiness_policy* | 0 |
-| *aws_appautoscaling_policy* | 0 |
+| *aws_appautoscaling_policy* | 1 |
 | *aws_appautoscaling_scheduled_action* | 0 |
-| *aws_appautoscaling_target* | 0 |
+| *aws_appautoscaling_target* | 1 |
 | *aws_appmesh_mesh* | 0 |
 | *aws_appmesh_route* | 0 |
 | *aws_appmesh_virtual_node* | 0 |
@@ -545,8 +546,8 @@
 | *aws_gamelift_build* | 1 |
 | *aws_gamelift_fleet* | 0 |
 | *aws_gamelift_game_session_queue* | 0 |
-| *aws_glacier_vault* | 0 |
-| *aws_glacier_vault_lock* | 0 |
+| *aws_glacier_vault* | 1 |
+| *aws_glacier_vault_lock* | 1 |
 | *aws_glue_catalog_database* | 0 |
 | *aws_glue_catalog_table* | 0 |
 | *aws_glue_classifier* | 0 |
@@ -764,7 +765,7 @@
 | *aws_transfer_ssh_key* | 0 |
 | *aws_transfer_user* | 0 |
 | *aws_volume_attachment* | 1 |
-| *aws_vpc* | 2 |
+| *aws_vpc* | 3 |
 | *aws_vpc_dhcp_options* | 1 |
 | *aws_vpc_dhcp_options_association* | 1 |
 | *aws_vpc_endpoint* | 1 |
@@ -813,7 +814,7 @@
 | Service | Coverage |
 | --- | --- |
 | *acm* | 3/12 (25%) |
-| *acm-pca* | 1/17 (5%) |
+| *acm-pca* | 2/17 (11%) |
 | *apigateway* | 42/120 (35%) |
 | *application-autoscaling* | 2/10 (20%) |
 | *appstream* | 15/44 (34%) |
@@ -834,6 +835,7 @@
 | *cognito-identity* | 2/18 (11%) |
 | *cognito-idp* | 10/95 (10%) |
 | *config* | 9/47 (19%) |
+| *datasync* | 2/25 (8%) |
 | *dax* | 10/21 (47%) |
 | *dlm* | 4/5 (80%) |
 | *dms* | 27/44 (61%) |
@@ -853,6 +855,7 @@
 | *events* | 11/15 (73%) |
 | *firehose* | 3/12 (25%) |
 | *gamelift* | 8/67 (11%) |
+| *glacier* | 3/33 (9%) |
 | *glue* | 35/87 (40%) |
 | *guardduty* | 25/42 (59%) |
 | *iam* | 33/137 (24%) |
@@ -889,6 +892,7 @@
 | *sqs* | 6/20 (30%) |
 | *ssm* | 21/111 (18%) |
 | *stepfunctions* | 7/19 (36%) |
+| *sts* | 1/7 (14%) |
 | *support* | 5/14 (35%) |
 | *waf* | 32/73 (43%) |
 | *waf-regional* | 34/77 (44%) |
@@ -911,7 +915,7 @@
 | *acm* | `RequestCertificate` | 1 |
 | *acm* | `ResendValidationEmail` | 0 |
 | *acm* | `UpdateCertificateOptions` | 0 |
-| *acm-pca* | `CreateCertificateAuthority` | 0 |
+| *acm-pca* | `CreateCertificateAuthority` | 1 |
 | *acm-pca* | `CreateCertificateAuthorityAuditReport` | 0 |
 | *acm-pca* | `DeleteCertificateAuthority` | 0 |
 | *acm-pca* | `DescribeCertificateAuthority` | 0 |
@@ -921,7 +925,7 @@
 | *acm-pca* | `GetCertificateAuthorityCsr` | 0 |
 | *acm-pca* | `ImportCertificateAuthorityCertificate` | 0 |
 | *acm-pca* | `IssueCertificate` | 0 |
-| *acm-pca* | `ListCertificateAuthorities` | 1 |
+| *acm-pca* | `ListCertificateAuthorities` | 2 |
 | *acm-pca* | `ListTags` | 0 |
 | *acm-pca* | `RestoreCertificateAuthority` | 0 |
 | *acm-pca* | `RevokeCertificate` | 0 |
@@ -2058,8 +2062,8 @@
 | *datasync* | `DescribeLocationS3` | 0 |
 | *datasync* | `DescribeTask` | 0 |
 | *datasync* | `DescribeTaskExecution` | 0 |
-| *datasync* | `ListAgents` | 0 |
-| *datasync* | `ListLocations` | 0 |
+| *datasync* | `ListAgents` | 1 |
+| *datasync* | `ListLocations` | 1 |
 | *datasync* | `ListTagsForResource` | 0 |
 | *datasync* | `ListTaskExecutions` | 0 |
 | *datasync* | `ListTasks` | 0 |
@@ -2429,7 +2433,7 @@
 | *ec2* | `CreateTransitGatewayRouteTable` | 1 |
 | *ec2* | `CreateTransitGatewayVpcAttachment` | 1 |
 | *ec2* | `CreateVolume` | 1 |
-| *ec2* | `CreateVpc` | 2 |
+| *ec2* | `CreateVpc` | 3 |
 | *ec2* | `CreateVpcEndpoint` | 1 |
 | *ec2* | `CreateVpcEndpointConnectionNotification` | 0 |
 | *ec2* | `CreateVpcEndpointServiceConfiguration` | 1 |
@@ -3086,7 +3090,7 @@
 | *glacier* | `AddTagsToVault` | 0 |
 | *glacier* | `CompleteMultipartUpload` | 0 |
 | *glacier* | `CompleteVaultLock` | 0 |
-| *glacier* | `CreateVault` | 0 |
+| *glacier* | `CreateVault` | 1 |
 | *glacier* | `DeleteArchive` | 0 |
 | *glacier* | `DeleteVault` | 0 |
 | *glacier* | `DeleteVaultAccessPolicy` | 0 |
@@ -3100,13 +3104,13 @@
 | *glacier* | `GetVaultNotifications` | 0 |
 | *glacier* | `InitiateJob` | 0 |
 | *glacier* | `InitiateMultipartUpload` | 0 |
-| *glacier* | `InitiateVaultLock` | 0 |
+| *glacier* | `InitiateVaultLock` | 1 |
 | *glacier* | `ListJobs` | 0 |
 | *glacier* | `ListMultipartUploads` | 0 |
 | *glacier* | `ListParts` | 0 |
 | *glacier* | `ListProvisionedCapacity` | 0 |
 | *glacier* | `ListTagsForVault` | 0 |
-| *glacier* | `ListVaults` | 0 |
+| *glacier* | `ListVaults` | 1 |
 | *glacier* | `PurchaseProvisionedCapacity` | 0 |
 | *glacier* | `RemoveTagsFromVault` | 0 |
 | *glacier* | `SetDataRetrievalPolicy` | 0 |
@@ -5567,7 +5571,7 @@
 | *sns* | `ListPlatformApplications` | 1 |
 | *sns* | `ListSubscriptions` | 1 |
 | *sns* | `ListSubscriptionsByTopic` | 0 |
-| *sns* | `ListTopics` | 9 |
+| *sns* | `ListTopics` | 10 |
 | *sns* | `OptInPhoneNumber` | 0 |
 | *sns* | `Publish` | 0 |
 | *sns* | `RemovePermission` | 0 |
@@ -5801,7 +5805,7 @@
 | *sts* | `AssumeRoleWithSAML` | 0 |
 | *sts* | `AssumeRoleWithWebIdentity` | 0 |
 | *sts* | `DecodeAuthorizationMessage` | 0 |
-| *sts* | `GetCallerIdentity` | 0 |
+| *sts* | `GetCallerIdentity` | 1 |
 | *sts* | `GetFederationToken` | 0 |
 | *sts* | `GetSessionToken` | 0 |
 | *support* | `AddAttachmentsToSet` | 0 |
@@ -6160,4 +6164,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 945 (17%)**
+**Total Unique Occurances: 952 (18%)**

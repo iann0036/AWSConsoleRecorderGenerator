@@ -8,7 +8,9 @@ services = None
 cfn_spec = None
 occurances = []
 skipped_ops = []
-tf_resources = []
+tf_resources = [
+    "aws_acm_certificate_validation"
+]
 cfn_types = []
 cfn_occurances = [
     "AWS::CloudFormation::CustomResource",
