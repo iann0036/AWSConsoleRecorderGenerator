@@ -16,8 +16,7 @@
       "tabs",
       "debugger",
       "notifications",
-      "*://*.console.aws.amazon.com/*",
-      "*://console.aws.amazon.com/*",
+      "*://*.aws.amazon.com/*",
       "*://*.amazonaws.com/*"
     ]
 }

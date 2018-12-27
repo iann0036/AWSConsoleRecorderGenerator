@@ -346,7 +346,7 @@
 
 ## Terraform Coverage
 
-**185/458 (40%)** Resources Covered
+**194/458 (42%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -361,8 +361,8 @@
 | *aws_alb_target_group* | 0 |
 | *aws_alb_target_group_attachment* | 0 |
 | *aws_ami* | 1 |
-| *aws_ami_copy* | 0 |
-| *aws_ami_from_instance* | 0 |
+| *aws_ami_copy* | 1 |
+| *aws_ami_from_instance* | 1 |
 | *aws_ami_launch_permission* | 0 |
 | *aws_api_gateway_account* | 0 |
 | *aws_api_gateway_api_key* | 1 |
@@ -616,12 +616,12 @@
 | *aws_lb_ssl_negotiation_policy* | 0 |
 | *aws_lb_target_group* | 0 |
 | *aws_lb_target_group_attachment* | 0 |
-| *aws_licensemanager_license_configuration* | 0 |
-| *aws_lightsail_domain* | 0 |
-| *aws_lightsail_instance* | 0 |
-| *aws_lightsail_key_pair* | 0 |
-| *aws_lightsail_static_ip* | 0 |
-| *aws_lightsail_static_ip_attachment* | 0 |
+| *aws_licensemanager_license_configuration* | 1 |
+| *aws_lightsail_domain* | 1 |
+| *aws_lightsail_instance* | 1 |
+| *aws_lightsail_key_pair* | 1 |
+| *aws_lightsail_static_ip* | 1 |
+| *aws_lightsail_static_ip_attachment* | 1 |
 | *aws_load_balancer_backend_server_policy* | 0 |
 | *aws_load_balancer_listener_policy* | 0 |
 | *aws_load_balancer_policy* | 0 |
@@ -841,7 +841,7 @@
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 126/310 (40%) |
+| *ec2* | 132/310 (42%) |
 | *ecr* | 3/22 (13%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -869,6 +869,8 @@
 | *kinesisanalyticsv2* | 1/21 (4%) |
 | *kms* | 7/41 (17%) |
 | *lambda* | 14/38 (36%) |
+| *license-manager* | 6/15 (40%) |
+| *lightsail* | 21/100 (21%) |
 | *logs* | 5/39 (12%) |
 | *medialive* | 4/25 (16%) |
 | *mq* | 7/20 (35%) |
@@ -2397,7 +2399,7 @@
 | *ec2* | `CancelSpotInstanceRequests` | 0 |
 | *ec2* | `ConfirmProductInstance` | 0 |
 | *ec2* | `CopyFpgaImage` | 0 |
-| *ec2* | `CopyImage` | 0 |
+| *ec2* | `CopyImage` | 1 |
 | *ec2* | `CopySnapshot` | 0 |
 | *ec2* | `CreateCapacityReservation` | 0 |
 | *ec2* | `CreateCustomerGateway` | 1 |
@@ -2408,7 +2410,7 @@
 | *ec2* | `CreateFleet` | 0 |
 | *ec2* | `CreateFlowLogs` | 1 |
 | *ec2* | `CreateFpgaImage` | 0 |
-| *ec2* | `CreateImage` | 0 |
+| *ec2* | `CreateImage` | 1 |
 | *ec2* | `CreateInstanceExportTask` | 0 |
 | *ec2* | `CreateInternetGateway` | 1 |
 | *ec2* | `CreateKeyPair` | 1 |
@@ -2460,7 +2462,7 @@
 | *ec2* | `DeleteRoute` | 0 |
 | *ec2* | `DeleteRouteTable` | 2 |
 | *ec2* | `DeleteSecurityGroup` | 0 |
-| *ec2* | `DeleteSnapshot` | 0 |
+| *ec2* | `DeleteSnapshot` | 1 |
 | *ec2* | `DeleteSpotDatafeedSubscription` | 0 |
 | *ec2* | `DeleteSubnet` | 1 |
 | *ec2* | `DeleteTags` | 1 |
@@ -2478,9 +2480,9 @@
 | *ec2* | `DeleteVpnConnectionRoute` | 0 |
 | *ec2* | `DeleteVpnGateway` | 1 |
 | *ec2* | `DeprovisionByoipCidr` | 0 |
-| *ec2* | `DeregisterImage` | 0 |
+| *ec2* | `DeregisterImage` | 1 |
 | *ec2* | `DescribeAccountAttributes` | 2 |
-| *ec2* | `DescribeAddresses` | 3 |
+| *ec2* | `DescribeAddresses` | 4 |
 | *ec2* | `DescribeAggregateIdFormat` | 0 |
 | *ec2* | `DescribeAvailabilityZones` | 11 |
 | *ec2* | `DescribeBundleTasks` | 0 |
@@ -2505,7 +2507,7 @@
 | *ec2* | `DescribeIamInstanceProfileAssociations` | 0 |
 | *ec2* | `DescribeIdFormat` | 1 |
 | *ec2* | `DescribeIdentityIdFormat` | 0 |
-| *ec2* | `DescribeImageAttribute` | 0 |
+| *ec2* | `DescribeImageAttribute` | 1 |
 | *ec2* | `DescribeImages` | 2 |
 | *ec2* | `DescribeImportImageTasks` | 0 |
 | *ec2* | `DescribeImportSnapshotTasks` | 0 |
@@ -2527,7 +2529,7 @@
 | *ec2* | `DescribePrefixLists` | 1 |
 | *ec2* | `DescribePrincipalIdFormat` | 0 |
 | *ec2* | `DescribePublicIpv4Pools` | 0 |
-| *ec2* | `DescribeRegions` | 2 |
+| *ec2* | `DescribeRegions` | 3 |
 | *ec2* | `DescribeReservedInstances` | 0 |
 | *ec2* | `DescribeReservedInstancesListings` | 0 |
 | *ec2* | `DescribeReservedInstancesModifications` | 0 |
@@ -2537,8 +2539,8 @@
 | *ec2* | `DescribeScheduledInstances` | 0 |
 | *ec2* | `DescribeSecurityGroupReferences` | 0 |
 | *ec2* | `DescribeSecurityGroups` | 20 |
-| *ec2* | `DescribeSnapshotAttribute` | 0 |
-| *ec2* | `DescribeSnapshots` | 2 |
+| *ec2* | `DescribeSnapshotAttribute` | 1 |
+| *ec2* | `DescribeSnapshots` | 3 |
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
 | *ec2* | `DescribeSpotFleetInstances` | 0 |
 | *ec2* | `DescribeSpotFleetRequestHistory` | 0 |
@@ -2554,7 +2556,7 @@
 | *ec2* | `DescribeTransitGateways` | 1 |
 | *ec2* | `DescribeVolumeAttribute` | 0 |
 | *ec2* | `DescribeVolumeStatus` | 0 |
-| *ec2* | `DescribeVolumes` | 1 |
+| *ec2* | `DescribeVolumes` | 3 |
 | *ec2* | `DescribeVolumesModifications` | 0 |
 | *ec2* | `DescribeVpcAttribute` | 2 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
@@ -2564,7 +2566,7 @@
 | *ec2* | `DescribeVpcEndpointServiceConfigurations` | 1 |
 | *ec2* | `DescribeVpcEndpointServicePermissions` | 1 |
 | *ec2* | `DescribeVpcEndpointServices` | 1 |
-| *ec2* | `DescribeVpcEndpoints` | 2 |
+| *ec2* | `DescribeVpcEndpoints` | 3 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
 | *ec2* | `DescribeVpcs` | 24 |
 | *ec2* | `DescribeVpnConnections` | 1 |
@@ -3865,7 +3867,7 @@
 | *kms* | `DeleteCustomKeyStore` | 0 |
 | *kms* | `DeleteImportedKeyMaterial` | 0 |
 | *kms* | `DescribeCustomKeyStores` | 0 |
-| *kms* | `DescribeKey` | 5 |
+| *kms* | `DescribeKey` | 6 |
 | *kms* | `DisableKey` | 0 |
 | *kms* | `DisableKeyRotation` | 0 |
 | *kms* | `DisconnectCustomKeyStore` | 0 |
@@ -3971,38 +3973,38 @@
 | *lex-models* | `StartImport` | 0 |
 | *lex-runtime* | `PostContent` | 0 |
 | *lex-runtime* | `PostText` | 0 |
-| *license-manager* | `CreateLicenseConfiguration` | 0 |
+| *license-manager* | `CreateLicenseConfiguration` | 1 |
 | *license-manager* | `DeleteLicenseConfiguration` | 0 |
-| *license-manager* | `GetLicenseConfiguration` | 0 |
+| *license-manager* | `GetLicenseConfiguration` | 1 |
 | *license-manager* | `GetServiceSettings` | 0 |
-| *license-manager* | `ListAssociationsForLicenseConfiguration` | 0 |
-| *license-manager* | `ListLicenseConfigurations` | 0 |
+| *license-manager* | `ListAssociationsForLicenseConfiguration` | 1 |
+| *license-manager* | `ListLicenseConfigurations` | 1 |
 | *license-manager* | `ListLicenseSpecificationsForResource` | 0 |
 | *license-manager* | `ListResourceInventory` | 0 |
 | *license-manager* | `ListTagsForResource` | 0 |
-| *license-manager* | `ListUsageForLicenseConfiguration` | 0 |
+| *license-manager* | `ListUsageForLicenseConfiguration` | 1 |
 | *license-manager* | `TagResource` | 0 |
 | *license-manager* | `UntagResource` | 0 |
 | *license-manager* | `UpdateLicenseConfiguration` | 0 |
-| *license-manager* | `UpdateLicenseSpecificationsForResource` | 0 |
+| *license-manager* | `UpdateLicenseSpecificationsForResource` | 1 |
 | *license-manager* | `UpdateServiceSettings` | 0 |
-| *lightsail* | `AllocateStaticIp` | 0 |
+| *lightsail* | `AllocateStaticIp` | 1 |
 | *lightsail* | `AttachDisk` | 0 |
 | *lightsail* | `AttachInstancesToLoadBalancer` | 0 |
 | *lightsail* | `AttachLoadBalancerTlsCertificate` | 0 |
-| *lightsail* | `AttachStaticIp` | 0 |
+| *lightsail* | `AttachStaticIp` | 1 |
 | *lightsail* | `CloseInstancePublicPorts` | 0 |
 | *lightsail* | `CopySnapshot` | 0 |
 | *lightsail* | `CreateCloudFormationStack` | 0 |
 | *lightsail* | `CreateDisk` | 0 |
 | *lightsail* | `CreateDiskFromSnapshot` | 0 |
 | *lightsail* | `CreateDiskSnapshot` | 0 |
-| *lightsail* | `CreateDomain` | 0 |
+| *lightsail* | `CreateDomain` | 1 |
 | *lightsail* | `CreateDomainEntry` | 0 |
 | *lightsail* | `CreateInstanceSnapshot` | 0 |
-| *lightsail* | `CreateInstances` | 0 |
+| *lightsail* | `CreateInstances` | 1 |
 | *lightsail* | `CreateInstancesFromSnapshot` | 0 |
-| *lightsail* | `CreateKeyPair` | 0 |
+| *lightsail* | `CreateKeyPair` | 1 |
 | *lightsail* | `CreateLoadBalancer` | 0 |
 | *lightsail* | `CreateLoadBalancerTlsCertificate` | 0 |
 | *lightsail* | `CreateRelationalDatabase` | 0 |
@@ -4010,9 +4012,9 @@
 | *lightsail* | `CreateRelationalDatabaseSnapshot` | 0 |
 | *lightsail* | `DeleteDisk` | 0 |
 | *lightsail* | `DeleteDiskSnapshot` | 0 |
-| *lightsail* | `DeleteDomain` | 0 |
+| *lightsail* | `DeleteDomain` | 1 |
 | *lightsail* | `DeleteDomainEntry` | 0 |
-| *lightsail* | `DeleteInstance` | 0 |
+| *lightsail* | `DeleteInstance` | 1 |
 | *lightsail* | `DeleteInstanceSnapshot` | 0 |
 | *lightsail* | `DeleteKeyPair` | 0 |
 | *lightsail* | `DeleteLoadBalancer` | 0 |
@@ -4021,20 +4023,20 @@
 | *lightsail* | `DeleteRelationalDatabaseSnapshot` | 0 |
 | *lightsail* | `DetachDisk` | 0 |
 | *lightsail* | `DetachInstancesFromLoadBalancer` | 0 |
-| *lightsail* | `DetachStaticIp` | 0 |
+| *lightsail* | `DetachStaticIp` | 1 |
 | *lightsail* | `DownloadDefaultKeyPair` | 0 |
 | *lightsail* | `ExportSnapshot` | 0 |
 | *lightsail* | `GetActiveNames` | 0 |
-| *lightsail* | `GetBlueprints` | 0 |
-| *lightsail* | `GetBundles` | 0 |
-| *lightsail* | `GetCloudFormationStackRecords` | 0 |
+| *lightsail* | `GetBlueprints` | 1 |
+| *lightsail* | `GetBundles` | 1 |
+| *lightsail* | `GetCloudFormationStackRecords` | 1 |
 | *lightsail* | `GetDisk` | 0 |
 | *lightsail* | `GetDiskSnapshot` | 0 |
 | *lightsail* | `GetDiskSnapshots` | 0 |
-| *lightsail* | `GetDisks` | 0 |
+| *lightsail* | `GetDisks` | 1 |
 | *lightsail* | `GetDomain` | 0 |
 | *lightsail* | `GetDomains` | 0 |
-| *lightsail* | `GetExportSnapshotRecords` | 0 |
+| *lightsail* | `GetExportSnapshotRecords` | 1 |
 | *lightsail* | `GetInstance` | 0 |
 | *lightsail* | `GetInstanceAccessDetails` | 0 |
 | *lightsail* | `GetInstanceMetricData` | 0 |
@@ -4042,7 +4044,7 @@
 | *lightsail* | `GetInstanceSnapshot` | 0 |
 | *lightsail* | `GetInstanceSnapshots` | 0 |
 | *lightsail* | `GetInstanceState` | 0 |
-| *lightsail* | `GetInstances` | 0 |
+| *lightsail* | `GetInstances` | 1 |
 | *lightsail* | `GetKeyPair` | 0 |
 | *lightsail* | `GetKeyPairs` | 0 |
 | *lightsail* | `GetLoadBalancer` | 0 |
@@ -4050,9 +4052,9 @@
 | *lightsail* | `GetLoadBalancerTlsCertificates` | 0 |
 | *lightsail* | `GetLoadBalancers` | 0 |
 | *lightsail* | `GetOperation` | 0 |
-| *lightsail* | `GetOperations` | 0 |
+| *lightsail* | `GetOperations` | 1 |
 | *lightsail* | `GetOperationsForResource` | 0 |
-| *lightsail* | `GetRegions` | 0 |
+| *lightsail* | `GetRegions` | 1 |
 | *lightsail* | `GetRelationalDatabase` | 0 |
 | *lightsail* | `GetRelationalDatabaseBlueprints` | 0 |
 | *lightsail* | `GetRelationalDatabaseBundles` | 0 |
@@ -4066,18 +4068,18 @@
 | *lightsail* | `GetRelationalDatabaseSnapshots` | 0 |
 | *lightsail* | `GetRelationalDatabases` | 0 |
 | *lightsail* | `GetStaticIp` | 0 |
-| *lightsail* | `GetStaticIps` | 0 |
+| *lightsail* | `GetStaticIps` | 1 |
 | *lightsail* | `ImportKeyPair` | 0 |
 | *lightsail* | `IsVpcPeered` | 0 |
 | *lightsail* | `OpenInstancePublicPorts` | 0 |
 | *lightsail* | `PeerVpc` | 0 |
 | *lightsail* | `PutInstancePublicPorts` | 0 |
-| *lightsail* | `RebootInstance` | 0 |
+| *lightsail* | `RebootInstance` | 1 |
 | *lightsail* | `RebootRelationalDatabase` | 0 |
-| *lightsail* | `ReleaseStaticIp` | 0 |
-| *lightsail* | `StartInstance` | 0 |
+| *lightsail* | `ReleaseStaticIp` | 1 |
+| *lightsail* | `StartInstance` | 1 |
 | *lightsail* | `StartRelationalDatabase` | 0 |
-| *lightsail* | `StopInstance` | 0 |
+| *lightsail* | `StopInstance` | 1 |
 | *lightsail* | `StopRelationalDatabase` | 0 |
 | *lightsail* | `TagResource` | 0 |
 | *lightsail* | `UnpeerVpc` | 0 |
@@ -6164,4 +6166,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 952 (18%)**
+**Total Unique Occurances: 985 (18%)**
