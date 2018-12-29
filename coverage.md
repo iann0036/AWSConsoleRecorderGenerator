@@ -346,7 +346,7 @@
 
 ## Terraform Coverage
 
-**194/458 (42%)** Resources Covered
+**200/458 (43%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -752,12 +752,12 @@
 | *aws_ssm_patch_baseline* | 0 |
 | *aws_ssm_patch_group* | 0 |
 | *aws_ssm_resource_data_sync* | 1 |
-| *aws_storagegateway_cache* | 0 |
-| *aws_storagegateway_cached_iscsi_volume* | 0 |
-| *aws_storagegateway_gateway* | 0 |
-| *aws_storagegateway_nfs_file_share* | 0 |
-| *aws_storagegateway_smb_file_share* | 0 |
-| *aws_storagegateway_upload_buffer* | 0 |
+| *aws_storagegateway_cache* | 1 |
+| *aws_storagegateway_cached_iscsi_volume* | 1 |
+| *aws_storagegateway_gateway* | 1 |
+| *aws_storagegateway_nfs_file_share* | 1 |
+| *aws_storagegateway_smb_file_share* | 1 |
+| *aws_storagegateway_upload_buffer* | 1 |
 | *aws_storagegateway_working_storage* | 0 |
 | *aws_subnet* | 1 |
 | *aws_swf_domain* | 0 |
@@ -841,7 +841,7 @@
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 132/310 (42%) |
+| *ec2* | 134/310 (43%) |
 | *ecr* | 3/22 (13%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -894,6 +894,7 @@
 | *sqs* | 6/20 (30%) |
 | *ssm* | 21/111 (18%) |
 | *stepfunctions* | 7/19 (36%) |
+| *storagegateway* | 29/69 (42%) |
 | *sts* | 1/7 (14%) |
 | *support* | 5/14 (35%) |
 | *waf* | 32/73 (43%) |
@@ -2470,7 +2471,7 @@
 | *ec2* | `DeleteTransitGatewayRoute` | 0 |
 | *ec2* | `DeleteTransitGatewayRouteTable` | 0 |
 | *ec2* | `DeleteTransitGatewayVpcAttachment` | 0 |
-| *ec2* | `DeleteVolume` | 0 |
+| *ec2* | `DeleteVolume` | 1 |
 | *ec2* | `DeleteVpc` | 1 |
 | *ec2* | `DeleteVpcEndpointConnectionNotifications` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
@@ -2547,7 +2548,7 @@
 | *ec2* | `DescribeSpotFleetRequests` | 1 |
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DescribeSpotPriceHistory` | 1 |
-| *ec2* | `DescribeStaleSecurityGroups` | 1 |
+| *ec2* | `DescribeStaleSecurityGroups` | 2 |
 | *ec2* | `DescribeSubnets` | 18 |
 | *ec2* | `DescribeTags` | 2 |
 | *ec2* | `DescribeTransitGatewayAttachments` | 0 |
@@ -2568,7 +2569,7 @@
 | *ec2* | `DescribeVpcEndpointServices` | 1 |
 | *ec2* | `DescribeVpcEndpoints` | 3 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 24 |
+| *ec2* | `DescribeVpcs` | 25 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 2 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -2662,7 +2663,7 @@
 | *ec2* | `ResetSnapshotAttribute` | 0 |
 | *ec2* | `RestoreAddressToClassic` | 0 |
 | *ec2* | `RevokeSecurityGroupEgress` | 0 |
-| *ec2* | `RevokeSecurityGroupIngress` | 0 |
+| *ec2* | `RevokeSecurityGroupIngress` | 1 |
 | *ec2* | `RunInstances` | 1 |
 | *ec2* | `RunScheduledInstances` | 0 |
 | *ec2* | `SearchTransitGatewayRoutes` | 1 |
@@ -5734,67 +5735,67 @@
 | *stepfunctions* | `StartExecution` | 0 |
 | *stepfunctions* | `StopExecution` | 0 |
 | *stepfunctions* | `UpdateStateMachine` | 0 |
-| *storagegateway* | `ActivateGateway` | 0 |
-| *storagegateway* | `AddCache` | 0 |
+| *storagegateway* | `ActivateGateway` | 1 |
+| *storagegateway* | `AddCache` | 1 |
 | *storagegateway* | `AddTagsToResource` | 0 |
-| *storagegateway* | `AddUploadBuffer` | 0 |
+| *storagegateway* | `AddUploadBuffer` | 1 |
 | *storagegateway* | `AddWorkingStorage` | 0 |
 | *storagegateway* | `CancelArchival` | 0 |
 | *storagegateway* | `CancelRetrieval` | 0 |
-| *storagegateway* | `CreateCachediSCSIVolume` | 0 |
-| *storagegateway* | `CreateNFSFileShare` | 0 |
-| *storagegateway* | `CreateSMBFileShare` | 0 |
+| *storagegateway* | `CreateCachediSCSIVolume` | 1 |
+| *storagegateway* | `CreateNFSFileShare` | 1 |
+| *storagegateway* | `CreateSMBFileShare` | 1 |
 | *storagegateway* | `CreateSnapshot` | 0 |
 | *storagegateway* | `CreateSnapshotFromVolumeRecoveryPoint` | 0 |
 | *storagegateway* | `CreateStorediSCSIVolume` | 0 |
 | *storagegateway* | `CreateTapeWithBarcode` | 0 |
-| *storagegateway* | `CreateTapes` | 0 |
-| *storagegateway* | `DeleteBandwidthRateLimit` | 0 |
+| *storagegateway* | `CreateTapes` | 1 |
+| *storagegateway* | `DeleteBandwidthRateLimit` | 1 |
 | *storagegateway* | `DeleteChapCredentials` | 0 |
-| *storagegateway* | `DeleteFileShare` | 0 |
-| *storagegateway* | `DeleteGateway` | 0 |
+| *storagegateway* | `DeleteFileShare` | 1 |
+| *storagegateway* | `DeleteGateway` | 1 |
 | *storagegateway* | `DeleteSnapshotSchedule` | 0 |
-| *storagegateway* | `DeleteTape` | 0 |
+| *storagegateway* | `DeleteTape` | 1 |
 | *storagegateway* | `DeleteTapeArchive` | 0 |
-| *storagegateway* | `DeleteVolume` | 0 |
-| *storagegateway* | `DescribeBandwidthRateLimit` | 0 |
+| *storagegateway* | `DeleteVolume` | 1 |
+| *storagegateway* | `DescribeBandwidthRateLimit` | 1 |
 | *storagegateway* | `DescribeCache` | 0 |
 | *storagegateway* | `DescribeCachediSCSIVolumes` | 0 |
 | *storagegateway* | `DescribeChapCredentials` | 0 |
-| *storagegateway* | `DescribeGatewayInformation` | 0 |
-| *storagegateway* | `DescribeMaintenanceStartTime` | 0 |
-| *storagegateway* | `DescribeNFSFileShares` | 0 |
+| *storagegateway* | `DescribeGatewayInformation` | 1 |
+| *storagegateway* | `DescribeMaintenanceStartTime` | 1 |
+| *storagegateway* | `DescribeNFSFileShares` | 1 |
 | *storagegateway* | `DescribeSMBFileShares` | 0 |
-| *storagegateway* | `DescribeSMBSettings` | 0 |
+| *storagegateway* | `DescribeSMBSettings` | 1 |
 | *storagegateway* | `DescribeSnapshotSchedule` | 0 |
 | *storagegateway* | `DescribeStorediSCSIVolumes` | 0 |
 | *storagegateway* | `DescribeTapeArchives` | 0 |
 | *storagegateway* | `DescribeTapeRecoveryPoints` | 0 |
 | *storagegateway* | `DescribeTapes` | 0 |
-| *storagegateway* | `DescribeUploadBuffer` | 0 |
-| *storagegateway* | `DescribeVTLDevices` | 0 |
+| *storagegateway* | `DescribeUploadBuffer` | 1 |
+| *storagegateway* | `DescribeVTLDevices` | 1 |
 | *storagegateway* | `DescribeWorkingStorage` | 0 |
 | *storagegateway* | `DisableGateway` | 0 |
 | *storagegateway* | `JoinDomain` | 0 |
-| *storagegateway* | `ListFileShares` | 0 |
-| *storagegateway* | `ListGateways` | 0 |
-| *storagegateway* | `ListLocalDisks` | 0 |
+| *storagegateway* | `ListFileShares` | 1 |
+| *storagegateway* | `ListGateways` | 1 |
+| *storagegateway* | `ListLocalDisks` | 1 |
 | *storagegateway* | `ListTagsForResource` | 0 |
-| *storagegateway* | `ListTapes` | 0 |
-| *storagegateway* | `ListVolumeInitiators` | 0 |
+| *storagegateway* | `ListTapes` | 1 |
+| *storagegateway* | `ListVolumeInitiators` | 1 |
 | *storagegateway* | `ListVolumeRecoveryPoints` | 0 |
-| *storagegateway* | `ListVolumes` | 0 |
+| *storagegateway* | `ListVolumes` | 1 |
 | *storagegateway* | `NotifyWhenUploaded` | 0 |
-| *storagegateway* | `RefreshCache` | 0 |
+| *storagegateway* | `RefreshCache` | 1 |
 | *storagegateway* | `RemoveTagsFromResource` | 0 |
 | *storagegateway* | `ResetCache` | 0 |
 | *storagegateway* | `RetrieveTapeArchive` | 0 |
 | *storagegateway* | `RetrieveTapeRecoveryPoint` | 0 |
 | *storagegateway* | `SetLocalConsolePassword` | 0 |
-| *storagegateway* | `SetSMBGuestPassword` | 0 |
+| *storagegateway* | `SetSMBGuestPassword` | 1 |
 | *storagegateway* | `ShutdownGateway` | 0 |
 | *storagegateway* | `StartGateway` | 0 |
-| *storagegateway* | `UpdateBandwidthRateLimit` | 0 |
+| *storagegateway* | `UpdateBandwidthRateLimit` | 1 |
 | *storagegateway* | `UpdateChapCredentials` | 0 |
 | *storagegateway* | `UpdateGatewayInformation` | 0 |
 | *storagegateway* | `UpdateGatewaySoftwareNow` | 0 |
@@ -5802,7 +5803,7 @@
 | *storagegateway* | `UpdateNFSFileShare` | 0 |
 | *storagegateway* | `UpdateSMBFileShare` | 0 |
 | *storagegateway* | `UpdateSnapshotSchedule` | 0 |
-| *storagegateway* | `UpdateVTLDeviceType` | 0 |
+| *storagegateway* | `UpdateVTLDeviceType` | 1 |
 | *sts* | `AssumeRole` | 0 |
 | *sts* | `AssumeRoleWithSAML` | 0 |
 | *sts* | `AssumeRoleWithWebIdentity` | 0 |
@@ -6166,4 +6167,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 985 (18%)**
+**Total Unique Occurances: 1016 (19%)**
