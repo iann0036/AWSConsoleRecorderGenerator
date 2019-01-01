@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**335/339 (98%)** Resources Covered
+**337/339 (99%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -233,7 +233,7 @@
 | *AWS::KinesisAnalytics::ApplicationReferenceDataSource* | 1 |
 | *AWS::KinesisFirehose::DeliveryStream* | 1 |
 | *AWS::Lambda::Alias* | 1 |
-| *AWS::Lambda::EventSourceMapping* | 0 |
+| *AWS::Lambda::EventSourceMapping* | 1 |
 | *AWS::Lambda::Function* | 1 |
 | *AWS::Lambda::LayerVersion* | 1 |
 | *AWS::Lambda::LayerVersionPermission* | 1 |
@@ -280,7 +280,7 @@
 | *AWS::S3::BucketPolicy* | 1 |
 | *AWS::SDB::Domain* | 1 |
 | *AWS::SES::ConfigurationSet* | 1 |
-| *AWS::SES::ConfigurationSetEventDestination* | 0 |
+| *AWS::SES::ConfigurationSetEventDestination* | 1 |
 | *AWS::SES::ReceiptFilter* | 1 |
 | *AWS::SES::ReceiptRule* | 1 |
 | *AWS::SES::ReceiptRuleSet* | 1 |
@@ -868,7 +868,7 @@
 | *kinesisanalytics* | 9/17 (52%) |
 | *kinesisanalyticsv2* | 1/21 (4%) |
 | *kms* | 7/41 (17%) |
-| *lambda* | 14/38 (36%) |
+| *lambda* | 15/38 (39%) |
 | *license-manager* | 6/15 (40%) |
 | *lightsail* | 21/100 (21%) |
 | *logs* | 5/39 (12%) |
@@ -889,7 +889,7 @@
 | *serverlessrepo* | 1/13 (7%) |
 | *servicecatalog* | 14/77 (18%) |
 | *servicediscovery* | 6/20 (30%) |
-| *ses* | 9/70 (12%) |
+| *ses* | 10/70 (14%) |
 | *sns* | 8/30 (26%) |
 | *sqs* | 6/20 (30%) |
 | *ssm* | 21/111 (18%) |
@@ -3901,7 +3901,7 @@
 | *lambda* | `AddLayerVersionPermission` | 0 |
 | *lambda* | `AddPermission` | 0 |
 | *lambda* | `CreateAlias` | 1 |
-| *lambda* | `CreateEventSourceMapping` | 0 |
+| *lambda* | `CreateEventSourceMapping` | 1 |
 | *lambda* | `CreateFunction` | 1 |
 | *lambda* | `DeleteAlias` | 0 |
 | *lambda* | `DeleteEventSourceMapping` | 0 |
@@ -5407,11 +5407,11 @@
 | *servicediscovery* | `UpdateService` | 0 |
 | *ses* | `CloneReceiptRuleSet` | 0 |
 | *ses* | `CreateConfigurationSet` | 1 |
-| *ses* | `CreateConfigurationSetEventDestination` | 0 |
+| *ses* | `CreateConfigurationSetEventDestination` | 1 |
 | *ses* | `CreateConfigurationSetTrackingOptions` | 0 |
 | *ses* | `CreateCustomVerificationEmailTemplate` | 0 |
 | *ses* | `CreateReceiptFilter` | 1 |
-| *ses* | `CreateReceiptRule` | 2 |
+| *ses* | `CreateReceiptRule` | 1 |
 | *ses* | `CreateReceiptRuleSet` | 1 |
 | *ses* | `CreateTemplate` | 0 |
 | *ses* | `DeleteConfigurationSet` | 1 |
@@ -6167,4 +6167,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 1018 (19%)**
+**Total Unique Occurances: 1020 (19%)**
