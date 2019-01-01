@@ -15484,6 +15484,8 @@ function analyseRequest(details) {
     // manual:cloudwatch:logs.CreateLogStream
     // manual:cloudwatch:logs.PutMetricFilter
     // manual:cloudwatch:logs.PutSubscriptionFilter
+    // manual:cloudwatch:cloudwatch.PutMetricAlarm
+    // manual:cloudwatch:cloudwatch.DeleteAlarms
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloudwatch\/CloudWatch\//g)) {
         if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "wuLyBG8jCdQ61w9bK2g4kaSdI4Q") {
             reqParams.boto3['logGroupName'] = jsonRequestBody.I[0]["P"][0];
@@ -15649,6 +15651,146 @@ function analyseRequest(details) {
                 notifyBlocked();
                 return {cancel: true};
             }
+        } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "iSih$I64mhIIcyhlGUibH6SRuW0=") {
+            reqParams.boto3['OKActions'] = jsonRequestBody['O'][0]['P']['OKActions'];
+            reqParams.cli['--ok-actions'] = jsonRequestBody['O'][0]['P']['OKActions'];
+            reqParams.boto3['ActionsEnabled'] = jsonRequestBody['O'][0]['P']['actionsEnabled'];
+            reqParams.cli['--actions-enabled'] = jsonRequestBody['O'][0]['P']['actionsEnabled'];
+            reqParams.boto3['AlarmActions'] = jsonRequestBody['O'][0]['P']['alarmActions'];
+            reqParams.cli['--alarm-actions'] = jsonRequestBody['O'][0]['P']['alarmActions'];
+            reqParams.boto3['AlarmDescription'] = jsonRequestBody['O'][0]['P']['alarmDescription'];
+            reqParams.cli['--alarm-description'] = jsonRequestBody['O'][0]['P']['alarmDescription'];
+            reqParams.boto3['AlarmName'] = jsonRequestBody['O'][0]['P']['alarmName'];
+            reqParams.cli['--alarm-name'] = jsonRequestBody['O'][0]['P']['alarmName'];
+            reqParams.boto3['ComparisonOperator'] = jsonRequestBody['O'][0]['P']['comparisonOperator'];
+            reqParams.cli['--comparison-operator'] = jsonRequestBody['O'][0]['P']['comparisonOperator'];
+            reqParams.boto3['DatapointsToAlarm'] = jsonRequestBody['O'][0]['P']['datapointsToAlarm'];
+            reqParams.cli['--datapoints-to-alarm'] = jsonRequestBody['O'][0]['P']['datapointsToAlarm'];
+            reqParams.boto3['EvaluateLowSampleCountPercentile'] = jsonRequestBody['O'][0]['P']['evaluateLowSampleCountPercentile'];
+            reqParams.cli['--evaluate-low-sample-count-percentile'] = jsonRequestBody['O'][0]['P']['evaluateLowSampleCountPercentile'];
+            reqParams.boto3['EvaluationPeriods'] = jsonRequestBody['O'][0]['P']['evaluationPeriods'];
+            reqParams.cli['--evaluation-periods'] = jsonRequestBody['O'][0]['P']['evaluationPeriods'];
+            reqParams.boto3['InsufficientDataActions'] = jsonRequestBody['O'][0]['P']['insufficientDataActions'];
+            reqParams.cli['--insufficient-data-actions'] = jsonRequestBody['O'][0]['P']['insufficientDataActions'];
+            reqParams.boto3['MetricName'] = jsonRequestBody['O'][0]['P']['metricName'];
+            reqParams.cli['--metric-name'] = jsonRequestBody['O'][0]['P']['metricName'];
+            reqParams.boto3['Namespace'] = jsonRequestBody['O'][0]['P']['namespace'];
+            reqParams.cli['--namespace'] = jsonRequestBody['O'][0]['P']['namespace'];
+            reqParams.boto3['Period'] = jsonRequestBody['O'][0]['P']['period'];
+            reqParams.cli['--period'] = jsonRequestBody['O'][0]['P']['period'];
+            reqParams.boto3['Statistic'] = jsonRequestBody['O'][0]['P']['statistic'];
+            reqParams.cli['--statistic'] = jsonRequestBody['O'][0]['P']['statistic'];
+            reqParams.boto3['Threshold'] = jsonRequestBody['O'][0]['P']['threshold'];
+            reqParams.cli['--threshold'] = jsonRequestBody['O'][0]['P']['threshold'];
+            reqParams.boto3['TreatMissingData'] = jsonRequestBody['O'][0]['P']['treatMissingData'];
+            reqParams.cli['--treat-missing-data'] = jsonRequestBody['O'][0]['P']['treatMissingData'];
+            reqParams.boto3['Unit'] = jsonRequestBody['O'][0]['P']['unit'];
+            reqParams.cli['--unit'] = jsonRequestBody['O'][0]['P']['unit'];
+            //reqParams.boto3['AlarmName'] = jsonRequestBody['O'][0]['P']['metrics']; TODO: Metric Math
+
+            if (jsonRequestBody['O'][0]['P']['dimensions']) {
+                var dimensions = [];
+                var tf_dimensions = {};
+
+                for (var i=0; i<jsonRequestBody['O'][0]['P']['dimensions'].length; i++) {
+                    for (var j=1; j<jsonRequestBody['O'].length; j++) {
+                        if (jsonRequestBody['O'][j]['T'] == jsonRequestBody['O'][0]['P']['dimensions'][i]['T']) {
+                            dimensions.push({
+                                'Name': jsonRequestBody['O'][1]['P']['name'],
+                                'Value': jsonRequestBody['O'][1]['P']['value']
+                            });
+
+                            tf_dimensions[jsonRequestBody['O'][1]['P']['name']] = jsonRequestBody['O'][1]['P']['value'];
+
+                            break;
+                        }
+                    }
+                }
+
+                reqParams.boto3['Dimensions'] = dimensions;
+                reqParams.cli['--dimensions'] = dimensions;
+                reqParams.cfn['Dimensions'] = dimensions;
+                reqParams.tf['dimensions'] = tf_dimensions;
+            }
+
+            reqParams.cfn['OKActions'] = jsonRequestBody['O'][0]['P']['OKActions'];
+            reqParams.cfn['ActionsEnabled'] = jsonRequestBody['O'][0]['P']['actionsEnabled'];
+            reqParams.cfn['AlarmActions'] = jsonRequestBody['O'][0]['P']['alarmActions'];
+            reqParams.cfn['AlarmDescription'] = jsonRequestBody['O'][0]['P']['alarmDescription'];
+            reqParams.cfn['AlarmName'] = jsonRequestBody['O'][0]['P']['alarmName'];
+            reqParams.cfn['ComparisonOperator'] = jsonRequestBody['O'][0]['P']['comparisonOperator'];
+            reqParams.cfn['DatapointsToAlarm'] = jsonRequestBody['O'][0]['P']['datapointsToAlarm'];
+            reqParams.cfn['EvaluateLowSampleCountPercentile'] = jsonRequestBody['O'][0]['P']['evaluateLowSampleCountPercentile'];
+            reqParams.cfn['EvaluationPeriods'] = jsonRequestBody['O'][0]['P']['evaluationPeriods'];
+            reqParams.cfn['InsufficientDataActions'] = jsonRequestBody['O'][0]['P']['insufficientDataActions'];
+            reqParams.cfn['MetricName'] = jsonRequestBody['O'][0]['P']['metricName'];
+            reqParams.cfn['Namespace'] = jsonRequestBody['O'][0]['P']['namespace'];
+            reqParams.cfn['Period'] = jsonRequestBody['O'][0]['P']['period'];
+            reqParams.cfn['Statistic'] = jsonRequestBody['O'][0]['P']['statistic'];
+            reqParams.cfn['Threshold'] = jsonRequestBody['O'][0]['P']['threshold'];
+            reqParams.cfn['TreatMissingData'] = jsonRequestBody['O'][0]['P']['treatMissingData'];
+            reqParams.cfn['Unit'] = jsonRequestBody['O'][0]['P']['unit'];
+
+            reqParams.tf['ok_actions'] = jsonRequestBody['O'][0]['P']['OKActions'];
+            reqParams.tf['actions_enabled'] = jsonRequestBody['O'][0]['P']['actionsEnabled'];
+            reqParams.tf['alarm_actions'] = jsonRequestBody['O'][0]['P']['alarmActions'];
+            reqParams.tf['alarm_description'] = jsonRequestBody['O'][0]['P']['alarmDescription'];
+            reqParams.tf['alarm_name'] = jsonRequestBody['O'][0]['P']['alarmName'];
+            reqParams.tf['comparison_operator'] = jsonRequestBody['O'][0]['P']['comparisonOperator'];
+            reqParams.tf['datapoints_to_alarm'] = jsonRequestBody['O'][0]['P']['datapointsToAlarm'];
+            reqParams.tf['evaluate_low_sample_count_percentiles'] = jsonRequestBody['O'][0]['P']['evaluateLowSampleCountPercentile'];
+            reqParams.tf['evaluation_periods'] = jsonRequestBody['O'][0]['P']['evaluationPeriods'];
+            reqParams.tf['insufficient_data_actions'] = jsonRequestBody['O'][0]['P']['insufficientDataActions'];
+            reqParams.tf['metric_name'] = jsonRequestBody['O'][0]['P']['metricName'];
+            reqParams.tf['namespace'] = jsonRequestBody['O'][0]['P']['namespace'];
+            reqParams.tf['period'] = jsonRequestBody['O'][0]['P']['period'];
+            reqParams.tf['statistic'] = jsonRequestBody['O'][0]['P']['statistic'];
+            reqParams.tf['threshold'] = jsonRequestBody['O'][0]['P']['threshold'];
+            reqParams.tf['treat_missing_data'] = jsonRequestBody['O'][0]['P']['treatMissingData'];
+            reqParams.tf['unit'] = jsonRequestBody['O'][0]['P']['unit'];
+
+            outputs.push({
+                'region': region,
+                'service': 'cloudwatch',
+                'method': {
+                    'api': 'PutMetricAlarm',
+                    'boto3': 'put_metric_alarm',
+                    'cli': 'put-metric-alarm'
+                },
+                'options': reqParams,
+                'requestDetails': details
+            });
+
+            tracked_resources.push({
+                'logicalId': getResourceName('cloudwatch', details.requestId),
+                'region': region,
+                'service': 'cloudwatch',
+                'type': 'AWS::CloudWatch::Alarm',
+                'terraformType': 'aws_cloudwatch_metric_alarm',
+                'options': reqParams,
+                'requestDetails': details,
+                'was_blocked': blocking
+            });
+
+            if (blocking) {
+                notifyBlocked();
+                return {cancel: true};
+            }
+        } else if (jsonRequestBody.I && jsonRequestBody.I[0] && jsonRequestBody.I[0]["O"] && jsonRequestBody.I[0]["O"] == "zRQgdkyFzweXA2nKjontGSE28Mw=") {
+            reqParams.boto3['AlarmNames'] = jsonRequestBody['I'][0]['P'][0];
+            reqParams.cli['--alarm-names'] = jsonRequestBody['I'][0]['P'][0];
+
+            outputs.push({
+                'region': region,
+                'service': 'cloudwatch',
+                'method': {
+                    'api': 'DeleteAlarms',
+                    'boto3': 'delete_alarms',
+                    'cli': 'delete-alarms'
+                },
+                'options': reqParams,
+                'requestDetails': details
+            });
         }
         
         return {};
@@ -36416,6 +36558,92 @@ function analyseRequest(details) {
             },
             'options': reqParams,
             'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // manual:cloudfront:cloudfront.CreateStreamingDistribution
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloudfront\/cloudfrontconsole\/cloudfront$/g) && gwtRequest['service'] == "com.amazonaws.cloudfront.console.gwt.CloudFrontService" && gwtRequest['method'] == "createStreamingDistribution") {
+        console.dir(gwtRequest);
+
+        var ts_items = [];
+        for (var i=0; i<gwtRequest.args[0].value.trustedsigners.items.value.length; i++) {
+            ts_items.push(gwtRequest.args[0].value.trustedsigners.items.value[i].value);
+        }
+
+        var a_items = [];
+        for (var i=0; i<gwtRequest.args[0].value.aliases.items.value.length; i++) {
+            a_items.push(gwtRequest.args[0].value.aliases.items.value[i].value);
+        }
+        
+        reqParams.boto3['StreamingDistributionConfig'] = {
+            'CallerReference': gwtRequest.args[0].value.timestamp,
+            'S3Origin': {
+                'DomainName': gwtRequest.args[0].value.s3origin.domainname,
+                'OriginAccessIdentity': gwtRequest.args[0].value.s3origin.identity
+            },
+            'Aliases': {
+                'Quantity': gwtRequest.args[0].value.aliases.quantity.value,
+                'Items': a_items
+            },
+            'Comment': gwtRequest.args[0].value.comment,
+            'Logging': {
+                'Enabled': gwtRequest.args[0].value.logging.enabled.value,
+                'Bucket': gwtRequest.args[0].value.logging.bucket,
+                'Prefix': gwtRequest.args[0].value.logging.prefix
+            },
+            'TrustedSigners': {
+                'Enabled': gwtRequest.args[0].value.trustedsigners.enabled.value,
+                'Quantity': gwtRequest.args[0].value.trustedsigners.quantity.value,
+                'Items': ts_items
+            },
+            'PriceClass': gwtRequest.args[0].value.priceclass,
+            'Enabled': gwtRequest.args[0].value.enabled.value
+        };
+
+        reqParams.cli['--streaming-distribution-config'] = reqParams.boto3['StreamingDistributionConfig'];
+
+        reqParams.cfn['StreamingDistributionConfig'] = {
+            'Aliases': a_items,
+            'Comment': gwtRequest.args[0].value.comment,
+            'Enabled': gwtRequest.args[0].value.enabled.value,
+            'Logging': {
+                'Enabled': gwtRequest.args[0].value.logging.enabled.value,
+                'Bucket': gwtRequest.args[0].value.logging.bucket,
+                'Prefix': gwtRequest.args[0].value.logging.prefix
+            },
+            'PriceClass': gwtRequest.args[0].value.priceclass,
+            'S3Origin': {
+                'DomainName': gwtRequest.args[0].value.s3origin.domainname,
+                'OriginAccessIdentity': gwtRequest.args[0].value.s3origin.identity
+            },
+            'TrustedSigners': {
+                'Enabled': gwtRequest.args[0].value.trustedsigners.enabled.value,
+                'AwsAccountNumbers': ts_items
+            }
+        };
+
+        outputs.push({
+            'region': region,
+            'service': 'cloudfront',
+            'method': {
+                'api': 'CreateStreamingDistribution',
+                'boto3': 'create_streaming_distribution',
+                'cli': 'create-streaming-distribution'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('cloudfront', details.requestId),
+            'region': region,
+            'service': 'cloudfront',
+            'type': 'AWS::CloudFront::StreamingDistribution',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
         });
         
         return {};

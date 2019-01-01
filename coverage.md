@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**333/339 (98%)** Resources Covered
+**335/339 (98%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -63,9 +63,9 @@
 | *AWS::CloudFormation::WaitConditionHandle* | 1 |
 | *AWS::CloudFront::CloudFrontOriginAccessIdentity* | 1 |
 | *AWS::CloudFront::Distribution* | 0 |
-| *AWS::CloudFront::StreamingDistribution* | 0 |
+| *AWS::CloudFront::StreamingDistribution* | 1 |
 | *AWS::CloudTrail::Trail* | 1 |
-| *AWS::CloudWatch::Alarm* | 0 |
+| *AWS::CloudWatch::Alarm* | 1 |
 | *AWS::CloudWatch::Dashboard* | 1 |
 | *AWS::CodeBuild::Project* | 1 |
 | *AWS::CodeCommit::Repository* | 1 |
@@ -346,7 +346,7 @@
 
 ## Terraform Coverage
 
-**200/458 (43%)** Resources Covered
+**201/458 (43%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -429,7 +429,7 @@
 | *aws_cloudwatch_log_resource_policy* | 0 |
 | *aws_cloudwatch_log_stream* | 1 |
 | *aws_cloudwatch_log_subscription_filter* | 1 |
-| *aws_cloudwatch_metric_alarm* | 0 |
+| *aws_cloudwatch_metric_alarm* | 1 |
 | *aws_codebuild_project* | 0 |
 | *aws_codebuild_webhook* | 0 |
 | *aws_codecommit_repository* | 1 |
@@ -827,7 +827,7 @@
 | *cloud9* | 6/10 (60%) |
 | *cloudformation* | 3/45 (6%) |
 | *cloudtrail* | 8/14 (57%) |
-| *cloudwatch* | 2/17 (11%) |
+| *cloudwatch* | 4/17 (23%) |
 | *codebuild* | 4/19 (21%) |
 | *codecommit* | 5/39 (12%) |
 | *codedeploy* | 15/43 (34%) |
@@ -1620,7 +1620,7 @@
 | *cloudtrail* | `StartLogging` | 1 |
 | *cloudtrail* | `StopLogging` | 0 |
 | *cloudtrail* | `UpdateTrail` | 0 |
-| *cloudwatch* | `DeleteAlarms` | 0 |
+| *cloudwatch* | `DeleteAlarms` | 1 |
 | *cloudwatch* | `DeleteDashboards` | 0 |
 | *cloudwatch* | `DescribeAlarmHistory` | 0 |
 | *cloudwatch* | `DescribeAlarms` | 0 |
@@ -1634,7 +1634,7 @@
 | *cloudwatch* | `ListDashboards` | 0 |
 | *cloudwatch* | `ListMetrics` | 0 |
 | *cloudwatch* | `PutDashboard` | 1 |
-| *cloudwatch* | `PutMetricAlarm` | 0 |
+| *cloudwatch* | `PutMetricAlarm` | 1 |
 | *cloudwatch* | `PutMetricData` | 0 |
 | *cloudwatch* | `SetAlarmState` | 0 |
 | *codebuild* | `BatchDeleteBuilds` | 0 |
@@ -6167,4 +6167,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 1016 (19%)**
+**Total Unique Occurances: 1018 (19%)**
