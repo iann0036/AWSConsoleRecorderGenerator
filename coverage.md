@@ -100,7 +100,7 @@
 | *AWS::DataPipeline::Pipeline* | 0 |
 | *AWS::DirectoryService::MicrosoftAD* | 1 |
 | *AWS::DirectoryService::SimpleAD* | 1 |
-| *AWS::DynamoDB::Table* | 1 |
+| *AWS::DynamoDB::Table* | 2 |
 | *AWS::EC2::CustomerGateway* | 1 |
 | *AWS::EC2::DHCPOptions* | 1 |
 | *AWS::EC2::EC2Fleet* | 1 |
@@ -120,7 +120,7 @@
 | *AWS::EC2::NetworkInterfacePermission* | 1 |
 | *AWS::EC2::PlacementGroup* | 1 |
 | *AWS::EC2::Route* | 1 |
-| *AWS::EC2::RouteTable* | 2 |
+| *AWS::EC2::RouteTable* | 1 |
 | *AWS::EC2::SecurityGroup* | 2 |
 | *AWS::EC2::SecurityGroupEgress* | 1 |
 | *AWS::EC2::SecurityGroupIngress* | 1 |
@@ -346,7 +346,7 @@
 
 ## Terraform Coverage
 
-**201/458 (43%)** Resources Covered
+**204/459 (44%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -498,7 +498,7 @@
 | *aws_dx_private_virtual_interface* | 0 |
 | *aws_dx_public_virtual_interface* | 0 |
 | *aws_dynamodb_global_table* | 0 |
-| *aws_dynamodb_table* | 0 |
+| *aws_dynamodb_table* | 1 |
 | *aws_dynamodb_table_item* | 0 |
 | *aws_ebs_snapshot* | 0 |
 | *aws_ebs_snapshot_copy* | 0 |
@@ -603,7 +603,7 @@
 | *aws_kms_grant* | 0 |
 | *aws_kms_key* | 2 |
 | *aws_lambda_alias* | 1 |
-| *aws_lambda_event_source_mapping* | 0 |
+| *aws_lambda_event_source_mapping* | 1 |
 | *aws_lambda_function* | 0 |
 | *aws_lambda_permission* | 0 |
 | *aws_launch_configuration* | 0 |
@@ -696,7 +696,7 @@
 | *aws_route53_record* | 1 |
 | *aws_route53_zone* | 2 |
 | *aws_route53_zone_association* | 0 |
-| *aws_route_table* | 2 |
+| *aws_route_table* | 1 |
 | *aws_route_table_association* | 0 |
 | *aws_s3_account_public_access_block* | 0 |
 | *aws_s3_bucket* | 3 |
@@ -731,6 +731,7 @@
 | *aws_sfn_activity* | 1 |
 | *aws_sfn_state_machine* | 1 |
 | *aws_simpledb_domain* | 0 |
+| *aws_simpledb_domain* | 0 |
 | *aws_snapshot_create_volume_permission* | 0 |
 | *aws_sns_platform_application* | 0 |
 | *aws_sns_sms_preferences* | 0 |
@@ -760,7 +761,7 @@
 | *aws_storagegateway_upload_buffer* | 1 |
 | *aws_storagegateway_working_storage* | 0 |
 | *aws_subnet* | 1 |
-| *aws_swf_domain* | 0 |
+| *aws_swf_domain* | 1 |
 | *aws_transfer_server* | 0 |
 | *aws_transfer_ssh_key* | 0 |
 | *aws_transfer_user* | 0 |
@@ -897,6 +898,7 @@
 | *storagegateway* | 29/69 (42%) |
 | *sts* | 1/7 (14%) |
 | *support* | 5/14 (35%) |
+| *swf* | 1/31 (3%) |
 | *waf* | 32/73 (43%) |
 | *waf-regional* | 34/77 (44%) |
 | *workspaces* | 4/32 (12%) |
@@ -2330,7 +2332,7 @@
 | *dynamodb* | `BatchWriteItem` | 0 |
 | *dynamodb* | `CreateBackup` | 0 |
 | *dynamodb* | `CreateGlobalTable` | 0 |
-| *dynamodb* | `CreateTable` | 1 |
+| *dynamodb* | `CreateTable` | 2 |
 | *dynamodb* | `DeleteBackup` | 0 |
 | *dynamodb* | `DeleteItem` | 0 |
 | *dynamodb* | `DeleteTable` | 0 |
@@ -2425,7 +2427,7 @@
 | *ec2* | `CreatePlacementGroup` | 1 |
 | *ec2* | `CreateReservedInstancesListing` | 0 |
 | *ec2* | `CreateRoute` | 1 |
-| *ec2* | `CreateRouteTable` | 3 |
+| *ec2* | `CreateRouteTable` | 1 |
 | *ec2* | `CreateSecurityGroup` | 2 |
 | *ec2* | `CreateSnapshot` | 0 |
 | *ec2* | `CreateSpotDatafeedSubscription` | 0 |
@@ -5846,7 +5848,7 @@
 | *swf* | `PollForDecisionTask` | 0 |
 | *swf* | `RecordActivityTaskHeartbeat` | 0 |
 | *swf* | `RegisterActivityType` | 0 |
-| *swf* | `RegisterDomain` | 0 |
+| *swf* | `RegisterDomain` | 1 |
 | *swf* | `RegisterWorkflowType` | 0 |
 | *swf* | `RequestCancelWorkflowExecution` | 0 |
 | *swf* | `RespondActivityTaskCanceled` | 0 |
@@ -6167,4 +6169,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 1020 (19%)**
+**Total Unique Occurances: 1021 (19%)**

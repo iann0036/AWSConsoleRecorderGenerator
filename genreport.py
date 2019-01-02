@@ -9,7 +9,8 @@ cfn_spec = None
 occurances = []
 skipped_ops = []
 tf_resources = [
-    "aws_acm_certificate_validation"
+    "aws_acm_certificate_validation",
+    "aws_simpledb_domain"
 ]
 cfn_types = []
 cfn_occurances = [
