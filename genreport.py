@@ -8,10 +8,7 @@ services = None
 cfn_spec = None
 occurances = []
 skipped_ops = []
-tf_resources = [
-    "aws_acm_certificate_validation",
-    "aws_simpledb_domain"
-]
+tf_resources = []
 cfn_types = []
 cfn_occurances = [
     "AWS::CloudFormation::CustomResource",
@@ -49,7 +46,19 @@ cfn_occurances = [
     "AWS::EMR::InstanceFleetConfig",
     "AWS::Glue::Partition"
 ]
-tf_occurances = []
+tf_occurances = [
+    "aws_acm_certificate_validation",
+    "aws_simpledb_domain",
+    "aws_opsworks_custom_layer", # bad detection
+    "aws_opsworks_ganglia_layer", # bad detection
+    "aws_opsworks_haproxy_layer", # bad detection
+    "aws_opsworks_java_app_layer", # bad detection
+    "aws_opsworks_memcached_layer", # bad detection
+    "aws_opsworks_nodejs_app_layer", # bad detection
+    "aws_opsworks_php_app_layer", # bad detection
+    "aws_opsworks_rails_app_layer", # bad detection
+    "aws_opsworks_static_web_layer" # bad detection
+]
 
 with open("combined.json", "r") as f:
     services = json.loads(f.read())

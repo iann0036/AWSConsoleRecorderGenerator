@@ -654,7 +654,7 @@ function analyseRequest(details) {
         reqParams.boto3['MaxCount'] = jsonRequestBody.MaxCount;
         reqParams.boto3['MinCount'] = jsonRequestBody.MinCount;
         reqParams.boto3['KeyName'] = jsonRequestBody.KeyName;
-        reqParams.boto3['SecurityGroupId'] = jsonRequestBody.SecurityGroupIds;
+        reqParams.boto3['SecurityGroupIds'] = jsonRequestBody.SecurityGroupIds;
         reqParams.boto3['InstanceType'] = jsonRequestBody.InstanceType;
         reqParams.boto3['Placement'] = jsonRequestBody.Placement;
         reqParams.boto3['Monitoring'] = jsonRequestBody.Monitoring;
@@ -663,7 +663,13 @@ function analyseRequest(details) {
         reqParams.boto3['CreditSpecification'] = jsonRequestBody.CreditSpecification;
         reqParams.boto3['TagSpecification'] = jsonRequestBody.TagSpecifications;
         reqParams.boto3['EbsOptimized'] = jsonRequestBody.EbsOptimized;
-        reqParams.boto3['BlockDeviceMapping'] = jsonRequestBody.BlockDeviceMappings;
+        reqParams.boto3['BlockDeviceMappings'] = jsonRequestBody.BlockDeviceMappings;
+        reqParams.boto3['CapacityReservationSpecification'] = jsonRequestBody.CapacityReservationSpecification;
+        reqParams.boto3['ElasticInferenceAccelerators'] = jsonRequestBody.ElasticInferenceAccelerator;
+        if (jsonRequestBody.UserData) {
+            reqParams.boto3['UserData'] = atob(jsonRequestBody.UserData);
+        }
+        reqParams.boto3['NetworkInterfaces'] = jsonRequestBody.NetworkInterface;
 
         reqParams.cfn['ImageId'] = jsonRequestBody.ImageId;
         reqParams.cfn['KeyName'] = jsonRequestBody.KeyName;
@@ -683,6 +689,9 @@ function analyseRequest(details) {
         reqParams.cfn['Tags'] = jsonRequestBody.TagSpecifications;
         reqParams.cfn['EbsOptimized'] = jsonRequestBody.EbsOptimized;
         reqParams.cfn['BlockDeviceMappings'] = jsonRequestBody.BlockDeviceMappings;
+        reqParams.cfn['ElasticInferenceAccelerators'] = jsonRequestBody.ElasticInferenceAccelerator;
+        reqParams.cfn['UserData'] = jsonRequestBody.UserData;
+        reqParams.cfn['NetworkInterfaces'] = jsonRequestBody.NetworkInterface;
 
         reqParams.cli['--image-id'] = jsonRequestBody.ImageId;
         if (jsonRequestBody.MaxCount == jsonRequestBody.MinCount) {
@@ -704,6 +713,12 @@ function analyseRequest(details) {
         reqParams.cli['--tag-specifications'] = jsonRequestBody.TagSpecifications;
         reqParams.cli['--ebs-optimized'] = jsonRequestBody.EbsOptimized;
         reqParams.cli['--block-device-mappings'] = jsonRequestBody.BlockDeviceMappings;
+        reqParams.cli['--capacity-reservation-specification'] = jsonRequestBody.CapacityReservationSpecification;
+        reqParams.cli['--elastic-inference-accelerators'] = jsonRequestBody.ElasticInferenceAccelerator;
+        if (jsonRequestBody.UserData) {
+            reqParams.cli['--user-data'] = atob(jsonRequestBody.UserData);
+        }
+        reqParams.cli['--network-interfaces'] = jsonRequestBody.NetworkInterface;
 
         reqParams.tf['ami'] = jsonRequestBody.ImageId;
         reqParams.tf['key_name'] = jsonRequestBody.KeyName;
@@ -713,9 +728,7 @@ function analyseRequest(details) {
             reqParams.tf['tenancy'] = jsonRequestBody.Placement.Tenancy;
         }
         if (jsonRequestBody.Monitoring) {
-            reqParams.tf['monitoring'] = {
-                'enabled': jsonRequestBody.Monitoring.Enabled
-            };
+            reqParams.tf['monitoring'] = jsonRequestBody.Monitoring.Enabled;
         }
         reqParams.tf['disable_api_termination'] = jsonRequestBody.DisableApiTermination;
         reqParams.tf['instance_initiated_shutdown_behavior'] = jsonRequestBody.InstanceInitiatedShutdownBehavior;
@@ -742,8 +755,7 @@ function analyseRequest(details) {
                 if (jsonRequestBody.BlockDeviceMappings[i].Ebs) {
                     reqParams.tf['root_block_device'] = {
                         'volume_type': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeType,
-                        'volume_size': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeSize,
-                        'delete_on_termination': jsonRequestBody.BlockDeviceMappings[i].Ebs.DeleteOnTermination
+                        'volume_size': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeSize
                     };
                 }
             } else if (jsonRequestBody.BlockDeviceMappings[i].Ebs) {
@@ -755,6 +767,41 @@ function analyseRequest(details) {
                     'iops': jsonRequestBody.BlockDeviceMappings[i].Ebs.Iops,
                     'snapshot_id': jsonRequestBody.BlockDeviceMappings[i].Ebs.SnapshotId
                 };
+            }
+        }
+
+        if (jsonRequestBody.UserData) {
+            reqParams.tf['user_data'] = atob(jsonRequestBody.UserData);
+        }
+        if (jsonRequestBody.NetworkInterface) {
+            reqParams.tf['network_interface'] = [];
+            for (var i=0; i<jsonRequestBody.NetworkInterface.length; i++) {
+                var nic_id = jsonRequestBody.NetworkInterface[i].NetworkInterfaceId;
+
+                if (!jsonRequestBody.NetworkInterface[i].NetworkInterfaceId && jsonRequestBody.NetworkInterface[i].SubnetId) {
+                    tracked_resources.push({
+                        'logicalId': getResourceName('ec2', details.requestId + "_NetworkInterface" + i),
+                        'region': region,
+                        'service': 'ec2',
+                        'terraformType': 'aws_network_interface',
+                        'options': {
+                            'tf': {
+                                'subnet_id': jsonRequestBody.NetworkInterface[i].SubnetId,
+                                'description': jsonRequestBody.NetworkInterface[i].Description,
+                                'security_groups': jsonRequestBody.NetworkInterface[i].Groups,
+                                'private_ips': jsonRequestBody.NetworkInterface[i].PrivateIpAddresses
+                            }
+                        },
+                        'requestDetails': details,
+                        'was_blocked': blocking
+                    });
+                }
+
+                reqParams.tf['network_interface'].push({
+                    'device_index': jsonRequestBody.NetworkInterface[i].DeviceIndex,
+                    'network_interface_id': "${aws_network_interface." + getResourceName('ec2', details.requestId + "_NetworkInterface" + i) + ".id}",
+                    'delete_on_termination': jsonRequestBody.NetworkInterface[i].DeleteOnTermination
+                });
             }
         }
 
@@ -16212,6 +16259,28 @@ function analyseRequest(details) {
         reqParams.cfn['DefaultInstanceProfileArn'] = jsonRequestBody.DefaultInstanceProfileArn;
         reqParams.cfn['AgentVersion'] = jsonRequestBody.AgentVersion;
 
+        reqParams.tf['name'] = jsonRequestBody.Name;
+        reqParams.tf['default_os'] = jsonRequestBody.DefaultOs;
+        reqParams.tf['default_root_device_type'] = jsonRequestBody.DefaultRootDeviceType;
+        reqParams.tf['hostname_theme'] = jsonRequestBody.HostnameTheme;
+        reqParams.tf['use_custom_cookbooks'] = jsonRequestBody.UseCustomCookbooks;
+        reqParams.tf['custom_json'] = jsonRequestBody.CustomJson;
+        reqParams.tf['use_opsworks_security_groups'] = jsonRequestBody.UseOpsworksSecurityGroups;
+        reqParams.tf['configuration_manager_name'] = jsonRequestBody.ConfigurationManager.Name;
+        reqParams.tf['configuration_manager_version'] = jsonRequestBody.ConfigurationManager.Version;
+        reqParams.tf['name'] = jsonRequestBody.ConfigurationManager.Name;
+        reqParams.tf['color'] = jsonRequestBody.Attributes.Color;
+        reqParams.tf['custom_cookbooks_source'] = {
+            'type': jsonRequestBody.CustomCookbooksSource.Type,
+            'url': jsonRequestBody.CustomCookbooksSource.Url
+        };
+        reqParams.tf['vpc_id'] = jsonRequestBody.VpcId;
+        reqParams.tf['default_ssh_key_name'] = jsonRequestBody.DefaultSshKeyName;
+        reqParams.tf['default_subnet_id'] = jsonRequestBody.DefaultSubnetId;
+        reqParams.tf['service_role_arn'] = jsonRequestBody.ServiceRoleArn;
+        reqParams.tf['default_instance_profile_arn'] = jsonRequestBody.DefaultInstanceProfileArn;
+        reqParams.tf['agent_version'] = jsonRequestBody.AgentVersion;
+
         outputs.push({
             'region': region,
             'service': 'opsworks',
@@ -16229,6 +16298,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'opsworks',
             'type': 'AWS::OpsWorks::Stack',
+            'terraformType': 'aws_opsworks_stack',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -16273,6 +16343,30 @@ function analyseRequest(details) {
         reqParams.cfn['Environment'] = jsonRequestBody.Environment;
         reqParams.cfn['DataSources'] = jsonRequestBody.DataSources;
 
+        reqParams.tf['stack_id'] = jsonRequestBody.StackId;
+        reqParams.tf['name'] = jsonRequestBody.Name;
+        reqParams.tf['type'] = jsonRequestBody.Type;
+        reqParams.tf['app_source'] = {
+            'type': jsonRequestBody.AppSource.Type,
+            'url': jsonRequestBody.AppSource.Url,
+            'ssh_key': (jsonRequestBody.AppSource.SshKey == "" ? undefined : jsonRequestBody.AppSource.SshKey),
+            'revision': (jsonRequestBody.AppSource.Revision == "" ? undefined : jsonRequestBody.AppSource.Revision),
+            'username': (jsonRequestBody.AppSource.Username == "" ? undefined : jsonRequestBody.AppSource.Username),
+            'password': (jsonRequestBody.AppSource.Password == "" ? undefined : jsonRequestBody.AppSource.Password)
+        };
+        reqParams.tf['enable_ssl'] = jsonRequestBody.EnableSsl;
+        reqParams.tf['domains'] = jsonRequestBody.Domains;
+        if (jsonRequestBody.Environment && jsonRequestBody.Environment.length) {
+            reqParams.tf['environments'] = [];
+            for (var i=0; i<jsonRequestBody.Environment.length; i++) {
+                reqParams.tf['environments'].push({
+                    'value': jsonRequestBody.Environment[i].Value,
+                    'secure': jsonRequestBody.Environment[i].Secure,
+                    'key': jsonRequestBody.Environment[i].Key
+                });
+            }
+        }
+
         outputs.push({
             'region': region,
             'service': 'opsworks',
@@ -16290,6 +16384,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'opsworks',
             'type': 'AWS::OpsWorks::App',
+            'terraformType': 'aws_opsworks_application',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -16336,6 +16431,87 @@ function analyseRequest(details) {
         reqParams.cfn['CustomRecipes'] = jsonRequestBody.CustomRecipes;
         reqParams.cfn['EnableAutoHealing'] = jsonRequestBody.EnableAutoHealing;
 
+        var terraformType = null;
+
+        if (jsonRequestBody.Type == "custom") {
+            terraformType = "aws_opsworks_custom_layer";
+        } else if (jsonRequestBody.Type == "monitoring-master") {
+            terraformType = "aws_opsworks_ganglia_layer";
+            
+            reqParams.tf['drain_elb_on_shutdown'] = jsonRequestBody.Attributes.LifecycleEventConfiguration.Shutdown.DelayUntilElbConnectionsDrained;
+            reqParams.tf['password'] = jsonRequestBody.Attributes.GangliaPassword;
+            reqParams.tf['url'] = jsonRequestBody.Attributes.GangliaUrl;
+            reqParams.tf['username'] = jsonRequestBody.Attributes.GangliaUser;
+        } else if (jsonRequestBody.Type == "lb") {
+            terraformType = "aws_opsworks_haproxy_layer";
+
+            reqParams.tf['stats_enabled'] = jsonRequestBody.Attributes.EnableHaproxyStats;
+            reqParams.tf['healthcheck_method'] = jsonRequestBody.Attributes.HaproxyHealthCheckMethod;
+            reqParams.tf['healthcheck_url'] = jsonRequestBody.Attributes.HaproxyHealthCheckUrl;
+            reqParams.tf['stats_password'] = jsonRequestBody.Attributes.HaproxyStatsPassword;
+            reqParams.tf['stats_url'] = jsonRequestBody.Attributes.HaproxyStatsUrl;
+            reqParams.tf['stats_user'] = jsonRequestBody.Attributes.HaproxyStatsUser;
+        } else if (jsonRequestBody.Type == "java-app") {
+            terraformType = "aws_opsworks_java_app_layer";
+
+            reqParams.tf['app_server'] = jsonRequestBody.Attributes.JavaAppServer;
+            reqParams.tf['app_server_version'] = jsonRequestBody.Attributes.JavaAppServerVersion;
+            reqParams.tf['jvm_type'] = jsonRequestBody.Attributes.Jvm;
+            reqParams.tf['jvm_options'] = jsonRequestBody.Attributes.JvmOptions;
+            reqParams.tf['jvm_version'] = jsonRequestBody.Attributes.JvmVersion;
+        } else if (jsonRequestBody.Type == "memcached") {
+            terraformType = "aws_opsworks_memcached_layer";
+
+            reqParams.tf['allocated_memory'] = jsonRequestBody.Attributes.MemcachedMemory;
+        } else if (jsonRequestBody.Type == "nodejs-app") {
+            terraformType = "aws_opsworks_nodejs_app_layer";
+            
+            reqParams.tf['drain_elb_on_shutdown'] = jsonRequestBody.Attributes.LifecycleEventConfiguration.Shutdown.DelayUntilElbConnectionsDrained;
+            reqParams.tf['nodejs_version'] = jsonRequestBody.Attributes.NodejsVersion;
+        } else if (jsonRequestBody.Type == "php-app") {
+            terraformType = "aws_opsworks_php_app_layer";
+            
+            reqParams.tf['drain_elb_on_shutdown'] = jsonRequestBody.Attributes.LifecycleEventConfiguration.Shutdown.DelayUntilElbConnectionsDrained;
+        } else if (jsonRequestBody.Type == "rails-app") {
+            terraformType = "aws_opsworks_rails_app_layer";
+
+            reqParams.tf['bundler_version'] = jsonRequestBody.Attributes.BundlerVersion;
+            reqParams.tf['manage_bundler'] = jsonRequestBody.Attributes.ManageBundler;
+            reqParams.tf['passenger_version'] = jsonRequestBody.Attributes.PassengerVersion;
+            reqParams.tf['app_server'] = jsonRequestBody.Attributes.RailsStack;
+            reqParams.tf['ruby_version'] = jsonRequestBody.Attributes.RubyVersion;
+            reqParams.tf['rubygems_version'] = jsonRequestBody.Attributes.RubygemsVersion;
+        } else if (jsonRequestBody.Type == "web") {
+            terraformType = "aws_opsworks_static_web_layer";
+            
+            reqParams.tf['drain_elb_on_shutdown'] = jsonRequestBody.Attributes.LifecycleEventConfiguration.Shutdown.DelayUntilElbConnectionsDrained;
+        }
+
+        reqParams.tf['stack_id'] = jsonRequestBody.StackId;
+        reqParams.tf['name'] = jsonRequestBody.Name;
+        reqParams.tf['short_name'] = jsonRequestBody.Shortname;
+        reqParams.tf['auto_assign_public_ips'] = jsonRequestBody.AutoAssignPublicIps;
+        reqParams.tf['use_ebs_optimized_instances'] = jsonRequestBody.UseEbsOptimizedInstances;
+        reqParams.tf['auto_assign_elastic_ips'] = jsonRequestBody.AutoAssignElasticIps;
+        if (jsonRequestBody.CustomRecipes) {
+            if (jsonRequestBody.CustomRecipes.Configure.length) {
+                reqParams.tf['custom_configure_recipes'] = jsonRequestBody.CustomRecipes.Configure;
+            }
+            if (jsonRequestBody.CustomRecipes.Deploy.length) {
+                reqParams.tf['custom_deploy_recipes'] = jsonRequestBody.CustomRecipes.Deploy;
+            }
+            if (jsonRequestBody.CustomRecipes.Setup.length) {
+                reqParams.tf['custom_setup_recipes'] = jsonRequestBody.CustomRecipes.Setup;
+            }
+            if (jsonRequestBody.CustomRecipes.Shutdown.length) {
+                reqParams.tf['custom_shutdown_recipes'] = jsonRequestBody.CustomRecipes.Shutdown;
+            }
+            if (jsonRequestBody.CustomRecipes.Undeploy.length) {
+                reqParams.tf['custom_undeploy_recipes'] = jsonRequestBody.CustomRecipes.Undeploy;
+            }
+        }
+        reqParams.tf['auto_healing'] = jsonRequestBody.EnableAutoHealing;
+
         outputs.push({
             'region': region,
             'service': 'opsworks',
@@ -16353,6 +16529,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'opsworks',
             'type': 'AWS::OpsWorks::Layer',
+            'terraformType': terraformType,
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -16397,6 +16574,38 @@ function analyseRequest(details) {
         reqParams.cfn['BlockDeviceMappings'] = jsonRequestBody.BlockDeviceMappings;
         reqParams.cfn['InstanceType'] = jsonRequestBody.InstanceType;
 
+        reqParams.tf['stack_id'] = jsonRequestBody.StackId;
+        reqParams.tf['layer_ids'] = jsonRequestBody.LayerIds;
+        reqParams.tf['hostname'] = jsonRequestBody.Hostname;
+        reqParams.tf['os'] = jsonRequestBody.Os;
+        reqParams.tf['ssh_key_name'] = jsonRequestBody.SshKeyName;
+        reqParams.tf['root_device_type'] = jsonRequestBody.RootDeviceType;
+        reqParams.tf['architecture'] = jsonRequestBody.Architecture;
+        if (jsonRequestBody.BlockDeviceMappings) {
+            for (var i=0; i<jsonRequestBody.BlockDeviceMappings.length; i++) {
+                if (jsonRequestBody.BlockDeviceMappings[i].DeviceName == "/dev/sda1" || jsonRequestBody.BlockDeviceMappings[i].DeviceName == "/dev/xvda") {
+                    if (jsonRequestBody.BlockDeviceMappings[i].Ebs) {
+                        reqParams.tf['root_block_device'] = {
+                            'volume_type': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeType,
+                            'volume_size': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeSize,
+                            'delete_on_termination': jsonRequestBody.BlockDeviceMappings[i].Ebs.DeleteOnTermination,
+                            'iops': jsonRequestBody.BlockDeviceMappings[i].Ebs.Iops
+                        };
+                    }
+                } else if (jsonRequestBody.BlockDeviceMappings[i].Ebs) {
+                    reqParams.tf['ebs_block_device'] = {
+                        'device_name': jsonRequestBody.BlockDeviceMappings[i].DeviceName,
+                        'volume_type': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeType,
+                        'volume_size': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeSize,
+                        'delete_on_termination': jsonRequestBody.BlockDeviceMappings[i].Ebs.DeleteOnTermination,
+                        'iops': jsonRequestBody.BlockDeviceMappings[i].Ebs.Iops,
+                        'snapshot_id': jsonRequestBody.BlockDeviceMappings[i].Ebs.SnapshotId
+                    };
+                }
+            }
+        }
+        reqParams.tf['instance_type'] = jsonRequestBody.InstanceType;
+
         outputs.push({
             'region': region,
             'service': 'opsworks',
@@ -16414,6 +16623,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'opsworks',
             'type': 'AWS::OpsWorks::Instance',
+            'terraformType': 'aws_opsworks_instance',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking

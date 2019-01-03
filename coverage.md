@@ -346,13 +346,12 @@
 
 ## Terraform Coverage
 
-**204/459 (44%)** Resources Covered
+**218/457 (47%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
 | *aws_acm_certificate* | 1 |
-| *aws_acm_certificate_validation* | 0 |
-| *aws_acm_certificate_validation* | 0 |
+| *aws_acm_certificate_validation* | 1 |
 | *aws_acmpca_certificate_authority* | 1 |
 | *aws_alb* | 0 |
 | *aws_alb_listener* | 0 |
@@ -642,24 +641,24 @@
 | *aws_neptune_subnet_group* | 1 |
 | *aws_network_acl* | 2 |
 | *aws_network_acl_rule* | 1 |
-| *aws_network_interface* | 1 |
+| *aws_network_interface* | 2 |
 | *aws_network_interface_attachment* | 1 |
 | *aws_network_interface_sg_attachment* | 0 |
-| *aws_opsworks_application* | 0 |
-| *aws_opsworks_custom_layer* | 0 |
-| *aws_opsworks_ganglia_layer* | 0 |
-| *aws_opsworks_haproxy_layer* | 0 |
-| *aws_opsworks_instance* | 0 |
-| *aws_opsworks_java_app_layer* | 0 |
-| *aws_opsworks_memcached_layer* | 0 |
+| *aws_opsworks_application* | 1 |
+| *aws_opsworks_custom_layer* | 1 |
+| *aws_opsworks_ganglia_layer* | 1 |
+| *aws_opsworks_haproxy_layer* | 1 |
+| *aws_opsworks_instance* | 1 |
+| *aws_opsworks_java_app_layer* | 1 |
+| *aws_opsworks_memcached_layer* | 1 |
 | *aws_opsworks_mysql_layer* | 0 |
-| *aws_opsworks_nodejs_app_layer* | 0 |
+| *aws_opsworks_nodejs_app_layer* | 1 |
 | *aws_opsworks_permission* | 0 |
-| *aws_opsworks_php_app_layer* | 0 |
-| *aws_opsworks_rails_app_layer* | 0 |
+| *aws_opsworks_php_app_layer* | 1 |
+| *aws_opsworks_rails_app_layer* | 1 |
 | *aws_opsworks_rds_db_instance* | 0 |
-| *aws_opsworks_stack* | 0 |
-| *aws_opsworks_static_web_layer* | 0 |
+| *aws_opsworks_stack* | 1 |
+| *aws_opsworks_static_web_layer* | 1 |
 | *aws_opsworks_user_profile* | 1 |
 | *aws_organizations_account* | 1 |
 | *aws_organizations_organization* | 0 |
@@ -730,8 +729,7 @@
 | *aws_ses_template* | 0 |
 | *aws_sfn_activity* | 1 |
 | *aws_sfn_state_machine* | 1 |
-| *aws_simpledb_domain* | 0 |
-| *aws_simpledb_domain* | 0 |
+| *aws_simpledb_domain* | 1 |
 | *aws_snapshot_create_volume_permission* | 0 |
 | *aws_sns_platform_application* | 0 |
 | *aws_sns_sms_preferences* | 0 |
