@@ -346,7 +346,7 @@
 
 ## Terraform Coverage
 
-**218/457 (47%)** Resources Covered
+**225/457 (49%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -651,12 +651,12 @@
 | *aws_opsworks_instance* | 1 |
 | *aws_opsworks_java_app_layer* | 1 |
 | *aws_opsworks_memcached_layer* | 1 |
-| *aws_opsworks_mysql_layer* | 0 |
+| *aws_opsworks_mysql_layer* | 1 |
 | *aws_opsworks_nodejs_app_layer* | 1 |
 | *aws_opsworks_permission* | 0 |
 | *aws_opsworks_php_app_layer* | 1 |
 | *aws_opsworks_rails_app_layer* | 1 |
-| *aws_opsworks_rds_db_instance* | 0 |
+| *aws_opsworks_rds_db_instance* | 1 |
 | *aws_opsworks_stack* | 1 |
 | *aws_opsworks_static_web_layer* | 1 |
 | *aws_opsworks_user_profile* | 1 |
@@ -664,17 +664,17 @@
 | *aws_organizations_organization* | 0 |
 | *aws_organizations_policy* | 1 |
 | *aws_organizations_policy_attachment* | 0 |
-| *aws_pinpoint_adm_channel* | 0 |
-| *aws_pinpoint_apns_channel* | 0 |
+| *aws_pinpoint_adm_channel* | 1 |
+| *aws_pinpoint_apns_channel* | 1 |
 | *aws_pinpoint_apns_sandbox_channel* | 0 |
 | *aws_pinpoint_apns_voip_channel* | 0 |
 | *aws_pinpoint_apns_voip_sandbox_channel* | 0 |
 | *aws_pinpoint_app* | 0 |
-| *aws_pinpoint_baidu_channel* | 0 |
+| *aws_pinpoint_baidu_channel* | 1 |
 | *aws_pinpoint_email_channel* | 0 |
 | *aws_pinpoint_event_stream* | 0 |
-| *aws_pinpoint_gcm_channel* | 0 |
-| *aws_pinpoint_sms_channel* | 0 |
+| *aws_pinpoint_gcm_channel* | 1 |
+| *aws_pinpoint_sms_channel* | 1 |
 | *aws_placement_group* | 1 |
 | *aws_proxy_protocol_policy* | 0 |
 | *aws_rds_cluster* | 1 |
@@ -874,10 +874,10 @@
 | *medialive* | 4/25 (16%) |
 | *mq* | 7/20 (35%) |
 | *neptune* | 12/57 (21%) |
-| *opsworks* | 16/74 (21%) |
+| *opsworks* | 18/74 (24%) |
 | *organizations* | 14/42 (33%) |
-| *pinpoint* | 1/74 (1%) |
-| *rds* | 23/107 (21%) |
+| *pinpoint* | 7/74 (9%) |
+| *rds* | 25/107 (23%) |
 | *redshift* | 5/81 (6%) |
 | *rekognition* | 3/34 (8%) |
 | *route53* | 9/56 (16%) |
@@ -4437,8 +4437,8 @@
 | *opsworks* | `DescribeEcsClusters` | 0 |
 | *opsworks* | `DescribeElasticIps` | 0 |
 | *opsworks* | `DescribeElasticLoadBalancers` | 1 |
-| *opsworks* | `DescribeInstances` | 0 |
-| *opsworks* | `DescribeLayers` | 1 |
+| *opsworks* | `DescribeInstances` | 1 |
+| *opsworks* | `DescribeLayers` | 2 |
 | *opsworks* | `DescribeLoadBasedAutoScaling` | 0 |
 | *opsworks* | `DescribeMyUserProfile` | 0 |
 | *opsworks* | `DescribeOperatingSystems` | 0 |
@@ -4461,7 +4461,7 @@
 | *opsworks* | `RegisterEcsCluster` | 0 |
 | *opsworks* | `RegisterElasticIp` | 0 |
 | *opsworks* | `RegisterInstance` | 0 |
-| *opsworks* | `RegisterRdsDbInstance` | 0 |
+| *opsworks* | `RegisterRdsDbInstance` | 1 |
 | *opsworks* | `RegisterVolume` | 1 |
 | *opsworks* | `SetLoadBasedAutoScaling` | 0 |
 | *opsworks* | `SetPermission` | 0 |
@@ -4543,7 +4543,7 @@
 | *organizations* | `UpdatePolicy` | 0 |
 | *pi* | `DescribeDimensionKeys` | 0 |
 | *pi* | `GetResourceMetrics` | 0 |
-| *pinpoint* | `CreateApp` | 0 |
+| *pinpoint* | `CreateApp` | 1 |
 | *pinpoint* | `CreateCampaign` | 0 |
 | *pinpoint* | `CreateExportJob` | 0 |
 | *pinpoint* | `CreateImportJob` | 0 |
@@ -4602,20 +4602,20 @@
 | *pinpoint* | `RemoveAttributes` | 0 |
 | *pinpoint* | `SendMessages` | 0 |
 | *pinpoint* | `SendUsersMessages` | 0 |
-| *pinpoint* | `UpdateAdmChannel` | 0 |
-| *pinpoint* | `UpdateApnsChannel` | 0 |
+| *pinpoint* | `UpdateAdmChannel` | 1 |
+| *pinpoint* | `UpdateApnsChannel` | 1 |
 | *pinpoint* | `UpdateApnsSandboxChannel` | 0 |
 | *pinpoint* | `UpdateApnsVoipChannel` | 0 |
 | *pinpoint* | `UpdateApnsVoipSandboxChannel` | 0 |
 | *pinpoint* | `UpdateApplicationSettings` | 0 |
-| *pinpoint* | `UpdateBaiduChannel` | 0 |
+| *pinpoint* | `UpdateBaiduChannel` | 1 |
 | *pinpoint* | `UpdateCampaign` | 0 |
 | *pinpoint* | `UpdateEmailChannel` | 0 |
 | *pinpoint* | `UpdateEndpoint` | 0 |
 | *pinpoint* | `UpdateEndpointsBatch` | 0 |
-| *pinpoint* | `UpdateGcmChannel` | 0 |
+| *pinpoint* | `UpdateGcmChannel` | 1 |
 | *pinpoint* | `UpdateSegment` | 0 |
-| *pinpoint* | `UpdateSmsChannel` | 0 |
+| *pinpoint* | `UpdateSmsChannel` | 1 |
 | *pinpoint* | `UpdateVoiceChannel` | 0 |
 | *pinpoint-email* | `CreateConfigurationSet` | 0 |
 | *pinpoint-email* | `CreateConfigurationSetEventDestination` | 0 |
@@ -4745,7 +4745,7 @@
 | *rds* | `DescribeDBClusters` | 2 |
 | *rds* | `DescribeDBEngineVersions` | 0 |
 | *rds* | `DescribeDBInstanceAutomatedBackups` | 0 |
-| *rds* | `DescribeDBInstances` | 3 |
+| *rds* | `DescribeDBInstances` | 4 |
 | *rds* | `DescribeDBLogFiles` | 1 |
 | *rds* | `DescribeDBParameterGroups` | 2 |
 | *rds* | `DescribeDBParameters` | 0 |
@@ -4758,11 +4758,11 @@
 | *rds* | `DescribeEventCategories` | 0 |
 | *rds* | `DescribeEventSubscriptions` | 1 |
 | *rds* | `DescribeEvents` | 1 |
-| *rds* | `DescribeGlobalClusters` | 0 |
+| *rds* | `DescribeGlobalClusters` | 1 |
 | *rds* | `DescribeOptionGroupOptions` | 0 |
 | *rds* | `DescribeOptionGroups` | 1 |
 | *rds* | `DescribeOrderableDBInstanceOptions` | 0 |
-| *rds* | `DescribePendingMaintenanceActions` | 0 |
+| *rds* | `DescribePendingMaintenanceActions` | 1 |
 | *rds* | `DescribeReservedDBInstances` | 1 |
 | *rds* | `DescribeReservedDBInstancesOfferings` | 0 |
 | *rds* | `DescribeSourceRegions` | 0 |
@@ -6167,4 +6167,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 1021 (19%)**
+**Total Unique Occurances: 1031 (19%)**

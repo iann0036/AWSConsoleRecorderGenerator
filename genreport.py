@@ -54,6 +54,7 @@ tf_occurances = [
     "aws_opsworks_haproxy_layer", # bad detection
     "aws_opsworks_java_app_layer", # bad detection
     "aws_opsworks_memcached_layer", # bad detection
+    "aws_opsworks_mysql_layer", # bad detection
     "aws_opsworks_nodejs_app_layer", # bad detection
     "aws_opsworks_php_app_layer", # bad detection
     "aws_opsworks_rails_app_layer", # bad detection
