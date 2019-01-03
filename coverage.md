@@ -346,7 +346,7 @@
 
 ## Terraform Coverage
 
-**225/457 (49%)** Resources Covered
+**230/457 (50%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -453,11 +453,11 @@
 | *aws_config_configuration_recorder_status* | 0 |
 | *aws_config_delivery_channel* | 1 |
 | *aws_customer_gateway* | 1 |
-| *aws_datasync_agent* | 0 |
-| *aws_datasync_location_efs* | 0 |
-| *aws_datasync_location_nfs* | 0 |
-| *aws_datasync_location_s3* | 0 |
-| *aws_datasync_task* | 0 |
+| *aws_datasync_agent* | 1 |
+| *aws_datasync_location_efs* | 1 |
+| *aws_datasync_location_nfs* | 1 |
+| *aws_datasync_location_s3* | 1 |
+| *aws_datasync_task* | 1 |
 | *aws_dax_cluster* | 1 |
 | *aws_dax_parameter_group* | 1 |
 | *aws_dax_subnet_group* | 1 |
@@ -834,7 +834,7 @@
 | *cognito-identity* | 2/18 (11%) |
 | *cognito-idp* | 10/95 (10%) |
 | *config* | 9/47 (19%) |
-| *datasync* | 2/25 (8%) |
+| *datasync* | 14/25 (56%) |
 | *dax* | 10/21 (47%) |
 | *dlm* | 4/5 (80%) |
 | *dms* | 27/44 (61%) |
@@ -2051,25 +2051,25 @@
 | *datapipeline* | `SetTaskStatus` | 0 |
 | *datapipeline* | `ValidatePipelineDefinition` | 0 |
 | *datasync* | `CancelTaskExecution` | 0 |
-| *datasync* | `CreateAgent` | 0 |
-| *datasync* | `CreateLocationEfs` | 0 |
-| *datasync* | `CreateLocationNfs` | 0 |
-| *datasync* | `CreateLocationS3` | 0 |
-| *datasync* | `CreateTask` | 0 |
-| *datasync* | `DeleteAgent` | 0 |
-| *datasync* | `DeleteLocation` | 0 |
-| *datasync* | `DeleteTask` | 0 |
-| *datasync* | `DescribeAgent` | 0 |
+| *datasync* | `CreateAgent` | 1 |
+| *datasync* | `CreateLocationEfs` | 1 |
+| *datasync* | `CreateLocationNfs` | 1 |
+| *datasync* | `CreateLocationS3` | 1 |
+| *datasync* | `CreateTask` | 1 |
+| *datasync* | `DeleteAgent` | 1 |
+| *datasync* | `DeleteLocation` | 1 |
+| *datasync* | `DeleteTask` | 1 |
+| *datasync* | `DescribeAgent` | 1 |
 | *datasync* | `DescribeLocationEfs` | 0 |
-| *datasync* | `DescribeLocationNfs` | 0 |
+| *datasync* | `DescribeLocationNfs` | 2 |
 | *datasync* | `DescribeLocationS3` | 0 |
-| *datasync* | `DescribeTask` | 0 |
+| *datasync* | `DescribeTask` | 1 |
 | *datasync* | `DescribeTaskExecution` | 0 |
 | *datasync* | `ListAgents` | 1 |
 | *datasync* | `ListLocations` | 1 |
 | *datasync* | `ListTagsForResource` | 0 |
 | *datasync* | `ListTaskExecutions` | 0 |
-| *datasync* | `ListTasks` | 0 |
+| *datasync* | `ListTasks` | 1 |
 | *datasync* | `StartTaskExecution` | 0 |
 | *datasync* | `TagResource` | 0 |
 | *datasync* | `UntagResource` | 0 |
@@ -2741,9 +2741,9 @@
 | *efs* | `DeleteFileSystem` | 1 |
 | *efs* | `DeleteMountTarget` | 1 |
 | *efs* | `DeleteTags` | 1 |
-| *efs* | `DescribeFileSystems` | 1 |
+| *efs* | `DescribeFileSystems` | 2 |
 | *efs* | `DescribeMountTargetSecurityGroups` | 0 |
-| *efs* | `DescribeMountTargets` | 1 |
+| *efs* | `DescribeMountTargets` | 2 |
 | *efs* | `DescribeTags` | 1 |
 | *efs* | `ModifyMountTargetSecurityGroups` | 1 |
 | *efs* | `UpdateFileSystem` | 1 |
@@ -3453,7 +3453,7 @@
 | *iam* | `ListPolicyVersions` | 1 |
 | *iam* | `ListRolePolicies` | 0 |
 | *iam* | `ListRoleTags` | 0 |
-| *iam* | `ListRoles` | 13 |
+| *iam* | `ListRoles` | 14 |
 | *iam* | `ListSAMLProviders` | 0 |
 | *iam* | `ListSSHPublicKeys` | 0 |
 | *iam* | `ListServerCertificates` | 1 |
@@ -5124,7 +5124,7 @@
 | *s3* | `ListBucketAnalyticsConfigurations` | 0 |
 | *s3* | `ListBucketInventoryConfigurations` | 0 |
 | *s3* | `ListBucketMetricsConfigurations` | 0 |
-| *s3* | `ListBuckets` | 4 |
+| *s3* | `ListBuckets` | 5 |
 | *s3* | `ListMultipartUploads` | 0 |
 | *s3* | `ListObjectVersions` | 0 |
 | *s3* | `ListObjects` | 1 |
@@ -6167,4 +6167,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 1031 (19%)**
+**Total Unique Occurances: 1043 (19%)**
