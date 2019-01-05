@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**337/339 (99%)** Resources Covered
+**338/340 (99%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -140,6 +140,7 @@
 | *AWS::EC2::VPCCidrBlock* | 1 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
+| *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
 | *AWS::EC2::VPCEndpointService* | 1 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 1 |
 | *AWS::EC2::VPCGatewayAttachment* | 2 |
@@ -276,6 +277,7 @@
 | *AWS::Route53::RecordSetGroup* | 1 |
 | *AWS::Route53Resolver::ResolverEndpoint* | 1 |
 | *AWS::Route53Resolver::ResolverRule* | 1 |
+| *AWS::Route53Resolver::ResolverRuleAssociation* | 1 |
 | *AWS::S3::Bucket* | 3 |
 | *AWS::S3::BucketPolicy* | 1 |
 | *AWS::SDB::Domain* | 1 |
@@ -293,7 +295,6 @@
 | *AWS::SSM::Association* | 1 |
 | *AWS::SSM::Document* | 1 |
 | *AWS::SSM::MaintenanceWindow* | 1 |
-| *AWS::SSM::MaintenanceWindowTarget* | 1 |
 | *AWS::SSM::MaintenanceWindowTask* | 1 |
 | *AWS::SSM::Parameter* | 1 |
 | *AWS::SSM::PatchBaseline* | 1 |
@@ -895,7 +896,7 @@
 | *stepfunctions* | 7/19 (36%) |
 | *storagegateway* | 29/69 (42%) |
 | *sts* | 1/7 (14%) |
-| *support* | 5/14 (35%) |
+| *support* | 7/14 (50%) |
 | *swf* | 1/31 (3%) |
 | *waf* | 32/73 (43%) |
 | *waf-regional* | 34/77 (44%) |
@@ -1615,7 +1616,7 @@
 | *cloudtrail* | `ListPublicKeys` | 0 |
 | *cloudtrail* | `ListTags` | 1 |
 | *cloudtrail* | `LookupEvents` | 1 |
-| *cloudtrail* | `PutEventSelectors` | 2 |
+| *cloudtrail* | `PutEventSelectors` | 1 |
 | *cloudtrail* | `RemoveTags` | 0 |
 | *cloudtrail* | `StartLogging` | 1 |
 | *cloudtrail* | `StopLogging` | 0 |
@@ -2472,7 +2473,7 @@
 | *ec2* | `DeleteTransitGatewayRouteTable` | 0 |
 | *ec2* | `DeleteTransitGatewayVpcAttachment` | 0 |
 | *ec2* | `DeleteVolume` | 1 |
-| *ec2* | `DeleteVpc` | 1 |
+| *ec2* | `DeleteVpc` | 2 |
 | *ec2* | `DeleteVpcEndpointConnectionNotifications` | 0 |
 | *ec2* | `DeleteVpcEndpointServiceConfigurations` | 0 |
 | *ec2* | `DeleteVpcEndpoints` | 1 |
@@ -2559,17 +2560,17 @@
 | *ec2* | `DescribeVolumeStatus` | 0 |
 | *ec2* | `DescribeVolumes` | 3 |
 | *ec2* | `DescribeVolumesModifications` | 0 |
-| *ec2* | `DescribeVpcAttribute` | 2 |
+| *ec2* | `DescribeVpcAttribute` | 3 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 1 |
 | *ec2* | `DescribeVpcEndpointConnectionNotifications` | 0 |
 | *ec2* | `DescribeVpcEndpointConnections` | 0 |
 | *ec2* | `DescribeVpcEndpointServiceConfigurations` | 1 |
 | *ec2* | `DescribeVpcEndpointServicePermissions` | 1 |
-| *ec2* | `DescribeVpcEndpointServices` | 1 |
+| *ec2* | `DescribeVpcEndpointServices` | 2 |
 | *ec2* | `DescribeVpcEndpoints` | 3 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 25 |
+| *ec2* | `DescribeVpcs` | 26 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 2 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -5812,7 +5813,7 @@
 | *sts* | `GetFederationToken` | 0 |
 | *sts* | `GetSessionToken` | 0 |
 | *support* | `AddAttachmentsToSet` | 0 |
-| *support* | `AddCommunicationToCase` | 0 |
+| *support* | `AddCommunicationToCase` | 1 |
 | *support* | `CreateCase` | 1 |
 | *support* | `DescribeAttachment` | 0 |
 | *support* | `DescribeCases` | 1 |
@@ -5824,7 +5825,7 @@
 | *support* | `DescribeTrustedAdvisorCheckSummaries` | 0 |
 | *support* | `DescribeTrustedAdvisorChecks` | 0 |
 | *support* | `RefreshTrustedAdvisorCheck` | 0 |
-| *support* | `ResolveCase` | 0 |
+| *support* | `ResolveCase` | 1 |
 | *swf* | `CountClosedWorkflowExecutions` | 0 |
 | *swf* | `CountOpenWorkflowExecutions` | 0 |
 | *swf* | `CountPendingActivityTasks` | 0 |
@@ -6167,4 +6168,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 1043 (19%)**
+**Total Unique Occurances: 1045 (19%)**
