@@ -110,7 +110,7 @@
 | *AWS::EC2::FlowLog* | 1 |
 | *AWS::EC2::Host* | 1 |
 | *AWS::EC2::Instance* | 1 |
-| *AWS::EC2::InternetGateway* | 1 |
+| *AWS::EC2::InternetGateway* | 2 |
 | *AWS::EC2::LaunchTemplate* | 1 |
 | *AWS::EC2::NatGateway* | 1 |
 | *AWS::EC2::NetworkAcl* | 2 |
@@ -119,16 +119,16 @@
 | *AWS::EC2::NetworkInterfaceAttachment* | 1 |
 | *AWS::EC2::NetworkInterfacePermission* | 1 |
 | *AWS::EC2::PlacementGroup* | 1 |
-| *AWS::EC2::Route* | 1 |
-| *AWS::EC2::RouteTable* | 1 |
+| *AWS::EC2::Route* | 2 |
+| *AWS::EC2::RouteTable* | 2 |
 | *AWS::EC2::SecurityGroup* | 2 |
 | *AWS::EC2::SecurityGroupEgress* | 1 |
 | *AWS::EC2::SecurityGroupIngress* | 1 |
 | *AWS::EC2::SpotFleet* | 1 |
-| *AWS::EC2::Subnet* | 1 |
+| *AWS::EC2::Subnet* | 2 |
 | *AWS::EC2::SubnetCidrBlock* | 1 |
 | *AWS::EC2::SubnetNetworkAclAssociation* | 1 |
-| *AWS::EC2::SubnetRouteTableAssociation* | 1 |
+| *AWS::EC2::SubnetRouteTableAssociation* | 2 |
 | *AWS::EC2::TransitGateway* | 1 |
 | *AWS::EC2::TransitGatewayAttachment* | 1 |
 | *AWS::EC2::TransitGatewayRoute* | 1 |
@@ -136,8 +136,8 @@
 | *AWS::EC2::TransitGatewayRouteTableAssociation* | 1 |
 | *AWS::EC2::TransitGatewayRouteTablePropagation* | 1 |
 | *AWS::EC2::TrunkInterfaceAssociation* | 1 |
-| *AWS::EC2::VPC* | 3 |
-| *AWS::EC2::VPCCidrBlock* | 1 |
+| *AWS::EC2::VPC* | 4 |
+| *AWS::EC2::VPCCidrBlock* | 2 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
 | *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
@@ -587,7 +587,7 @@
 | *aws_inspector_assessment_template* | 1 |
 | *aws_inspector_resource_group* | 0 |
 | *aws_instance* | 1 |
-| *aws_internet_gateway* | 1 |
+| *aws_internet_gateway* | 2 |
 | *aws_iot_certificate* | 1 |
 | *aws_iot_policy* | 1 |
 | *aws_iot_policy_attachment* | 1 |
@@ -696,7 +696,7 @@
 | *aws_route53_record* | 1 |
 | *aws_route53_zone* | 2 |
 | *aws_route53_zone_association* | 0 |
-| *aws_route_table* | 1 |
+| *aws_route_table* | 2 |
 | *aws_route_table_association* | 0 |
 | *aws_s3_account_public_access_block* | 0 |
 | *aws_s3_bucket* | 3 |
@@ -759,13 +759,13 @@
 | *aws_storagegateway_smb_file_share* | 1 |
 | *aws_storagegateway_upload_buffer* | 1 |
 | *aws_storagegateway_working_storage* | 0 |
-| *aws_subnet* | 1 |
+| *aws_subnet* | 2 |
 | *aws_swf_domain* | 1 |
 | *aws_transfer_server* | 0 |
 | *aws_transfer_ssh_key* | 0 |
 | *aws_transfer_user* | 0 |
 | *aws_volume_attachment* | 1 |
-| *aws_vpc* | 3 |
+| *aws_vpc* | 4 |
 | *aws_vpc_dhcp_options* | 1 |
 | *aws_vpc_dhcp_options_association* | 1 |
 | *aws_vpc_endpoint* | 1 |
@@ -841,7 +841,7 @@
 | *dms* | 27/44 (61%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 134/310 (43%) |
+| *ec2* | 135/310 (43%) |
 | *ecr* | 3/22 (13%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -2379,12 +2379,12 @@
 | *ec2* | `AssociateAddress` | 1 |
 | *ec2* | `AssociateDhcpOptions` | 1 |
 | *ec2* | `AssociateIamInstanceProfile` | 0 |
-| *ec2* | `AssociateRouteTable` | 1 |
+| *ec2* | `AssociateRouteTable` | 2 |
 | *ec2* | `AssociateSubnetCidrBlock` | 1 |
 | *ec2* | `AssociateTransitGatewayRouteTable` | 1 |
 | *ec2* | `AssociateVpcCidrBlock` | 1 |
 | *ec2* | `AttachClassicLinkVpc` | 0 |
-| *ec2* | `AttachInternetGateway` | 1 |
+| *ec2* | `AttachInternetGateway` | 2 |
 | *ec2* | `AttachNetworkInterface` | 1 |
 | *ec2* | `AttachVolume` | 1 |
 | *ec2* | `AttachVpnGateway` | 1 |
@@ -2414,7 +2414,7 @@
 | *ec2* | `CreateFpgaImage` | 0 |
 | *ec2* | `CreateImage` | 1 |
 | *ec2* | `CreateInstanceExportTask` | 0 |
-| *ec2* | `CreateInternetGateway` | 1 |
+| *ec2* | `CreateInternetGateway` | 2 |
 | *ec2* | `CreateKeyPair` | 1 |
 | *ec2* | `CreateLaunchTemplate` | 1 |
 | *ec2* | `CreateLaunchTemplateVersion` | 0 |
@@ -2425,20 +2425,20 @@
 | *ec2* | `CreateNetworkInterfacePermission` | 0 |
 | *ec2* | `CreatePlacementGroup` | 1 |
 | *ec2* | `CreateReservedInstancesListing` | 0 |
-| *ec2* | `CreateRoute` | 1 |
-| *ec2* | `CreateRouteTable` | 1 |
+| *ec2* | `CreateRoute` | 2 |
+| *ec2* | `CreateRouteTable` | 2 |
 | *ec2* | `CreateSecurityGroup` | 2 |
 | *ec2* | `CreateSnapshot` | 0 |
 | *ec2* | `CreateSpotDatafeedSubscription` | 0 |
-| *ec2* | `CreateSubnet` | 1 |
-| *ec2* | `CreateTags` | 2 |
+| *ec2* | `CreateSubnet` | 2 |
+| *ec2* | `CreateTags` | 4 |
 | *ec2* | `CreateTransitGateway` | 1 |
 | *ec2* | `CreateTransitGatewayRoute` | 1 |
 | *ec2* | `CreateTransitGatewayRouteTable` | 1 |
 | *ec2* | `CreateTransitGatewayVpcAttachment` | 1 |
 | *ec2* | `CreateVolume` | 1 |
-| *ec2* | `CreateVpc` | 3 |
-| *ec2* | `CreateVpcEndpoint` | 1 |
+| *ec2* | `CreateVpc` | 4 |
+| *ec2* | `CreateVpcEndpoint` | 2 |
 | *ec2* | `CreateVpcEndpointConnectionNotification` | 0 |
 | *ec2* | `CreateVpcEndpointServiceConfiguration` | 1 |
 | *ec2* | `CreateVpcPeeringConnection` | 1 |
@@ -2628,7 +2628,7 @@
 | *ec2* | `ModifyTransitGatewayVpcAttachment` | 0 |
 | *ec2* | `ModifyVolume` | 0 |
 | *ec2* | `ModifyVolumeAttribute` | 0 |
-| *ec2* | `ModifyVpcAttribute` | 0 |
+| *ec2* | `ModifyVpcAttribute` | 1 |
 | *ec2* | `ModifyVpcEndpoint` | 0 |
 | *ec2* | `ModifyVpcEndpointConnectionNotification` | 0 |
 | *ec2* | `ModifyVpcEndpointServiceConfiguration` | 0 |
@@ -6168,4 +6168,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 1045 (19%)**
+**Total Unique Occurances: 1046 (19%)**
