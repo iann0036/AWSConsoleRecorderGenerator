@@ -58,7 +58,11 @@ tf_occurances = [
     "aws_opsworks_nodejs_app_layer", # bad detection
     "aws_opsworks_php_app_layer", # bad detection
     "aws_opsworks_rails_app_layer", # bad detection
-    "aws_opsworks_static_web_layer" # bad detection
+    "aws_opsworks_static_web_layer", # bad detection
+    "aws_appmesh_mesh",
+    "aws_appmesh_route",
+    "aws_appmesh_virtual_node",
+    "aws_appmesh_virtual_router"
 ]
 
 with open("combined.json", "r") as f:

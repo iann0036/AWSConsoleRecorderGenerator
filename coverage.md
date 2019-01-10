@@ -347,7 +347,7 @@
 
 ## Terraform Coverage
 
-**230/457 (50%)** Resources Covered
+**236/457 (51%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -391,10 +391,10 @@
 | *aws_appautoscaling_policy* | 1 |
 | *aws_appautoscaling_scheduled_action* | 0 |
 | *aws_appautoscaling_target* | 1 |
-| *aws_appmesh_mesh* | 0 |
-| *aws_appmesh_route* | 0 |
-| *aws_appmesh_virtual_node* | 0 |
-| *aws_appmesh_virtual_router* | 0 |
+| *aws_appmesh_mesh* | 1 |
+| *aws_appmesh_route* | 1 |
+| *aws_appmesh_virtual_node* | 1 |
+| *aws_appmesh_virtual_router* | 1 |
 | *aws_appsync_api_key* | 1 |
 | *aws_appsync_datasource* | 0 |
 | *aws_appsync_graphql_api* | 1 |
@@ -628,8 +628,8 @@
 | *aws_macie_member_account_association* | 0 |
 | *aws_macie_s3_bucket_association* | 0 |
 | *aws_main_route_table_association* | 0 |
-| *aws_media_store_container* | 0 |
-| *aws_media_store_container_policy* | 0 |
+| *aws_media_store_container* | 1 |
+| *aws_media_store_container_policy* | 1 |
 | *aws_mq_broker* | 1 |
 | *aws_mq_configuration* | 1 |
 | *aws_nat_gateway* | 1 |
@@ -873,6 +873,7 @@
 | *lightsail* | 21/100 (21%) |
 | *logs* | 5/39 (12%) |
 | *medialive* | 4/25 (16%) |
+| *mediastore* | 7/13 (53%) |
 | *mq* | 7/20 (35%) |
 | *neptune* | 12/57 (21%) |
 | *opsworks* | 18/74 (24%) |
@@ -883,7 +884,7 @@
 | *rekognition* | 3/34 (8%) |
 | *route53* | 9/56 (16%) |
 | *route53resolver* | 10/22 (45%) |
-| *s3* | 25/88 (28%) |
+| *s3* | 26/88 (29%) |
 | *sagemaker* | 16/75 (21%) |
 | *secretsmanager* | 6/18 (33%) |
 | *serverlessrepo* | 1/13 (7%) |
@@ -4243,17 +4244,17 @@
 | *mediapackage* | `RotateIngestEndpointCredentials` | 0 |
 | *mediapackage* | `UpdateChannel` | 0 |
 | *mediapackage* | `UpdateOriginEndpoint` | 0 |
-| *mediastore* | `CreateContainer` | 0 |
-| *mediastore* | `DeleteContainer` | 0 |
+| *mediastore* | `CreateContainer` | 1 |
+| *mediastore* | `DeleteContainer` | 1 |
 | *mediastore* | `DeleteContainerPolicy` | 0 |
 | *mediastore* | `DeleteCorsPolicy` | 0 |
 | *mediastore* | `DeleteLifecyclePolicy` | 0 |
-| *mediastore* | `DescribeContainer` | 0 |
-| *mediastore* | `GetContainerPolicy` | 0 |
-| *mediastore* | `GetCorsPolicy` | 0 |
+| *mediastore* | `DescribeContainer` | 1 |
+| *mediastore* | `GetContainerPolicy` | 1 |
+| *mediastore* | `GetCorsPolicy` | 1 |
 | *mediastore* | `GetLifecyclePolicy` | 0 |
-| *mediastore* | `ListContainers` | 0 |
-| *mediastore* | `PutContainerPolicy` | 0 |
+| *mediastore* | `ListContainers` | 1 |
+| *mediastore* | `PutContainerPolicy` | 1 |
 | *mediastore* | `PutCorsPolicy` | 0 |
 | *mediastore* | `PutLifecyclePolicy` | 0 |
 | *mediastore-data* | `DeleteObject` | 0 |
@@ -5115,7 +5116,7 @@
 | *s3* | `GetObject` | 0 |
 | *s3* | `GetObjectAcl` | 0 |
 | *s3* | `GetObjectLegalHold` | 0 |
-| *s3* | `GetObjectLockConfiguration` | 0 |
+| *s3* | `GetObjectLockConfiguration` | 1 |
 | *s3* | `GetObjectRetention` | 0 |
 | *s3* | `GetObjectTagging` | 0 |
 | *s3* | `GetObjectTorrent` | 0 |
@@ -6168,4 +6169,4 @@
 
 **Total Operations: 5255**
 
-**Total Unique Occurances: 1046 (19%)**
+**Total Unique Occurances: 1054 (20%)**
