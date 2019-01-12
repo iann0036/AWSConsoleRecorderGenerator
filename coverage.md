@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**338/340 (99%)** Resources Covered
+**343/344 (99%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -62,7 +62,7 @@
 | *AWS::CloudFormation::WaitCondition* | 1 |
 | *AWS::CloudFormation::WaitConditionHandle* | 1 |
 | *AWS::CloudFront::CloudFrontOriginAccessIdentity* | 1 |
-| *AWS::CloudFront::Distribution* | 0 |
+| *AWS::CloudFront::Distribution* | 1 |
 | *AWS::CloudFront::StreamingDistribution* | 1 |
 | *AWS::CloudTrail::Trail* | 1 |
 | *AWS::CloudWatch::Alarm* | 1 |
@@ -100,6 +100,10 @@
 | *AWS::DataPipeline::Pipeline* | 0 |
 | *AWS::DirectoryService::MicrosoftAD* | 1 |
 | *AWS::DirectoryService::SimpleAD* | 1 |
+| *AWS::DocDB::DBCluster* | 1 |
+| *AWS::DocDB::DBClusterParameterGroup* | 1 |
+| *AWS::DocDB::DBInstance* | 1 |
+| *AWS::DocDB::DBSubnetGroup* | 1 |
 | *AWS::DynamoDB::Table* | 2 |
 | *AWS::EC2::CustomerGateway* | 1 |
 | *AWS::EC2::DHCPOptions* | 1 |
@@ -833,16 +837,17 @@
 | *codedeploy* | 15/43 (34%) |
 | *codepipeline* | 11/32 (34%) |
 | *cognito-identity* | 2/18 (11%) |
-| *cognito-idp* | 10/95 (10%) |
+| *cognito-idp* | 10/96 (10%) |
 | *config* | 9/47 (19%) |
 | *datasync* | 14/25 (56%) |
 | *dax* | 10/21 (47%) |
 | *dlm* | 4/5 (80%) |
 | *dms* | 27/44 (61%) |
+| *docdb* | 12/39 (30%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 3/36 (8%) |
-| *ec2* | 135/310 (43%) |
-| *ecr* | 3/22 (13%) |
+| *ec2* | 135/329 (41%) |
+| *ecr* | 3/25 (12%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
 | *eks* | 2/7 (28%) |
@@ -894,7 +899,7 @@
 | *sns* | 8/30 (26%) |
 | *sqs* | 6/20 (30%) |
 | *ssm* | 21/111 (18%) |
-| *stepfunctions* | 7/19 (36%) |
+| *stepfunctions* | 7/22 (31%) |
 | *storagegateway* | 29/69 (42%) |
 | *sts* | 1/7 (14%) |
 | *support* | 7/14 (50%) |
@@ -1152,6 +1157,63 @@
 | *apigateway* | `UpdateUsage` | 0 |
 | *apigateway* | `UpdateUsagePlan` | 0 |
 | *apigateway* | `UpdateVpcLink` | 0 |
+| *apigatewaymanagementapi* | `PostToConnection` | 0 |
+| *apigatewayv2* | `CreateApi` | 0 |
+| *apigatewayv2* | `CreateApiMapping` | 0 |
+| *apigatewayv2* | `CreateAuthorizer` | 0 |
+| *apigatewayv2* | `CreateDeployment` | 0 |
+| *apigatewayv2* | `CreateDomainName` | 0 |
+| *apigatewayv2* | `CreateIntegration` | 0 |
+| *apigatewayv2* | `CreateIntegrationResponse` | 0 |
+| *apigatewayv2* | `CreateModel` | 0 |
+| *apigatewayv2* | `CreateRoute` | 0 |
+| *apigatewayv2* | `CreateRouteResponse` | 0 |
+| *apigatewayv2* | `CreateStage` | 0 |
+| *apigatewayv2* | `DeleteApi` | 0 |
+| *apigatewayv2* | `DeleteApiMapping` | 0 |
+| *apigatewayv2* | `DeleteAuthorizer` | 0 |
+| *apigatewayv2* | `DeleteDeployment` | 0 |
+| *apigatewayv2* | `DeleteDomainName` | 0 |
+| *apigatewayv2* | `DeleteIntegration` | 0 |
+| *apigatewayv2* | `DeleteIntegrationResponse` | 0 |
+| *apigatewayv2* | `DeleteModel` | 0 |
+| *apigatewayv2* | `DeleteRoute` | 0 |
+| *apigatewayv2* | `DeleteRouteResponse` | 0 |
+| *apigatewayv2* | `DeleteStage` | 0 |
+| *apigatewayv2* | `GetApi` | 0 |
+| *apigatewayv2* | `GetApiMapping` | 0 |
+| *apigatewayv2* | `GetApiMappings` | 0 |
+| *apigatewayv2* | `GetApis` | 0 |
+| *apigatewayv2* | `GetAuthorizer` | 0 |
+| *apigatewayv2* | `GetAuthorizers` | 0 |
+| *apigatewayv2* | `GetDeployment` | 0 |
+| *apigatewayv2* | `GetDeployments` | 0 |
+| *apigatewayv2* | `GetDomainName` | 0 |
+| *apigatewayv2* | `GetDomainNames` | 0 |
+| *apigatewayv2* | `GetIntegration` | 0 |
+| *apigatewayv2* | `GetIntegrationResponse` | 0 |
+| *apigatewayv2* | `GetIntegrationResponses` | 0 |
+| *apigatewayv2* | `GetIntegrations` | 0 |
+| *apigatewayv2* | `GetModel` | 0 |
+| *apigatewayv2* | `GetModelTemplate` | 0 |
+| *apigatewayv2* | `GetModels` | 0 |
+| *apigatewayv2* | `GetRoute` | 0 |
+| *apigatewayv2* | `GetRouteResponse` | 0 |
+| *apigatewayv2* | `GetRouteResponses` | 0 |
+| *apigatewayv2* | `GetRoutes` | 0 |
+| *apigatewayv2* | `GetStage` | 0 |
+| *apigatewayv2* | `GetStages` | 0 |
+| *apigatewayv2* | `UpdateApi` | 0 |
+| *apigatewayv2* | `UpdateApiMapping` | 0 |
+| *apigatewayv2* | `UpdateAuthorizer` | 0 |
+| *apigatewayv2* | `UpdateDeployment` | 0 |
+| *apigatewayv2* | `UpdateDomainName` | 0 |
+| *apigatewayv2* | `UpdateIntegration` | 0 |
+| *apigatewayv2* | `UpdateIntegrationResponse` | 0 |
+| *apigatewayv2* | `UpdateModel` | 0 |
+| *apigatewayv2* | `UpdateRoute` | 0 |
+| *apigatewayv2* | `UpdateRouteResponse` | 0 |
+| *apigatewayv2* | `UpdateStage` | 0 |
 | *application-autoscaling* | `DeleteScalingPolicy` | 0 |
 | *application-autoscaling* | `DeleteScheduledAction` | 0 |
 | *application-autoscaling* | `DeregisterScalableTarget` | 0 |
@@ -1901,6 +1963,7 @@
 | *cognito-idp* | `UpdateUserAttributes` | 0 |
 | *cognito-idp* | `UpdateUserPool` | 0 |
 | *cognito-idp* | `UpdateUserPoolClient` | 0 |
+| *cognito-idp* | `UpdateUserPoolDomain` | 0 |
 | *cognito-idp* | `VerifySoftwareToken` | 0 |
 | *cognito-idp* | `VerifyUserAttribute` | 0 |
 | *cognito-sync* | `BulkPublish` | 0 |
@@ -1960,6 +2023,8 @@
 | *comprehend* | `StopEntitiesDetectionJob` | 0 |
 | *comprehend* | `StopKeyPhrasesDetectionJob` | 0 |
 | *comprehend* | `StopSentimentDetectionJob` | 0 |
+| *comprehend* | `StopTrainingDocumentClassifier` | 0 |
+| *comprehend* | `StopTrainingEntityRecognizer` | 0 |
 | *comprehendmedical* | `DetectEntities` | 0 |
 | *comprehendmedical* | `DetectPHI` | 0 |
 | *config* | `BatchGetAggregateResourceConfig` | 0 |
@@ -2278,6 +2343,45 @@
 | *dms* | `StartReplicationTaskAssessment` | 0 |
 | *dms* | `StopReplicationTask` | 0 |
 | *dms* | `TestConnection` | 0 |
+| *docdb* | `AddTagsToResource` | 0 |
+| *docdb* | `ApplyPendingMaintenanceAction` | 0 |
+| *docdb* | `CopyDBClusterParameterGroup` | 0 |
+| *docdb* | `CopyDBClusterSnapshot` | 0 |
+| *docdb* | `CreateDBCluster` | 1 |
+| *docdb* | `CreateDBClusterParameterGroup` | 1 |
+| *docdb* | `CreateDBClusterSnapshot` | 0 |
+| *docdb* | `CreateDBInstance` | 1 |
+| *docdb* | `CreateDBSubnetGroup` | 1 |
+| *docdb* | `DeleteDBCluster` | 1 |
+| *docdb* | `DeleteDBClusterParameterGroup` | 1 |
+| *docdb* | `DeleteDBClusterSnapshot` | 0 |
+| *docdb* | `DeleteDBInstance` | 1 |
+| *docdb* | `DeleteDBSubnetGroup` | 1 |
+| *docdb* | `DescribeDBClusterParameterGroups` | 1 |
+| *docdb* | `DescribeDBClusterParameters` | 0 |
+| *docdb* | `DescribeDBClusterSnapshotAttributes` | 0 |
+| *docdb* | `DescribeDBClusterSnapshots` | 0 |
+| *docdb* | `DescribeDBClusters` | 1 |
+| *docdb* | `DescribeDBEngineVersions` | 0 |
+| *docdb* | `DescribeDBInstances` | 0 |
+| *docdb* | `DescribeDBSubnetGroups` | 1 |
+| *docdb* | `DescribeEngineDefaultClusterParameters` | 0 |
+| *docdb* | `DescribeEventCategories` | 0 |
+| *docdb* | `DescribeEvents` | 0 |
+| *docdb* | `DescribeOrderableDBInstanceOptions` | 0 |
+| *docdb* | `DescribePendingMaintenanceActions` | 1 |
+| *docdb* | `FailoverDBCluster` | 0 |
+| *docdb* | `ListTagsForResource` | 0 |
+| *docdb* | `ModifyDBCluster` | 0 |
+| *docdb* | `ModifyDBClusterParameterGroup` | 0 |
+| *docdb* | `ModifyDBClusterSnapshotAttribute` | 0 |
+| *docdb* | `ModifyDBInstance` | 0 |
+| *docdb* | `ModifyDBSubnetGroup` | 0 |
+| *docdb* | `RebootDBInstance` | 0 |
+| *docdb* | `RemoveTagsFromResource` | 0 |
+| *docdb* | `ResetDBClusterParameterGroup` | 0 |
+| *docdb* | `RestoreDBClusterFromSnapshot` | 0 |
+| *docdb* | `RestoreDBClusterToPointInTime` | 0 |
 | *ds* | `AcceptSharedDirectory` | 0 |
 | *ds* | `AddIpRoutes` | 0 |
 | *ds* | `AddTagsToResource` | 0 |
@@ -2375,9 +2479,11 @@
 | *ec2* | `AdvertiseByoipCidr` | 0 |
 | *ec2* | `AllocateAddress` | 1 |
 | *ec2* | `AllocateHosts` | 1 |
+| *ec2* | `ApplySecurityGroupsToClientVpnTargetNetwork` | 0 |
 | *ec2* | `AssignIpv6Addresses` | 0 |
 | *ec2* | `AssignPrivateIpAddresses` | 0 |
 | *ec2* | `AssociateAddress` | 1 |
+| *ec2* | `AssociateClientVpnTargetNetwork` | 0 |
 | *ec2* | `AssociateDhcpOptions` | 1 |
 | *ec2* | `AssociateIamInstanceProfile` | 0 |
 | *ec2* | `AssociateRouteTable` | 2 |
@@ -2389,6 +2495,7 @@
 | *ec2* | `AttachNetworkInterface` | 1 |
 | *ec2* | `AttachVolume` | 1 |
 | *ec2* | `AttachVpnGateway` | 1 |
+| *ec2* | `AuthorizeClientVpnIngress` | 0 |
 | *ec2* | `AuthorizeSecurityGroupEgress` | 0 |
 | *ec2* | `AuthorizeSecurityGroupIngress` | 1 |
 | *ec2* | `BundleInstance` | 0 |
@@ -2405,6 +2512,8 @@
 | *ec2* | `CopyImage` | 1 |
 | *ec2* | `CopySnapshot` | 0 |
 | *ec2* | `CreateCapacityReservation` | 0 |
+| *ec2* | `CreateClientVpnEndpoint` | 0 |
+| *ec2* | `CreateClientVpnRoute` | 0 |
 | *ec2* | `CreateCustomerGateway` | 1 |
 | *ec2* | `CreateDefaultSubnet` | 0 |
 | *ec2* | `CreateDefaultVpc` | 0 |
@@ -2446,6 +2555,8 @@
 | *ec2* | `CreateVpnConnection` | 1 |
 | *ec2* | `CreateVpnConnectionRoute` | 1 |
 | *ec2* | `CreateVpnGateway` | 1 |
+| *ec2* | `DeleteClientVpnEndpoint` | 0 |
+| *ec2* | `DeleteClientVpnRoute` | 0 |
 | *ec2* | `DeleteCustomerGateway` | 1 |
 | *ec2* | `DeleteDhcpOptions` | 1 |
 | *ec2* | `DeleteEgressOnlyInternetGateway` | 1 |
@@ -2487,11 +2598,16 @@
 | *ec2* | `DescribeAccountAttributes` | 2 |
 | *ec2* | `DescribeAddresses` | 4 |
 | *ec2* | `DescribeAggregateIdFormat` | 0 |
-| *ec2* | `DescribeAvailabilityZones` | 11 |
+| *ec2* | `DescribeAvailabilityZones` | 12 |
 | *ec2* | `DescribeBundleTasks` | 0 |
 | *ec2* | `DescribeByoipCidrs` | 0 |
 | *ec2* | `DescribeCapacityReservations` | 1 |
 | *ec2* | `DescribeClassicLinkInstances` | 0 |
+| *ec2* | `DescribeClientVpnAuthorizationRules` | 0 |
+| *ec2* | `DescribeClientVpnConnections` | 0 |
+| *ec2* | `DescribeClientVpnEndpoints` | 0 |
+| *ec2* | `DescribeClientVpnRoutes` | 0 |
+| *ec2* | `DescribeClientVpnTargetNetworks` | 0 |
 | *ec2* | `DescribeConversionTasks` | 0 |
 | *ec2* | `DescribeCustomerGateways` | 2 |
 | *ec2* | `DescribeDhcpOptions` | 4 |
@@ -2541,7 +2657,7 @@
 | *ec2* | `DescribeScheduledInstanceAvailability` | 0 |
 | *ec2* | `DescribeScheduledInstances` | 0 |
 | *ec2* | `DescribeSecurityGroupReferences` | 0 |
-| *ec2* | `DescribeSecurityGroups` | 20 |
+| *ec2* | `DescribeSecurityGroups` | 21 |
 | *ec2* | `DescribeSnapshotAttribute` | 1 |
 | *ec2* | `DescribeSnapshots` | 3 |
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
@@ -2551,7 +2667,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DescribeSpotPriceHistory` | 1 |
 | *ec2* | `DescribeStaleSecurityGroups` | 2 |
-| *ec2* | `DescribeSubnets` | 18 |
+| *ec2* | `DescribeSubnets` | 19 |
 | *ec2* | `DescribeTags` | 2 |
 | *ec2* | `DescribeTransitGatewayAttachments` | 0 |
 | *ec2* | `DescribeTransitGatewayRouteTables` | 1 |
@@ -2571,7 +2687,7 @@
 | *ec2* | `DescribeVpcEndpointServices` | 2 |
 | *ec2* | `DescribeVpcEndpoints` | 3 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 26 |
+| *ec2* | `DescribeVpcs` | 27 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 2 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -2584,6 +2700,7 @@
 | *ec2* | `DisableVpcClassicLink` | 0 |
 | *ec2* | `DisableVpcClassicLinkDnsSupport` | 0 |
 | *ec2* | `DisassociateAddress` | 1 |
+| *ec2* | `DisassociateClientVpnTargetNetwork` | 0 |
 | *ec2* | `DisassociateIamInstanceProfile` | 0 |
 | *ec2* | `DisassociateRouteTable` | 0 |
 | *ec2* | `DisassociateSubnetCidrBlock` | 0 |
@@ -2594,6 +2711,8 @@
 | *ec2* | `EnableVolumeIO` | 0 |
 | *ec2* | `EnableVpcClassicLink` | 0 |
 | *ec2* | `EnableVpcClassicLinkDnsSupport` | 0 |
+| *ec2* | `ExportClientVpnClientCertificateRevocationList` | 0 |
+| *ec2* | `ExportClientVpnClientConfiguration` | 0 |
 | *ec2* | `ExportTransitGatewayRoutes` | 0 |
 | *ec2* | `GetConsoleOutput` | 0 |
 | *ec2* | `GetConsoleScreenshot` | 0 |
@@ -2604,12 +2723,14 @@
 | *ec2* | `GetTransitGatewayAttachmentPropagations` | 0 |
 | *ec2* | `GetTransitGatewayRouteTableAssociations` | 1 |
 | *ec2* | `GetTransitGatewayRouteTablePropagations` | 1 |
+| *ec2* | `ImportClientVpnClientCertificateRevocationList` | 0 |
 | *ec2* | `ImportImage` | 0 |
 | *ec2* | `ImportInstance` | 0 |
 | *ec2* | `ImportKeyPair` | 1 |
 | *ec2* | `ImportSnapshot` | 0 |
 | *ec2* | `ImportVolume` | 0 |
 | *ec2* | `ModifyCapacityReservation` | 0 |
+| *ec2* | `ModifyClientVpnEndpoint` | 0 |
 | *ec2* | `ModifyFleet` | 0 |
 | *ec2* | `ModifyFpgaImageAttribute` | 0 |
 | *ec2* | `ModifyHosts` | 0 |
@@ -2664,6 +2785,7 @@
 | *ec2* | `ResetNetworkInterfaceAttribute` | 0 |
 | *ec2* | `ResetSnapshotAttribute` | 0 |
 | *ec2* | `RestoreAddressToClassic` | 0 |
+| *ec2* | `RevokeClientVpnIngress` | 0 |
 | *ec2* | `RevokeSecurityGroupEgress` | 0 |
 | *ec2* | `RevokeSecurityGroupIngress` | 1 |
 | *ec2* | `RunInstances` | 1 |
@@ -2671,6 +2793,7 @@
 | *ec2* | `SearchTransitGatewayRoutes` | 1 |
 | *ec2* | `StartInstances` | 1 |
 | *ec2* | `StopInstances` | 1 |
+| *ec2* | `TerminateClientVpnConnections` | 0 |
 | *ec2* | `TerminateInstances` | 1 |
 | *ec2* | `UnassignIpv6Addresses` | 0 |
 | *ec2* | `UnassignPrivateIpAddresses` | 0 |
@@ -2695,10 +2818,13 @@
 | *ecr* | `GetRepositoryPolicy` | 0 |
 | *ecr* | `InitiateLayerUpload` | 0 |
 | *ecr* | `ListImages` | 0 |
+| *ecr* | `ListTagsForResource` | 0 |
 | *ecr* | `PutImage` | 0 |
 | *ecr* | `PutLifecyclePolicy` | 0 |
 | *ecr* | `SetRepositoryPolicy` | 0 |
 | *ecr* | `StartLifecyclePolicyPreview` | 0 |
+| *ecr* | `TagResource` | 0 |
+| *ecr* | `UntagResource` | 0 |
 | *ecr* | `UploadLayerPart` | 0 |
 | *ecs* | `CreateCluster` | 1 |
 | *ecs* | `CreateService` | 1 |
@@ -3870,7 +3996,7 @@
 | *kms* | `DeleteCustomKeyStore` | 0 |
 | *kms* | `DeleteImportedKeyMaterial` | 0 |
 | *kms* | `DescribeCustomKeyStores` | 0 |
-| *kms* | `DescribeKey` | 6 |
+| *kms* | `DescribeKey` | 7 |
 | *kms* | `DisableKey` | 0 |
 | *kms* | `DisableKeyRotation` | 0 |
 | *kms* | `DisconnectCustomKeyStore` | 0 |
@@ -5731,11 +5857,14 @@
 | *stepfunctions* | `ListActivities` | 1 |
 | *stepfunctions* | `ListExecutions` | 0 |
 | *stepfunctions* | `ListStateMachines` | 2 |
+| *stepfunctions* | `ListTagsForResource` | 0 |
 | *stepfunctions* | `SendTaskFailure` | 0 |
 | *stepfunctions* | `SendTaskHeartbeat` | 0 |
 | *stepfunctions* | `SendTaskSuccess` | 0 |
 | *stepfunctions* | `StartExecution` | 0 |
 | *stepfunctions* | `StopExecution` | 0 |
+| *stepfunctions* | `TagResource` | 0 |
+| *stepfunctions* | `UntagResource` | 0 |
 | *stepfunctions* | `UpdateStateMachine` | 0 |
 | *storagegateway* | `ActivateGateway` | 1 |
 | *storagegateway* | `AddCache` | 1 |
@@ -6165,8 +6294,8 @@
 | *xray* | `UpdateSamplingRule` | 0 |
 
 
-**Total Services: 166**
+**Total Services: 169**
 
-**Total Operations: 5255**
+**Total Operations: 5379**
 
-**Total Unique Occurances: 1054 (20%)**
+**Total Unique Occurances: 1066 (19%)**

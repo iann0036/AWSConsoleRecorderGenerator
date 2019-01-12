@@ -20043,152 +20043,162 @@ function analyseRequest(details) {
     // autogen:cognito-idp:cognito-idp.CreateUserPool
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cognito\/data\/signin\/pool$/g)) {
         var pools = JSON.parse(jsonRequestBody.pool);
-        for (var i=0; i<pools.length; i++) {
+
+        function processPool(pool) {
+            reqParams = {
+                'boto3': {},
+                'go': {},
+                'cfn': {},
+                'cli': {},
+                'tf': {},
+                'iam': {}
+            };
+
             reqParams.iam['Resource'] = [
                 "arn:aws:cognito-idp:*:*:userpool/*"
             ];
 
-            reqParams.boto3['PoolName'] = pools[i].name;
-            reqParams.cli['--pool-name'] = pools[i].name;
+            reqParams.boto3['PoolName'] = pool.name;
+            reqParams.cli['--pool-name'] = pool.name;
             reqParams.boto3['Policies'] = {
                 'PasswordPolicy': {
-                    'MinimumLength': pools[i].passPolicyMinLength,
-                    'RequireUppercase': pools[i].passPolicyRequireUppercase,
-                    'RequireLowercase': pools[i].passPolicyRequireLowercase,
-                    'RequireNumbers': pools[i].passPolicyRequireNumbers,
-                    'RequireSymbols': pools[i].passPolicyRequireSymbols
+                    'MinimumLength': pool.passPolicyMinLength,
+                    'RequireUppercase': pool.passPolicyRequireUppercase,
+                    'RequireLowercase': pool.passPolicyRequireLowercase,
+                    'RequireNumbers': pool.passPolicyRequireNumbers,
+                    'RequireSymbols': pool.passPolicyRequireSymbols
                 }
             };
             reqParams.cli['--policies'] = {
                 'PasswordPolicy': {
-                    'MinimumLength': pools[i].passPolicyMinLength,
-                    'RequireUppercase': pools[i].passPolicyRequireUppercase,
-                    'RequireLowercase': pools[i].passPolicyRequireLowercase,
-                    'RequireNumbers': pools[i].passPolicyRequireNumbers,
-                    'RequireSymbols': pools[i].passPolicyRequireSymbols
+                    'MinimumLength': pool.passPolicyMinLength,
+                    'RequireUppercase': pool.passPolicyRequireUppercase,
+                    'RequireLowercase': pool.passPolicyRequireLowercase,
+                    'RequireNumbers': pool.passPolicyRequireNumbers,
+                    'RequireSymbols': pool.passPolicyRequireSymbols
                 }
             };
             reqParams.boto3['AutoVerifiedAttributes'] = [];
             reqParams.cli['--auto-verified-attributes'] = [];
-            if (pools[i].verifySMS == false) {
+            if (pool.verifySMS == false) {
                 reqParams.boto3['AutoVerifiedAttributes'].push("phone_number");
                 reqParams.cli['--auto-verified-attributes'].push("phone_number");
             }
-            if (pools[i].verifyEmail == false) {
+            if (pool.verifyEmail == false) {
                 reqParams.boto3['AutoVerifiedAttributes'].push("email");
                 reqParams.cli['--auto-verified-attributes'].push("email");
             }
-            reqParams.boto3['AliasAttributes'] = pools[i].aliasAttributes;
-            reqParams.cli['--alias-attributes'] = pools[i].aliasAttributes;
-            reqParams.boto3['UsernameAttributes'] = pools[i].usernameAttributes;
-            reqParams.cli['--username-attributes'] = pools[i].usernameAttributes;
-            reqParams.boto3['SmsVerificationMessage'] = pools[i].smsVerificationMessage;
-            reqParams.cli['--sms-verification-message'] = pools[i].smsVerificationMessage;
-            reqParams.boto3['EmailVerificationMessage'] = pools[i].emailVerificationMessage;
-            reqParams.cli['--email-verification-message'] = pools[i].emailVerificationMessage;
-            reqParams.boto3['EmailVerificationSubject'] = pools[i].emailVerificationSubject;
-            reqParams.cli['--email-verification-subject'] = pools[i].emailVerificationSubject;
+            reqParams.boto3['AliasAttributes'] = pool.aliasAttributes;
+            reqParams.cli['--alias-attributes'] = pool.aliasAttributes;
+            reqParams.boto3['UsernameAttributes'] = pool.usernameAttributes;
+            reqParams.cli['--username-attributes'] = pool.usernameAttributes;
+            reqParams.boto3['SmsVerificationMessage'] = pool.smsVerificationMessage;
+            reqParams.cli['--sms-verification-message'] = pool.smsVerificationMessage;
+            reqParams.boto3['EmailVerificationMessage'] = pool.emailVerificationMessage;
+            reqParams.cli['--email-verification-message'] = pool.emailVerificationMessage;
+            reqParams.boto3['EmailVerificationSubject'] = pool.emailVerificationSubject;
+            reqParams.cli['--email-verification-subject'] = pool.emailVerificationSubject;
             reqParams.boto3['VerificationMessageTemplate'] = {
-                'SmsMessage': pools[i].smsVerificationMessage,
-                'EmailMessage': pools[i].emailVerificationMessage,
-                'EmailSubject': pools[i].emailVerificationSubject,
-                'EmailMessageByLink': pools[i].emailVerificationMessageByLink,
-                'EmailSubjectByLink': pools[i].emailVerificationSubjectByLink,
-                'DefaultEmailOption': pools[i].defaultEmailOption
+                'SmsMessage': pool.smsVerificationMessage,
+                'EmailMessage': pool.emailVerificationMessage,
+                'EmailSubject': pool.emailVerificationSubject,
+                'EmailMessageByLink': pool.emailVerificationMessageByLink,
+                'EmailSubjectByLink': pool.emailVerificationSubjectByLink,
+                'DefaultEmailOption': pool.defaultEmailOption
             };
             reqParams.cli['--verification-message-template'] = {
-                'SmsMessage': pools[i].smsVerificationMessage,
-                'EmailMessage': pools[i].emailVerificationMessage,
-                'EmailSubject': pools[i].emailVerificationSubject,
-                'EmailMessageByLink': pools[i].emailVerificationMessageByLink,
-                'EmailSubjectByLink': pools[i].emailVerificationSubjectByLink,
-                'DefaultEmailOption': pools[i].defaultEmailOption
+                'SmsMessage': pool.smsVerificationMessage,
+                'EmailMessage': pool.emailVerificationMessage,
+                'EmailSubject': pool.emailVerificationSubject,
+                'EmailMessageByLink': pool.emailVerificationMessageByLink,
+                'EmailSubjectByLink': pool.emailVerificationSubjectByLink,
+                'DefaultEmailOption': pool.defaultEmailOption
             };
-            reqParams.boto3['MfaConfiguration'] = pools[i].mfaEnabledLevel;
-            reqParams.cli['--mfa-configuration'] = pools[i].mfaEnabledLevel;
+            reqParams.boto3['MfaConfiguration'] = pool.mfaEnabledLevel;
+            reqParams.cli['--mfa-configuration'] = pool.mfaEnabledLevel;
             reqParams.boto3['DeviceConfiguration'] = {
-                'ChallengeRequiredOnNewDevice': pools[i].challengeRequiredOnNewDevice,
-                'DeviceOnlyRememberedOnUserPrompt': pools[i].deviceOnlyRememberedOnUserPrompt
+                'ChallengeRequiredOnNewDevice': pool.challengeRequiredOnNewDevice,
+                'DeviceOnlyRememberedOnUserPrompt': pool.deviceOnlyRememberedOnUserPrompt
             };
             reqParams.cli['--device-configuration'] = {
-                'ChallengeRequiredOnNewDevice': pools[i].challengeRequiredOnNewDevice,
-                'DeviceOnlyRememberedOnUserPrompt': pools[i].deviceOnlyRememberedOnUserPrompt
+                'ChallengeRequiredOnNewDevice': pool.challengeRequiredOnNewDevice,
+                'DeviceOnlyRememberedOnUserPrompt': pool.deviceOnlyRememberedOnUserPrompt
             };
             reqParams.boto3['EmailConfiguration'] = {
-                'SourceArn': pools[i].fromEmailAddressArn,
-                'ReplyToEmailAddress': pools[i].replyToEmailAddress
+                'SourceArn': pool.fromEmailAddressArn,
+                'ReplyToEmailAddress': pool.replyToEmailAddress
             };
             reqParams.cli['--email-configuration'] = {
-                'SourceArn': pools[i].fromEmailAddressArn,
-                'ReplyToEmailAddress': pools[i].replyToEmailAddress
+                'SourceArn': pool.fromEmailAddressArn,
+                'ReplyToEmailAddress': pool.replyToEmailAddress
             };
             reqParams.boto3['SmsConfiguration'] = {
-                'SnsCallerArn': pools[i].snsCallerArn,
-                'ExternalId': pools[i].externalId
+                'SnsCallerArn': pool.snsCallerArn,
+                'ExternalId': pool.externalId
             };
             reqParams.cli['--sms-configuration'] = {
-                'SnsCallerArn': pools[i].snsCallerArn,
-                'ExternalId': pools[i].externalId
+                'SnsCallerArn': pool.snsCallerArn,
+                'ExternalId': pool.externalId
             };
             reqParams.boto3['UserPoolTags'] = {};
             reqParams.cli['--user-pool-tags'] = {};
-            for (var j=0; j<pools[i].userpoolTags.length; j++) {
-                reqParams.boto3['UserPoolTags'][pools[i].userpoolTags[j].tagName] = pools[i].userpoolTags[j].tagValue;
-                reqParams.cli['--user-pool-tags'][pools[i].userpoolTags[j].tagName] = pools[i].userpoolTags[j].tagValue;
+            for (var j=0; j<pool.userpoolTags.length; j++) {
+                reqParams.boto3['UserPoolTags'][pool.userpoolTags[j].tagName] = pool.userpoolTags[j].tagValue;
+                reqParams.cli['--user-pool-tags'][pool.userpoolTags[j].tagName] = pool.userpoolTags[j].tagValue;
             }
             reqParams.boto3['AdminCreateUserConfig'] = {
-                'AllowAdminCreateUserOnly': pools[i].allowAdminCreateUserOnly,
-                'UnusedAccountValidityDays': pools[i].adminCreateUserUnusedAccountValidityDays
+                'AllowAdminCreateUserOnly': pool.allowAdminCreateUserOnly,
+                'UnusedAccountValidityDays': pool.adminCreateUserUnusedAccountValidityDays
             };
             reqParams.cli['--admin-create-user-config'] = {
-                'AllowAdminCreateUserOnly': pools[i].allowAdminCreateUserOnly,
-                'UnusedAccountValidityDays': pools[i].adminCreateUserUnusedAccountValidityDays
+                'AllowAdminCreateUserOnly': pool.allowAdminCreateUserOnly,
+                'UnusedAccountValidityDays': pool.adminCreateUserUnusedAccountValidityDays
             };
             reqParams.boto3['Schema'] = [];
             reqParams.cli['--schema'] = [];
-            for (var j=0; j<pools[i].customAttributes.length; j++) {
+            for (var j=0; j<pool.customAttributes.length; j++) {
                 reqParams.boto3['Schema'].push({
-                    'Name': pools[i].customAttributes[j].name,
-                    'AttributeDataType': pools[i].customAttributes[j].dataType,
-                    'Mutable': pools[i].customAttributes[j].mutable,
+                    'Name': pool.customAttributes[j].name,
+                    'AttributeDataType': pool.customAttributes[j].dataType,
+                    'Mutable': pool.customAttributes[j].mutable,
                     'NumberAttributeConstraints': {
-                        'MinValue': pools[i].customAttributes[j].numMinValue,
-                        'MaxValue': pools[i].customAttributes[j].numMaxValue
+                        'MinValue': pool.customAttributes[j].numMinValue,
+                        'MaxValue': pool.customAttributes[j].numMaxValue
                     },
                     'StringAttributeConstraints': {
-                        'MinLength': pools[i].customAttributes[j].strMinLength,
-                        'MaxLength': pools[i].customAttributes[j].strMaxLength
+                        'MinLength': pool.customAttributes[j].strMinLength,
+                        'MaxLength': pool.customAttributes[j].strMaxLength
                     }
                 });
                 reqParams.cli['--schema'].push({
-                    'Name': pools[i].customAttributes[j].name,
-                    'AttributeDataType': pools[i].customAttributes[j].dataType,
-                    'Mutable': pools[i].customAttributes[j].mutable,
+                    'Name': pool.customAttributes[j].name,
+                    'AttributeDataType': pool.customAttributes[j].dataType,
+                    'Mutable': pool.customAttributes[j].mutable,
                     'NumberAttributeConstraints': {
-                        'MinValue': pools[i].customAttributes[j].numMinValue,
-                        'MaxValue': pools[i].customAttributes[j].numMaxValue
+                        'MinValue': pool.customAttributes[j].numMinValue,
+                        'MaxValue': pool.customAttributes[j].numMaxValue
                     },
                     'StringAttributeConstraints': {
-                        'MinLength': pools[i].customAttributes[j].strMinLength,
-                        'MaxLength': pools[i].customAttributes[j].strMaxLength
+                        'MinLength': pool.customAttributes[j].strMinLength,
+                        'MaxLength': pool.customAttributes[j].strMaxLength
                     }
                 });
             }
 
             reqParams.cfn['AdminCreateUserConfig'] = reqParams.boto3['AdminCreateUserConfig'];
-            reqParams.cfn['AliasAttributes'] = pools[i].aliasAttributes;
+            reqParams.cfn['AliasAttributes'] = pool.aliasAttributes;
             reqParams.cfn['AutoVerifiedAttributes'] = reqParams.boto3['AutoVerifiedAttributes'];
             reqParams.cfn['DeviceConfiguration'] = reqParams.boto3['DeviceConfiguration'];
             reqParams.cfn['EmailConfiguration'] = reqParams.boto3['EmailConfiguration'];
-            reqParams.cfn['EmailVerificationMessage'] = pools[i].emailVerificationMessage;
-            reqParams.cfn['EmailVerificationSubject'] = pools[i].emailVerificationSubject;
-            reqParams.cfn['MfaConfiguration'] = pools[i].mfaEnabledLevel;
+            reqParams.cfn['EmailVerificationMessage'] = pool.emailVerificationMessage;
+            reqParams.cfn['EmailVerificationSubject'] = pool.emailVerificationSubject;
+            reqParams.cfn['MfaConfiguration'] = pool.mfaEnabledLevel;
             reqParams.cfn['Policies'] = reqParams.boto3['Policies'];
             reqParams.cfn['Schema'] = reqParams.boto3['Schema'];
             reqParams.cfn['SmsConfiguration'] = reqParams.boto3['SmsConfiguration'];
-            reqParams.cfn['SmsVerificationMessage'] = pools[i].smsVerificationMessage;
-            reqParams.cfn['UsernameAttributes'] = pools[i].usernameAttributes;
-            reqParams.cfn['UserPoolName'] = pools[i].name;
+            reqParams.cfn['SmsVerificationMessage'] = pool.smsVerificationMessage;
+            reqParams.cfn['UsernameAttributes'] = pool.usernameAttributes;
+            reqParams.cfn['UserPoolName'] = pool.name;
             reqParams.cfn['UserPoolTags'] = reqParams.boto3['UserPoolTags'];
 
             outputs.push({
@@ -20213,7 +20223,7 @@ function analyseRequest(details) {
                 'was_blocked': blocking
             });
 
-            for (var j=0; j<pools[i].userPoolClients.length; j++) {
+            for (var j=0; j<pool.userPoolClients.length; j++) {
                 reqParams = {
                     'boto3': {},
                     'go': {},
@@ -20225,11 +20235,19 @@ function analyseRequest(details) {
 
                 // TODO
             }
+        }
 
-            if (blocking) {
-                notifyBlocked();
-                return {cancel: true};
+        if (Array.isArray(pools)) {
+            for (var i=0; i<pools.length; i++) {
+                processPool(pools[i]);
             }
+        } else {
+            processPool(pools);
+        }
+
+        if (blocking) {
+            notifyBlocked();
+            return {cancel: true};
         }
         
         return {};
@@ -20357,7 +20375,7 @@ function analyseRequest(details) {
     // autogen:cognito-idp:cognito-idp.AdminCreateUser
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cognito\/data\/signin\/user$/g)) {
         reqParams.iam['Resource'] = [
-            "arn:aws:cognito-idp:*:*:userpool/" + jsonRequestBody.id[0]
+            "arn:aws:cognito-idp:*:*:userpool/" + jsonRequestBody.poolId[0]
         ];
 
         reqParams.boto3['UserAttributes'] = [];
@@ -41448,6 +41466,734 @@ function analyseRequest(details) {
             },
             'options': reqParams,
             'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.DescribeDBClusters
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "describeDBClusters") {
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'DescribeDBClusters',
+                'boto3': 'describe_db_clusters',
+                'cli': 'describe-db-clusters'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.DescribePendingMaintenanceActions
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "describePendingMaintenanceActions") {
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'DescribePendingMaintenanceActions',
+                'boto3': 'describe_pending_maintenance_actions',
+                'cli': 'describe-pending-maintenance-actions'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.DescribeDBSubnetGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "describeDBSubnetGroups") {
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'DescribeDBSubnetGroups',
+                'boto3': 'describe_db_subnet_groups',
+                'cli': 'describe-db-subnet-groups'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:ec2.DescribeSecurityGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/ec2$/g) && jsonRequestBody.operation == "describeSecurityGroups") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSecurityGroups',
+                'boto3': 'describe_security_groups',
+                'cli': 'describe-security-groups'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.DescribeDBClusterParameterGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "describeDBClusterParameterGroups") {
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'DescribeDBClusterParameterGroups',
+                'boto3': 'describe_db_cluster_parameter_groups',
+                'cli': 'describe-db-cluster-parameter-groups'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/ec2$/g) && jsonRequestBody.operation == "describeVpcs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/ec2$/g) && jsonRequestBody.operation == "describeSubnets") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:ec2.DescribeAvailabilityZones
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/ec2$/g) && jsonRequestBody.operation == "describeAvailabilityZones") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeAvailabilityZones',
+                'boto3': 'describe_availability_zones',
+                'cli': 'describe-availability-zones'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.CreateDBSubnetGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "createDBSubnetGroup") {
+        var splitContentString = JSON.parse('{"' + decodeURI(jsonRequestBody.contentString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+        
+        reqParams.boto3['SubnetIds'] = [];
+        reqParams.cli['--subnet-ids'] = [];
+        reqParams.boto3['DBSubnetGroupDescription'] = splitContentString.DBSubnetGroupDescription;
+        reqParams.cli['--db-subnet-group-description'] = splitContentString.DBSubnetGroupDescription;
+        reqParams.boto3['DBSubnetGroupName'] = splitContentString.DBSubnetGroupName;
+        reqParams.cli['--db-subnet-group-name'] = splitContentString.DBSubnetGroupName;
+
+        reqParams.cfn['SubnetIds'] = [];
+        reqParams.cfn['DBSubnetGroupDescription'] = splitContentString.DBSubnetGroupDescription;
+        reqParams.cfn['DBSubnetGroupName'] = splitContentString.DBSubnetGroupName;
+
+        var i=1;
+        while (splitContentString['SubnetIds.SubnetIdentifier.' + i]) {
+            reqParams.boto3['SubnetIds'].push(splitContentString['SubnetIds.SubnetIdentifier.' + i]);
+            reqParams.cli['--subnet-ids'].push(splitContentString['SubnetIds.SubnetIdentifier.' + i]);
+            reqParams.cfn['SubnetIds'].push(splitContentString['SubnetIds.SubnetIdentifier.' + i]);
+            i++;
+        }
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'CreateDBSubnetGroup',
+                'boto3': 'create_db_subnet_group',
+                'cli': 'create-db-subnet-group'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('docdb', details.requestId),
+            'region': region,
+            'service': 'docdb',
+            'type': 'AWS::DocDB::DBSubnetGroup',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.CreateDBClusterParameterGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "createDBClusterParameterGroup") {
+        var splitContentString = JSON.parse('{"' + decodeURI(jsonRequestBody.contentString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+
+        reqParams.boto3['Description'] = splitContentString.Description;
+        reqParams.cli['--description'] = splitContentString.Description;
+        reqParams.boto3['DBParameterGroupFamily'] = splitContentString.DBParameterGroupFamily;
+        reqParams.cli['--db-parameter-group-family'] = splitContentString.DBParameterGroupFamily;
+        reqParams.boto3['DBClusterParameterGroupName'] = splitContentString.DBClusterParameterGroupName;
+        reqParams.cli['--db-cluster-parameter-group-name'] = splitContentString.DBClusterParameterGroupName;
+
+        reqParams.cfn['Description'] = splitContentString.Description;
+        reqParams.cfn['Family'] = splitContentString.DBParameterGroupFamily;
+        reqParams.cfn['Name'] = splitContentString.DBClusterParameterGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'CreateDBClusterParameterGroup',
+                'boto3': 'create_db_cluster_parameter_group',
+                'cli': 'create-db-cluster-parameter-group'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('docdb', details.requestId),
+            'region': region,
+            'service': 'docdb',
+            'type': 'AWS::DocDB::DBClusterParameterGroup',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:kms.DescribeKey
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/kms$/g) && jsonRequestBody.operation == "describeKey") {
+        reqParams.boto3['KeyId'] = jsonRequestBody.contentString.KeyId;
+        reqParams.cli['--key-id'] = jsonRequestBody.contentString.KeyId;
+
+        outputs.push({
+            'region': region,
+            'service': 'kms',
+            'method': {
+                'api': 'DescribeKey',
+                'boto3': 'describe_key',
+                'cli': 'describe-key'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.CreateDBCluster
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "createDBCluster") {
+        var splitContentString = JSON.parse('{"' + decodeURI(jsonRequestBody.contentString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+
+        reqParams.boto3['EngineVersion'] = splitContentString.EngineVersion;
+        reqParams.cli['--engine-version'] = splitContentString.EngineVersion;
+        reqParams.boto3['Engine'] = splitContentString.Engine;
+        reqParams.cli['--engine'] = splitContentString.Engine;
+        reqParams.boto3['DBSubnetGroupName'] = splitContentString.DBSubnetGroupName;
+        reqParams.cli['--db-subnet-group-name'] = splitContentString.DBSubnetGroupName;
+        reqParams.boto3['DBClusterParameterGroupName'] = splitContentString.DBClusterParameterGroupName;
+        reqParams.cli['--db-cluster-parameter-group-name'] = splitContentString.DBClusterParameterGroupName;
+        reqParams.boto3['DBClusterIdentifier'] = splitContentString.DBClusterIdentifier;
+        reqParams.cli['--db-cluster-identifier'] = splitContentString.DBClusterIdentifier;
+        reqParams.boto3['BackupRetentionPeriod'] = splitContentString.BackupRetentionPeriod;
+        reqParams.cli['--backup-retention-period'] = splitContentString.BackupRetentionPeriod;
+        reqParams.boto3['KmsKeyId'] = splitContentString.KmsKeyId;
+        reqParams.cli['--kms-key-id'] = splitContentString.KmsKeyId;
+        reqParams.boto3['StorageEncrypted'] = splitContentString.StorageEncrypted;
+        reqParams.cli['--storage-encrypted'] = splitContentString.StorageEncrypted;
+        reqParams.boto3['PreferredMaintenanceWindow'] = splitContentString.PreferredMaintenanceWindow;
+        reqParams.cli['--preferred-maintenance-window'] = splitContentString.PreferredMaintenanceWindow;
+        reqParams.boto3['PreferredBackupWindow'] = splitContentString.PreferredBackupWindow;
+        reqParams.cli['--preferred-backup-window'] = splitContentString.PreferredBackupWindow;
+        reqParams.boto3['MasterUserPassword'] = splitContentString.MasterUserPassword;
+        reqParams.cli['--master-user-password'] = splitContentString.MasterUserPassword;
+        reqParams.boto3['MasterUsername'] = splitContentString.MasterUsername;
+        reqParams.cli['--master-username'] = splitContentString.MasterUsername;
+        reqParams.boto3['Port'] = splitContentString.Port;
+        reqParams.cli['--port'] = splitContentString.Port;
+
+        reqParams.cfn['EngineVersion'] = splitContentString.EngineVersion;
+        reqParams.cfn['DBSubnetGroupName'] = splitContentString.DBSubnetGroupName;
+        reqParams.cfn['DBClusterParameterGroupName'] = splitContentString.DBClusterParameterGroupName;
+        reqParams.cfn['DBClusterIdentifier'] = splitContentString.DBClusterIdentifier;
+        reqParams.cfn['BackupRetentionPeriod'] = splitContentString.BackupRetentionPeriod;
+        reqParams.cfn['KmsKeyId'] = splitContentString.KmsKeyId;
+        reqParams.cfn['StorageEncrypted'] = splitContentString.StorageEncrypted;
+        reqParams.cfn['PreferredMaintenanceWindow'] = splitContentString.PreferredMaintenanceWindow;
+        reqParams.cfn['PreferredBackupWindow'] = splitContentString.PreferredBackupWindow;
+        reqParams.cfn['MasterUserPassword'] = splitContentString.MasterUserPassword;
+        reqParams.cfn['MasterUsername'] = splitContentString.MasterUsername;
+        reqParams.cfn['Port'] = splitContentString.Port;
+
+        if (splitContentString['VpcSecurityGroupIds.VpcSecurityGroupId.1']) {
+            reqParams.boto3['VpcSecurityGroupIds'] = [];
+            reqParams.cli['--vpc-security-group-ids'] = [];
+
+            var i=1;
+            while (splitContentString['VpcSecurityGroupIds.VpcSecurityGroupId.' + i]) {
+                reqParams.boto3['VpcSecurityGroupIds'].push(splitContentString['VpcSecurityGroupIds.VpcSecurityGroupId.' + i]);
+                reqParams.cli['--vpc-security-group-ids'].push(splitContentString['VpcSecurityGroupIds.VpcSecurityGroupId.' + i]);
+                i++;
+            }
+        }
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'CreateDBCluster',
+                'boto3': 'create_db_cluster',
+                'cli': 'create-db-cluster'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('docdb', details.requestId),
+            'region': region,
+            'service': 'docdb',
+            'type': 'AWS::DocDB::DBCluster',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.CreateDBInstance
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "createDBInstance") {
+        var splitContentString = JSON.parse('{"' + decodeURI(jsonRequestBody.contentString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+
+        reqParams.boto3['DBClusterIdentifier'] = splitContentString.DBClusterIdentifier;
+        reqParams.cli['--db-cluster-identifier'] = splitContentString.DBClusterIdentifier;
+        reqParams.boto3['Engine'] = splitContentString.Engine;
+        reqParams.cli['--engine'] = splitContentString.Engine;
+        reqParams.boto3['DBInstanceClass'] = splitContentString.DBInstanceClass;
+        reqParams.cli['--db-instance-class'] = splitContentString.DBInstanceClass;
+        reqParams.boto3['DBInstanceIdentifier'] = splitContentString.DBInstanceIdentifier;
+        reqParams.cli['--db-instance-identifier'] = splitContentString.DBInstanceIdentifier;
+
+        reqParams.cfn['DBClusterIdentifier'] = splitContentString.DBClusterIdentifier;
+        reqParams.cfn['DBInstanceClass'] = splitContentString.DBInstanceClass;
+        reqParams.cfn['DBInstanceIdentifier'] = splitContentString.DBInstanceIdentifier;
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'CreateDBInstance',
+                'boto3': 'create_db_instance',
+                'cli': 'create-db-instance'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('docdb', details.requestId),
+            'region': region,
+            'service': 'docdb',
+            'type': 'AWS::DocDB::DBInstance',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.DeleteDBInstance
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "deleteDBInstance") {
+        var splitContentString = JSON.parse('{"' + decodeURI(jsonRequestBody.contentString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+
+        reqParams.boto3['DBInstanceIdentifier'] = splitContentString.DBInstanceIdentifier;
+        reqParams.cli['--db-instance-identifier'] = splitContentString.DBInstanceIdentifier;
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'DeleteDBInstance',
+                'boto3': 'delete_db_instance',
+                'cli': 'delete-db-instance'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.DeleteDBCluster
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "deleteDBCluster") {
+        var splitContentString = JSON.parse('{"' + decodeURI(jsonRequestBody.contentString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+
+        reqParams.boto3['FinalDBSnapshotIdentifier'] = splitContentString.FinalDBSnapshotIdentifier;
+        reqParams.cli['--final-db-snapshot-identifier'] = splitContentString.FinalDBSnapshotIdentifier;
+        reqParams.boto3['DBClusterIdentifier'] = splitContentString.DBClusterIdentifier;
+        reqParams.cli['--db-cluster-identifier'] = splitContentString.DBClusterIdentifier;
+        reqParams.boto3['SkipFinalSnapshot'] = splitContentString.SkipFinalSnapshot;
+        reqParams.cli['--skip-final-snapshot'] = splitContentString.SkipFinalSnapshot;
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'DeleteDBCluster',
+                'boto3': 'delete_db_cluster',
+                'cli': 'delete-db-cluster'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.DeleteDBSubnetGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "deleteDBSubnetGroup") {
+        var splitContentString = JSON.parse('{"' + decodeURI(jsonRequestBody.contentString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+
+        reqParams.boto3['DBSubnetGroupName'] = splitContentString.DBSubnetGroupName;
+        reqParams.cli['--db-subnet-group-name'] = splitContentString.DBSubnetGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'DeleteDBSubnetGroup',
+                'boto3': 'delete_db_subnet_group',
+                'cli': 'delete-db-subnet-group'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:docdb:docdb.DeleteDBClusterParameterGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/docdb\/api\/rds$/g) && jsonRequestBody.operation == "deleteDBClusterParameterGroup") {
+        var splitContentString = JSON.parse('{"' + decodeURI(jsonRequestBody.contentString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+
+        reqParams.boto3['DBClusterParameterGroupName'] = splitContentString.DBClusterParameterGroupName;
+        reqParams.cli['--db-cluster-parameter-group-name'] = splitContentString.DBClusterParameterGroupName;
+
+        outputs.push({
+            'region': region,
+            'service': 'docdb',
+            'method': {
+                'api': 'DeleteDBClusterParameterGroup',
+                'boto3': 'delete_db_cluster_parameter_group',
+                'cli': 'delete-db-cluster-parameter-group'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:cloudfront:cloudfront.CreateDistribution
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cloudfront\/cloudfrontconsole\/service\/distribution$/g) && gwtRequest['method'] == "createDistribution" && gwtRequest['service'] == "com.amazonaws.cloudfront.console.shared.service.DistributionService") {
+        var aliases = null;
+        if (gwtRequest.args[0].value.aliases.items.value.length) {
+            aliases = [];
+            for (var i=0; i<gwtRequest.args[0].value.aliases.items.value.length; i++) {
+                aliases.push(gwtRequest.args[0].value.aliases.items.value[i].value);
+            }
+            reqParams.cfn['Aliases'] = aliases;
+        }
+
+        var origins = [];
+        var origins_cfn = [];
+        for (var i=0; i<gwtRequest.args[0].value.origins.origins.value.length; i++) {
+            var customheaders = null;
+
+            var origin = {
+                'Id': gwtRequest.args[0].value.origins.origins.value[i].originid,
+                'DomainName': gwtRequest.args[0].value.origins.origins.value[i].domainname,
+                'OriginPath': gwtRequest.args[0].value.origins.origins.value[i].path
+            };
+            var origin_cfn = {
+                'Id': gwtRequest.args[0].value.origins.origins.value[i].originid,
+                'DomainName': gwtRequest.args[0].value.origins.origins.value[i].domainname,
+                'OriginPath': gwtRequest.args[0].value.origins.origins.value[i].path
+            };
+
+            if (gwtRequest.args[0].value.origins.origins.value[i].customheaders && gwtRequest.args[0].value.origins.origins.value[i].customheaders.headers && Array.isArray(gwtRequest.args[0].value.origins.origins.value[i].customheaders.headers.value)) {
+                var customheaders = [];
+
+                for (var j=0; j<gwtRequest.args[0].value.origins.origins.value[i].customheaders.headers.value.length; j++) {
+                    customheaders.push({
+                        'HeaderName': gwtRequest.args[0].value.origins.origins.value[i].customheaders.headers.value[j].key,
+                        'HeaderValue': gwtRequest.args[0].value.origins.origins.value[i].customheaders.headers.value[j].value
+                    });
+                }
+
+                origin['CustomHeaders'] = {
+                    'Quantity': customheaders.length,
+                    'Items': customheaders
+                };
+                origin_cfn['OriginCustomHeaders'] = customheaders;
+
+                if (gwtRequest.args[0].value.origins.origins.value[i].s3originconfig && gwtRequest.args[0].value.origins.origins.value[i].s3originconfig.originaccessid) {
+                    origin['S3OriginConfig'] = {
+                        'OriginAccessIdentity': gwtRequest.args[0].value.origins.origins.value[i].s3originconfig.originaccessid
+                    };
+                    origin_cfn['S3OriginConfig'] = {
+                        'OriginAccessIdentity': gwtRequest.args[0].value.origins.origins.value[i].s3originconfig.originaccessid
+                    };
+                }
+
+                // TODO: CustomOriginConfig
+            }
+
+            origins.push(origin);
+            origins_cfn.push(origin_cfn);
+        }
+
+        // TODO: OriginGroups
+
+        var trustedsigners = {
+            'Enabled': gwtRequest.args[0].value.defaultcachebehaviour.trustedsigners.enabled.value
+        };
+        var trustedsigners_items = [];
+        for (var i=0; i<gwtRequest.args[0].value.defaultcachebehaviour.trustedsigners.items.length; i++) {
+            trustedsigners_items.push(gwtRequest.args[0].value.defaultcachebehaviour.trustedsigners.items[i].value);
+        }
+        if (trustedsigners_items.length) {
+            trustedsigners = {
+                'Enabled': gwtRequest.args[0].value.defaultcachebehaviour.trustedsigners.enabled.value,
+                'Quantity': trustedsigners.length,
+                'Items': trustedsigners
+            };
+        }
+
+        var allowedmethods = [];
+        for (var i=0; i<gwtRequest.args[0].value.defaultcachebehaviour.listtype1.value.length; i++) {
+            allowedmethods.push(gwtRequest.args[0].value.defaultcachebehaviour.listtype1.value[i].value);
+        }
+        var cachedmethods = [];
+        for (var i=0; i<gwtRequest.args[0].value.defaultcachebehaviour.listtype2.value.length; i++) {
+            cachedmethods.push(gwtRequest.args[0].value.defaultcachebehaviour.listtype2.value[i].value);
+        }
+        var cookies = null;
+        var cookies_cfn = null;
+        var cookienames = [];
+        for (var i=0; i<gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.cookienames.cookienames.value.length; i++) {
+            cookienames.push(gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.cookienames.cookienames.value[i].value);
+        }
+        if (cookienames.length) {
+            cookies = {
+                'Forward': gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.cookiepreference.preference,
+                'WhitelistedNames': {
+                    'Quantity': cookienames.length,
+                    'Items': cookienames
+                }
+            };
+            cookies_cfn = {
+                'Forward': gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.cookiepreference.preference,
+                'WhitelistedNames': cookienames
+            };
+        }
+        var headers = null;
+        var header_items = null;
+        if (gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.headers.headers.value) {
+            header_items = [];
+            for (var i=0; i<gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.headers.headers.value.length; i++) {
+                header_items.push(gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.headers.headers.value[i].value);
+            }
+            headers = {
+                'Quantity': header_items.length,
+                'Items': header_items
+            }
+        }
+
+        var querystringcachekeys = null;
+        var querystringcachekeys_items = null;
+        if (gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.querystringcachekeys.keys.value) {
+            querystringcachekeys_items = [];
+            for (var i=0; i<gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.querystringcachekeys.keys.value.length; i++) {
+                querystringcachekeys_items.push(gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.querystringcachekeys.keys.value[i].value);
+            }
+            querystringcachekeys = {
+                'Quantity': querystringcachekeys_items.length,
+                'Items': querystringcachekeys_items
+            }
+        }
+
+        var lambdafunctionassociations = null; // TODO
+
+        var cachebehaviours = null; // TODO
+
+        var customerrorresponses = null; // TODO
+
+        var georestriction = {
+            'RestrictionType': 'none'
+        }; // TODO
+
+        var viewercertificate = null; // TODO
+
+        var webaclid = null; // TODO
+
+        var fieldlevelencryptionid = null; // TODO
+
+        reqParams.boto3['DistributionConfig'] = {
+            'CallerReference': gwtRequest.args[0].value.timestamp,
+            'Aliases': {
+                'Quantity': aliases.length,
+                'Items': aliases
+            },
+            'DefaultRootObject': gwtRequest.args[0].value.rootobject,
+            'Origins': {
+                'Quantity': origins.length,
+                'Items': origins
+            },
+            'DefaultCacheBehavior': {
+                'TargetOriginId': gwtRequest.args[0].value.defaultcachebehaviour.targetoriginid,
+                'ForwardedValues': {
+                    'QueryString': gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.querystring.value,
+                    'Cookies': cookies,
+                    'Headers': headers,
+                    'QueryStringCacheKeys': querystringcachekeys
+                },
+                'TrustedSigners': trustedsigners,
+                'ViewerProtocolPolicy': gwtRequest.args[0].value.defaultcachebehaviour.viewerprotocolpolicy,
+                'MinTTL': gwtRequest.args[0].value.defaultcachebehaviour.minttl.value,
+                'AllowedMethods': {
+                    'Quantity': allowedmethods.length,
+                    'Items': allowedmethods,
+                    'CachedMethods': {
+                        'Quantity': cachedmethods.length,
+                        'Items': cachedmethods
+                    }
+                },
+                'SmoothStreaming': gwtRequest.args[0].value.defaultcachebehaviour.smooth.value,
+                'DefaultTTL': gwtRequest.args[0].value.defaultcachebehaviour.defaultttl.value,
+                'MaxTTL': gwtRequest.args[0].value.defaultcachebehaviour.maxttl.value,
+                'Compress': gwtRequest.args[0].value.defaultcachebehaviour.compress.value,
+                'LambdaFunctionAssociations': lambdafunctionassociations,
+                'FieldLevelEncryptionId': fieldlevelencryptionid
+            },
+            'CacheBehaviors': cachebehaviours,
+            'CustomErrorResponses': customerrorresponses,
+            'Comment': gwtRequest.args[0].value.comment,
+            'Logging': {
+                'Enabled': gwtRequest.args[0].value.loggingconfig.enabled.value,
+                'IncludeCookies': gwtRequest.args[0].value.loggingconfig.includecookies.value,
+                'Bucket': gwtRequest.args[0].value.loggingconfig.bucket,
+                'Prefix': gwtRequest.args[0].value.loggingconfig.prefix
+            },
+            'PriceClass': gwtRequest.args[0].value.priceclass,
+            'Enabled': gwtRequest.args[0].value.enabled.value,
+            'ViewerCertificate': viewercertificate,
+            'Restrictions': {
+                'GeoRestriction': georestriction
+            },
+            'WebACLId': webaclid,
+            'HttpVersion': gwtRequest.args[0].value.supportedhttpversion,
+            'IsIPV6Enabled': gwtRequest.args[0].value.ipv6support.value
+        };
+        reqParams.cli['--distribution-config'] = reqParams.boto3['DistributionConfig'];
+
+        reqParams.cfn['Comment'] = gwtRequest.args[0].value.comment;
+        reqParams.cfn['DefaultCacheBehavior'] = {
+            'TargetOriginId': gwtRequest.args[0].value.defaultcachebehaviour.targetoriginid,
+            'ForwardedValues': {
+                'QueryString': gwtRequest.args[0].value.defaultcachebehaviour.forwardvalues.querystring.value,
+                'Cookies': cookies_cfn,
+                'Headers': header_items,
+                'QueryStringCacheKeys': querystringcachekeys_items
+            },
+            'TrustedSigners': (trustedsigners_items.length ? trustedsigners_items : null),
+            'ViewerProtocolPolicy': gwtRequest.args[0].value.defaultcachebehaviour.viewerprotocolpolicy,
+            'MinTTL': gwtRequest.args[0].value.defaultcachebehaviour.minttl.value,
+            'AllowedMethods': allowedmethods,
+            'CachedMethods': cachedmethods,
+            'SmoothStreaming': gwtRequest.args[0].value.defaultcachebehaviour.smooth.value,
+            'DefaultTTL': gwtRequest.args[0].value.defaultcachebehaviour.defaultttl.value,
+            'MaxTTL': gwtRequest.args[0].value.defaultcachebehaviour.maxttl.value,
+            'Compress': gwtRequest.args[0].value.defaultcachebehaviour.compress.value
+        };
+        reqParams.cfn['DefaultRootObject'] = gwtRequest.args[0].value.rootobject;
+        reqParams.cfn['Enabled'] = gwtRequest.args[0].value.enabled.value;
+        reqParams.cfn['HttpVersion'] = gwtRequest.args[0].value.supportedhttpversion;
+        reqParams.cfn['IPV6Enabled'] = gwtRequest.args[0].value.ipv6support.value;
+        if (gwtRequest.args[0].value.loggingconfig.enabled.value) {
+            reqParams.cfn['Logging'] = {
+                'IncludeCookies': gwtRequest.args[0].value.loggingconfig.includecookies.value,
+                'Bucket': gwtRequest.args[0].value.loggingconfig.bucket,
+                'Prefix': gwtRequest.args[0].value.loggingconfig.prefix
+            };
+        }
+        reqParams.cfn['Origins'] = origins_cfn;
+        reqParams.cfn['PriceClass'] = gwtRequest.args[0].value.priceclass;
+
+        outputs.push({
+            'region': region,
+            'service': 'cloudfront',
+            'method': {
+                'api': 'CreateDistribution',
+                'boto3': 'create_distribution',
+                'cli': 'create-distribution'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('cloudfront', details.requestId),
+            'region': region,
+            'service': 'cloudfront',
+            'type': 'AWS::CloudFront::Distribution',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
         });
         
         return {};
