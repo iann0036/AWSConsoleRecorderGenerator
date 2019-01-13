@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**343/344 (99%)** Resources Covered
+**344/344 (100%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -97,7 +97,7 @@
 | *AWS::DMS::ReplicationInstance* | 1 |
 | *AWS::DMS::ReplicationSubnetGroup* | 1 |
 | *AWS::DMS::ReplicationTask* | 1 |
-| *AWS::DataPipeline::Pipeline* | 0 |
+| *AWS::DataPipeline::Pipeline* | 1 |
 | *AWS::DirectoryService::MicrosoftAD* | 1 |
 | *AWS::DirectoryService::SimpleAD* | 1 |
 | *AWS::DocDB::DBCluster* | 1 |
@@ -839,6 +839,7 @@
 | *cognito-identity* | 2/18 (11%) |
 | *cognito-idp* | 10/96 (10%) |
 | *config* | 9/47 (19%) |
+| *datapipeline* | 1/19 (5%) |
 | *datasync* | 14/25 (56%) |
 | *dax* | 10/21 (47%) |
 | *dlm* | 4/5 (80%) |
@@ -2100,7 +2101,7 @@
 | *cur* | `PutReportDefinition` | 0 |
 | *datapipeline* | `ActivatePipeline` | 0 |
 | *datapipeline* | `AddTags` | 0 |
-| *datapipeline* | `CreatePipeline` | 0 |
+| *datapipeline* | `CreatePipeline` | 1 |
 | *datapipeline* | `DeactivatePipeline` | 0 |
 | *datapipeline* | `DeletePipeline` | 0 |
 | *datapipeline* | `DescribeObjects` | 0 |
@@ -6298,4 +6299,4 @@
 
 **Total Operations: 5379**
 
-**Total Unique Occurances: 1066 (19%)**
+**Total Unique Occurances: 1067 (19%)**

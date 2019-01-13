@@ -42199,5 +42199,109 @@ function analyseRequest(details) {
         return {};
     }
 
+    // manual:datapipeline:datapipeline.CreatePipeline
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/datapipeline\/datapipeline\/dispatch$/g) && gwtRequest['method'] == "dispatch" && gwtRequest['service'] == "edp.console.client.dispatch.DispatchService") {
+        console.dir(gwtRequest);
+
+        reqParams.boto3['name'] = gwtRequest.args[0].value.name;
+        reqParams.cli['--name'] = gwtRequest.args[0].value.name;
+        reqParams.boto3['uniqueId'] = gwtRequest.args[1].value;
+        reqParams.cli['--unique-id'] = gwtRequest.args[1].value;
+        reqParams.boto3['description'] = gwtRequest.args[0].value.description;
+        reqParams.cli['--description'] = gwtRequest.args[0].value.description;
+        if (gwtRequest.args[0].value.tags.value) {
+            reqParams.boto3['tags'] = [];
+            reqParams.cfn['PipelineTags'] = [];
+            for (var i=0; i<gwtRequest.args[0].value.tags.value.length; i++) {
+                reqParams.boto3['tags'].push({
+                    'key': gwtRequest.args[0].value.tags.value[i].tagkey,
+                    'value': gwtRequest.args[0].value.tags.value[i].tagvalue
+                });
+                reqParams.cfn['PipelineTags'].push({
+                    'Key': gwtRequest.args[0].value.tags.value[i].tagkey,
+                    'Value': gwtRequest.args[0].value.tags.value[i].tagvalue
+                });
+            }
+        }
+        reqParams.cli['--tags'] = reqParams.boto3['tags'];
+
+        reqParams.cfn['Name'] = gwtRequest.args[0].value.name;
+        reqParams.cfn['Description'] = gwtRequest.args[0].value.description;
+        if (gwtRequest.args[0].value.pipelineparameterobjects.objects) {
+            reqParams.cfn['ParameterObjects'] = [];
+            reqParams.cfn['ParameterValues'] = [];
+
+            for (var i=0; i<gwtRequest.args[0].value.pipelineparameterobjects.objects.value.length; i++) {
+                var attributes = [];
+
+                for (var j=0; j<gwtRequest.args[0].value.pipelineparameterobjects.objects.value[i].values.items.length; j++) {
+                    var attrkey = gwtRequest.args[0].value.pipelineparameterobjects.objects.value[i].values.items[j].key.value;
+                    for (var k=0; k<gwtRequest.args[0].value.pipelineparameterobjects.objects.value[i].values.items[j].value.length; k++) {
+                        attributes.push({
+                            'Key': attrkey,
+                            'StringValue': gwtRequest.args[0].value.pipelineparameterobjects.objects.value[i].values.items[j].value[k].value
+                        });
+                    }
+                }
+
+                reqParams.cfn['ParameterObjects'].push({
+                    'Id': "parameter" + (i+1),
+                    'Attributes': attributes
+                });
+            }
+
+            for (var i=0; i<gwtRequest.args[0].value.pipelineparametervalues.values.items.length; i++) {
+                reqParams.cfn['ParameterValues'].push({
+                    'Id': gwtRequest.args[0].value.pipelineparametervalues.values.items[i].key.value,
+                    'StringValue': gwtRequest.args[0].value.pipelineparametervalues.values.items[i].value.value
+                });
+            }
+        }
+        reqParams.cfn['PipelineObjects'] = [];
+        for (var i=0; i<gwtRequest.args[0].value.pipelinedefinition.objects.items.length; i++) {
+            var fields = [];
+
+            for (var j=0; j<gwtRequest.args[0].value.pipelinedefinition.objects.items[i].value.values.items.length; j++) {
+                for (var k=0; k<gwtRequest.args[0].value.pipelinedefinition.objects.items[i].value.values.items[j].value.values.value.length; k++) {
+                    fields.push({
+                        'Key': gwtRequest.args[0].value.pipelinedefinition.objects.items[i].value.values.items[j].key.value,
+                        //'RefValue" : String,
+                        'StringValue': gwtRequest.args[0].value.pipelinedefinition.objects.items[i].value.values.items[j].value.values.value[k].value
+                    });
+                }
+            }
+
+            reqParams.cfn['PipelineObjects'].push({
+                'Fields': fields,
+                'Id': "object" + (i+1),
+                'Name': gwtRequest.args[0].value.pipelinedefinition.objects.items[i].key.id
+            });
+        }
+
+        outputs.push({
+            'region': region,
+            'service': 'datapipeline',
+            'method': {
+                'api': 'CreatePipeline',
+                'boto3': 'create_pipeline',
+                'cli': 'create-pipeline'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('datapipeline', details.requestId),
+            'region': region,
+            'service': 'datapipeline',
+            'type': 'AWS::DataPipeline::Pipeline',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
     return false;
 }
