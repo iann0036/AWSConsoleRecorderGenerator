@@ -351,19 +351,19 @@
 
 ## Terraform Coverage
 
-**236/457 (51%)** Resources Covered
+**246/457 (53%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
 | *aws_acm_certificate* | 1 |
 | *aws_acm_certificate_validation* | 1 |
 | *aws_acmpca_certificate_authority* | 1 |
-| *aws_alb* | 0 |
-| *aws_alb_listener* | 0 |
-| *aws_alb_listener_certificate* | 0 |
-| *aws_alb_listener_rule* | 0 |
-| *aws_alb_target_group* | 0 |
-| *aws_alb_target_group_attachment* | 0 |
+| *aws_alb* | 1 |
+| *aws_alb_listener* | 1 |
+| *aws_alb_listener_certificate* | 1 |
+| *aws_alb_listener_rule* | 1 |
+| *aws_alb_target_group* | 1 |
+| *aws_alb_target_group_attachment* | 1 |
 | *aws_ami* | 1 |
 | *aws_ami_copy* | 1 |
 | *aws_ami_from_instance* | 1 |
@@ -501,9 +501,9 @@
 | *aws_dx_lag* | 0 |
 | *aws_dx_private_virtual_interface* | 0 |
 | *aws_dx_public_virtual_interface* | 0 |
-| *aws_dynamodb_global_table* | 0 |
+| *aws_dynamodb_global_table* | 1 |
 | *aws_dynamodb_table* | 1 |
-| *aws_dynamodb_table_item* | 0 |
+| *aws_dynamodb_table_item* | 1 |
 | *aws_ebs_snapshot* | 0 |
 | *aws_ebs_snapshot_copy* | 0 |
 | *aws_ebs_volume* | 1 |
@@ -579,7 +579,7 @@
 | *aws_iam_role_policy* | 1 |
 | *aws_iam_role_policy_attachment* | 0 |
 | *aws_iam_saml_provider* | 0 |
-| *aws_iam_server_certificate* | 0 |
+| *aws_iam_server_certificate* | 1 |
 | *aws_iam_service_linked_role* | 1 |
 | *aws_iam_user* | 1 |
 | *aws_iam_user_group_membership* | 1 |
@@ -846,7 +846,7 @@
 | *dms* | 27/44 (61%) |
 | *docdb* | 12/39 (30%) |
 | *ds* | 4/50 (8%) |
-| *dynamodb* | 3/36 (8%) |
+| *dynamodb* | 5/36 (13%) |
 | *ec2* | 135/329 (41%) |
 | *ecr* | 3/25 (12%) |
 | *ecs* | 5/37 (13%) |
@@ -888,6 +888,7 @@
 | *rds* | 25/107 (23%) |
 | *redshift* | 5/81 (6%) |
 | *rekognition* | 3/34 (8%) |
+| *resource-groups* | 1/12 (8%) |
 | *route53* | 9/56 (16%) |
 | *route53resolver* | 10/22 (45%) |
 | *s3* | 26/88 (29%) |
@@ -2436,7 +2437,7 @@
 | *dynamodb* | `BatchGetItem` | 0 |
 | *dynamodb* | `BatchWriteItem` | 0 |
 | *dynamodb* | `CreateBackup` | 0 |
-| *dynamodb* | `CreateGlobalTable` | 0 |
+| *dynamodb* | `CreateGlobalTable` | 1 |
 | *dynamodb* | `CreateTable` | 2 |
 | *dynamodb* | `DeleteBackup` | 0 |
 | *dynamodb* | `DeleteItem` | 0 |
@@ -2454,7 +2455,7 @@
 | *dynamodb* | `ListGlobalTables` | 0 |
 | *dynamodb* | `ListTables` | 1 |
 | *dynamodb* | `ListTagsOfResource` | 0 |
-| *dynamodb* | `PutItem` | 0 |
+| *dynamodb* | `PutItem` | 1 |
 | *dynamodb* | `Query` | 0 |
 | *dynamodb* | `RestoreTableFromBackup` | 0 |
 | *dynamodb* | `RestoreTableToPointInTime` | 0 |
@@ -5049,7 +5050,7 @@
 | *rekognition* | `StartPersonTracking` | 0 |
 | *rekognition* | `StartStreamProcessor` | 0 |
 | *rekognition* | `StopStreamProcessor` | 0 |
-| *resource-groups* | `CreateGroup` | 0 |
+| *resource-groups* | `CreateGroup` | 1 |
 | *resource-groups* | `DeleteGroup` | 0 |
 | *resource-groups* | `GetGroup` | 0 |
 | *resource-groups* | `GetGroupQuery` | 0 |
@@ -6299,4 +6300,4 @@
 
 **Total Operations: 5379**
 
-**Total Unique Occurances: 1067 (19%)**
+**Total Unique Occurances: 1070 (19%)**

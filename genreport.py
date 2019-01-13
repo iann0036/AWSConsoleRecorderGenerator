@@ -71,7 +71,14 @@ tf_occurances = [
     "aws_appmesh_mesh",
     "aws_appmesh_route",
     "aws_appmesh_virtual_node",
-    "aws_appmesh_virtual_router"
+    "aws_appmesh_virtual_router",
+    "aws_alb",
+    "aws_alb_listener",
+    "aws_alb_listener_certificate",
+    "aws_alb_listener_rule",
+    "aws_alb_target_group",
+    "aws_alb_target_group_attachment",
+    "aws_iam_server_certificate"
 ]
 
 with open("combined.json", "r") as f:

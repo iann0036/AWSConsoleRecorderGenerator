@@ -28843,6 +28843,8 @@ function analyseRequest(details) {
     // autogen:dynamodb:dax.DeleteParameterGroup
     // autogen:dynamodb:dax.CreateCluster
     // autogen:dynamodb:dax.DeleteCluster
+    // manual:dynamodb:dynamodb.PutItem
+    // manual:dynamodb:dynamodb.CreateGlobalTable
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/dynamodb\/rpc$/g)) {
         for (var i in jsonRequestBody.actions) {
             var action = jsonRequestBody.actions[i];
@@ -29368,6 +29370,88 @@ function analyseRequest(details) {
                     },
                     'options': reqParams,
                     'requestDetails': details
+                });
+            } else if (action['action'] == "com.amazonaws.console.dynamodbv2.shared.DynamoDBItemsRequestContext.putItem") {
+                reqParams.iam['Resource'] = [
+                    "arn:aws:dynamodb:*:*:table/" + action['parameters'][0]['name']
+                ];
+
+                reqParams.boto3['TableName'] = action['parameters'][0];
+                reqParams.cli['--table-name'] = action['parameters'][0];
+
+                reqParams.boto3['Item'] = parseDynamoItem(action['parameters'][1]['attributes']);
+                reqParams.cli['--item'] = parseDynamoItem(action['parameters'][1]['attributes']);
+
+                reqParams.tf['table_name'] = action['parameters'][0];
+                reqParams.tf['item'] = parseDynamoItem(action['parameters'][1]['attributes']);
+                reqParams.tf['hash_key'] = action['parameters'][2]['hashKey']['name'];
+
+                outputs.push({
+                    'region': region,
+                    'service': 'dynamodb',
+                    'method': {
+                        'api': 'PutItem',
+                        'boto3': 'put_item',
+                        'cli': 'put-item'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('dynamodb', details.requestId),
+                    'region': region,
+                    'service': 'dynamodb',
+                    'terraformType': 'aws_dynamodb_table_item',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
+                });
+            } else if (action['action'] == "com.amazonaws.console.dynamodbv2.shared.GlobalTablesRequestContext.createGlobalTable") {
+                reqParams.iam['Resource'] = [
+                    "arn:aws:dynamodb:*:*:table/" + action['parameters'][0]['globalTableName'],
+                    "arn:aws:dynamodb:*:*:global-table/" + action['parameters'][0]['globalTableName'],
+                ];
+
+                reqParams.boto3['GlobalTableName'] = action['parameters'][0]['globalTableName'];
+                reqParams.cli['--global-table-name'] = action['parameters'][0]['globalTableName'];
+                reqParams.tf['name'] = action['parameters'][0]['globalTableName'];
+                reqParams.boto3['ReplicationGroup'] = [];
+                reqParams.cli['--replication-group'] = [];
+                reqParams.tf['replica'] = [];
+
+                for (var j=0; j<action['parameters'][0]['replicationGroup'].length; j++) {
+                    reqParams.boto3['ReplicationGroup'].push({
+                        'RegionName': action['parameters'][0]['replicationGroup'][j]['regionName']
+                    });
+                    reqParams.cli['--replication-group'].push({
+                        'RegionName': action['parameters'][0]['replicationGroup'][j]['regionName']
+                    });
+                    reqParams.tf['replica'].push({
+                        'region_name': action['parameters'][0]['replicationGroup'][j]['regionName']
+                    });
+                }
+
+                outputs.push({
+                    'region': region,
+                    'service': 'dynamodb',
+                    'method': {
+                        'api': 'CreateGlobalTable',
+                        'boto3': 'create_global_table',
+                        'cli': 'create-global-table'
+                    },
+                    'options': reqParams,
+                    'requestDetails': details
+                });
+
+                tracked_resources.push({
+                    'logicalId': getResourceName('dynamodb', details.requestId),
+                    'region': region,
+                    'service': 'dynamodb',
+                    'terraformType': 'aws_dynamodb_global_table',
+                    'options': reqParams,
+                    'requestDetails': details,
+                    'was_blocked': blocking
                 });
             }
         }
@@ -42295,6 +42379,46 @@ function analyseRequest(details) {
             'region': region,
             'service': 'datapipeline',
             'type': 'AWS::DataPipeline::Pipeline',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:resource-groups:resource-groups.CreateGroup
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/resource\-groups\/api\/ardi$/g) && jsonRequestBody.operation == "createGroup") {
+        reqParams.boto3['Name'] = jsonRequestBody.contentString.Name;
+        reqParams.cli['--name'] = jsonRequestBody.contentString.Name;
+        reqParams.boto3['Description'] = jsonRequestBody.contentString.Description;
+        reqParams.cli['--description'] = jsonRequestBody.contentString.Description;
+        reqParams.boto3['ResourceQuery'] = jsonRequestBody.contentString.ResourceQuery;
+        reqParams.cli['--resource-query'] = jsonRequestBody.contentString.ResourceQuery;
+        reqParams.boto3['Tags'] = jsonRequestBody.contentString.Tags;
+        reqParams.cli['--tags'] = jsonRequestBody.contentString.Tags;
+
+        reqParams.tf['name'] = jsonRequestBody.contentString.Name;
+        reqParams.tf['description'] = jsonRequestBody.contentString.Description;
+        reqParams.tf['resource_query'] = jsonRequestBody.contentString.ResourceQuery;
+
+        outputs.push({
+            'region': region,
+            'service': 'resource-groups',
+            'method': {
+                'api': 'CreateGroup',
+                'boto3': 'create_group',
+                'cli': 'create-group'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('resource-groups', details.requestId),
+            'region': region,
+            'service': 'resource-groups',
+            'terraformType': 'aws_resource_group',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
