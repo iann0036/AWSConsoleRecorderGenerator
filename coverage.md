@@ -351,7 +351,7 @@
 
 ## Terraform Coverage
 
-**246/457 (53%)** Resources Covered
+**248/457 (54%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -367,7 +367,7 @@
 | *aws_ami* | 1 |
 | *aws_ami_copy* | 1 |
 | *aws_ami_from_instance* | 1 |
-| *aws_ami_launch_permission* | 0 |
+| *aws_ami_launch_permission* | 2 |
 | *aws_api_gateway_account* | 0 |
 | *aws_api_gateway_api_key* | 1 |
 | *aws_api_gateway_authorizer* | 0 |
@@ -405,7 +405,7 @@
 | *aws_athena_database* | 0 |
 | *aws_athena_named_query* | 1 |
 | *aws_autoscaling_attachment* | 0 |
-| *aws_autoscaling_group* | 0 |
+| *aws_autoscaling_group* | 1 |
 | *aws_autoscaling_lifecycle_hook* | 0 |
 | *aws_autoscaling_notification* | 0 |
 | *aws_autoscaling_policy* | 0 |
@@ -842,12 +842,13 @@
 | *datapipeline* | 1/19 (5%) |
 | *datasync* | 14/25 (56%) |
 | *dax* | 10/21 (47%) |
+| *devicefarm* | 6/64 (9%) |
 | *dlm* | 4/5 (80%) |
 | *dms* | 27/44 (61%) |
 | *docdb* | 12/39 (30%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 5/36 (13%) |
-| *ec2* | 135/329 (41%) |
+| *ec2* | 136/329 (41%) |
 | *ecr* | 3/25 (12%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -2168,7 +2169,7 @@
 | *devicefarm* | `CreateDevicePool` | 0 |
 | *devicefarm* | `CreateInstanceProfile` | 0 |
 | *devicefarm* | `CreateNetworkProfile` | 0 |
-| *devicefarm* | `CreateProject` | 0 |
+| *devicefarm* | `CreateProject` | 1 |
 | *devicefarm* | `CreateRemoteAccessSession` | 0 |
 | *devicefarm* | `CreateUpload` | 0 |
 | *devicefarm* | `CreateVPCEConfiguration` | 0 |
@@ -2180,7 +2181,7 @@
 | *devicefarm* | `DeleteRun` | 0 |
 | *devicefarm* | `DeleteUpload` | 0 |
 | *devicefarm* | `DeleteVPCEConfiguration` | 0 |
-| *devicefarm* | `GetAccountSettings` | 0 |
+| *devicefarm* | `GetAccountSettings` | 1 |
 | *devicefarm* | `GetDevice` | 0 |
 | *devicefarm* | `GetDeviceInstance` | 0 |
 | *devicefarm* | `GetDevicePool` | 0 |
@@ -2189,7 +2190,7 @@
 | *devicefarm* | `GetJob` | 0 |
 | *devicefarm* | `GetNetworkProfile` | 0 |
 | *devicefarm* | `GetOfferingStatus` | 0 |
-| *devicefarm* | `GetProject` | 0 |
+| *devicefarm* | `GetProject` | 1 |
 | *devicefarm* | `GetRemoteAccessSession` | 0 |
 | *devicefarm* | `GetRun` | 0 |
 | *devicefarm* | `GetSuite` | 0 |
@@ -2207,9 +2208,9 @@
 | *devicefarm* | `ListOfferingPromotions` | 0 |
 | *devicefarm* | `ListOfferingTransactions` | 0 |
 | *devicefarm* | `ListOfferings` | 0 |
-| *devicefarm* | `ListProjects` | 0 |
-| *devicefarm* | `ListRemoteAccessSessions` | 0 |
-| *devicefarm* | `ListRuns` | 0 |
+| *devicefarm* | `ListProjects` | 1 |
+| *devicefarm* | `ListRemoteAccessSessions` | 1 |
+| *devicefarm* | `ListRuns` | 1 |
 | *devicefarm* | `ListSamples` | 0 |
 | *devicefarm* | `ListSuites` | 0 |
 | *devicefarm* | `ListTests` | 0 |
@@ -2738,7 +2739,7 @@
 | *ec2* | `ModifyHosts` | 0 |
 | *ec2* | `ModifyIdFormat` | 0 |
 | *ec2* | `ModifyIdentityIdFormat` | 0 |
-| *ec2* | `ModifyImageAttribute` | 0 |
+| *ec2* | `ModifyImageAttribute` | 1 |
 | *ec2* | `ModifyInstanceAttribute` | 0 |
 | *ec2* | `ModifyInstanceCapacityReservationAttributes` | 0 |
 | *ec2* | `ModifyInstanceCreditSpecification` | 0 |
@@ -6300,4 +6301,4 @@
 
 **Total Operations: 5379**
 
-**Total Unique Occurances: 1070 (19%)**
+**Total Unique Occurances: 1077 (20%)**
