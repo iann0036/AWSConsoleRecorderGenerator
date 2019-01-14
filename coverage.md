@@ -351,7 +351,7 @@
 
 ## Terraform Coverage
 
-**248/457 (54%)** Resources Covered
+**259/457 (56%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -400,13 +400,13 @@
 | *aws_appmesh_virtual_node* | 1 |
 | *aws_appmesh_virtual_router* | 1 |
 | *aws_appsync_api_key* | 1 |
-| *aws_appsync_datasource* | 0 |
+| *aws_appsync_datasource* | 1 |
 | *aws_appsync_graphql_api* | 1 |
 | *aws_athena_database* | 0 |
 | *aws_athena_named_query* | 1 |
 | *aws_autoscaling_attachment* | 0 |
 | *aws_autoscaling_group* | 1 |
-| *aws_autoscaling_lifecycle_hook* | 0 |
+| *aws_autoscaling_lifecycle_hook* | 1 |
 | *aws_autoscaling_notification* | 0 |
 | *aws_autoscaling_policy* | 0 |
 | *aws_autoscaling_schedule* | 0 |
@@ -531,9 +531,9 @@
 | *aws_elastic_beanstalk_application_version* | 0 |
 | *aws_elastic_beanstalk_configuration_template* | 1 |
 | *aws_elastic_beanstalk_environment* | 0 |
-| *aws_elasticache_cluster* | 0 |
+| *aws_elasticache_cluster* | 1 |
 | *aws_elasticache_parameter_group* | 1 |
-| *aws_elasticache_replication_group* | 0 |
+| *aws_elasticache_replication_group* | 1 |
 | *aws_elasticache_security_group* | 0 |
 | *aws_elasticache_subnet_group* | 1 |
 | *aws_elasticsearch_domain* | 1 |
@@ -608,17 +608,17 @@
 | *aws_kms_key* | 2 |
 | *aws_lambda_alias* | 1 |
 | *aws_lambda_event_source_mapping* | 1 |
-| *aws_lambda_function* | 0 |
+| *aws_lambda_function* | 1 |
 | *aws_lambda_permission* | 0 |
-| *aws_launch_configuration* | 0 |
+| *aws_launch_configuration* | 1 |
 | *aws_launch_template* | 1 |
 | *aws_lb* | 1 |
 | *aws_lb_cookie_stickiness_policy* | 0 |
-| *aws_lb_listener* | 0 |
+| *aws_lb_listener* | 1 |
 | *aws_lb_listener_certificate* | 1 |
 | *aws_lb_listener_rule* | 0 |
 | *aws_lb_ssl_negotiation_policy* | 0 |
-| *aws_lb_target_group* | 0 |
+| *aws_lb_target_group* | 1 |
 | *aws_lb_target_group_attachment* | 0 |
 | *aws_licensemanager_license_configuration* | 1 |
 | *aws_lightsail_domain* | 1 |
@@ -687,13 +687,13 @@
 | *aws_rds_cluster_instance* | 0 |
 | *aws_rds_cluster_parameter_group* | 1 |
 | *aws_rds_global_cluster* | 0 |
-| *aws_redshift_cluster* | 0 |
+| *aws_redshift_cluster* | 1 |
 | *aws_redshift_event_subscription* | 0 |
 | *aws_redshift_parameter_group* | 1 |
 | *aws_redshift_security_group* | 0 |
 | *aws_redshift_snapshot_copy_grant* | 0 |
 | *aws_redshift_subnet_group* | 1 |
-| *aws_route* | 0 |
+| *aws_route* | 2 |
 | *aws_route53_delegation_set* | 0 |
 | *aws_route53_health_check* | 1 |
 | *aws_route53_query_log* | 0 |
@@ -739,7 +739,7 @@
 | *aws_sns_platform_application* | 0 |
 | *aws_sns_sms_preferences* | 0 |
 | *aws_sns_topic* | 1 |
-| *aws_sns_topic_policy* | 0 |
+| *aws_sns_topic_policy* | 1 |
 | *aws_sns_topic_subscription* | 1 |
 | *aws_spot_datafeed_subscription* | 0 |
 | *aws_spot_fleet_request* | 0 |
