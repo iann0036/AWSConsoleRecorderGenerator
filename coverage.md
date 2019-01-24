@@ -351,7 +351,7 @@
 
 ## Terraform Coverage
 
-**259/457 (56%)** Resources Covered
+**261/457 (57%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -515,9 +515,9 @@
 | *aws_ec2_transit_gateway_route_table_association* | 1 |
 | *aws_ec2_transit_gateway_route_table_propagation* | 1 |
 | *aws_ec2_transit_gateway_vpc_attachment* | 1 |
-| *aws_ecr_lifecycle_policy* | 0 |
+| *aws_ecr_lifecycle_policy* | 1 |
 | *aws_ecr_repository* | 2 |
-| *aws_ecr_repository_policy* | 0 |
+| *aws_ecr_repository_policy* | 1 |
 | *aws_ecs_cluster* | 1 |
 | *aws_ecs_service* | 0 |
 | *aws_ecs_task_definition* | 0 |
@@ -826,6 +826,7 @@
 | *athena* | 1/11 (9%) |
 | *autoscaling* | 19/54 (35%) |
 | *autoscaling-plans* | 3/6 (50%) |
+| *backup* | 11/43 (25%) |
 | *batch* | 11/16 (68%) |
 | *budgets* | 1/14 (7%) |
 | *cloud9* | 6/10 (60%) |
@@ -849,7 +850,7 @@
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 5/36 (13%) |
 | *ec2* | 136/329 (41%) |
-| *ecr* | 3/25 (12%) |
+| *ecr* | 10/25 (40%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
 | *eks* | 2/7 (28%) |
@@ -903,12 +904,13 @@
 | *sqs* | 6/20 (30%) |
 | *ssm* | 21/111 (18%) |
 | *stepfunctions* | 7/22 (31%) |
-| *storagegateway* | 29/69 (42%) |
+| *storagegateway* | 29/71 (40%) |
 | *sts* | 1/7 (14%) |
 | *support* | 7/14 (50%) |
 | *swf* | 1/31 (3%) |
 | *waf* | 32/73 (43%) |
 | *waf-regional* | 34/77 (44%) |
+| *worklink* | 9/20 (45%) |
 | *workspaces* | 4/32 (12%) |
 | *xray* | 7/19 (36%) |
 
@@ -1394,6 +1396,49 @@
 | *autoscaling-plans* | `DescribeScalingPlans` | 1 |
 | *autoscaling-plans* | `GetScalingPlanResourceForecastData` | 0 |
 | *autoscaling-plans* | `UpdateScalingPlan` | 0 |
+| *backup* | `CreateBackupPlan` | 1 |
+| *backup* | `CreateBackupSelection` | 0 |
+| *backup* | `CreateBackupVault` | 1 |
+| *backup* | `DeleteBackupPlan` | 1 |
+| *backup* | `DeleteBackupSelection` | 0 |
+| *backup* | `DeleteBackupVault` | 0 |
+| *backup* | `DeleteBackupVaultAccessPolicy` | 0 |
+| *backup* | `DeleteBackupVaultNotifications` | 0 |
+| *backup* | `DeleteRecoveryPoint` | 0 |
+| *backup* | `DescribeBackupJob` | 0 |
+| *backup* | `DescribeBackupVault` | 0 |
+| *backup* | `DescribeProtectedResource` | 0 |
+| *backup* | `DescribeRecoveryPoint` | 0 |
+| *backup* | `DescribeRestoreJob` | 0 |
+| *backup* | `ExportBackupPlanTemplate` | 0 |
+| *backup* | `GetBackupPlan` | 1 |
+| *backup* | `GetBackupPlanFromJSON` | 0 |
+| *backup* | `GetBackupPlanFromTemplate` | 1 |
+| *backup* | `GetBackupSelection` | 0 |
+| *backup* | `GetBackupVaultAccessPolicy` | 0 |
+| *backup* | `GetBackupVaultNotifications` | 0 |
+| *backup* | `GetRecoveryPointRestoreMetadata` | 0 |
+| *backup* | `GetSupportedResourceTypes` | 0 |
+| *backup* | `ListBackupJobs` | 1 |
+| *backup* | `ListBackupPlanTemplates` | 1 |
+| *backup* | `ListBackupPlanVersions` | 0 |
+| *backup* | `ListBackupPlans` | 1 |
+| *backup* | `ListBackupSelections` | 1 |
+| *backup* | `ListBackupVaults` | 0 |
+| *backup* | `ListProtectedResources` | 0 |
+| *backup* | `ListRecoveryPointsByBackupVault` | 0 |
+| *backup* | `ListRecoveryPointsByResource` | 0 |
+| *backup* | `ListRestoreJobs` | 1 |
+| *backup* | `ListTags` | 1 |
+| *backup* | `PutBackupVaultAccessPolicy` | 0 |
+| *backup* | `PutBackupVaultNotifications` | 0 |
+| *backup* | `StartBackupJob` | 0 |
+| *backup* | `StartRestoreJob` | 0 |
+| *backup* | `StopBackupJob` | 0 |
+| *backup* | `TagResource` | 0 |
+| *backup* | `UntagResource` | 0 |
+| *backup* | `UpdateBackupPlan` | 0 |
+| *backup* | `UpdateRecoveryPointLifecycle` | 0 |
 | *batch* | `CancelJob` | 1 |
 | *batch* | `CreateComputeEnvironment` | 1 |
 | *batch* | `CreateJobQueue` | 1 |
@@ -1681,7 +1726,7 @@
 | *cloudtrail* | `GetTrailStatus` | 1 |
 | *cloudtrail* | `ListPublicKeys` | 0 |
 | *cloudtrail* | `ListTags` | 1 |
-| *cloudtrail* | `LookupEvents` | 1 |
+| *cloudtrail* | `LookupEvents` | 2 |
 | *cloudtrail* | `PutEventSelectors` | 1 |
 | *cloudtrail* | `RemoveTags` | 0 |
 | *cloudtrail* | `StartLogging` | 1 |
@@ -2276,6 +2321,7 @@
 | *directconnect* | `UpdateLag` | 0 |
 | *directconnect* | `UpdateVirtualInterfaceAttributes` | 0 |
 | *discovery* | `AssociateConfigurationItemsToApplication` | 0 |
+| *discovery* | `BatchDeleteImportData` | 0 |
 | *discovery* | `CreateApplication` | 0 |
 | *discovery* | `CreateTags` | 0 |
 | *discovery* | `DeleteApplications` | 0 |
@@ -2285,6 +2331,7 @@
 | *discovery* | `DescribeContinuousExports` | 0 |
 | *discovery* | `DescribeExportConfigurations` | 0 |
 | *discovery* | `DescribeExportTasks` | 0 |
+| *discovery* | `DescribeImportTasks` | 0 |
 | *discovery* | `DescribeTags` | 0 |
 | *discovery* | `DisassociateConfigurationItemsFromApplication` | 0 |
 | *discovery* | `ExportConfigurations` | 0 |
@@ -2294,6 +2341,7 @@
 | *discovery* | `StartContinuousExport` | 0 |
 | *discovery* | `StartDataCollectionByAgentIds` | 0 |
 | *discovery* | `StartExportTask` | 0 |
+| *discovery* | `StartImportTask` | 0 |
 | *discovery* | `StopContinuousExport` | 0 |
 | *discovery* | `StopDataCollectionByAgentIds` | 0 |
 | *discovery* | `UpdateApplication` | 0 |
@@ -2811,20 +2859,20 @@
 | *ecr* | `CreateRepository` | 2 |
 | *ecr* | `DeleteLifecyclePolicy` | 0 |
 | *ecr* | `DeleteRepository` | 1 |
-| *ecr* | `DeleteRepositoryPolicy` | 0 |
-| *ecr* | `DescribeImages` | 0 |
+| *ecr* | `DeleteRepositoryPolicy` | 1 |
+| *ecr* | `DescribeImages` | 1 |
 | *ecr* | `DescribeRepositories` | 2 |
 | *ecr* | `GetAuthorizationToken` | 0 |
 | *ecr* | `GetDownloadUrlForLayer` | 0 |
-| *ecr* | `GetLifecyclePolicy` | 0 |
-| *ecr* | `GetLifecyclePolicyPreview` | 0 |
-| *ecr* | `GetRepositoryPolicy` | 0 |
+| *ecr* | `GetLifecyclePolicy` | 1 |
+| *ecr* | `GetLifecyclePolicyPreview` | 1 |
+| *ecr* | `GetRepositoryPolicy` | 1 |
 | *ecr* | `InitiateLayerUpload` | 0 |
 | *ecr* | `ListImages` | 0 |
 | *ecr* | `ListTagsForResource` | 0 |
 | *ecr* | `PutImage` | 0 |
-| *ecr* | `PutLifecyclePolicy` | 0 |
-| *ecr* | `SetRepositoryPolicy` | 0 |
+| *ecr* | `PutLifecyclePolicy` | 1 |
+| *ecr* | `SetRepositoryPolicy` | 1 |
 | *ecr* | `StartLifecyclePolicyPreview` | 0 |
 | *ecr* | `TagResource` | 0 |
 | *ecr* | `UntagResource` | 0 |
@@ -5874,6 +5922,7 @@
 | *storagegateway* | `AddTagsToResource` | 0 |
 | *storagegateway* | `AddUploadBuffer` | 1 |
 | *storagegateway* | `AddWorkingStorage` | 0 |
+| *storagegateway* | `AttachVolume` | 0 |
 | *storagegateway* | `CancelArchival` | 0 |
 | *storagegateway* | `CancelRetrieval` | 0 |
 | *storagegateway* | `CreateCachediSCSIVolume` | 1 |
@@ -5909,6 +5958,7 @@
 | *storagegateway* | `DescribeUploadBuffer` | 1 |
 | *storagegateway* | `DescribeVTLDevices` | 1 |
 | *storagegateway* | `DescribeWorkingStorage` | 0 |
+| *storagegateway* | `DetachVolume` | 0 |
 | *storagegateway* | `DisableGateway` | 0 |
 | *storagegateway* | `JoinDomain` | 0 |
 | *storagegateway* | `ListFileShares` | 1 |
@@ -6213,6 +6263,26 @@
 | *workdocs* | `UpdateDocumentVersion` | 0 |
 | *workdocs* | `UpdateFolder` | 0 |
 | *workdocs* | `UpdateUser` | 0 |
+| *worklink* | `AssociateWebsiteCertificateAuthority` | 0 |
+| *worklink* | `CreateFleet` | 1 |
+| *worklink* | `DeleteFleet` | 1 |
+| *worklink* | `DescribeAuditStreamConfiguration` | 1 |
+| *worklink* | `DescribeCompanyNetworkConfiguration` | 1 |
+| *worklink* | `DescribeDevice` | 0 |
+| *worklink* | `DescribeDevicePolicyConfiguration` | 1 |
+| *worklink* | `DescribeFleetMetadata` | 1 |
+| *worklink* | `DescribeIdentityProviderConfiguration` | 1 |
+| *worklink* | `DescribeWebsiteCertificateAuthority` | 0 |
+| *worklink* | `DisassociateWebsiteCertificateAuthority` | 0 |
+| *worklink* | `ListDevices` | 0 |
+| *worklink* | `ListFleets` | 1 |
+| *worklink* | `ListWebsiteCertificateAuthorities` | 1 |
+| *worklink* | `SignOutUser` | 0 |
+| *worklink* | `UpdateAuditStreamConfiguration` | 0 |
+| *worklink* | `UpdateCompanyNetworkConfiguration` | 0 |
+| *worklink* | `UpdateDevicePolicyConfiguration` | 0 |
+| *worklink* | `UpdateFleetMetadata` | 0 |
+| *worklink* | `UpdateIdentityProviderConfiguration` | 0 |
 | *workmail* | `AssociateDelegateToResource` | 0 |
 | *workmail* | `AssociateMemberToGroup` | 0 |
 | *workmail* | `CreateAlias` | 0 |
@@ -6297,8 +6367,8 @@
 | *xray* | `UpdateSamplingRule` | 0 |
 
 
-**Total Services: 169**
+**Total Services: 171**
 
-**Total Operations: 5379**
+**Total Operations: 5447**
 
-**Total Unique Occurances: 1077 (20%)**
+**Total Unique Occurances: 1104 (20%)**

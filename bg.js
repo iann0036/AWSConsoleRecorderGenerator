@@ -683,7 +683,6 @@ function analyseRequest(details) {
         reqParams.boto3['CreditSpecification'] = jsonRequestBody.CreditSpecification;
         reqParams.boto3['TagSpecification'] = jsonRequestBody.TagSpecifications;
         reqParams.boto3['EbsOptimized'] = jsonRequestBody.EbsOptimized;
-        reqParams.boto3['BlockDeviceMappings'] = jsonRequestBody.BlockDeviceMappings;
         reqParams.boto3['CapacityReservationSpecification'] = jsonRequestBody.CapacityReservationSpecification;
         reqParams.boto3['ElasticInferenceAccelerators'] = jsonRequestBody.ElasticInferenceAccelerator;
         if (jsonRequestBody.UserData) {
@@ -710,9 +709,7 @@ function analyseRequest(details) {
                 'CPUCredits': jsonRequestBody.CreditSpecification.CpuCredits
             }
         }
-        reqParams.cfn['Tags'] = jsonRequestBody.TagSpecifications;
         reqParams.cfn['EbsOptimized'] = jsonRequestBody.EbsOptimized;
-        reqParams.cfn['BlockDeviceMappings'] = jsonRequestBody.BlockDeviceMappings;
         reqParams.cfn['ElasticInferenceAccelerators'] = jsonRequestBody.ElasticInferenceAccelerator;
         reqParams.cfn['UserData'] = jsonRequestBody.UserData;
         reqParams.cfn['NetworkInterfaces'] = jsonRequestBody.NetworkInterface;
@@ -747,7 +744,6 @@ function analyseRequest(details) {
         reqParams.cli['--credit-specification'] = jsonRequestBody.CreditSpecification;
         reqParams.cli['--tag-specifications'] = jsonRequestBody.TagSpecifications;
         reqParams.cli['--ebs-optimized'] = jsonRequestBody.EbsOptimized;
-        reqParams.cli['--block-device-mappings'] = jsonRequestBody.BlockDeviceMappings;
         reqParams.cli['--elastic-inference-accelerators'] = jsonRequestBody.ElasticInferenceAccelerator;
         if (jsonRequestBody.UserData) {
             reqParams.cli['--user-data'] = atob(jsonRequestBody.UserData);
@@ -781,8 +777,13 @@ function analyseRequest(details) {
             reqParams.tf['tags'] = {};
             for (var i=0; i<jsonRequestBody.TagSpecifications.length; i++) {
                 if (jsonRequestBody.TagSpecifications[i].ResourceType == "instance") {
+                    reqParams.cfn['Tags'] = [];
                     for (var j=0; j<jsonRequestBody.TagSpecifications[i].Tag.length; j++) {
                         reqParams.tf['tags'][jsonRequestBody.TagSpecifications[i].Tag[j].Key] = jsonRequestBody.TagSpecifications[i].Tag[j].Value;
+                        reqParams.cfn['Tags'].push({
+                            'Key': jsonRequestBody.TagSpecifications[i].Tag[j].Key,
+                            'Value': jsonRequestBody.TagSpecifications[i].Tag[j].Value
+                        });
                     }
                 }
             }
@@ -792,7 +793,88 @@ function analyseRequest(details) {
             reqParams.tf['iam_instance_profile'] = jsonRequestBody.IamInstanceProfile.Arn;
         }
 
+        reqParams.boto3['BlockDeviceMappings'] = [];
+        reqParams.cli['--block-device-mappings'] = [];
+        reqParams.cfn['BlockDeviceMappings'] = [];
+
+        var used_device_names = [];
+        var instance_type_instance_store_count = {
+            'm5d.large': 1,
+            'm5d.xlarge': 1,
+            'm5d.2xlarge': 1,
+            'm5d.4xlarge': 2,
+            'm5d.12xlarge': 2,
+            'm5d.24xlarge': 4,
+            'c5d.large': 1,
+            'c5d.xlarge': 1,
+            'c5d.2xlarge': 1,
+            'c5d.4xlarge': 1,
+            'c5d.9xlarge': 1,
+            'c5d.18xlarge': 2,
+            'p3dn.24xlarge': 2,
+            'x1.16xlarge': 1,
+            'x1.32xlarge': 2,
+            'x1e.xlarge': 1,
+            'x1e.2xlarge': 1,
+            'x1e.4xlarge': 1,
+            'x1e.8xlarge': 1,
+            'x1e.16xlarge': 1,
+            'x1e.32xlarge': 2,
+            'r5d.large': 1,
+            'r5d.xlarge': 1,
+            'r5d.2xlarge': 1,
+            'r5d.4xlarge': 2,
+            'r5d.12xlarge': 2,
+            'r5d.24xlarge': 4,
+            'z1d.large': 1,
+            'z1d.xlarge': 1,
+            'z1d.2xlarge': 1,
+            'z1d.3xlarge': 1,
+            'z1d.6xlarge': 1,
+            'z1d.12xlarge': 2,
+            'i3.large': 1,
+            'i3.xlarge': 1,
+            'i3.2xlarge': 1,
+            'i3.4xlarge': 2,
+            'i3.8xlarge': 4,
+            'i3.16xlarge': 8,
+            'i3.metal': 8,
+            'h1.2xlarge': 1,
+            'h1.4xlarge': 2,
+            'h1.8xlarge': 4,
+            'h1.16xlarge': 8,
+            'd2.xlarge': 3,
+            'd2.2xlarge': 6,
+            'd2.4xlarge': 12,
+            'd2.8xlarge': 24,
+            'f1.4xlarge': 1
+        };
+
         for (var i=0; i<jsonRequestBody.BlockDeviceMappings.length; i++) {
+            if (
+                !jsonRequestBody.BlockDeviceMappings[i].DeviceName.startsWith("xvdc") ||
+                jsonRequestBody.BlockDeviceMappings[i].DeviceName.length != 5 ||
+                jsonRequestBody.BlockDeviceMappings[i].VirtualName ||
+                jsonRequestBody.BlockDeviceMappings[i].Ebs
+            ) {
+                reqParams.boto3['BlockDeviceMappings'].push({
+                    'DeviceName': jsonRequestBody.BlockDeviceMappings[i].DeviceName,
+                    'Ebs': jsonRequestBody.BlockDeviceMappings[i].Ebs,
+                    'VirtualName': jsonRequestBody.BlockDeviceMappings[i].VirtualName
+                });
+                reqParams.cli['--block-device-mappings'].push({
+                    'DeviceName': jsonRequestBody.BlockDeviceMappings[i].DeviceName,
+                    'Ebs': jsonRequestBody.BlockDeviceMappings[i].Ebs,
+                    'VirtualName': jsonRequestBody.BlockDeviceMappings[i].VirtualName
+                });
+                reqParams.cfn['BlockDeviceMappings'].push({
+                    'DeviceName': jsonRequestBody.BlockDeviceMappings[i].DeviceName,
+                    'Ebs': jsonRequestBody.BlockDeviceMappings[i].Ebs,
+                    'VirtualName': jsonRequestBody.BlockDeviceMappings[i].VirtualName
+                });
+                used_device_names.push(jsonRequestBody.BlockDeviceMappings[i].DeviceName);
+            }
+
             if (jsonRequestBody.BlockDeviceMappings[i].DeviceName == "/dev/sda1" || jsonRequestBody.BlockDeviceMappings[i].DeviceName == "/dev/xvda") {
                 if (jsonRequestBody.BlockDeviceMappings[i].Ebs) {
                     reqParams.tf['root_block_device'] = {
@@ -801,18 +883,42 @@ function analyseRequest(details) {
                     };
                 }
             } else if (jsonRequestBody.BlockDeviceMappings[i].Ebs) {
-                reqParams.tf['ebs_block_device'] = {
+                if (!reqParams.tf['ebs_block_device']) {
+                    reqParams.tf['ebs_block_device'] = [];
+                }
+                reqParams.tf['ebs_block_device'].push({
                     'device_name': jsonRequestBody.BlockDeviceMappings[i].DeviceName,
                     'volume_type': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeType,
                     'volume_size': jsonRequestBody.BlockDeviceMappings[i].Ebs.VolumeSize,
                     'delete_on_termination': jsonRequestBody.BlockDeviceMappings[i].Ebs.DeleteOnTermination,
                     'iops': jsonRequestBody.BlockDeviceMappings[i].Ebs.Iops,
                     'snapshot_id': jsonRequestBody.BlockDeviceMappings[i].Ebs.SnapshotId
-                };
+                });
 
                 if (jsonRequestBody.BlockDeviceMappings[i].Ebs.SnapshotId) {
                     reqParams.iam['Resource'].push("arn:aws:ec2:*::snapshot/" + jsonRequestBody.BlockDeviceMappings[i].Ebs.SnapshotId);
                 }
+            }
+        }
+        instance_store_count = 0;
+        if (instance_type_instance_store_count[jsonRequestBody.InstanceType]) {
+            instance_store_count = instance_type_instance_store_count[jsonRequestBody.InstanceType];
+        }
+        for (var i=0; i<instance_store_count; i++) { // unused instance store volumes
+            var device_name = "xvdc" + String.fromCharCode(97 + i);
+            if (!used_device_names.includes(device_name)) {
+                reqParams.boto3['BlockDeviceMappings'].push({
+                    'DeviceName': device_name,
+                    'NoDevice': ''
+                });
+                reqParams.cli['--block-device-mappings'].push({
+                    'DeviceName': device_name,
+                    'NoDevice': ''
+                });
+                reqParams.cfn['BlockDeviceMappings'].push({
+                    'DeviceName': device_name,
+                    'NoDevice': ''
+                });
             }
         }
 
@@ -42845,6 +42951,610 @@ function analyseRequest(details) {
                 'api': 'GetAccountSettings',
                 'boto3': 'get_account_settings',
                 'cli': 'get-account-settings'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:cloudtrail.LookupEvents
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/cloudtrail$/g) && jsonRequestBody.operation == "lookupEvents") {
+        reqParams.boto3['LookupAttributes'] = jsonRequestBody.contentString.LookupAttributes;
+        reqParams.cli['--lookup-attributes'] = jsonRequestBody.contentString.LookupAttributes;
+        reqParams.boto3['MaxResults'] = jsonRequestBody.contentString.MaxResults;
+        reqParams.cli['--max-items'] = jsonRequestBody.contentString.MaxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'cloudtrail',
+            'method': {
+                'api': 'LookupEvents',
+                'boto3': 'lookup_events',
+                'cli': 'lookup-events'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.GetLifecyclePolicyPreview
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "getLifecyclePolicyPreview") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['MaxResults'] = jsonRequestBody.contentString.maxResults;
+        reqParams.cli['--max-results'] = jsonRequestBody.contentString.maxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'GetLifecyclePolicyPreview',
+                'boto3': 'get_lifecycle_policy_preview',
+                'cli': 'get-lifecycle-policy-preview'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.GetLifecyclePolicy
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "getLifecyclePolicy") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'GetLifecyclePolicy',
+                'boto3': 'get_lifecycle_policy',
+                'cli': 'get-lifecycle-policy'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.DescribeImages
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "describeImages") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['MaxResults'] = jsonRequestBody.contentString.maxResults;
+        reqParams.cli['--max-results'] = jsonRequestBody.contentString.maxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'DescribeImages',
+                'boto3': 'describe_images',
+                'cli': 'describe-images'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.GetRepositoryPolicy
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "getRepositoryPolicy") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'GetRepositoryPolicy',
+                'boto3': 'get_repository_policy',
+                'cli': 'get-repository-policy'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.DeleteRepositoryPolicy
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "deleteRepositoryPolicy") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'DeleteRepositoryPolicy',
+                'boto3': 'delete_repository_policy',
+                'cli': 'delete-repository-policy'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.SetRepositoryPolicy
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "setRepositoryPolicy") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['PolicyText'] = jsonRequestBody.contentString.policyText;
+        reqParams.cli['--policy-text'] = jsonRequestBody.contentString.policyText;
+
+        reqParams.tf['repository'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.tf['policy'] = jsonRequestBody.contentString.policyText;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'SetRepositoryPolicy',
+                'boto3': 'set_repository_policy',
+                'cli': 'set-repository-policy'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('ecr', details.requestId),
+            'region': region,
+            'service': 'ecr',
+            'terraformType': 'aws_ecr_repository_policy',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:ecr:ecr.PutLifecyclePolicy
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ecr\/api\/ecr$/g) && jsonRequestBody.operation == "putLifecyclePolicy") {
+        reqParams.boto3['RepositoryName'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.cli['--repository-name'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.boto3['LifecyclePolicyText'] = jsonRequestBody.contentString.lifecyclePolicyText;
+        reqParams.cli['--lifecycle-policy-text'] = jsonRequestBody.contentString.lifecyclePolicyText;
+        
+        reqParams.tf['repository'] = jsonRequestBody.contentString.repositoryName;
+        reqParams.tf['policy'] = jsonRequestBody.contentString.lifecyclePolicyText;
+
+        outputs.push({
+            'region': region,
+            'service': 'ecr',
+            'method': {
+                'api': 'PutLifecyclePolicy',
+                'boto3': 'put_lifecycle_policy',
+                'cli': 'put-lifecycle-policy'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('ecr', details.requestId),
+            'region': region,
+            'service': 'ecr',
+            'terraformType': 'aws_ecr_lifecycle_policy',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:worklink:worklink.ListFleets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/worklink\/api\/worklink$/g) && jsonRequestBody.operation == "listFleets") {
+
+        outputs.push({
+            'region': region,
+            'service': 'worklink',
+            'method': {
+                'api': 'ListFleets',
+                'boto3': 'list_fleets',
+                'cli': 'list-fleets'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:worklink:worklink.CreateFleet
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/worklink\/api\/worklink$/g) && jsonRequestBody.operation == "createFleet") {
+        reqParams.boto3['FleetName'] = jsonRequestBody.contentString.FleetName;
+        reqParams.cli['--fleet-name'] = jsonRequestBody.contentString.FleetName;
+        reqParams.boto3['DisplayName'] = jsonRequestBody.contentString.DisplayName;
+        reqParams.cli['--display-name'] = jsonRequestBody.contentString.DisplayName;
+        reqParams.boto3['OptimizeForEndUserLocation'] = jsonRequestBody.contentString.OptimizeForEndUserLocation;
+        reqParams.cli['--optimize-for-end-user-location'] = jsonRequestBody.contentString.OptimizeForEndUserLocation;
+
+        outputs.push({
+            'region': region,
+            'service': 'worklink',
+            'method': {
+                'api': 'CreateFleet',
+                'boto3': 'create_fleet',
+                'cli': 'create-fleet'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:worklink:worklink.DescribeFleetMetadata
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/worklink\/api\/worklink$/g) && jsonRequestBody.operation == "describeFleetMetadata") {
+        reqParams.boto3['FleetArn'] = jsonRequestBody.contentString.FleetArn;
+        reqParams.cli['--fleet-arn'] = jsonRequestBody.contentString.FleetArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'worklink',
+            'method': {
+                'api': 'DescribeFleetMetadata',
+                'boto3': 'describe_fleet_metadata',
+                'cli': 'describe-fleet-metadata'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:worklink:worklink.DescribeIdentityProviderConfiguration
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/worklink\/api\/worklink$/g) && jsonRequestBody.operation == "describeIdentityProviderConfiguration") {
+        reqParams.boto3['FleetArn'] = jsonRequestBody.contentString.FleetArn;
+        reqParams.cli['--fleet-arn'] = jsonRequestBody.contentString.FleetArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'worklink',
+            'method': {
+                'api': 'DescribeIdentityProviderConfiguration',
+                'boto3': 'describe_identity_provider_configuration',
+                'cli': 'describe-identity-provider-configuration'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:worklink:worklink.DescribeAuditStreamConfiguration
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/worklink\/api\/worklink$/g) && jsonRequestBody.operation == "describeAuditStreamConfiguration") {
+        reqParams.boto3['FleetArn'] = jsonRequestBody.contentString.FleetArn;
+        reqParams.cli['--fleet-arn'] = jsonRequestBody.contentString.FleetArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'worklink',
+            'method': {
+                'api': 'DescribeAuditStreamConfiguration',
+                'boto3': 'describe_audit_stream_configuration',
+                'cli': 'describe-audit-stream-configuration'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:worklink:worklink.DescribeDevicePolicyConfiguration
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/worklink\/api\/worklink$/g) && jsonRequestBody.operation == "describeDevicePolicyConfiguration") {
+        reqParams.boto3['FleetArn'] = jsonRequestBody.contentString.FleetArn;
+        reqParams.cli['--fleet-arn'] = jsonRequestBody.contentString.FleetArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'worklink',
+            'method': {
+                'api': 'DescribeDevicePolicyConfiguration',
+                'boto3': 'describe_device_policy_configuration',
+                'cli': 'describe-device-policy-configuration'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:worklink:worklink.DescribeCompanyNetworkConfiguration
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/worklink\/api\/worklink$/g) && jsonRequestBody.operation == "describeCompanyNetworkConfiguration") {
+        reqParams.boto3['FleetArn'] = jsonRequestBody.contentString.FleetArn;
+        reqParams.cli['--fleet-arn'] = jsonRequestBody.contentString.FleetArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'worklink',
+            'method': {
+                'api': 'DescribeCompanyNetworkConfiguration',
+                'boto3': 'describe_company_network_configuration',
+                'cli': 'describe-company-network-configuration'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:worklink:worklink.ListWebsiteCertificateAuthorities
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/worklink\/api\/worklink$/g) && jsonRequestBody.operation == "listWebsiteCertificateAuthorities") {
+        reqParams.boto3['FleetArn'] = jsonRequestBody.contentString.FleetArn;
+        reqParams.cli['--fleet-arn'] = jsonRequestBody.contentString.FleetArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'worklink',
+            'method': {
+                'api': 'ListWebsiteCertificateAuthorities',
+                'boto3': 'list_website_certificate_authorities',
+                'cli': 'list-website-certificate-authorities'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:worklink:worklink.DeleteFleet
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/worklink\/api\/worklink$/g) && jsonRequestBody.operation == "deleteFleet") {
+        reqParams.boto3['FleetArn'] = jsonRequestBody.contentString.FleetArn;
+        reqParams.cli['--fleet-arn'] = jsonRequestBody.contentString.FleetArn;
+
+        outputs.push({
+            'region': region,
+            'service': 'worklink',
+            'method': {
+                'api': 'DeleteFleet',
+                'boto3': 'delete_fleet',
+                'cli': 'delete-fleet'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.ListBackupJobs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "listBackupJobs") {
+        reqParams.boto3['ByCreatedAfter'] = jsonRequestBody.params.createdAfter;
+        reqParams.cli['--by-created-after'] = jsonRequestBody.params.createdAfter;
+        reqParams.boto3['ByState'] = jsonRequestBody.params.state;
+        reqParams.cli['--by-state'] = jsonRequestBody.params.state;
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'ListBackupJobs',
+                'boto3': 'list_backup_jobs',
+                'cli': 'list-backup-jobs'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.ListRestoreJobs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "listRestoreJobs") {
+        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.cli['--max-items'] = jsonRequestBody.params.maxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'ListRestoreJobs',
+                'boto3': 'list_restore_jobs',
+                'cli': 'list-restore-jobs'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.ListBackupPlans
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "listBackupPlans") {
+        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.cli['--max-items'] = jsonRequestBody.params.maxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'ListBackupPlans',
+                'boto3': 'list_backup_plans',
+                'cli': 'list-backup-plans'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.ListBackupPlanTemplates
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "listBackupPlanTemplates") {
+        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.cli['--max-items'] = jsonRequestBody.params.maxResults;
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'ListBackupPlanTemplates',
+                'boto3': 'list_backup_plan_templates',
+                'cli': 'list-backup-plan-templates'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.GetBackupPlanFromTemplate
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "getBackupPlanFromTemplate") {
+        reqParams.boto3['BackupPlanTemplateId'] = jsonRequestBody.path.split("/")[4];
+        reqParams.cli['--backup-plan-template-id'] = jsonRequestBody.path.split("/")[4];
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'GetBackupPlanFromTemplate',
+                'boto3': 'get_backup_plan_from_template',
+                'cli': 'get-backup-plan-from-template'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.CreateBackupVault
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "createBackupVault") {
+        reqParams.boto3['CreatorRequestId'] = jsonRequestBody.contentString.CreatorRequestId;
+        reqParams.cli['--creator-request-id'] = jsonRequestBody.contentString.CreatorRequestId;
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'CreateBackupVault',
+                'boto3': 'create_backup_vault',
+                'cli': 'create-backup-vault'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.CreateBackupPlan
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "createBackupPlan") {
+        reqParams.boto3['BackupPlan'] = jsonRequestBody.contentString.BackupPlan;
+        reqParams.cli['--backup-plan'] = jsonRequestBody.contentString.BackupPlan;
+        reqParams.boto3['BackupPlanTags'] = jsonRequestBody.contentString.BackupPlanTags;
+        reqParams.cli['--backup-plan-tags'] = jsonRequestBody.contentString.BackupPlanTags;
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'CreateBackupPlan',
+                'boto3': 'create_backup_plan',
+                'cli': 'create-backup-plan'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.GetBackupPlan
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "getBackupPlan") {
+        reqParams.boto3['BackupPlanId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--backup-plan-id'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'GetBackupPlan',
+                'boto3': 'get_backup_plan',
+                'cli': 'get-backup-plan'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.ListBackupSelections
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "listBackupSelections") {
+        reqParams.boto3['MaxResults'] = jsonRequestBody.params.maxResults;
+        reqParams.cli['--max-items'] = jsonRequestBody.params.maxResults;
+        reqParams.boto3['BackupPlanId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--backup-plan-id'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'ListBackupSelections',
+                'boto3': 'list_backup_selections',
+                'cli': 'list-backup-selections'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.ListTags
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "listTags") {
+        reqParams.boto3['ResourceArn'] = jsonRequestBody.path.split("/")[2];
+        reqParams.cli['--resource-arn'] = jsonRequestBody.path.split("/")[2];
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'ListTags',
+                'boto3': 'list_tags',
+                'cli': 'list-tags'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:backup:backup.DeleteBackupPlan
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "deleteBackupPlan") {
+        reqParams.boto3['BackupPlanId'] = jsonRequestBody.path.split("/")[3];
+        reqParams.cli['--backup-plan-id'] = jsonRequestBody.path.split("/")[3];
+
+        outputs.push({
+            'region': region,
+            'service': 'backup',
+            'method': {
+                'api': 'DeleteBackupPlan',
+                'boto3': 'delete_backup_plan',
+                'cli': 'delete-backup-plan'
             },
             'options': reqParams,
             'requestDetails': details
