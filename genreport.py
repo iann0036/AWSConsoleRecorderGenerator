@@ -46,13 +46,12 @@ cfn_occurances = [
     "AWS::EMR::InstanceFleetConfig",
     "AWS::Glue::Partition"
 ]
-
 '''
-AWS::CloudFormation::Init
-AWS::SSM::MaintenanceWindowTarget
-AWS::CloudFormation::Authentication
-AWS::CloudFormation::Interface
-AWS::AutoScaling::Trigger
+    "AWS::CloudFormation::Init",
+    "AWS::SSM::MaintenanceWindowTarget",
+    "AWS::CloudFormation::Authentication",
+    "AWS::CloudFormation::Interface",
+    "AWS::AutoScaling::Trigger"
 '''
 
 tf_occurances = [

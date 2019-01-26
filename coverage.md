@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**344/344 (100%)** Resources Covered
+**345/345 (100%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -261,6 +261,7 @@
 | *AWS::OpsWorks::Stack* | 1 |
 | *AWS::OpsWorks::UserProfile* | 1 |
 | *AWS::OpsWorks::Volume* | 1 |
+| *AWS::OpsWorksCM::Server* | 1 |
 | *AWS::RDS::DBCluster* | 1 |
 | *AWS::RDS::DBClusterParameterGroup* | 1 |
 | *AWS::RDS::DBInstance* | 1 |
@@ -885,6 +886,7 @@
 | *mq* | 7/20 (35%) |
 | *neptune* | 12/57 (21%) |
 | *opsworks* | 18/74 (24%) |
+| *opsworkscm* | 3/16 (18%) |
 | *organizations* | 14/42 (33%) |
 | *pinpoint* | 7/74 (9%) |
 | *rds* | 25/107 (23%) |
@@ -4664,14 +4666,14 @@
 | *opsworks* | `UpdateVolume` | 0 |
 | *opsworkscm* | `AssociateNode` | 0 |
 | *opsworkscm* | `CreateBackup` | 0 |
-| *opsworkscm* | `CreateServer` | 0 |
+| *opsworkscm* | `CreateServer` | 1 |
 | *opsworkscm* | `DeleteBackup` | 0 |
 | *opsworkscm* | `DeleteServer` | 0 |
 | *opsworkscm* | `DescribeAccountAttributes` | 0 |
-| *opsworkscm* | `DescribeBackups` | 0 |
+| *opsworkscm* | `DescribeBackups` | 1 |
 | *opsworkscm* | `DescribeEvents` | 0 |
 | *opsworkscm* | `DescribeNodeAssociationStatus` | 0 |
-| *opsworkscm* | `DescribeServers` | 0 |
+| *opsworkscm* | `DescribeServers` | 1 |
 | *opsworkscm* | `DisassociateNode` | 0 |
 | *opsworkscm* | `ExportServerEngineAttribute` | 0 |
 | *opsworkscm* | `RestoreServer` | 0 |
@@ -6371,4 +6373,4 @@
 
 **Total Operations: 5447**
 
-**Total Unique Occurances: 1104 (20%)**
+**Total Unique Occurances: 1107 (20%)**
