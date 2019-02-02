@@ -77,7 +77,8 @@ tf_occurances = [
     "aws_alb_listener_rule",
     "aws_alb_target_group",
     "aws_alb_target_group_attachment",
-    "aws_iam_server_certificate"
+    "aws_iam_server_certificate",
+    "aws_route53_delegation_set"
 ]
 
 with open("combined.json", "r") as f:

@@ -115,6 +115,8 @@ aws_dynamodb_table_item
 aws_dax_cluster
 aws_dax_parameter_group
 aws_dax_subnet_group
+aws_docdb_cluster_parameter_group
+aws_docdb_subnet_group
 aws_alb
 aws_alb_listener
 aws_alb_listener_certificate
@@ -200,6 +202,7 @@ aws_gamelift_fleet
 aws_gamelift_game_session_queue
 aws_glacier_vault
 aws_glacier_vault_lock
+aws_globalaccelerator_accelerator
 aws_glue_catalog_database
 aws_glue_catalog_table
 aws_glue_classifier
@@ -254,7 +257,9 @@ aws_kms_key
 aws_lambda_alias
 aws_lambda_event_source_mapping
 aws_lambda_function
+aws_lambda_layer_version
 aws_lambda_permission
+aws_licensemanager_association
 aws_licensemanager_license_configuration
 aws_lightsail_domain
 aws_lightsail_instance
@@ -265,6 +270,7 @@ aws_macie_member_account_association
 aws_macie_s3_bucket_association
 aws_mq_broker
 aws_mq_configuration
+aws_media_package_channel
 aws_media_store_container
 aws_media_store_container_policy
 aws_opsworks_application
@@ -298,6 +304,7 @@ aws_pinpoint_email_channel
 aws_pinpoint_event_stream
 aws_pinpoint_gcm_channel
 aws_pinpoint_sms_channel
+aws_ram_resource_share
 aws_db_cluster_snapshot
 aws_db_event_subscription
 aws_db_instance
@@ -324,6 +331,7 @@ aws_redshift_parameter_group
 aws_redshift_security_group
 aws_redshift_snapshot_copy_grant
 aws_redshift_subnet_group
+aws_resourcegroups_group
 aws_waf_byte_match_set
 aws_waf_geo_match_set
 aws_waf_ipset
@@ -362,9 +370,12 @@ aws_s3_bucket_metric
 aws_s3_bucket_notification
 aws_s3_bucket_object
 aws_s3_bucket_policy
+aws_s3_bucket_public_access_block
+aws_sagemaker_notebook_instance
 aws_secretsmanager_secret
 aws_secretsmanager_secret_version
 aws_securityhub_account
+aws_securityhub_product_subscription
 aws_securityhub_standards_subscription
 aws_ses_active_receipt_rule_set
 aws_ses_domain_identity

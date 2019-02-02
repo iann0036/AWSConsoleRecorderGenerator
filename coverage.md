@@ -352,7 +352,7 @@
 
 ## Terraform Coverage
 
-**262/457 (57%)** Resources Covered
+**274/468 (58%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -479,7 +479,7 @@
 | *aws_default_route_table* | 0 |
 | *aws_default_security_group* | 0 |
 | *aws_default_subnet* | 0 |
-| *aws_default_vpc* | 0 |
+| *aws_default_vpc* | 1 |
 | *aws_default_vpc_dhcp_options* | 0 |
 | *aws_devicefarm_project* | 0 |
 | *aws_directory_service_conditional_forwarder* | 0 |
@@ -490,6 +490,8 @@
 | *aws_dms_replication_instance* | 0 |
 | *aws_dms_replication_subnet_group* | 1 |
 | *aws_dms_replication_task* | 0 |
+| *aws_docdb_cluster_parameter_group* | 0 |
+| *aws_docdb_subnet_group* | 0 |
 | *aws_dx_bgp_peer* | 0 |
 | *aws_dx_connection* | 0 |
 | *aws_dx_connection_association* | 0 |
@@ -553,6 +555,7 @@
 | *aws_gamelift_game_session_queue* | 0 |
 | *aws_glacier_vault* | 1 |
 | *aws_glacier_vault_lock* | 1 |
+| *aws_globalaccelerator_accelerator* | 0 |
 | *aws_glue_catalog_database* | 0 |
 | *aws_glue_catalog_table* | 0 |
 | *aws_glue_classifier* | 0 |
@@ -566,15 +569,15 @@
 | *aws_guardduty_member* | 1 |
 | *aws_guardduty_threatintelset* | 1 |
 | *aws_iam_access_key* | 1 |
-| *aws_iam_account_alias* | 0 |
-| *aws_iam_account_password_policy* | 0 |
+| *aws_iam_account_alias* | 1 |
+| *aws_iam_account_password_policy* | 1 |
 | *aws_iam_group* | 1 |
 | *aws_iam_group_membership* | 0 |
 | *aws_iam_group_policy* | 1 |
 | *aws_iam_group_policy_attachment* | 1 |
-| *aws_iam_instance_profile* | 2 |
+| *aws_iam_instance_profile* | 1 |
 | *aws_iam_openid_connect_provider* | 0 |
-| *aws_iam_policy* | 0 |
+| *aws_iam_policy* | 1 |
 | *aws_iam_policy_attachment* | 0 |
 | *aws_iam_role* | 1 |
 | *aws_iam_role_policy* | 1 |
@@ -600,7 +603,7 @@
 | *aws_iot_thing_principal_attachment* | 1 |
 | *aws_iot_thing_type* | 0 |
 | *aws_iot_topic_rule* | 0 |
-| *aws_key_pair* | 0 |
+| *aws_key_pair* | 1 |
 | *aws_kinesis_analytics_application* | 1 |
 | *aws_kinesis_firehose_delivery_stream* | 1 |
 | *aws_kinesis_stream* | 2 |
@@ -610,6 +613,7 @@
 | *aws_lambda_alias* | 1 |
 | *aws_lambda_event_source_mapping* | 1 |
 | *aws_lambda_function* | 1 |
+| *aws_lambda_layer_version* | 0 |
 | *aws_lambda_permission* | 0 |
 | *aws_launch_configuration* | 1 |
 | *aws_launch_template* | 1 |
@@ -620,7 +624,8 @@
 | *aws_lb_listener_rule* | 0 |
 | *aws_lb_ssl_negotiation_policy* | 0 |
 | *aws_lb_target_group* | 1 |
-| *aws_lb_target_group_attachment* | 0 |
+| *aws_lb_target_group_attachment* | 3 |
+| *aws_licensemanager_association* | 1 |
 | *aws_licensemanager_license_configuration* | 1 |
 | *aws_lightsail_domain* | 1 |
 | *aws_lightsail_instance* | 1 |
@@ -633,6 +638,7 @@
 | *aws_macie_member_account_association* | 0 |
 | *aws_macie_s3_bucket_association* | 0 |
 | *aws_main_route_table_association* | 0 |
+| *aws_media_package_channel* | 0 |
 | *aws_media_store_container* | 1 |
 | *aws_media_store_container_policy* | 1 |
 | *aws_mq_broker* | 1 |
@@ -683,6 +689,7 @@
 | *aws_pinpoint_sms_channel* | 1 |
 | *aws_placement_group* | 1 |
 | *aws_proxy_protocol_policy* | 0 |
+| *aws_ram_resource_share* | 0 |
 | *aws_rds_cluster* | 1 |
 | *aws_rds_cluster_endpoint* | 0 |
 | *aws_rds_cluster_instance* | 0 |
@@ -694,8 +701,9 @@
 | *aws_redshift_security_group* | 0 |
 | *aws_redshift_snapshot_copy_grant* | 0 |
 | *aws_redshift_subnet_group* | 1 |
+| *aws_resourcegroups_group* | 0 |
 | *aws_route* | 2 |
-| *aws_route53_delegation_set* | 0 |
+| *aws_route53_delegation_set* | 1 |
 | *aws_route53_health_check* | 1 |
 | *aws_route53_query_log* | 0 |
 | *aws_route53_record* | 1 |
@@ -710,12 +718,15 @@
 | *aws_s3_bucket_notification* | 0 |
 | *aws_s3_bucket_object* | 0 |
 | *aws_s3_bucket_policy* | 1 |
+| *aws_s3_bucket_public_access_block* | 0 |
+| *aws_sagemaker_notebook_instance* | 0 |
 | *aws_secretsmanager_secret* | 1 |
 | *aws_secretsmanager_secret_version* | 0 |
 | *aws_security_group* | 2 |
 | *aws_security_group_rule* | 0 |
-| *aws_securityhub_account* | 0 |
-| *aws_securityhub_standards_subscription* | 0 |
+| *aws_securityhub_account* | 1 |
+| *aws_securityhub_product_subscription* | 1 |
+| *aws_securityhub_standards_subscription* | 1 |
 | *aws_service_discovery_http_namespace* | 0 |
 | *aws_service_discovery_private_dns_namespace* | 1 |
 | *aws_service_discovery_public_dns_namespace* | 1 |
@@ -766,8 +777,8 @@
 | *aws_storagegateway_working_storage* | 0 |
 | *aws_subnet* | 2 |
 | *aws_swf_domain* | 1 |
-| *aws_transfer_server* | 0 |
-| *aws_transfer_ssh_key* | 0 |
+| *aws_transfer_server* | 2 |
+| *aws_transfer_ssh_key* | 1 |
 | *aws_transfer_user* | 0 |
 | *aws_volume_attachment* | 1 |
 | *aws_vpc* | 4 |
@@ -850,7 +861,7 @@
 | *docdb* | 12/39 (30%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 5/36 (13%) |
-| *ec2* | 136/329 (41%) |
+| *ec2* | 138/329 (41%) |
 | *ecr* | 10/25 (40%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -858,7 +869,7 @@
 | *elasticache* | 11/42 (26%) |
 | *elasticbeanstalk* | 8/44 (18%) |
 | *elb* | 4/29 (13%) |
-| *elbv2* | 16/34 (47%) |
+| *elbv2* | 18/34 (52%) |
 | *emr* | 9/27 (33%) |
 | *es* | 11/23 (47%) |
 | *events* | 11/15 (73%) |
@@ -867,7 +878,7 @@
 | *glacier* | 3/33 (9%) |
 | *glue* | 35/87 (40%) |
 | *guardduty* | 25/42 (59%) |
-| *iam* | 33/137 (24%) |
+| *iam* | 37/137 (27%) |
 | *inspector* | 11/37 (29%) |
 | *iot* | 12/166 (7%) |
 | *iot1click-devices* | 3/10 (30%) |
@@ -896,8 +907,10 @@
 | *route53* | 9/56 (16%) |
 | *route53resolver* | 10/22 (45%) |
 | *s3* | 26/88 (29%) |
+| *s3control* | 1/3 (33%) |
 | *sagemaker* | 16/75 (21%) |
 | *secretsmanager* | 6/18 (33%) |
+| *securityhub* | 10/29 (34%) |
 | *serverlessrepo* | 1/13 (7%) |
 | *servicecatalog* | 14/77 (18%) |
 | *servicediscovery* | 6/20 (30%) |
@@ -910,6 +923,7 @@
 | *sts* | 1/7 (14%) |
 | *support* | 7/14 (50%) |
 | *swf* | 1/31 (3%) |
+| *transfer* | 9/18 (50%) |
 | *waf* | 32/73 (43%) |
 | *waf-regional* | 34/77 (44%) |
 | *worklink* | 9/20 (45%) |
@@ -2569,7 +2583,7 @@
 | *ec2* | `CreateClientVpnRoute` | 0 |
 | *ec2* | `CreateCustomerGateway` | 1 |
 | *ec2* | `CreateDefaultSubnet` | 0 |
-| *ec2* | `CreateDefaultVpc` | 0 |
+| *ec2* | `CreateDefaultVpc` | 1 |
 | *ec2* | `CreateDhcpOptions` | 1 |
 | *ec2* | `CreateEgressOnlyInternetGateway` | 1 |
 | *ec2* | `CreateFleet` | 0 |
@@ -2795,7 +2809,7 @@
 | *ec2* | `ModifyInstanceCreditSpecification` | 0 |
 | *ec2* | `ModifyInstancePlacement` | 0 |
 | *ec2* | `ModifyLaunchTemplate` | 0 |
-| *ec2* | `ModifyNetworkInterfaceAttribute` | 0 |
+| *ec2* | `ModifyNetworkInterfaceAttribute` | 1 |
 | *ec2* | `ModifyReservedInstances` | 0 |
 | *ec2* | `ModifySnapshotAttribute` | 0 |
 | *ec2* | `ModifySpotFleetRequest` | 0 |
@@ -3088,13 +3102,13 @@
 | *elbv2* | `DescribeTags` | 0 |
 | *elbv2* | `DescribeTargetGroupAttributes` | 0 |
 | *elbv2* | `DescribeTargetGroups` | 1 |
-| *elbv2* | `DescribeTargetHealth` | 0 |
+| *elbv2* | `DescribeTargetHealth` | 1 |
 | *elbv2* | `ModifyListener` | 0 |
 | *elbv2* | `ModifyLoadBalancerAttributes` | 0 |
 | *elbv2* | `ModifyRule` | 0 |
 | *elbv2* | `ModifyTargetGroup` | 0 |
 | *elbv2* | `ModifyTargetGroupAttributes` | 0 |
-| *elbv2* | `RegisterTargets` | 0 |
+| *elbv2* | `RegisterTargets` | 1 |
 | *elbv2* | `RemoveListenerCertificates` | 0 |
 | *elbv2* | `RemoveTags` | 0 |
 | *elbv2* | `SetIpAddressType` | 0 |
@@ -3549,7 +3563,7 @@
 | *iam* | `AttachUserPolicy` | 1 |
 | *iam* | `ChangePassword` | 0 |
 | *iam* | `CreateAccessKey` | 1 |
-| *iam* | `CreateAccountAlias` | 0 |
+| *iam* | `CreateAccountAlias` | 1 |
 | *iam* | `CreateGroup` | 1 |
 | *iam* | `CreateInstanceProfile` | 2 |
 | *iam* | `CreateLoginProfile` | 1 |
@@ -3564,8 +3578,8 @@
 | *iam* | `CreateVirtualMFADevice` | 0 |
 | *iam* | `DeactivateMFADevice` | 0 |
 | *iam* | `DeleteAccessKey` | 1 |
-| *iam* | `DeleteAccountAlias` | 0 |
-| *iam* | `DeleteAccountPasswordPolicy` | 0 |
+| *iam* | `DeleteAccountAlias` | 1 |
+| *iam* | `DeleteAccountPasswordPolicy` | 1 |
 | *iam* | `DeleteGroup` | 0 |
 | *iam* | `DeleteGroupPolicy` | 0 |
 | *iam* | `DeleteInstanceProfile` | 0 |
@@ -3662,7 +3676,7 @@
 | *iam* | `UntagRole` | 0 |
 | *iam* | `UntagUser` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
-| *iam* | `UpdateAccountPasswordPolicy` | 0 |
+| *iam* | `UpdateAccountPasswordPolicy` | 1 |
 | *iam* | `UpdateAssumeRolePolicy` | 0 |
 | *iam* | `UpdateGroup` | 0 |
 | *iam* | `UpdateLoginProfile` | 0 |
@@ -5305,7 +5319,7 @@
 | *s3* | `ListBucketAnalyticsConfigurations` | 0 |
 | *s3* | `ListBucketInventoryConfigurations` | 0 |
 | *s3* | `ListBucketMetricsConfigurations` | 0 |
-| *s3* | `ListBuckets` | 5 |
+| *s3* | `ListBuckets` | 6 |
 | *s3* | `ListMultipartUploads` | 0 |
 | *s3* | `ListObjectVersions` | 0 |
 | *s3* | `ListObjects` | 1 |
@@ -5342,7 +5356,7 @@
 | *s3* | `UploadPartCopy` | 0 |
 | *s3control* | `DeletePublicAccessBlock` | 0 |
 | *s3control* | `GetPublicAccessBlock` | 0 |
-| *s3control* | `PutPublicAccessBlock` | 0 |
+| *s3control* | `PutPublicAccessBlock` | 1 |
 | *sagemaker* | `AddTags` | 0 |
 | *sagemaker* | `CreateAlgorithm` | 0 |
 | *sagemaker* | `CreateCodeRepository` | 0 |
@@ -5449,7 +5463,7 @@
 | *secretsmanager* | `UpdateSecretVersionStage` | 0 |
 | *securityhub* | `AcceptInvitation` | 0 |
 | *securityhub* | `BatchDisableStandards` | 0 |
-| *securityhub* | `BatchEnableStandards` | 0 |
+| *securityhub* | `BatchEnableStandards` | 1 |
 | *securityhub* | `BatchImportFindings` | 0 |
 | *securityhub* | `CreateInsight` | 0 |
 | *securityhub* | `CreateMembers` | 0 |
@@ -5458,22 +5472,22 @@
 | *securityhub* | `DeleteInvitations` | 0 |
 | *securityhub* | `DeleteMembers` | 0 |
 | *securityhub* | `DisableImportFindingsForProduct` | 0 |
-| *securityhub* | `DisableSecurityHub` | 0 |
+| *securityhub* | `DisableSecurityHub` | 1 |
 | *securityhub* | `DisassociateFromMasterAccount` | 0 |
 | *securityhub* | `DisassociateMembers` | 0 |
-| *securityhub* | `EnableImportFindingsForProduct` | 0 |
-| *securityhub* | `EnableSecurityHub` | 0 |
+| *securityhub* | `EnableImportFindingsForProduct` | 1 |
+| *securityhub* | `EnableSecurityHub` | 1 |
 | *securityhub* | `GetEnabledStandards` | 0 |
-| *securityhub* | `GetFindings` | 0 |
+| *securityhub* | `GetFindings` | 1 |
 | *securityhub* | `GetInsightResults` | 0 |
-| *securityhub* | `GetInsights` | 0 |
+| *securityhub* | `GetInsights` | 1 |
 | *securityhub* | `GetInvitationsCount` | 0 |
-| *securityhub* | `GetMasterAccount` | 0 |
+| *securityhub* | `GetMasterAccount` | 1 |
 | *securityhub* | `GetMembers` | 0 |
 | *securityhub* | `InviteMembers` | 0 |
-| *securityhub* | `ListEnabledProductsForImport` | 0 |
-| *securityhub* | `ListInvitations` | 0 |
-| *securityhub* | `ListMembers` | 0 |
+| *securityhub* | `ListEnabledProductsForImport` | 1 |
+| *securityhub* | `ListInvitations` | 1 |
+| *securityhub* | `ListMembers` | 1 |
 | *securityhub* | `UpdateFindings` | 0 |
 | *securityhub* | `UpdateInsight` | 0 |
 | *serverlessrepo* | `CreateApplication` | 0 |
@@ -6051,19 +6065,19 @@
 | *transcribe* | `ListVocabularies` | 0 |
 | *transcribe* | `StartTranscriptionJob` | 0 |
 | *transcribe* | `UpdateVocabulary` | 0 |
-| *transfer* | `CreateServer` | 0 |
-| *transfer* | `CreateUser` | 0 |
-| *transfer* | `DeleteServer` | 0 |
+| *transfer* | `CreateServer` | 1 |
+| *transfer* | `CreateUser` | 1 |
+| *transfer* | `DeleteServer` | 1 |
 | *transfer* | `DeleteSshPublicKey` | 0 |
-| *transfer* | `DeleteUser` | 0 |
-| *transfer* | `DescribeServer` | 0 |
+| *transfer* | `DeleteUser` | 1 |
+| *transfer* | `DescribeServer` | 1 |
 | *transfer* | `DescribeUser` | 0 |
 | *transfer* | `ImportSshPublicKey` | 0 |
-| *transfer* | `ListServers` | 0 |
+| *transfer* | `ListServers` | 1 |
 | *transfer* | `ListTagsForResource` | 0 |
-| *transfer* | `ListUsers` | 0 |
-| *transfer* | `StartServer` | 0 |
-| *transfer* | `StopServer` | 0 |
+| *transfer* | `ListUsers` | 1 |
+| *transfer* | `StartServer` | 1 |
+| *transfer* | `StopServer` | 1 |
 | *transfer* | `TagResource` | 0 |
 | *transfer* | `TestIdentityProvider` | 0 |
 | *transfer* | `UntagResource` | 0 |
@@ -6373,4 +6387,4 @@
 
 **Total Operations: 5447**
 
-**Total Unique Occurances: 1110 (20%)**
+**Total Unique Occurances: 1138 (20%)**
