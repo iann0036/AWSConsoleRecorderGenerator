@@ -43671,5 +43671,91 @@ function analyseRequest(details) {
         return {};
     }
 
+    // autogen:opsworks:opsworkscm.DeleteServer
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/opsworks\/k\/DeleteServer\?/g)) {
+        reqParams.boto3['ServerName'] = jsonRequestBody.ServerName;
+        reqParams.cli['--server-name'] = jsonRequestBody.ServerName;
+
+        outputs.push({
+            'region': region,
+            'service': 'opsworkscm',
+            'method': {
+                'api': 'DeleteServer',
+                'boto3': 'delete_server',
+                'cli': 'delete-server'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:cognito-idp:cognito-idp.CreateUserPoolDomain
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/cognito\/data\/domain$/g)) {
+        if (jsonRequestBody.arn[0].length) {
+            reqParams.boto3['CustomDomainConfig'] = {
+                'CertificateArn': jsonRequestBody.arn[0]
+            };
+            reqParams.cli['--custom-domain-config'] = {
+                'CertificateArn': jsonRequestBody.arn[0]
+            };
+            reqParams.tf['certificate_arn'] = jsonRequestBody.arn[0];
+        }
+        reqParams.boto3['Domain'] = jsonRequestBody.domainName[0];
+        reqParams.cli['--domain'] = jsonRequestBody.domainName[0];
+        reqParams.boto3['UserPoolId'] = jsonRequestBody.id[0];
+        reqParams.cli['--user-pool-id'] = jsonRequestBody.id[0];
+
+        reqParams.tf['domain'] = jsonRequestBody.domainName[0];
+        reqParams.tf['user_pool_id'] = jsonRequestBody.id[0];
+
+        outputs.push({
+            'region': region,
+            'service': 'cognito-idp',
+            'method': {
+                'api': 'CreateUserPoolDomain',
+                'boto3': 'create_user_pool_domain',
+                'cli': 'create-user-pool-domain'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('cognito-idp', details.requestId),
+            'region': region,
+            'service': 'cognito-idp',
+            'terraformType': 'aws_cognito_user_pool_domain',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:cognito-idp:cognito-idp.DeleteUserPoolDomain
+    if (details.method == "DELETE" && details.url.match(/.+console\.aws\.amazon\.com\/cognito\/data\/domain\?/g)) {
+        reqParams.boto3['UserPoolId'] = getUrlValue(details.url, 'id');
+        reqParams.cli['--user-pool-id'] = getUrlValue(details.url, 'id');
+        reqParams.boto3['Domain'] = getUrlValue(details.url, 'domainName');
+        reqParams.cli['--domain'] = getUrlValue(details.url, 'domainName');
+
+        outputs.push({
+            'region': region,
+            'service': 'cognito-idp',
+            'method': {
+                'api': 'DeleteUserPoolDomain',
+                'boto3': 'delete_user_pool_domain',
+                'cli': 'delete-user-pool-domain'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
     return false;
 }

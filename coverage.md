@@ -352,7 +352,7 @@
 
 ## Terraform Coverage
 
-**261/457 (57%)** Resources Covered
+**262/457 (57%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -451,7 +451,7 @@
 | *aws_cognito_user_group* | 1 |
 | *aws_cognito_user_pool* | 0 |
 | *aws_cognito_user_pool_client* | 1 |
-| *aws_cognito_user_pool_domain* | 0 |
+| *aws_cognito_user_pool_domain* | 1 |
 | *aws_config_aggregate_authorization* | 1 |
 | *aws_config_config_rule* | 0 |
 | *aws_config_configuration_aggregator* | 0 |
@@ -839,7 +839,7 @@
 | *codedeploy* | 15/43 (34%) |
 | *codepipeline* | 11/32 (34%) |
 | *cognito-identity* | 2/18 (11%) |
-| *cognito-idp* | 10/96 (10%) |
+| *cognito-idp* | 12/96 (12%) |
 | *config* | 9/47 (19%) |
 | *datapipeline* | 1/19 (5%) |
 | *datasync* | 14/25 (56%) |
@@ -886,7 +886,7 @@
 | *mq* | 7/20 (35%) |
 | *neptune* | 12/57 (21%) |
 | *opsworks* | 18/74 (24%) |
-| *opsworkscm* | 3/16 (18%) |
+| *opsworkscm* | 4/16 (25%) |
 | *organizations* | 14/42 (33%) |
 | *pinpoint* | 7/74 (9%) |
 | *rds* | 25/107 (23%) |
@@ -1957,7 +1957,7 @@
 | *cognito-idp* | `CreateUserImportJob` | 0 |
 | *cognito-idp* | `CreateUserPool` | 1 |
 | *cognito-idp* | `CreateUserPoolClient` | 1 |
-| *cognito-idp* | `CreateUserPoolDomain` | 0 |
+| *cognito-idp* | `CreateUserPoolDomain` | 1 |
 | *cognito-idp* | `DeleteGroup` | 0 |
 | *cognito-idp* | `DeleteIdentityProvider` | 0 |
 | *cognito-idp* | `DeleteResourceServer` | 0 |
@@ -1965,7 +1965,7 @@
 | *cognito-idp* | `DeleteUserAttributes` | 0 |
 | *cognito-idp* | `DeleteUserPool` | 0 |
 | *cognito-idp* | `DeleteUserPoolClient` | 0 |
-| *cognito-idp* | `DeleteUserPoolDomain` | 0 |
+| *cognito-idp* | `DeleteUserPoolDomain` | 1 |
 | *cognito-idp* | `DescribeIdentityProvider` | 0 |
 | *cognito-idp* | `DescribeResourceServer` | 0 |
 | *cognito-idp* | `DescribeRiskConfiguration` | 0 |
@@ -4668,7 +4668,7 @@
 | *opsworkscm* | `CreateBackup` | 0 |
 | *opsworkscm* | `CreateServer` | 1 |
 | *opsworkscm* | `DeleteBackup` | 0 |
-| *opsworkscm* | `DeleteServer` | 0 |
+| *opsworkscm* | `DeleteServer` | 1 |
 | *opsworkscm* | `DescribeAccountAttributes` | 0 |
 | *opsworkscm* | `DescribeBackups` | 1 |
 | *opsworkscm* | `DescribeEvents` | 0 |
@@ -6373,4 +6373,4 @@
 
 **Total Operations: 5447**
 
-**Total Unique Occurances: 1107 (20%)**
+**Total Unique Occurances: 1110 (20%)**
