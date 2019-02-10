@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**345/345 (100%)** Resources Covered
+**354/354 (100%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -22,10 +22,19 @@
 | *AWS::ApiGateway::RequestValidator* | 1 |
 | *AWS::ApiGateway::Resource* | 1 |
 | *AWS::ApiGateway::RestApi* | 1 |
-| *AWS::ApiGateway::Stage* | 2 |
+| *AWS::ApiGateway::Stage* | 1 |
 | *AWS::ApiGateway::UsagePlan* | 1 |
 | *AWS::ApiGateway::UsagePlanKey* | 1 |
 | *AWS::ApiGateway::VpcLink* | 1 |
+| *AWS::ApiGatewayV2::Api* | 1 |
+| *AWS::ApiGatewayV2::Authorizer* | 1 |
+| *AWS::ApiGatewayV2::Deployment* | 1 |
+| *AWS::ApiGatewayV2::Integration* | 1 |
+| *AWS::ApiGatewayV2::IntegrationResponse* | 1 |
+| *AWS::ApiGatewayV2::Model* | 1 |
+| *AWS::ApiGatewayV2::Route* | 1 |
+| *AWS::ApiGatewayV2::RouteResponse* | 1 |
+| *AWS::ApiGatewayV2::Stage* | 1 |
 | *AWS::AppStream::DirectoryConfig* | 1 |
 | *AWS::AppStream::Fleet* | 1 |
 | *AWS::AppStream::ImageBuilder* | 1 |
@@ -147,7 +156,7 @@
 | *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
 | *AWS::EC2::VPCEndpointService* | 1 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 1 |
-| *AWS::EC2::VPCGatewayAttachment* | 2 |
+| *AWS::EC2::VPCGatewayAttachment* | 3 |
 | *AWS::EC2::VPCPeeringConnection* | 1 |
 | *AWS::EC2::VPNConnection* | 1 |
 | *AWS::EC2::VPNConnectionRoute* | 1 |
@@ -352,7 +361,7 @@
 
 ## Terraform Coverage
 
-**274/468 (58%)** Resources Covered
+**278/468 (59%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -388,7 +397,7 @@
 | *aws_api_gateway_request_validator* | 0 |
 | *aws_api_gateway_resource* | 1 |
 | *aws_api_gateway_rest_api* | 0 |
-| *aws_api_gateway_stage* | 2 |
+| *aws_api_gateway_stage* | 1 |
 | *aws_api_gateway_usage_plan* | 1 |
 | *aws_api_gateway_usage_plan_key* | 1 |
 | *aws_api_gateway_vpc_link* | 1 |
@@ -490,8 +499,8 @@
 | *aws_dms_replication_instance* | 0 |
 | *aws_dms_replication_subnet_group* | 1 |
 | *aws_dms_replication_task* | 0 |
-| *aws_docdb_cluster_parameter_group* | 0 |
-| *aws_docdb_subnet_group* | 0 |
+| *aws_docdb_cluster_parameter_group* | 1 |
+| *aws_docdb_subnet_group* | 1 |
 | *aws_dx_bgp_peer* | 0 |
 | *aws_dx_connection* | 0 |
 | *aws_dx_connection_association* | 0 |
@@ -555,7 +564,7 @@
 | *aws_gamelift_game_session_queue* | 0 |
 | *aws_glacier_vault* | 1 |
 | *aws_glacier_vault_lock* | 1 |
-| *aws_globalaccelerator_accelerator* | 0 |
+| *aws_globalaccelerator_accelerator* | 1 |
 | *aws_glue_catalog_database* | 0 |
 | *aws_glue_catalog_table* | 0 |
 | *aws_glue_classifier* | 0 |
@@ -689,7 +698,7 @@
 | *aws_pinpoint_sms_channel* | 1 |
 | *aws_placement_group* | 1 |
 | *aws_proxy_protocol_policy* | 0 |
-| *aws_ram_resource_share* | 0 |
+| *aws_ram_resource_share* | 1 |
 | *aws_rds_cluster* | 1 |
 | *aws_rds_cluster_endpoint* | 0 |
 | *aws_rds_cluster_instance* | 0 |
@@ -832,6 +841,7 @@
 | *acm* | 3/12 (25%) |
 | *acm-pca* | 2/17 (11%) |
 | *apigateway* | 42/120 (35%) |
+| *apigatewayv2* | 5/56 (8%) |
 | *application-autoscaling* | 2/10 (20%) |
 | *appstream* | 15/44 (34%) |
 | *appsync* | 17/33 (51%) |
@@ -876,6 +886,7 @@
 | *firehose* | 3/12 (25%) |
 | *gamelift* | 8/67 (11%) |
 | *glacier* | 3/33 (9%) |
+| *globalaccelerator* | 2/17 (11%) |
 | *glue* | 35/87 (40%) |
 | *guardduty* | 25/42 (59%) |
 | *iam* | 37/137 (27%) |
@@ -900,6 +911,7 @@
 | *opsworkscm* | 4/16 (25%) |
 | *organizations* | 14/42 (33%) |
 | *pinpoint* | 7/74 (9%) |
+| *ram* | 3/16 (18%) |
 | *rds* | 25/107 (23%) |
 | *redshift* | 5/81 (6%) |
 | *rekognition* | 3/34 (8%) |
@@ -1069,7 +1081,7 @@
 | *apigateway* | `CreateRequestValidator` | 1 |
 | *apigateway* | `CreateResource` | 1 |
 | *apigateway* | `CreateRestApi` | 1 |
-| *apigateway* | `CreateStage` | 2 |
+| *apigateway* | `CreateStage` | 1 |
 | *apigateway* | `CreateUsagePlan` | 1 |
 | *apigateway* | `CreateUsagePlanKey` | 1 |
 | *apigateway* | `CreateVpcLink` | 1 |
@@ -1179,16 +1191,16 @@
 | *apigateway* | `UpdateUsagePlan` | 0 |
 | *apigateway* | `UpdateVpcLink` | 0 |
 | *apigatewaymanagementapi* | `PostToConnection` | 0 |
-| *apigatewayv2* | `CreateApi` | 0 |
+| *apigatewayv2* | `CreateApi` | 1 |
 | *apigatewayv2* | `CreateApiMapping` | 0 |
 | *apigatewayv2* | `CreateAuthorizer` | 0 |
 | *apigatewayv2* | `CreateDeployment` | 0 |
 | *apigatewayv2* | `CreateDomainName` | 0 |
-| *apigatewayv2* | `CreateIntegration` | 0 |
-| *apigatewayv2* | `CreateIntegrationResponse` | 0 |
+| *apigatewayv2* | `CreateIntegration` | 1 |
+| *apigatewayv2* | `CreateIntegrationResponse` | 1 |
 | *apigatewayv2* | `CreateModel` | 0 |
-| *apigatewayv2* | `CreateRoute` | 0 |
-| *apigatewayv2* | `CreateRouteResponse` | 0 |
+| *apigatewayv2* | `CreateRoute` | 1 |
+| *apigatewayv2* | `CreateRouteResponse` | 1 |
 | *apigatewayv2* | `CreateStage` | 0 |
 | *apigatewayv2* | `DeleteApi` | 0 |
 | *apigatewayv2* | `DeleteApiMapping` | 0 |
@@ -3316,10 +3328,10 @@
 | *glacier* | `SetVaultNotifications` | 0 |
 | *glacier* | `UploadArchive` | 0 |
 | *glacier* | `UploadMultipartPart` | 0 |
-| *globalaccelerator* | `CreateAccelerator` | 0 |
+| *globalaccelerator* | `CreateAccelerator` | 1 |
 | *globalaccelerator* | `CreateEndpointGroup` | 0 |
 | *globalaccelerator* | `CreateListener` | 0 |
-| *globalaccelerator* | `DeleteAccelerator` | 0 |
+| *globalaccelerator* | `DeleteAccelerator` | 1 |
 | *globalaccelerator* | `DeleteEndpointGroup` | 0 |
 | *globalaccelerator* | `DeleteListener` | 0 |
 | *globalaccelerator* | `DescribeAccelerator` | 0 |
@@ -4878,14 +4890,14 @@
 | *quicksight* | `UpdateUser` | 0 |
 | *ram* | `AcceptResourceShareInvitation` | 0 |
 | *ram* | `AssociateResourceShare` | 0 |
-| *ram* | `CreateResourceShare` | 0 |
-| *ram* | `DeleteResourceShare` | 0 |
+| *ram* | `CreateResourceShare` | 1 |
+| *ram* | `DeleteResourceShare` | 1 |
 | *ram* | `DisassociateResourceShare` | 0 |
 | *ram* | `EnableSharingWithAwsOrganization` | 0 |
 | *ram* | `GetResourcePolicies` | 0 |
 | *ram* | `GetResourceShareAssociations` | 0 |
 | *ram* | `GetResourceShareInvitations` | 0 |
-| *ram* | `GetResourceShares` | 0 |
+| *ram* | `GetResourceShares` | 1 |
 | *ram* | `ListPrincipals` | 0 |
 | *ram* | `ListResources` | 0 |
 | *ram* | `RejectResourceShareInvitation` | 0 |
@@ -6387,4 +6399,4 @@
 
 **Total Operations: 5447**
 
-**Total Unique Occurances: 1138 (20%)**
+**Total Unique Occurances: 1148 (21%)**
