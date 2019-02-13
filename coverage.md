@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**354/354 (100%)** Resources Covered
+**355/354 (100%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -153,7 +153,7 @@
 | *AWS::EC2::VPCCidrBlock* | 2 |
 | *AWS::EC2::VPCDHCPOptionsAssociation* | 1 |
 | *AWS::EC2::VPCEndpoint* | 1 |
-| *AWS::EC2::VPCEndpointConnectionNotification* | 0 |
+| *AWS::EC2::VPCEndpointConnectionNotification* | 1 |
 | *AWS::EC2::VPCEndpointService* | 1 |
 | *AWS::EC2::VPCEndpointServicePermissions* | 1 |
 | *AWS::EC2::VPCGatewayAttachment* | 3 |
@@ -871,7 +871,7 @@
 | *docdb* | 12/39 (30%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 5/36 (13%) |
-| *ec2* | 138/329 (41%) |
+| *ec2* | 140/329 (42%) |
 | *ecr* | 10/25 (40%) |
 | *ecs* | 5/37 (13%) |
 | *efs* | 11/12 (91%) |
@@ -2628,7 +2628,7 @@
 | *ec2* | `CreateVolume` | 1 |
 | *ec2* | `CreateVpc` | 4 |
 | *ec2* | `CreateVpcEndpoint` | 2 |
-| *ec2* | `CreateVpcEndpointConnectionNotification` | 0 |
+| *ec2* | `CreateVpcEndpointConnectionNotification` | 1 |
 | *ec2* | `CreateVpcEndpointServiceConfiguration` | 1 |
 | *ec2* | `CreateVpcPeeringConnection` | 1 |
 | *ec2* | `CreateVpnConnection` | 1 |
@@ -2759,7 +2759,7 @@
 | *ec2* | `DescribeVpcAttribute` | 3 |
 | *ec2* | `DescribeVpcClassicLink` | 0 |
 | *ec2* | `DescribeVpcClassicLinkDnsSupport` | 1 |
-| *ec2* | `DescribeVpcEndpointConnectionNotifications` | 0 |
+| *ec2* | `DescribeVpcEndpointConnectionNotifications` | 1 |
 | *ec2* | `DescribeVpcEndpointConnections` | 0 |
 | *ec2* | `DescribeVpcEndpointServiceConfigurations` | 1 |
 | *ec2* | `DescribeVpcEndpointServicePermissions` | 1 |
@@ -6399,4 +6399,4 @@
 
 **Total Operations: 5447**
 
-**Total Unique Occurances: 1148 (21%)**
+**Total Unique Occurances: 1150 (21%)**
