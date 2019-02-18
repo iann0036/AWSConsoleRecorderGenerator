@@ -17381,8 +17381,10 @@ function analyseRequest(details) {
         reqParams.cli['--hosted-zone-config'] = {
             'Comment': getPipeSplitField(requestBody, 12)
         };
-        reqParams.boto3['VPC'] = getPipeSplitField(requestBody, 15);
-        reqParams.cli['--vpc'] = getPipeSplitField(requestBody, 15);
+        if (getPipeSplitField(requestBody, 15)) {
+            reqParams.boto3['VPC'] = getPipeSplitField(requestBody, 15);
+            reqParams.cli['--vpc'] = getPipeSplitField(requestBody, 15);
+        }
         reqParams.boto3['CallerReference'] = getPipeSplitField(requestBody, 16);
         reqParams.cli['--caller-reference'] = getPipeSplitField(requestBody, 16);
 
@@ -17390,13 +17392,21 @@ function analyseRequest(details) {
         reqParams.cfn['HostedZoneConfig'] = {
             'Comment': getPipeSplitField(requestBody, 12)
         };
-        reqParams.cfn['VPCs'] = [getPipeSplitField(requestBody, 15)];
+        if (getPipeSplitField(requestBody, 15)) {
+            reqParams.cfn['VPCs'] = [{
+                'VPCId': getPipeSplitField(requestBody, 15),
+                'VPCRegion': getPipeSplitField(requestBody, 17)
+            }];
+        }
 
         reqParams.tf['name'] = getPipeSplitField(requestBody, 11);
         reqParams.tf['comment'] = getPipeSplitField(requestBody, 12);
-        reqParams.tf['vpc'] = {
-            'vpc_id': getPipeSplitField(requestBody, 15)
-        };
+        if (getPipeSplitField(requestBody, 15)) {
+            reqParams.tf['vpc'] = {
+                'vpc_id': getPipeSplitField(requestBody, 15),
+                'vpc_region': getPipeSplitField(requestBody, 17)
+            };
+        }
 
         outputs.push({
             'region': region,
@@ -21176,8 +21186,51 @@ function analyseRequest(details) {
         reqParams.cfn['Description'] = jsonRequestBody.description;
         reqParams.cfn['InputParameters'] = jsonRequestBody.inputParameters;
         reqParams.cfn['MaximumExecutionFrequency'] = jsonRequestBody.maximumExecutionFrequency;
-        reqParams.cfn['Scope'] = jsonRequestBody.scope;
-        reqParams.cfn['Source'] = jsonRequestBody.source;
+        if (JSON.stringify(jsonRequestBody.scope) != JSON.stringify({})) {
+            reqParams.cfn['Scope'] = {
+                'ComplianceResourceId': jsonRequestBody.scope.complianceResourceId,
+                'ComplianceResourceTypes': jsonRequestBody.scope.complianceResourceTypes,
+            };
+        }
+
+        reqParams.tf['name'] = jsonRequestBody.configRuleName;
+        reqParams.tf['description'] = jsonRequestBody.description;
+        reqParams.tf['input_parameters'] = jsonRequestBody.inputParameters;
+        reqParams.tf['maximum_execution_frequency'] = jsonRequestBody.maximumExecutionFrequency;
+        if (JSON.stringify(jsonRequestBody.scope) != JSON.stringify({})) {
+            reqParams.tf['scope'] = {
+                'compliance_resource_id': jsonRequestBody.scope.complianceResourceId,
+                'compliance_resource_types': jsonRequestBody.scope.complianceResourceTypes,
+            };
+        }
+        var source_detail = null;
+        var source_detail_cfn = null;
+        if (jsonRequestBody.source.sourceDetails) {
+            source_detail = [];
+            source_detail_cfn = [];
+            for (var i=0; i<jsonRequestBody.source.sourceDetails.length; i++) {
+                source_detail.push({
+                    'event_source': jsonRequestBody.source.sourceDetails[i].eventSource,
+                    'maximum_execution_frequency': jsonRequestBody.source.sourceDetails[i].maximumExecutionFrequency,
+                    'message_type': jsonRequestBody.source.sourceDetails[i].messageType
+                });
+                source_detail_cfn.push({
+                    'EventSource': jsonRequestBody.source.sourceDetails[i].eventSource,
+                    'MaximumExecutionFrequency': jsonRequestBody.source.sourceDetails[i].maximumExecutionFrequency,
+                    'MessageType': jsonRequestBody.source.sourceDetails[i].messageType
+                });
+            }
+        }
+        reqParams.tf['source'] = {
+            'owner': jsonRequestBody.source.owner,
+            'source_detail': source_detail,
+            'source_identifier': jsonRequestBody.source.sourceIdentifier
+        };
+        reqParams.cfn['Source'] = {
+            'Owner': jsonRequestBody.source.owner,
+            'SourceDetails': source_detail_cfn,
+            'SourceIdentifier': jsonRequestBody.source.sourceIdentifier
+        };
 
         outputs.push({
             'region': region,
@@ -21196,6 +21249,7 @@ function analyseRequest(details) {
             'region': region,
             'service': 'config',
             'type': 'AWS::Config::ConfigRule',
+            'terraformType': 'aws_config_config_rule',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -27504,6 +27558,11 @@ function analyseRequest(details) {
 
         reqParams.cfn['ApplicationName'] = jsonRequestBody.content.ApplicationName;
         reqParams.cfn['ApplicationDescription'] = jsonRequestBody.content.ApplicationDescription;
+        reqParams.cfn['RuntimeEnvironment'] = "SQL-1.0";
+        if (jsonRequestBody.content.RuntimeEnvironment) {
+            reqParams.cfn['RuntimeEnvironment'] = jsonRequestBody.content.RuntimeEnvironment;
+        }
+        reqParams.cfn['ServiceExecutionRole'] = jsonRequestBody.content.ServiceExecutionRole;
 
         reqParams.tf['name'] = jsonRequestBody.content.ApplicationName;
         reqParams.tf['description'] = jsonRequestBody.content.ApplicationDescription;
@@ -27524,7 +27583,8 @@ function analyseRequest(details) {
             'logicalId': getResourceName('kinesisanalytics', details.requestId),
             'region': region,
             'service': 'kinesisanalytics',
-            'type': 'AWS::KinesisAnalytics::Application',
+            //'type': 'AWS::KinesisAnalytics::Application',
+            'type': 'AWS::KinesisAnalyticsV2::Application',
             'terraformType': 'aws_kinesis_analytics_application',
             'options': reqParams,
             'requestDetails': details,
@@ -27839,7 +27899,8 @@ function analyseRequest(details) {
             'logicalId': getResourceName('kinesisanalytics', details.requestId),
             'region': region,
             'service': 'kinesisanalytics',
-            'type': 'AWS::KinesisAnalytics::ApplicationOutput',
+            //'type': 'AWS::KinesisAnalytics::ApplicationOutput',
+            'type': 'AWS::KinesisAnalyticsV2::ApplicationOutput',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -29950,17 +30011,17 @@ function analyseRequest(details) {
 
         reqParams.boto3['name'] = jsonRequestBody.name;
         reqParams.cli['--name'] = jsonRequestBody.name;
-        reqParams.boto3['definition'] = jsonRequestBody.definition;
-        reqParams.cli['--definition'] = jsonRequestBody.definition;
+        reqParams.boto3['definition'] = JSON.stringify(jsonRequestBody.definition, null, 4);
+        reqParams.cli['--definition'] = JSON.stringify(jsonRequestBody.definition, null, 4);
         reqParams.boto3['roleArn'] = jsonRequestBody.roleArn;
         reqParams.cli['--role-arn'] = jsonRequestBody.roleArn;
 
         reqParams.cfn['StateMachineName'] = jsonRequestBody.name;
-        reqParams.cfn['DefinitionString'] = jsonRequestBody.definition;
+        reqParams.cfn['DefinitionString'] = JSON.stringify(jsonRequestBody.definition, null, 4);
         reqParams.cfn['RoleArn'] = jsonRequestBody.roleArn;
 
         reqParams.tf['name'] = jsonRequestBody.name;
-        reqParams.tf['definition'] = jsonRequestBody.definition;
+        reqParams.tf['definition'] = JSON.stringify(jsonRequestBody.definition, null, 4);
         reqParams.tf['role_arn'] = jsonRequestBody.roleArn;
 
         outputs.push({
@@ -36203,7 +36264,8 @@ function analyseRequest(details) {
             'logicalId': getResourceName('kinesisanalyticsv2', details.requestId),
             'region': region,
             'service': 'kinesisanalyticsv2',
-            'type': 'AWS::KinesisAnalytics::ApplicationReferenceDataSource',
+            //'type': 'AWS::KinesisAnalytics::ApplicationReferenceDataSource',
+            'type': 'AWS::KinesisAnalyticsV2::ApplicationReferenceDataSource',
             'options': reqParams,
             'requestDetails': details,
             'was_blocked': blocking
@@ -44993,6 +45055,190 @@ function analyseRequest(details) {
                 'api': 'DescribeVpcEndpointConnectionNotifications',
                 'boto3': 'describe_vpc_endpoint_connection_notifications',
                 'cli': 'describe-vpc-endpoint-connection-notifications'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:fsx:ds.DescribeDirectories
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/fsx\/api\/directoryservice$/g) && jsonRequestBody.operation == "describeDirectories") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ds',
+            'method': {
+                'api': 'DescribeDirectories',
+                'boto3': 'describe_directories',
+                'cli': 'describe-directories'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:fsx:ec2.DescribeSecurityGroups
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/fsx\/api\/ec2$/g) && jsonRequestBody.operation == "describeSecurityGroups") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSecurityGroups',
+                'boto3': 'describe_security_groups',
+                'cli': 'describe-security-groups'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:fsx:ec2.DescribeSubnets
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/fsx\/api\/ec2$/g) && jsonRequestBody.operation == "describeSubnets") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeSubnets',
+                'boto3': 'describe_subnets',
+                'cli': 'describe-subnets'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:fsx:ec2.DescribeVpcs
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/fsx\/api\/ec2$/g) && jsonRequestBody.operation == "describeVpcs") {
+
+        outputs.push({
+            'region': region,
+            'service': 'ec2',
+            'method': {
+                'api': 'DescribeVpcs',
+                'boto3': 'describe_vpcs',
+                'cli': 'describe-vpcs'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:fsx:kms.DescribeKey
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/fsx\/api\/kms$/g) && jsonRequestBody.operation == "describeKey") {
+        reqParams.boto3['KeyId'] = jsonRequestBody.contentString.KeyId;
+        reqParams.cli['--key-id'] = jsonRequestBody.contentString.KeyId;
+
+        outputs.push({
+            'region': region,
+            'service': 'kms',
+            'method': {
+                'api': 'DescribeKey',
+                'boto3': 'describe_key',
+                'cli': 'describe-key'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:fsx:fsx.DescribeFileSystems
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/fsx\/api\/fsx$/g) && jsonRequestBody.operation == "describeFileSystems") {
+
+        outputs.push({
+            'region': region,
+            'service': 'fsx',
+            'method': {
+                'api': 'DescribeFileSystems',
+                'boto3': 'describe_file_systems',
+                'cli': 'describe-file-systems'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+        
+        return {};
+    }
+
+    // autogen:fsx:fsx.CreateFileSystem
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/fsx\/api\/fsx$/g) && jsonRequestBody.operation == "createFileSystem") {
+        reqParams.boto3['FileSystemType'] = jsonRequestBody.contentString.FileSystemType;
+        reqParams.cli['--file-system-type'] = jsonRequestBody.contentString.FileSystemType;
+        reqParams.boto3['StorageCapacity'] = jsonRequestBody.contentString.StorageCapacity;
+        reqParams.cli['--storage-capacity'] = jsonRequestBody.contentString.StorageCapacity;
+        reqParams.boto3['SubnetIds'] = jsonRequestBody.contentString.SubnetIds;
+        reqParams.cli['--subnet-ids'] = jsonRequestBody.contentString.SubnetIds;
+        reqParams.boto3['SecurityGroupIds'] = jsonRequestBody.contentString.SecurityGroupIds;
+        reqParams.cli['--security-group-ids'] = jsonRequestBody.contentString.SecurityGroupIds;
+        reqParams.boto3['LustreConfiguration'] = jsonRequestBody.contentString.LustreConfiguration;
+        reqParams.cli['--lustre-configuration'] = jsonRequestBody.contentString.LustreConfiguration;
+        reqParams.boto3['WindowsConfiguration'] = jsonRequestBody.contentString.WindowsConfiguration;
+        reqParams.cli['--windows-configuration'] = jsonRequestBody.contentString.WindowsConfiguration;
+        reqParams.boto3['Tags'] = jsonRequestBody.contentString.Tags;
+        reqParams.cli['--tags'] = jsonRequestBody.contentString.Tags;
+        reqParams.boto3['ClientRequestToken'] = jsonRequestBody.contentString.ClientRequestToken;
+        reqParams.cli['--client-request-token'] = jsonRequestBody.contentString.ClientRequestToken;
+
+        reqParams.cfn['FileSystemType'] = jsonRequestBody.contentString.FileSystemType;
+        reqParams.cfn['StorageCapacity'] = jsonRequestBody.contentString.StorageCapacity;
+        reqParams.cfn['SubnetIds'] = jsonRequestBody.contentString.SubnetIds;
+        reqParams.cfn['SecurityGroupIds'] = jsonRequestBody.contentString.SecurityGroupIds;
+        reqParams.cfn['LustreConfiguration'] = jsonRequestBody.contentString.LustreConfiguration;
+        reqParams.cfn['WindowsConfiguration'] = jsonRequestBody.contentString.WindowsConfiguration;
+        reqParams.cfn['Tags'] = jsonRequestBody.contentString.Tags;
+
+        outputs.push({
+            'region': region,
+            'service': 'fsx',
+            'method': {
+                'api': 'CreateFileSystem',
+                'boto3': 'create_file_system',
+                'cli': 'create-file-system'
+            },
+            'options': reqParams,
+            'requestDetails': details
+        });
+
+        tracked_resources.push({
+            'logicalId': getResourceName('fsx', details.requestId),
+            'region': region,
+            'service': 'fsx',
+            'type': 'AWS::FSx::FileSystem',
+            'options': reqParams,
+            'requestDetails': details,
+            'was_blocked': blocking
+        });
+        
+        return {};
+    }
+
+    // autogen:fsx:fsx.DeleteFileSystem
+    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/fsx\/api\/fsx$/g) && jsonRequestBody.operation == "deleteFileSystem") {
+        reqParams.boto3['FileSystemId'] = jsonRequestBody.contentString.FileSystemId;
+        reqParams.cli['--file-system-id'] = jsonRequestBody.contentString.FileSystemId;
+        reqParams.boto3['ClientRequestToken'] = jsonRequestBody.contentString.ClientRequestToken;
+        reqParams.cli['--client-request-token'] = jsonRequestBody.contentString.ClientRequestToken;
+
+        outputs.push({
+            'region': region,
+            'service': 'fsx',
+            'method': {
+                'api': 'DeleteFileSystem',
+                'boto3': 'delete_file_system',
+                'cli': 'delete-file-system'
             },
             'options': reqParams,
             'requestDetails': details

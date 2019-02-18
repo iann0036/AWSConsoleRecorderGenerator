@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**355/354 (100%)** Resources Covered
+**360/354 (101%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -361,7 +361,7 @@
 
 ## Terraform Coverage
 
-**278/468 (59%)** Resources Covered
+**279/468 (59%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -462,7 +462,7 @@
 | *aws_cognito_user_pool_client* | 1 |
 | *aws_cognito_user_pool_domain* | 1 |
 | *aws_config_aggregate_authorization* | 1 |
-| *aws_config_config_rule* | 0 |
+| *aws_config_config_rule* | 1 |
 | *aws_config_configuration_aggregator* | 0 |
 | *aws_config_configuration_recorder* | 1 |
 | *aws_config_configuration_recorder_status* | 0 |
@@ -884,6 +884,7 @@
 | *es* | 11/23 (47%) |
 | *events* | 11/15 (73%) |
 | *firehose* | 3/12 (25%) |
+| *fsx* | 3/11 (27%) |
 | *gamelift* | 8/67 (11%) |
 | *glacier* | 3/33 (9%) |
 | *globalaccelerator* | 2/17 (11%) |
@@ -2481,7 +2482,7 @@
 | *ds* | `DeleteTrust` | 0 |
 | *ds* | `DeregisterEventTopic` | 0 |
 | *ds* | `DescribeConditionalForwarders` | 0 |
-| *ds* | `DescribeDirectories` | 3 |
+| *ds* | `DescribeDirectories` | 4 |
 | *ds* | `DescribeDomainControllers` | 0 |
 | *ds* | `DescribeEventTopics` | 0 |
 | *ds* | `DescribeSharedDirectories` | 0 |
@@ -2736,7 +2737,7 @@
 | *ec2* | `DescribeScheduledInstanceAvailability` | 0 |
 | *ec2* | `DescribeScheduledInstances` | 0 |
 | *ec2* | `DescribeSecurityGroupReferences` | 0 |
-| *ec2* | `DescribeSecurityGroups` | 21 |
+| *ec2* | `DescribeSecurityGroups` | 22 |
 | *ec2* | `DescribeSnapshotAttribute` | 1 |
 | *ec2* | `DescribeSnapshots` | 3 |
 | *ec2* | `DescribeSpotDatafeedSubscription` | 0 |
@@ -2746,7 +2747,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DescribeSpotPriceHistory` | 1 |
 | *ec2* | `DescribeStaleSecurityGroups` | 2 |
-| *ec2* | `DescribeSubnets` | 19 |
+| *ec2* | `DescribeSubnets` | 20 |
 | *ec2* | `DescribeTags` | 2 |
 | *ec2* | `DescribeTransitGatewayAttachments` | 0 |
 | *ec2* | `DescribeTransitGatewayRouteTables` | 1 |
@@ -2766,7 +2767,7 @@
 | *ec2* | `DescribeVpcEndpointServices` | 2 |
 | *ec2* | `DescribeVpcEndpoints` | 3 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 27 |
+| *ec2* | `DescribeVpcs` | 28 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 2 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -3218,12 +3219,12 @@
 | *fms* | `PutNotificationChannel` | 0 |
 | *fms* | `PutPolicy` | 0 |
 | *fsx* | `CreateBackup` | 0 |
-| *fsx* | `CreateFileSystem` | 0 |
+| *fsx* | `CreateFileSystem` | 1 |
 | *fsx* | `CreateFileSystemFromBackup` | 0 |
 | *fsx* | `DeleteBackup` | 0 |
-| *fsx* | `DeleteFileSystem` | 0 |
+| *fsx* | `DeleteFileSystem` | 1 |
 | *fsx* | `DescribeBackups` | 0 |
-| *fsx* | `DescribeFileSystems` | 0 |
+| *fsx* | `DescribeFileSystems` | 1 |
 | *fsx* | `ListTagsForResource` | 0 |
 | *fsx* | `TagResource` | 0 |
 | *fsx* | `UntagResource` | 0 |
@@ -4075,7 +4076,7 @@
 | *kms* | `DeleteCustomKeyStore` | 0 |
 | *kms* | `DeleteImportedKeyMaterial` | 0 |
 | *kms* | `DescribeCustomKeyStores` | 0 |
-| *kms* | `DescribeKey` | 7 |
+| *kms* | `DescribeKey` | 8 |
 | *kms* | `DisableKey` | 0 |
 | *kms* | `DisableKeyRotation` | 0 |
 | *kms* | `DisconnectCustomKeyStore` | 0 |
@@ -6399,4 +6400,4 @@
 
 **Total Operations: 5447**
 
-**Total Unique Occurances: 1150 (21%)**
+**Total Unique Occurances: 1153 (21%)**

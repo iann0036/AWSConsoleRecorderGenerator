@@ -44,7 +44,8 @@ cfn_occurances = [
     "AWS::CDK::Metadata",
     "AWS::Route53::RecordSetGroup",
     "AWS::EMR::InstanceFleetConfig",
-    "AWS::Glue::Partition"
+    "AWS::Glue::Partition",
+    "AWS::KinesisAnalyticsV2::ApplicationCloudWatchLoggingOption"
 ]
 '''
     "AWS::CloudFormation::Init",
@@ -126,7 +127,7 @@ with open("coverage.md", "w") as f:
     f.write("**%s/%s (%s%%)** Resources Covered\n" % (
         len(set(cfn_occurances)),
         len(cfn_types),
-        math.floor(len(set(cfn_occurances)) * 100 / len(cfn_types))
+        int(math.floor(len(set(cfn_occurances)) * 100 / len(cfn_types)))
     ))
 
     f.write("\n| Type | Coverage |\n")
@@ -139,7 +140,7 @@ with open("coverage.md", "w") as f:
     f.write("**%s/%s (%s%%)** Resources Covered\n" % (
         len(set(tf_occurances)),
         len(tf_resources),
-        math.floor(len(set(tf_occurances)) * 100 / len(tf_resources))
+        int(math.floor(len(set(tf_occurances)) * 100 / len(tf_resources)))
     ))
     
     f.write("\n| Type | Coverage |\n")
@@ -159,7 +160,7 @@ with open("coverage.md", "w") as f:
             if servicename + "." + operation['name'] in occurances or servicename + "." + operation['name'] in skipped_ops:
                 occurance_count += 1
         if occurance_count > 0:
-            coverage_val = "%s/%s (%s%%)" % (occurance_count, len(service['operations']), math.floor(occurance_count * 100 / len(service['operations'])))
+            coverage_val = "%s/%s (%s%%)" % (occurance_count, len(service['operations']), int(math.floor(occurance_count * 100 / len(service['operations']))))
             f.write("| *%s* | %s |\n" % (servicename, coverage_val))
     
     f.write("\n## Operation Coverage\n\n")
@@ -176,5 +177,5 @@ with open("coverage.md", "w") as f:
             f.write("| *%s* | `%s` | %s |\n" % (servicename, operation['name'], occurance_count))
 
     f.write("\n\n**Total Services: %s**\n\n**Total Operations: %s**\n\n**Total Unique Occurances: %s (%s%%)**\n"
-        % (total_services, total_operations, total_unique_occurances, (math.floor(total_unique_occurances * 100 / total_operations)))
+        % (total_services, total_operations, total_unique_occurances, int(math.floor(total_unique_occurances * 100 / total_operations)))
     )
