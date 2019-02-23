@@ -1,6 +1,6 @@
 ## CloudFormation Resource Coverage
 
-**360/354 (101%)** Resources Covered
+**367/366 (100%)** Resources Covered
 
 | Type | Coverage |
 | --- | --- |
@@ -195,6 +195,7 @@
 | *AWS::Elasticsearch::Domain* | 1 |
 | *AWS::Events::EventBusPolicy* | 1 |
 | *AWS::Events::Rule* | 1 |
+| *AWS::FSx::FileSystem* | 1 |
 | *AWS::GameLift::Alias* | 1 |
 | *AWS::GameLift::Build* | 1 |
 | *AWS::GameLift::Fleet* | 1 |
@@ -245,6 +246,10 @@
 | *AWS::KinesisAnalytics::Application* | 1 |
 | *AWS::KinesisAnalytics::ApplicationOutput* | 1 |
 | *AWS::KinesisAnalytics::ApplicationReferenceDataSource* | 1 |
+| *AWS::KinesisAnalyticsV2::Application* | 1 |
+| *AWS::KinesisAnalyticsV2::ApplicationCloudWatchLoggingOption* | 1 |
+| *AWS::KinesisAnalyticsV2::ApplicationOutput* | 1 |
+| *AWS::KinesisAnalyticsV2::ApplicationReferenceDataSource* | 1 |
 | *AWS::KinesisFirehose::DeliveryStream* | 1 |
 | *AWS::Lambda::Alias* | 1 |
 | *AWS::Lambda::EventSourceMapping* | 1 |
@@ -271,6 +276,7 @@
 | *AWS::OpsWorks::UserProfile* | 1 |
 | *AWS::OpsWorks::Volume* | 1 |
 | *AWS::OpsWorksCM::Server* | 1 |
+| *AWS::RAM::ResourceShare* | 1 |
 | *AWS::RDS::DBCluster* | 1 |
 | *AWS::RDS::DBClusterParameterGroup* | 1 |
 | *AWS::RDS::DBInstance* | 1 |
@@ -285,6 +291,12 @@
 | *AWS::Redshift::ClusterSecurityGroup* | 1 |
 | *AWS::Redshift::ClusterSecurityGroupIngress* | 1 |
 | *AWS::Redshift::ClusterSubnetGroup* | 1 |
+| *AWS::RoboMaker::Fleet* | 1 |
+| *AWS::RoboMaker::Robot* | 1 |
+| *AWS::RoboMaker::RobotApplication* | 1 |
+| *AWS::RoboMaker::RobotApplicationVersion* | 1 |
+| *AWS::RoboMaker::SimulationApplication* | 1 |
+| *AWS::RoboMaker::SimulationApplicationVersion* | 1 |
 | *AWS::Route53::HealthCheck* | 1 |
 | *AWS::Route53::HostedZone* | 2 |
 | *AWS::Route53::RecordSet* | 1 |
@@ -889,10 +901,11 @@
 | *glacier* | 3/33 (9%) |
 | *globalaccelerator* | 2/17 (11%) |
 | *glue* | 35/87 (40%) |
+| *greengrass* | 5/87 (5%) |
 | *guardduty* | 25/42 (59%) |
-| *iam* | 37/137 (27%) |
+| *iam* | 38/137 (27%) |
 | *inspector* | 11/37 (29%) |
-| *iot* | 12/166 (7%) |
+| *iot* | 15/166 (9%) |
 | *iot1click-devices* | 3/10 (30%) |
 | *iot1click-projects* | 3/13 (23%) |
 | *iotanalytics* | 11/34 (32%) |
@@ -910,16 +923,17 @@
 | *neptune* | 12/57 (21%) |
 | *opsworks* | 18/74 (24%) |
 | *opsworkscm* | 4/16 (25%) |
-| *organizations* | 14/42 (33%) |
+| *organizations* | 15/42 (35%) |
 | *pinpoint* | 7/74 (9%) |
-| *ram* | 3/16 (18%) |
+| *ram* | 4/16 (25%) |
 | *rds* | 25/107 (23%) |
 | *redshift* | 5/81 (6%) |
 | *rekognition* | 3/34 (8%) |
 | *resource-groups* | 1/12 (8%) |
+| *robomaker* | 18/32 (56%) |
 | *route53* | 9/56 (16%) |
 | *route53resolver* | 10/22 (45%) |
-| *s3* | 26/88 (29%) |
+| *s3* | 27/88 (30%) |
 | *s3control* | 1/3 (33%) |
 | *sagemaker* | 16/75 (21%) |
 | *secretsmanager* | 6/18 (33%) |
@@ -2678,7 +2692,7 @@
 | *ec2* | `DescribeAccountAttributes` | 2 |
 | *ec2* | `DescribeAddresses` | 4 |
 | *ec2* | `DescribeAggregateIdFormat` | 0 |
-| *ec2* | `DescribeAvailabilityZones` | 12 |
+| *ec2* | `DescribeAvailabilityZones` | 13 |
 | *ec2* | `DescribeBundleTasks` | 0 |
 | *ec2* | `DescribeByoipCidrs` | 0 |
 | *ec2* | `DescribeCapacityReservations` | 1 |
@@ -2747,7 +2761,7 @@
 | *ec2* | `DescribeSpotInstanceRequests` | 0 |
 | *ec2* | `DescribeSpotPriceHistory` | 1 |
 | *ec2* | `DescribeStaleSecurityGroups` | 2 |
-| *ec2* | `DescribeSubnets` | 20 |
+| *ec2* | `DescribeSubnets` | 21 |
 | *ec2* | `DescribeTags` | 2 |
 | *ec2* | `DescribeTransitGatewayAttachments` | 0 |
 | *ec2* | `DescribeTransitGatewayRouteTables` | 1 |
@@ -2767,7 +2781,7 @@
 | *ec2* | `DescribeVpcEndpointServices` | 2 |
 | *ec2* | `DescribeVpcEndpoints` | 3 |
 | *ec2* | `DescribeVpcPeeringConnections` | 1 |
-| *ec2* | `DescribeVpcs` | 28 |
+| *ec2* | `DescribeVpcs` | 29 |
 | *ec2* | `DescribeVpnConnections` | 1 |
 | *ec2* | `DescribeVpnGateways` | 2 |
 | *ec2* | `DetachClassicLinkVpc` | 0 |
@@ -3433,20 +3447,20 @@
 | *glue* | `UpdateTable` | 0 |
 | *glue* | `UpdateTrigger` | 0 |
 | *glue* | `UpdateUserDefinedFunction` | 0 |
-| *greengrass* | `AssociateRoleToGroup` | 0 |
+| *greengrass* | `AssociateRoleToGroup` | 1 |
 | *greengrass* | `AssociateServiceRoleToAccount` | 0 |
 | *greengrass* | `CreateConnectorDefinition` | 0 |
 | *greengrass* | `CreateConnectorDefinitionVersion` | 0 |
-| *greengrass* | `CreateCoreDefinition` | 0 |
-| *greengrass* | `CreateCoreDefinitionVersion` | 0 |
+| *greengrass* | `CreateCoreDefinition` | 1 |
+| *greengrass* | `CreateCoreDefinitionVersion` | 1 |
 | *greengrass* | `CreateDeployment` | 0 |
 | *greengrass* | `CreateDeviceDefinition` | 0 |
 | *greengrass* | `CreateDeviceDefinitionVersion` | 0 |
 | *greengrass* | `CreateFunctionDefinition` | 0 |
 | *greengrass* | `CreateFunctionDefinitionVersion` | 0 |
-| *greengrass* | `CreateGroup` | 0 |
+| *greengrass* | `CreateGroup` | 1 |
 | *greengrass* | `CreateGroupCertificateAuthority` | 0 |
-| *greengrass* | `CreateGroupVersion` | 0 |
+| *greengrass* | `CreateGroupVersion` | 1 |
 | *greengrass* | `CreateLoggerDefinition` | 0 |
 | *greengrass* | `CreateLoggerDefinitionVersion` | 0 |
 | *greengrass* | `CreateResourceDefinition` | 0 |
@@ -3650,7 +3664,7 @@
 | *iam* | `ListAttachedUserPolicies` | 0 |
 | *iam* | `ListEntitiesForPolicy` | 0 |
 | *iam* | `ListGroupPolicies` | 0 |
-| *iam* | `ListGroups` | 2 |
+| *iam* | `ListGroups` | 3 |
 | *iam* | `ListGroupsForUser` | 1 |
 | *iam* | `ListInstanceProfiles` | 4 |
 | *iam* | `ListInstanceProfilesForRole` | 0 |
@@ -3661,7 +3675,7 @@
 | *iam* | `ListPolicyVersions` | 1 |
 | *iam* | `ListRolePolicies` | 0 |
 | *iam* | `ListRoleTags` | 0 |
-| *iam* | `ListRoles` | 14 |
+| *iam* | `ListRoles` | 15 |
 | *iam* | `ListSAMLProviders` | 0 |
 | *iam* | `ListSSHPublicKeys` | 0 |
 | *iam* | `ListServerCertificates` | 1 |
@@ -3690,7 +3704,7 @@
 | *iam* | `UntagUser` | 0 |
 | *iam* | `UpdateAccessKey` | 0 |
 | *iam* | `UpdateAccountPasswordPolicy` | 1 |
-| *iam* | `UpdateAssumeRolePolicy` | 0 |
+| *iam* | `UpdateAssumeRolePolicy` | 1 |
 | *iam* | `UpdateGroup` | 0 |
 | *iam* | `UpdateLoginProfile` | 0 |
 | *iam* | `UpdateOpenIDConnectProviderThumbprint` | 0 |
@@ -3752,10 +3766,10 @@
 | *iot* | `AddThingToBillingGroup` | 0 |
 | *iot* | `AddThingToThingGroup` | 0 |
 | *iot* | `AssociateTargetsWithJob` | 0 |
-| *iot* | `AttachPolicy` | 0 |
+| *iot* | `AttachPolicy` | 1 |
 | *iot* | `AttachPrincipalPolicy` | 1 |
 | *iot* | `AttachSecurityProfile` | 0 |
-| *iot* | `AttachThingPrincipal` | 1 |
+| *iot* | `AttachThingPrincipal` | 2 |
 | *iot* | `CancelAuditTask` | 0 |
 | *iot* | `CancelCertificateTransfer` | 0 |
 | *iot* | `CancelJob` | 0 |
@@ -3766,15 +3780,15 @@
 | *iot* | `CreateCertificateFromCsr` | 1 |
 | *iot* | `CreateDynamicThingGroup` | 0 |
 | *iot* | `CreateJob` | 0 |
-| *iot* | `CreateKeysAndCertificate` | 0 |
+| *iot* | `CreateKeysAndCertificate` | 1 |
 | *iot* | `CreateOTAUpdate` | 0 |
-| *iot* | `CreatePolicy` | 1 |
+| *iot* | `CreatePolicy` | 2 |
 | *iot* | `CreatePolicyVersion` | 0 |
 | *iot* | `CreateRoleAlias` | 0 |
 | *iot* | `CreateScheduledAudit` | 0 |
 | *iot* | `CreateSecurityProfile` | 0 |
 | *iot* | `CreateStream` | 0 |
-| *iot* | `CreateThing` | 1 |
+| *iot* | `CreateThing` | 2 |
 | *iot* | `CreateThingGroup` | 0 |
 | *iot* | `CreateThingType` | 1 |
 | *iot* | `CreateTopicRule` | 2 |
@@ -3807,7 +3821,7 @@
 | *iot* | `DescribeCACertificate` | 0 |
 | *iot* | `DescribeCertificate` | 0 |
 | *iot* | `DescribeDefaultAuthorizer` | 0 |
-| *iot* | `DescribeEndpoint` | 0 |
+| *iot* | `DescribeEndpoint` | 1 |
 | *iot* | `DescribeEventConfigurations` | 0 |
 | *iot* | `DescribeIndex` | 0 |
 | *iot* | `DescribeJob` | 0 |
@@ -4721,7 +4735,7 @@
 | *organizations* | `DescribeAccount` | 1 |
 | *organizations* | `DescribeCreateAccountStatus` | 0 |
 | *organizations* | `DescribeHandshake` | 0 |
-| *organizations* | `DescribeOrganization` | 0 |
+| *organizations* | `DescribeOrganization` | 1 |
 | *organizations* | `DescribeOrganizationalUnit` | 0 |
 | *organizations* | `DescribePolicy` | 1 |
 | *organizations* | `DetachPolicy` | 0 |
@@ -4897,7 +4911,7 @@
 | *ram* | `EnableSharingWithAwsOrganization` | 0 |
 | *ram* | `GetResourcePolicies` | 0 |
 | *ram* | `GetResourceShareAssociations` | 0 |
-| *ram* | `GetResourceShareInvitations` | 0 |
+| *ram* | `GetResourceShareInvitations` | 1 |
 | *ram* | `GetResourceShares` | 1 |
 | *ram* | `ListPrincipals` | 0 |
 | *ram* | `ListResources` | 0 |
@@ -5148,30 +5162,30 @@
 | *robomaker* | `BatchDescribeSimulationJob` | 0 |
 | *robomaker* | `CancelSimulationJob` | 0 |
 | *robomaker* | `CreateDeploymentJob` | 0 |
-| *robomaker* | `CreateFleet` | 0 |
-| *robomaker* | `CreateRobot` | 0 |
-| *robomaker* | `CreateRobotApplication` | 0 |
-| *robomaker* | `CreateRobotApplicationVersion` | 0 |
-| *robomaker* | `CreateSimulationApplication` | 0 |
-| *robomaker* | `CreateSimulationApplicationVersion` | 0 |
+| *robomaker* | `CreateFleet` | 1 |
+| *robomaker* | `CreateRobot` | 1 |
+| *robomaker* | `CreateRobotApplication` | 1 |
+| *robomaker* | `CreateRobotApplicationVersion` | 1 |
+| *robomaker* | `CreateSimulationApplication` | 1 |
+| *robomaker* | `CreateSimulationApplicationVersion` | 1 |
 | *robomaker* | `CreateSimulationJob` | 0 |
-| *robomaker* | `DeleteFleet` | 0 |
+| *robomaker* | `DeleteFleet` | 1 |
 | *robomaker* | `DeleteRobot` | 0 |
-| *robomaker* | `DeleteRobotApplication` | 0 |
-| *robomaker* | `DeleteSimulationApplication` | 0 |
+| *robomaker* | `DeleteRobotApplication` | 2 |
+| *robomaker* | `DeleteSimulationApplication` | 2 |
 | *robomaker* | `DeregisterRobot` | 0 |
 | *robomaker* | `DescribeDeploymentJob` | 0 |
-| *robomaker* | `DescribeFleet` | 0 |
-| *robomaker* | `DescribeRobot` | 0 |
-| *robomaker* | `DescribeRobotApplication` | 0 |
-| *robomaker* | `DescribeSimulationApplication` | 0 |
+| *robomaker* | `DescribeFleet` | 1 |
+| *robomaker* | `DescribeRobot` | 2 |
+| *robomaker* | `DescribeRobotApplication` | 2 |
+| *robomaker* | `DescribeSimulationApplication` | 1 |
 | *robomaker* | `DescribeSimulationJob` | 0 |
 | *robomaker* | `ListDeploymentJobs` | 0 |
-| *robomaker* | `ListFleets` | 0 |
-| *robomaker* | `ListRobotApplications` | 0 |
-| *robomaker* | `ListRobots` | 0 |
-| *robomaker* | `ListSimulationApplications` | 0 |
-| *robomaker* | `ListSimulationJobs` | 0 |
+| *robomaker* | `ListFleets` | 1 |
+| *robomaker* | `ListRobotApplications` | 1 |
+| *robomaker* | `ListRobots` | 1 |
+| *robomaker* | `ListSimulationApplications` | 1 |
+| *robomaker* | `ListSimulationJobs` | 1 |
 | *robomaker* | `RegisterRobot` | 0 |
 | *robomaker* | `RestartSimulationJob` | 0 |
 | *robomaker* | `SyncDeploymentJob` | 0 |
@@ -5336,7 +5350,7 @@
 | *s3* | `ListMultipartUploads` | 0 |
 | *s3* | `ListObjectVersions` | 0 |
 | *s3* | `ListObjects` | 1 |
-| *s3* | `ListObjectsV2` | 0 |
+| *s3* | `ListObjectsV2` | 1 |
 | *s3* | `ListParts` | 0 |
 | *s3* | `PutBucketAccelerateConfiguration` | 0 |
 | *s3* | `PutBucketAcl` | 1 |
@@ -6400,4 +6414,4 @@
 
 **Total Operations: 5447**
 
-**Total Unique Occurances: 1153 (21%)**
+**Total Unique Occurances: 1183 (21%)**

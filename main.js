@@ -148,7 +148,8 @@ function doFinalize() {
             if (el.selectedIndex != -1) {
                 var optiontext = el.options[el.selectedIndex].text;
                 if (optiontext != "") {
-                    var boto3prop = optiontext.substring(0,1).toUpperCase() + optiontext.substring(1);
+                    //var boto3prop = optiontext.substring(0,1).toUpperCase() + optiontext.substring(1);
+                    var boto3prop = optiontext;
                     var cliprop = convertApiToCli(optiontext);
 
                     if (optiontext == "MaxResults") {
