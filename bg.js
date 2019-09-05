@@ -68,8 +68,8 @@ function logRequest(details) {
     try {
         jsonRequestBody = JSON.parse(requestBody);
     } catch(e) {;}
-
-    var rgx = /^.*console\.aws\.amazon\.com\/([a-zA-Z0-9-]+)\/(.+)$/g;
+    
+    var rgx = /^.*console\.(?:aws\.amazon|amazonaws-us-gov)\.com\/([a-zA-Z0-9-]+)\/(.+)$/g;
     var match = rgx.exec(details.url);
 
     if (!match) {
@@ -160,7 +160,7 @@ function logRequest(details) {
                 }
             }
 
-            var regex = '.+' + escapeRegExp(`console.aws.amazon.com/${urlservice}/${pathending}`) + '$';
+            var regex = '.+console\\\.(?:aws\\\.amazon|amazonaws-us-gov)' + escapeRegExp(`.com/${urlservice}/${pathending}`) + '$';
             if (regex_override) {
                 regex = regex_override;
             }
@@ -294,7 +294,6 @@ function analyseRequest(details) {
             }
         }
     } catch(e) {;}
-    
     
     // manual:ec2:ec2.DescribeInstances
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/ec2\/ecb\?call\=getMergedInstanceList\?/g)) {

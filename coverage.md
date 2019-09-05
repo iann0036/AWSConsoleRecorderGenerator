@@ -967,21 +967,21 @@
 | *cloud9* | 6/10 (60%) |
 | *cloudformation* | 3/45 (6%) |
 | *cloudtrail* | 8/14 (57%) |
-| *cloudwatch* | 4/20 (20%) |
+| *cloudwatch* | 4/23 (17%) |
 | *codebuild* | 4/19 (21%) |
 | *codecommit* | 5/53 (9%) |
 | *codedeploy* | 15/46 (32%) |
 | *codepipeline* | 11/36 (30%) |
 | *cognito-identity* | 2/21 (9%) |
 | *cognito-idp* | 12/100 (12%) |
-| *config* | 9/56 (16%) |
+| *config* | 9/61 (14%) |
 | *datapipeline* | 1/19 (5%) |
 | *datasync* | 14/25 (56%) |
 | *dax* | 10/21 (47%) |
 | *devicefarm* | 6/67 (8%) |
 | *dlm* | 4/5 (80%) |
 | *dms* | 27/46 (58%) |
-| *docdb* | 12/39 (30%) |
+| *docdb* | 12/41 (29%) |
 | *ds* | 4/50 (8%) |
 | *dynamodb* | 5/36 (13%) |
 | *ec2* | 140/352 (39%) |
@@ -995,7 +995,7 @@
 | *elbv2* | 18/34 (52%) |
 | *emr* | 9/27 (33%) |
 | *es* | 11/23 (47%) |
-| *events* | 11/18 (61%) |
+| *events* | 11/31 (35%) |
 | *firehose* | 3/12 (25%) |
 | *fsx* | 3/11 (27%) |
 | *gamelift* | 8/73 (10%) |
@@ -1019,7 +1019,7 @@
 | *lightsail* | 21/101 (20%) |
 | *logs* | 5/39 (12%) |
 | *medialive* | 4/31 (12%) |
-| *mediastore* | 7/15 (46%) |
+| *mediastore* | 7/18 (38%) |
 | *mq* | 7/22 (31%) |
 | *neptune* | 12/57 (21%) |
 | *opsworks* | 18/74 (24%) |
@@ -1040,7 +1040,7 @@
 | *secretsmanager* | 6/18 (33%) |
 | *securityhub* | 10/38 (26%) |
 | *serverlessrepo* | 1/13 (7%) |
-| *servicecatalog* | 14/82 (17%) |
+| *servicecatalog* | 14/83 (16%) |
 | *servicediscovery* | 6/20 (30%) |
 | *ses* | 10/71 (14%) |
 | *sns* | 8/33 (24%) |
@@ -1050,10 +1050,10 @@
 | *storagegateway* | 29/73 (39%) |
 | *sts* | 1/7 (14%) |
 | *support* | 7/14 (50%) |
-| *swf* | 1/31 (3%) |
+| *swf* | 1/37 (2%) |
 | *transfer* | 9/18 (50%) |
-| *waf* | 32/73 (43%) |
-| *waf-regional* | 34/77 (44%) |
+| *waf* | 32/76 (42%) |
+| *waf-regional* | 34/80 (42%) |
 | *worklink* | 9/30 (30%) |
 | *workspaces* | 4/33 (12%) |
 | *xray* | 7/20 (35%) |
@@ -1190,24 +1190,34 @@
 | *alexaforbusiness* | `UpdateSkillGroup` | 0 |
 | *amplify* | `CreateApp` | 0 |
 | *amplify* | `CreateBranch` | 0 |
+| *amplify* | `CreateDeployment` | 0 |
 | *amplify* | `CreateDomainAssociation` | 0 |
+| *amplify* | `CreateWebhook` | 0 |
 | *amplify* | `DeleteApp` | 0 |
 | *amplify* | `DeleteBranch` | 0 |
 | *amplify* | `DeleteDomainAssociation` | 0 |
 | *amplify* | `DeleteJob` | 0 |
+| *amplify* | `DeleteWebhook` | 0 |
 | *amplify* | `GetApp` | 0 |
 | *amplify* | `GetBranch` | 0 |
 | *amplify* | `GetDomainAssociation` | 0 |
 | *amplify* | `GetJob` | 0 |
+| *amplify* | `GetWebhook` | 0 |
 | *amplify* | `ListApps` | 0 |
 | *amplify* | `ListBranches` | 0 |
 | *amplify* | `ListDomainAssociations` | 0 |
 | *amplify* | `ListJobs` | 0 |
+| *amplify* | `ListTagsForResource` | 0 |
+| *amplify* | `ListWebhooks` | 0 |
+| *amplify* | `StartDeployment` | 0 |
 | *amplify* | `StartJob` | 0 |
 | *amplify* | `StopJob` | 0 |
+| *amplify* | `TagResource` | 0 |
+| *amplify* | `UntagResource` | 0 |
 | *amplify* | `UpdateApp` | 0 |
 | *amplify* | `UpdateBranch` | 0 |
 | *amplify* | `UpdateDomainAssociation` | 0 |
+| *amplify* | `UpdateWebhook` | 0 |
 | *apigateway* | `CreateApiKey` | 1 |
 | *apigateway* | `CreateAuthorizer` | 1 |
 | *apigateway* | `CreateBasePathMapping` | 1 |
@@ -1684,6 +1694,7 @@
 | *ce* | `GetReservationPurchaseRecommendation` | 0 |
 | *ce* | `GetReservationUtilization` | 0 |
 | *ce* | `GetTags` | 0 |
+| *ce* | `GetUsageForecast` | 0 |
 | *chime* | `AssociatePhoneNumberWithUser` | 0 |
 | *chime* | `AssociatePhoneNumbersWithVoiceConnector` | 0 |
 | *chime* | `BatchDeletePhoneNumber` | 0 |
@@ -1983,10 +1994,12 @@
 | *cloudtrail* | `StopLogging` | 0 |
 | *cloudtrail* | `UpdateTrail` | 0 |
 | *cloudwatch* | `DeleteAlarms` | 1 |
+| *cloudwatch* | `DeleteAnomalyDetector` | 0 |
 | *cloudwatch* | `DeleteDashboards` | 0 |
 | *cloudwatch* | `DescribeAlarmHistory` | 0 |
 | *cloudwatch* | `DescribeAlarms` | 0 |
 | *cloudwatch* | `DescribeAlarmsForMetric` | 0 |
+| *cloudwatch* | `DescribeAnomalyDetectors` | 0 |
 | *cloudwatch* | `DisableAlarmActions` | 0 |
 | *cloudwatch* | `EnableAlarmActions` | 0 |
 | *cloudwatch* | `GetDashboard` | 0 |
@@ -1996,6 +2009,7 @@
 | *cloudwatch* | `ListDashboards` | 0 |
 | *cloudwatch* | `ListMetrics` | 0 |
 | *cloudwatch* | `ListTagsForResource` | 0 |
+| *cloudwatch* | `PutAnomalyDetector` | 0 |
 | *cloudwatch* | `PutDashboard` | 1 |
 | *cloudwatch* | `PutMetricAlarm` | 1 |
 | *cloudwatch* | `PutMetricData` | 0 |
@@ -2367,6 +2381,7 @@
 | *config* | `DeleteConfigurationRecorder` | 0 |
 | *config* | `DeleteDeliveryChannel` | 0 |
 | *config* | `DeleteEvaluationResults` | 0 |
+| *config* | `DeleteOrganizationConfigRule` | 0 |
 | *config* | `DeletePendingAggregationRequest` | 0 |
 | *config* | `DeleteRemediationConfiguration` | 0 |
 | *config* | `DeleteRetentionConfiguration` | 0 |
@@ -2383,6 +2398,8 @@
 | *config* | `DescribeConfigurationRecorders` | 3 |
 | *config* | `DescribeDeliveryChannelStatus` | 0 |
 | *config* | `DescribeDeliveryChannels` | 1 |
+| *config* | `DescribeOrganizationConfigRuleStatuses` | 0 |
+| *config* | `DescribeOrganizationConfigRules` | 0 |
 | *config* | `DescribePendingAggregationRequests` | 1 |
 | *config* | `DescribeRemediationConfigurations` | 0 |
 | *config* | `DescribeRemediationExecutionStatus` | 0 |
@@ -2396,6 +2413,7 @@
 | *config* | `GetComplianceSummaryByConfigRule` | 0 |
 | *config* | `GetComplianceSummaryByResourceType` | 0 |
 | *config* | `GetDiscoveredResourceCounts` | 0 |
+| *config* | `GetOrganizationConfigRuleDetailedStatus` | 0 |
 | *config* | `GetResourceConfigHistory` | 0 |
 | *config* | `ListAggregateDiscoveredResources` | 0 |
 | *config* | `ListDiscoveredResources` | 0 |
@@ -2406,6 +2424,7 @@
 | *config* | `PutConfigurationRecorder` | 1 |
 | *config* | `PutDeliveryChannel` | 0 |
 | *config* | `PutEvaluations` | 0 |
+| *config* | `PutOrganizationConfigRule` | 0 |
 | *config* | `PutRemediationConfigurations` | 0 |
 | *config* | `PutRetentionConfiguration` | 0 |
 | *config* | `SelectResourceConfig` | 0 |
@@ -2739,6 +2758,8 @@
 | *docdb* | `ResetDBClusterParameterGroup` | 0 |
 | *docdb* | `RestoreDBClusterFromSnapshot` | 0 |
 | *docdb* | `RestoreDBClusterToPointInTime` | 0 |
+| *docdb* | `StartDBCluster` | 0 |
+| *docdb* | `StopDBCluster` | 0 |
 | *ds* | `AcceptSharedDirectory` | 0 |
 | *ds* | `AddIpRoutes` | 0 |
 | *ds* | `AddTagsToResource` | 0 |
@@ -3493,16 +3514,29 @@
 | *es* | `StartElasticsearchServiceSoftwareUpdate` | 0 |
 | *es* | `UpdateElasticsearchDomainConfig` | 0 |
 | *es* | `UpgradeElasticsearchDomain` | 0 |
+| *events* | `ActivateEventSource` | 0 |
+| *events* | `CreateEventBus` | 0 |
+| *events* | `CreatePartnerEventSource` | 0 |
+| *events* | `DeactivateEventSource` | 0 |
+| *events* | `DeleteEventBus` | 0 |
+| *events* | `DeletePartnerEventSource` | 0 |
 | *events* | `DeleteRule` | 2 |
 | *events* | `DescribeEventBus` | 0 |
+| *events* | `DescribeEventSource` | 0 |
+| *events* | `DescribePartnerEventSource` | 0 |
 | *events* | `DescribeRule` | 1 |
 | *events* | `DisableRule` | 1 |
 | *events* | `EnableRule` | 1 |
+| *events* | `ListEventBuses` | 0 |
+| *events* | `ListEventSources` | 0 |
+| *events* | `ListPartnerEventSourceAccounts` | 0 |
+| *events* | `ListPartnerEventSources` | 0 |
 | *events* | `ListRuleNamesByTarget` | 1 |
 | *events* | `ListRules` | 1 |
 | *events* | `ListTagsForResource` | 0 |
 | *events* | `ListTargetsByRule` | 1 |
 | *events* | `PutEvents` | 0 |
+| *events* | `PutPartnerEvents` | 0 |
 | *events* | `PutPermission` | 1 |
 | *events* | `PutRule` | 3 |
 | *events* | `PutTargets` | 2 |
@@ -4468,6 +4502,7 @@
 | *kinesis* | `StopStreamEncryption` | 0 |
 | *kinesis* | `SubscribeToShard` | 0 |
 | *kinesis* | `UpdateShardCount` | 0 |
+| *kinesis-video-archived-media* | `GetDASHStreamingSessionURL` | 0 |
 | *kinesis-video-archived-media* | `GetHLSStreamingSessionURL` | 0 |
 | *kinesis-video-archived-media* | `GetMediaForFragmentList` | 0 |
 | *kinesis-video-archived-media* | `ListFragments` | 0 |
@@ -4965,11 +5000,14 @@
 | *mediastore* | `GetCorsPolicy` | 1 |
 | *mediastore* | `GetLifecyclePolicy` | 0 |
 | *mediastore* | `ListContainers` | 1 |
+| *mediastore* | `ListTagsForResource` | 0 |
 | *mediastore* | `PutContainerPolicy` | 1 |
 | *mediastore* | `PutCorsPolicy` | 0 |
 | *mediastore* | `PutLifecyclePolicy` | 0 |
 | *mediastore* | `StartAccessLogging` | 0 |
 | *mediastore* | `StopAccessLogging` | 0 |
+| *mediastore* | `TagResource` | 0 |
+| *mediastore* | `UntagResource` | 0 |
 | *mediastore-data* | `DeleteObject` | 0 |
 | *mediastore-data* | `DescribeObject` | 0 |
 | *mediastore-data* | `GetObject` | 0 |
@@ -6168,6 +6206,7 @@
 | *servicecatalog* | `DescribeProvisioningParameters` | 0 |
 | *servicecatalog* | `DescribeRecord` | 0 |
 | *servicecatalog* | `DescribeServiceAction` | 0 |
+| *servicecatalog* | `DescribeServiceActionExecutionParameters` | 0 |
 | *servicecatalog* | `DescribeTagOption` | 1 |
 | *servicecatalog* | `DisableAWSOrganizationsAccess` | 0 |
 | *servicecatalog* | `DisassociateBudgetFromResource` | 0 |
@@ -6689,6 +6728,7 @@
 | *swf* | `ListClosedWorkflowExecutions` | 0 |
 | *swf* | `ListDomains` | 0 |
 | *swf* | `ListOpenWorkflowExecutions` | 0 |
+| *swf* | `ListTagsForResource` | 0 |
 | *swf* | `ListWorkflowTypes` | 0 |
 | *swf* | `PollForActivityTask` | 0 |
 | *swf* | `PollForDecisionTask` | 0 |
@@ -6703,7 +6743,12 @@
 | *swf* | `RespondDecisionTaskCompleted` | 0 |
 | *swf* | `SignalWorkflowExecution` | 0 |
 | *swf* | `StartWorkflowExecution` | 0 |
+| *swf* | `TagResource` | 0 |
 | *swf* | `TerminateWorkflowExecution` | 0 |
+| *swf* | `UndeprecateActivityType` | 0 |
+| *swf* | `UndeprecateDomain` | 0 |
+| *swf* | `UndeprecateWorkflowType` | 0 |
+| *swf* | `UntagResource` | 0 |
 | *textract* | `AnalyzeDocument` | 0 |
 | *textract* | `DetectDocumentText` | 0 |
 | *textract* | `GetDocumentAnalysis` | 0 |
@@ -6799,10 +6844,13 @@
 | *waf* | `ListSizeConstraintSets` | 1 |
 | *waf* | `ListSqlInjectionMatchSets` | 1 |
 | *waf* | `ListSubscribedRuleGroups` | 1 |
+| *waf* | `ListTagsForResource` | 0 |
 | *waf* | `ListWebACLs` | 0 |
 | *waf* | `ListXssMatchSets` | 1 |
 | *waf* | `PutLoggingConfiguration` | 0 |
 | *waf* | `PutPermissionPolicy` | 0 |
+| *waf* | `TagResource` | 0 |
+| *waf* | `UntagResource` | 0 |
 | *waf* | `UpdateByteMatchSet` | 1 |
 | *waf* | `UpdateGeoMatchSet` | 0 |
 | *waf* | `UpdateIPSet` | 1 |
@@ -6876,10 +6924,13 @@
 | *waf-regional* | `ListSizeConstraintSets` | 1 |
 | *waf-regional* | `ListSqlInjectionMatchSets` | 1 |
 | *waf-regional* | `ListSubscribedRuleGroups` | 1 |
+| *waf-regional* | `ListTagsForResource` | 0 |
 | *waf-regional* | `ListWebACLs` | 0 |
 | *waf-regional* | `ListXssMatchSets` | 1 |
 | *waf-regional* | `PutLoggingConfiguration` | 0 |
 | *waf-regional* | `PutPermissionPolicy` | 0 |
+| *waf-regional* | `TagResource` | 0 |
+| *waf-regional* | `UntagResource` | 0 |
 | *waf-regional* | `UpdateByteMatchSet` | 1 |
 | *waf-regional* | `UpdateGeoMatchSet` | 0 |
 | *waf-regional* | `UpdateIPSet` | 1 |
@@ -7053,6 +7104,6 @@
 
 **Total Services: 185**
 
-**Total Operations: 5987**
+**Total Operations: 6038**
 
 **Total Unique Occurances: 1183 (19%)**
