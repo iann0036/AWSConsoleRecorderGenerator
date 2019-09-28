@@ -43612,57 +43612,7 @@ function analyseRequest(details) {
         
         return {};
     }
-
-    // autogen:backup:backup.CreateBackupVault
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "createBackupVault") {
-        reqParams.iam['Resource'] = [
-            "*"
-        ];
-
-        reqParams.boto3['CreatorRequestId'] = jsonRequestBody.contentString.CreatorRequestId;
-        reqParams.cli['--creator-request-id'] = jsonRequestBody.contentString.CreatorRequestId;
-
-        outputs.push({
-            'region': region,
-            'service': 'backup',
-            'method': {
-                'api': 'CreateBackupVault',
-                'boto3': 'create_backup_vault',
-                'cli': 'create-backup-vault'
-            },
-            'options': reqParams,
-            'requestDetails': details
-        });
-        
-        return {};
-    }
-
-    // autogen:backup:backup.CreateBackupPlan
-    if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "createBackupPlan") {
-        reqParams.iam['Resource'] = [
-            "*"
-        ];
-
-        reqParams.boto3['BackupPlan'] = jsonRequestBody.contentString.BackupPlan;
-        reqParams.cli['--backup-plan'] = jsonRequestBody.contentString.BackupPlan;
-        reqParams.boto3['BackupPlanTags'] = jsonRequestBody.contentString.BackupPlanTags;
-        reqParams.cli['--backup-plan-tags'] = jsonRequestBody.contentString.BackupPlanTags;
-
-        outputs.push({
-            'region': region,
-            'service': 'backup',
-            'method': {
-                'api': 'CreateBackupPlan',
-                'boto3': 'create_backup_plan',
-                'cli': 'create-backup-plan'
-            },
-            'options': reqParams,
-            'requestDetails': details
-        });
-        
-        return {};
-    }
-
+    
     // autogen:backup:backup.GetBackupPlan
     if (details.method == "POST" && details.url.match(/.+console\.aws\.amazon\.com\/backup\/api\/backup$/g) && jsonRequestBody.operation == "getBackupPlan") {
         reqParams.boto3['BackupPlanId'] = jsonRequestBody.path.split("/")[3];
