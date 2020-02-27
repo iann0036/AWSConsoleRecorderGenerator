@@ -93,26 +93,30 @@ function doAccept() {
 
     [...document.getElementsByClassName(`inputMethodSelector${i}`)].forEach(
         (el, index, array) => {
-            if (el.tagName == "SELECT")
-            el.innerHTML = "<option></option>";
-            combined[apiservice]['operations'].forEach(operation => {
-                if (operation['name'] == apimethod) {
-                    operation['inputs'].forEach(input => {
-                        if (el.getAttribute('data-prop')) {
-                            var methodname = el.getAttribute('data-prop').split(".").pop();
-                            if (methodname.toLowerCase() == input.toLowerCase()) {
-                                el.innerHTML += `<option selected>${input}</option>`;
+            if (el.tagName == "SELECT") {
+                el.innerHTML = "<option></option>";
+                combined[apiservice]['operations'].forEach(operation => {
+                    if (operation['name'] == apimethod) {
+                        operation['inputs'].forEach(input => {
+                            if (el.getAttribute('data-prop')) {
+                                var methodname = el.getAttribute('data-prop').split(".").pop();
+                                if (methodname.toLowerCase() == input.toLowerCase()) {
+                                    el.innerHTML += `<option selected>${input}</option>`;
+                                } else {
+                                    el.innerHTML += `<option>${input}</option>`;
+                                }
                             } else {
                                 el.innerHTML += `<option>${input}</option>`;
                             }
-                        } else {
-                            el.innerHTML += `<option>${input}</option>`;
-                        }
-                    });
-                }
-            });
+                        });
+                    }
+                });
+
+                el.innerHTML += `<option value="urlparams">{urlparams}</option>`;
+            }
         }
     );
+
 
     this.outerHTML = "<i>accepted</i>";
 }
@@ -145,7 +149,34 @@ function doFinalize() {
     var inputs_string = '';
     [...document.getElementsByClassName(`inputMethodSelector${i}`)].forEach(
         (el, index, array) => {
-            if (el.selectedIndex != -1) {
+            if (el.selectedIndex != -1 && el.options[el.selectedIndex].value == "urlparams") {
+                inputs_string += `        var urlparts = {};
+        jsonRequestBody.contentString.split("&").forEach(function(part) {
+            var item = part.split("=");
+            urlparts[item[0]] = decodeURIComponent(item[1]);
+        });
+
+`;
+
+                var value = 'null';
+                if (el.hasAttribute('data-val')) {
+                    value = el.getAttribute('data-val');
+                }
+                var urlparts = {};
+                value.split("&").forEach(function(part) {
+                    var item = part.split("=");
+                    var key = item[0];
+                    var cliprop = convertApiToCli(key);
+                    var val = decodeURIComponent(item[1]);
+
+                    if (key != "Action") {
+                        inputs_string += `        reqParams.boto3['${key}'] = urlparts['${key}'];
+        reqParams.cli['--${cliprop}'] = urlparts['${key}'];
+`;
+                    }
+                });
+                
+            } else if (el.selectedIndex != -1) {
                 var optiontext = el.options[el.selectedIndex].text;
                 if (optiontext != "") {
                     //var boto3prop = optiontext.substring(0,1).toUpperCase() + optiontext.substring(1);
@@ -256,7 +287,7 @@ chrome.runtime.sendMessage(null, {
 
                 for (var prop in jsonRequestBody) {
                     var val = JSON.stringify(jsonRequestBody[prop]);
-                    selectable_json += `<a id="${i}-${prop}" data-prop="jsonRequestBody.${prop}" data-val=${val} style="color: #2222cc;">${prop}</a>: ${val} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${prop}" data-prop="jsonRequestBody.${prop}"></select><br />`;
+                    selectable_json += `<a id="${i}-${prop}" data-prop="jsonRequestBody.${prop}" data-val=${val} style="color: #2222cc;">${prop}</a>: ${val} <select class="inputMethodSelector${i}" data-val=${val} id="inputMethodSelector${i}-${prop}" data-prop="jsonRequestBody.${prop}"></select><br />`;
                     setTimeout(function(i, prop){
                         document.getElementById(`${i}-${prop}`).onclick = addSelectable;
                     }, 1, i, prop);
@@ -265,7 +296,7 @@ chrome.runtime.sendMessage(null, {
                         for (var subprop in jsonRequestBody[prop]) {
                             var proppath = prop + "." + subprop;
                             var val = JSON.stringify(jsonRequestBody[prop][subprop]);
-                            selectable_json += `<a id="${i}-${subprop}" data-prop="jsonRequestBody.${proppath}" data-val=${val} style="color: #2222cc;">${proppath}</a>: ${val} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${proppath}" data-prop="jsonRequestBody.${proppath}"></select><br />`;
+                            selectable_json += `<a id="${i}-${subprop}" data-prop="jsonRequestBody.${proppath}" data-val=${val} style="color: #2222cc;">${proppath}</a>: ${val} <select class="inputMethodSelector${i}" data-val=${val} id="inputMethodSelector${i}-${proppath}" data-prop="jsonRequestBody.${proppath}"></select><br />`;
                             setTimeout(function(i, subprop){
                                 document.getElementById(`${i}-${subprop}`).onclick = addSelectable;
                             }, 1, i, subprop);
@@ -276,7 +307,7 @@ chrome.runtime.sendMessage(null, {
                             for (var subprop in jsonRequestBody["actions"][0]["parameters"][0]) {
                                 var proppath = "action['parameters'][0]['" + subprop + "']";
                                 var val = JSON.stringify(jsonRequestBody["actions"][0]["parameters"][0][subprop]);
-                                selectable_json += `<a id="actions-${i}-${subprop}" data-prop="${proppath}" data-val=${val} style="color: #2222cc;">ACTION ${subprop}</a>: ${val} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${subprop}" data-prop="${proppath}"></select><br />`;
+                                selectable_json += `<a id="actions-${i}-${subprop}" data-prop="${proppath}" data-val=${val} style="color: #2222cc;">ACTION ${subprop}</a>: ${val} <select class="inputMethodSelector${i}" data-val=${val} id="inputMethodSelector${i}-${subprop}" data-prop="${proppath}"></select><br />`;
                                 setTimeout(function(i, subprop){
                                     document.getElementById(`actions-${i}-${subprop}`).onclick = addSelectable;
                                 }, 1, i, subprop);
@@ -295,7 +326,7 @@ chrome.runtime.sendMessage(null, {
                         var pipesplit_body = request_body.split("|");
                         for (var j=0; j<pipesplit_body.length; j++) {
                             var field = pipesplit_body[j];
-                            selectable_json += `<a id="pipesplit-${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})" data-val="${field}" style="color: #2222cc;">PIPESPLIT${j}</a>: ${field} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})"></select><br />`;
+                            selectable_json += `<a id="pipesplit-${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})" data-val="${field}" style="color: #2222cc;">PIPESPLIT${j}</a>: ${field} <select class="inputMethodSelector${i}" data-val=${val} id="inputMethodSelector${i}-${j}" data-prop="getPipeSplitField(requestBody, ${j})"></select><br />`;
                             setTimeout(function(i, j){
                                 document.getElementById(`pipesplit-${i}-${j}`).onclick = addSelectable;
                             }, 1, i, j);
@@ -306,7 +337,7 @@ chrome.runtime.sendMessage(null, {
                         if (request_body.match(/([^|{}=&]+)\=([^|{}=&]+)(?:\&([^|{}=&]+)\=([^|{}=&]+))*/g)) {
                             console.log(/([^|{}=&]+)\=([^|{}=&]+)(?:\&([^|{}=&]+)\=([^|{}=&]+))*/g.exec(request_body));
                         } else {
-                            selectable_json += `<a id="formreq-${i}-_" data-prop="formRequestBody._" data-val="${request_body}" style="color: #2222cc;">FORMDATA _</a>: ${request_body} <select class="inputMethodSelector${i}" id="inputMethodSelector${i}-_" data-prop="formRequestBody._"></select><br />`;
+                            selectable_json += `<a id="formreq-${i}-_" data-prop="formRequestBody._" data-val="${request_body}" style="color: #2222cc;">FORMDATA _</a>: ${request_body} <select class="inputMethodSelector${i}" data-val=${val} id="inputMethodSelector${i}-_" data-prop="formRequestBody._"></select><br />`;
                             setTimeout(function(i){
                                 document.getElementById(`formreq-${i}-_`).onclick = addSelectable;
                             }, 1, i);
